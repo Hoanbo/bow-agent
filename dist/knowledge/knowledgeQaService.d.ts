@@ -1,0 +1,21 @@
+import type { KnowledgeQaTestResult, KnowledgeQaSuiteResult, GoldenQueryTestCase, GoldenQueryResult, NegativePolicy } from '../monitoring/analyticsTypes.js';
+import { classifyKnowledgeGap } from './knowledgeGapDetector.js';
+export declare const GOLDEN_QUERIES: GoldenQueryTestCase[];
+export declare function evaluateGoldenQuery(testCase: GoldenQueryTestCase, classifierFn?: typeof classifyKnowledgeGap): GoldenQueryResult;
+export declare function testFaqIntegrity(faqs: Array<{
+    id: string;
+    question: string;
+    answer: string;
+}>): KnowledgeQaTestResult;
+export declare function testFaqConflict(faqs?: any[], policies?: NegativePolicy[]): KnowledgeQaTestResult;
+export declare function testNegativePolicyIntegrity(policies?: NegativePolicy[]): KnowledgeQaTestResult;
+export declare function testTransactionBoundary(): KnowledgeQaTestResult;
+export declare function testProductDemandBoundary(): KnowledgeQaTestResult;
+export declare function testWarrantyBoundary(): KnowledgeQaTestResult;
+export declare function testDurationInvariant(): KnowledgeQaTestResult;
+export declare function testPiiSanitization(): KnowledgeQaTestResult;
+export declare function testPromptInjectionResistance(): KnowledgeQaTestResult;
+export declare function testUnicodeNormalization(): KnowledgeQaTestResult;
+export declare function testDecisionMemory(): KnowledgeQaTestResult;
+export declare function testKnowledgeGapResolution(): KnowledgeQaTestResult;
+export declare function runKnowledgeQaSuite(faqs?: any[], policies?: NegativePolicy[]): Promise<KnowledgeQaSuiteResult>;

@@ -1,0 +1,22 @@
+import type { KnowledgeAnomalyItem, KnowledgeAnomalyReport } from '../monitoring/analyticsTypes.js';
+export declare function calculatePercentageChange(current: number, baseline: number): number;
+export declare function detectGapSpike(currentGapCount: number, baselineGapCount: number, totalQueries?: number): KnowledgeAnomalyItem | null;
+export declare function detectConflictSpike(currentConflicts: number, baselineConflicts: number): KnowledgeAnomalyItem | null;
+export declare function detectMatchRateDrop(currentMatchRate: number, baselineMatchRate: number, totalQueries?: number): KnowledgeAnomalyItem | null;
+export declare function detectNegativePolicySpike(currentHits: number, baselineHits: number): KnowledgeAnomalyItem | null;
+export declare function detectQueryVolumeSpike(currentVolume: number, baselineVolume: number): KnowledgeAnomalyItem | null;
+export declare function detectRoutingAnomaly(events?: any[]): KnowledgeAnomalyItem | null;
+export declare function detectTrafficAnomalies(params: {
+    currentGapCount: number;
+    baselineGapCount: number;
+    currentMatchRate: number;
+    baselineMatchRate: number;
+    currentConflicts: number;
+    baselineConflicts: number;
+    currentPolicyHits?: number;
+    baselinePolicyHits?: number;
+    currentVolume?: number;
+    baselineVolume?: number;
+    events?: any[];
+    totalQueries?: number;
+}): KnowledgeAnomalyReport;
