@@ -163,6 +163,40 @@ export const geminiToolDeclarations: FunctionDeclaration[] = [
       },
     },
   },
+  {
+    name: 'desktop_action',
+    description: 'Thực hiện các thao tác điều khiển máy tính PC mục tiêu (Computer Automation) thông qua bow-remote-agent: mở ứng dụng (Photoshop, Word, Excel, Chrome, VSCode...), mở website / URL, chụp màn hình, click chuột, gõ phím, chạy lệnh terminal, tắt máy, khởi động lại.',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        action: {
+          type: SchemaType.STRING,
+          description: 'Hành động cần thực thi: "open_app", "open_chrome", "open_url", "browser_search", "screenshot", "get_screen_info", "get_windows", "focus_window", "close_app", "mouse_click", "keyboard_type", "terminal_execute", "system_shutdown", "system_restart".',
+        },
+        target: {
+          type: SchemaType.STRING,
+          description: 'Tên ứng dụng (vd: "Photoshop", "Notepad", "Chrome", "Excel", "calc") hoặc cửa sổ cần thao tác.',
+        },
+        url: {
+          type: SchemaType.STRING,
+          description: 'Địa chỉ website hoặc URL nếu mở trình duyệt (vd: "https://youtube.com", "https://google.com").',
+        },
+        query: {
+          type: SchemaType.STRING,
+          description: 'Từ khóa tìm kiếm trên trình duyệt nếu có.',
+        },
+        text: {
+          type: SchemaType.STRING,
+          description: 'Đoạn văn bản cần gõ phím nếu có.',
+        },
+        command: {
+          type: SchemaType.STRING,
+          description: 'Lệnh terminal nếu hành động là terminal_execute.',
+        },
+      },
+      required: ['action'],
+    },
+  },
 ];
 
 /**
@@ -175,7 +209,8 @@ export interface GeminiToolExecutionOutput {
   message?: string;
   // Dữ liệu có cấu trúc để sinh Action Card tương ứng
   actionData?: {
-    type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected';
+    type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected' | 'desktop_action';
+    actionPayload?: Record<string, any>;
     product?: ProductItemResult;
     products?: ProductItemResult[];
     balance?: number;
@@ -608,6 +643,41 @@ export async function executeGeminiTool(
           actionData: {
             type: 'tickets',
             tickets,
+          },
+        };
+      }
+
+      case 'desktop_action': {
+        const action = typeof args.action === 'string' ? args.action.trim() : 'open_app';
+        const target = typeof args.target === 'string' ? args.target.trim() : undefined;
+        const url = typeof args.url === 'string' ? args.url.trim() : undefined;
+        const query = typeof args.query === 'string' ? args.query.trim() : undefined;
+        const text = typeof args.text === 'string' ? args.text.trim() : undefined;
+        const command = typeof args.command === 'string' ? args.command.trim() : undefined;
+
+        const actionPayload = {
+          action,
+          target,
+          url,
+          query,
+          text,
+          command,
+          ...(args || {}),
+        };
+
+        return {
+          toolName,
+          success: true,
+          data: {
+            status: 'dispatched',
+            action,
+            target: target || url || command || 'system',
+            payload: actionPayload,
+          },
+          message: `Lệnh điều khiển máy tính "${action}" đã được lên kế hoạch gửi tới bow-remote-agent.`,
+          actionData: {
+            type: 'desktop_action',
+            actionPayload,
           },
         };
       }

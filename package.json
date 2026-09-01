@@ -1,36 +1,42 @@
 {
-    "name":  "@bow/agent",
-    "version":  "3.3.0",
-    "description":  "BOW Agent V3.3 — Standalone Autonomous Enterprise AI Agent Engine",
-    "main":  "dist/index.js",
-    "types":  "dist/index.d.ts",
-    "type":  "module",
-    "scripts":  {
-                    "build":  "tsc -b",
-                    "typecheck":  "tsc -b --noEmit",
-                    "test":  "tsx tests/test_phase7_1_step4_extraction.ts"
-                },
-    "dependencies":  {
-                         "@google/generative-ai":  "^0.24.1"
-                     },
-    "devDependencies":  {
-                            "@types/node":  "^22.20.1",
-                            "typescript":  "^5.6.2",
-                            "tsx":  "^4.19.0"
-                        },
-    "exports":  {
-                    ".":  {
-                              "types":  "./dist/index.d.ts",
-                              "import":  "./dist/index.js",
-                              "default":  "./dist/index.js"
-                          },
-                    "./*":  {
-                                "types":  "./dist/*.d.ts",
-                                "import":  "./dist/*.js",
-                                "default":  "./dist/*.js"
-                            }
-                },
-    "files":  [
-                  "dist"
-              ]
+    "name": "@bow/agent",
+    "version": "3.3.0",
+    "description": "BOW Agent V3.3 — Standalone Autonomous Enterprise AI Agent Engine",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "type": "module",
+    "scripts": {
+        "start": "tsx src/server.ts",
+        "build": "tsc -b",
+        "typecheck": "tsc -b --noEmit",
+        "test": "tsx tests/test_phase7_1_step4_extraction.ts",
+        "test:multichannel": "tsx tests/test_multichannel_v3_3.ts",
+        "test:all": "tsx tests/test_phase7_1_step4_extraction.ts && tsx tests/test_multichannel_v3_3.ts"
+    },
+    "dependencies": {
+        "@google/generative-ai": "^0.24.1",
+        "dotenv": "^17.4.2",
+        "ws": "^8.21.3"
+    },
+    "devDependencies": {
+        "@types/node": "^22.20.1",
+        "@types/ws": "^8.18.1",
+        "tsx": "^4.19.0",
+        "typescript": "^5.6.2"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        },
+        "./*": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js"
+        }
+    },
+    "files": [
+        "dist"
+    ]
 }

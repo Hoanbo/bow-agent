@@ -13,7 +13,8 @@ export interface GeminiToolExecutionOutput {
     data: any;
     message?: string;
     actionData?: {
-        type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected';
+        type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected' | 'desktop_action';
+        actionPayload?: Record<string, any>;
         product?: ProductItemResult;
         products?: ProductItemResult[];
         balance?: number;

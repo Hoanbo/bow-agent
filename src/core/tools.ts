@@ -26,12 +26,21 @@ export async function searchProducts(
   storage?: StorageAdapter
 ): Promise<ToolExecutionResult<ProductItemResult[]>> {
   try {
-    const store = storage || getActiveShopAdapter().storage!;
-    const products = await store.searchProducts!(params);
+    const adapter = getActiveShopAdapter();
+    const store = storage || adapter.storage;
+    let products: ProductItemResult[] = [];
+    if (store?.searchProducts) {
+      products = await store.searchProducts(params);
+    } else if (store?.getProducts) {
+      products = await store.getProducts();
+    }
+    if ((!products || products.length === 0) && adapter.catalog?.getAllProducts) {
+      products = await adapter.catalog.getAllProducts();
+    }
     return {
       success: true,
       toolName: 'searchProducts',
-      data: products,
+      data: products || [],
     };
   } catch (err: any) {
     return { success: false, toolName: 'searchProducts', message: err.message || 'Lỗi truy vấn sản phẩm.' };

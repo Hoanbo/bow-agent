@@ -1,4 +1,4 @@
-export type AgentRole = 'admin' | 'ctv' | 'user' | 'guest';
+export type AgentRole = 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
 export interface AgentContext {
     userId?: string | null;
     email?: string | null;
@@ -6,6 +6,10 @@ export interface AgentContext {
     role: AgentRole;
     balance?: number;
     isAuthenticated: boolean;
+    sessionId?: string;
+    channel?: 'WEB' | 'ROBOT' | 'DESKTOP' | 'SYSTEM' | string;
+    authToken?: string;
+    userText?: string;
 }
 export type AgentIntent = 'GREETING' | 'SMALL_TALK' | 'CAPABILITY_DISCOVERY' | 'CLARIFICATION' | 'CATALOG' | 'VIEW_CATEGORY' | 'PRODUCT_SEARCH' | 'BUY' | 'EXPIRING_SOON' | 'ORDER_QUERY' | 'RENEW' | 'WARRANTY' | 'TICKET' | 'COUPON' | 'WALLET' | 'FAQ' | 'GENERAL';
 export type AgentActionType = 'NAVIGATE_CHECKOUT' | 'NAVIGATE_ORDER_DETAIL' | 'NAVIGATE_RENEWAL' | 'NAVIGATE_SUPPORT' | 'NAVIGATE_TICKET_DETAIL' | 'APPLY_COUPON' | 'OPEN_DEPOSIT';
@@ -46,6 +50,10 @@ export interface CategoryResolution {
     matched: boolean;
     category?: CategoryInfo;
 }
+export type CategoryItemResult = CategoryInfo;
+export type OrderItemResult = any;
+export type FaqItemResult = any;
+export type NegativePolicyItemResult = any;
 export interface PlanItemResult {
     id: string;
     name: string;

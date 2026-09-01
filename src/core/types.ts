@@ -1,6 +1,6 @@
 // src/services/agent/types.ts — Trung tâm toàn bộ Type Definitions cho BOW Agent V2
 
-export type AgentRole = 'admin' | 'ctv' | 'user' | 'guest';
+export type AgentRole = 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
 
 export interface AgentContext {
   userId?: string | null;
@@ -9,6 +9,10 @@ export interface AgentContext {
   role: AgentRole;
   balance?: number;
   isAuthenticated: boolean;
+  sessionId?: string;
+  channel?: 'WEB' | 'ROBOT' | 'DESKTOP' | 'SYSTEM' | string;
+  authToken?: string;
+  userText?: string;
 }
 
 export type AgentIntent =
@@ -79,6 +83,11 @@ export interface CategoryResolution {
   matched: boolean;
   category?: CategoryInfo;
 }
+
+export type CategoryItemResult = CategoryInfo;
+export type OrderItemResult = any;
+export type FaqItemResult = any;
+export type NegativePolicyItemResult = any;
 
 export interface PlanItemResult {
   id: string;

@@ -13,7 +13,8 @@ export type AgentToolName =
   | 'getActiveCoupons'
   | 'getMyWalletBalance'
   | 'getFaqsAndGuides'
-  | 'getSupportChannels';
+  | 'getSupportChannels'
+  | 'desktop_action';
 
 /**
  * Bảng phân quyền cho từng Tool của BOW Agent
@@ -28,6 +29,7 @@ const TOOL_PERMISSIONS: Record<AgentToolName, { requiresAuth: boolean; descripti
   getMyWalletBalance: { requiresAuth: true, description: 'Xem số dư ví của tài khoản' },
   getFaqsAndGuides: { requiresAuth: false, description: 'Câu hỏi thường gặp và hướng dẫn kích hoạt' },
   getSupportChannels: { requiresAuth: false, description: 'Kênh liên hệ hỗ trợ trực tiếp' },
+  desktop_action: { requiresAuth: false, description: 'Điều khiển máy tính và tự động hóa desktop' },
 };
 
 /**

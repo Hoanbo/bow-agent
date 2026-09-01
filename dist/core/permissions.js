@@ -11,6 +11,7 @@ const TOOL_PERMISSIONS = {
     getMyWalletBalance: { requiresAuth: true, description: 'Xem số dư ví của tài khoản' },
     getFaqsAndGuides: { requiresAuth: false, description: 'Câu hỏi thường gặp và hướng dẫn kích hoạt' },
     getSupportChannels: { requiresAuth: false, description: 'Kênh liên hệ hỗ trợ trực tiếp' },
+    desktop_action: { requiresAuth: false, description: 'Điều khiển máy tính và tự động hóa desktop' },
 };
 /**
  * Kiểm tra xem người dùng hiện tại có đủ quyền gọi tool không
