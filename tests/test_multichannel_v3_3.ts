@@ -4,7 +4,6 @@
 import {
   // Central Server & Config
   CONFIG,
-  BowCentralAgentServer,
   fallbackShopAdapter,
   setActiveShopAdapter,
   
@@ -34,6 +33,8 @@ import {
   // Knowledge Base & RAG
   knowledgeBase,
 } from '../src/index.js';
+
+import { BowCentralAgentServer } from '../src/server.js';
 import WebSocket from 'ws';
 
 let totalTests = 0;
