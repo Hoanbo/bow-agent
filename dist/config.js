@@ -1,11 +1,16 @@
 // src/config.ts
 // BOW AGENT V3.3 — CENTRALIZED ENVIRONMENT & RUNTIME CONFIGURATION
-import dotenv from 'dotenv';
-dotenv.config();
 function getEnvValue(key, defaultValue = '') {
     if (typeof process !== 'undefined' && process.env && process.env[key]) {
         return process.env[key].trim();
     }
+    try {
+        const metaEnv = import.meta?.env;
+        if (metaEnv && metaEnv[key]) {
+            return String(metaEnv[key]).trim();
+        }
+    }
+    catch { }
     return defaultValue;
 }
 export const CONFIG = {

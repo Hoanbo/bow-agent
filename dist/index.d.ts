@@ -58,5 +58,3 @@ export * from './gemini/geminiClient.js';
 export * from './gemini/geminiPrompt.js';
 export * from './gemini/geminiTools.js';
 export * from './config.js';
-export * from './server.js';
-export * from './gateway.js';

@@ -1,8 +1,7 @@
 // src/config.ts
 // BOW AGENT V3.3 — CENTRALIZED ENVIRONMENT & RUNTIME CONFIGURATION
 
-import dotenv from 'dotenv';
-dotenv.config();
+// In Node.js server environments, dotenv is loaded in server.ts
 
 export interface BowAgentEnvConfig {
   env: 'development' | 'production' | 'test';
@@ -22,6 +21,12 @@ function getEnvValue(key: string, defaultValue: string = ''): string {
   if (typeof process !== 'undefined' && process.env && process.env[key]) {
     return process.env[key]!.trim();
   }
+  try {
+    const metaEnv = (import.meta as any)?.env;
+    if (metaEnv && metaEnv[key]) {
+      return String(metaEnv[key]).trim();
+    }
+  } catch {}
   return defaultValue;
 }
 

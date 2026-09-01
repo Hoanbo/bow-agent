@@ -80,5 +80,5 @@ export * from './gemini/geminiTools.js';
 
 // 10. Runtime Server, Gateway & Config
 export * from './config.js';
-export * from './server.js';
-export * from './gateway.js';
+// export * from './server.js'; // (Server-only Node.js module)
+// export * from './gateway.js'; // (Server-only Node.js module)

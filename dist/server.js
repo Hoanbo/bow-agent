@@ -1,3 +1,5 @@
+import dotenv from 'dotenv';
+dotenv.config();
 // src/server.ts
 // BOW AGENT V3.3 — MULTI-CHANNEL CENTRAL SERVER & WEBSOCKET GATEWAY (Port 4000)
 import http from 'node:http';
