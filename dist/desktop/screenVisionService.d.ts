@@ -12,14 +12,17 @@ export interface ScreenNotificationResult {
 export interface ScreenInspectionOptions {
     userQuery?: string;
     focusApp?: string;
+    targetDisplay?: 'primary' | 'secondary' | 'screen_1' | 'screen_2' | 'all' | number;
+    screenIndex?: number;
     imageBase64?: string;
 }
 export declare const SAMPLE_FALLBACK_SCREEN_PNG = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 export declare class ScreenVisionService {
     /**
-     * Capture the primary Windows screen as a Base64 PNG using native PowerShell (0% GPU, pure OS)
+     * Capture Windows screen as Base64 PNG supporting Multi-Monitor setup (0% GPU, pure OS)
+     * @param target 'primary' (màn chính của Sếp) | 'secondary' (màn phụ) | 'screen_1' | 'screen_2' | 'all' | number
      */
-    captureScreenBase64(): Promise<string>;
+    captureScreenBase64(target?: string | number): Promise<string>;
     /**
      * Analyze screen image using Gemini Multimodal Vision API (Free Tier)
      */

@@ -4,10 +4,19 @@
 // Automatically focuses messaging applications (Facebook Messenger, Zalo, Telegram)
 // and types out the Boss's spoken response followed by ENTER to send.
 
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
-
-const execAsync = promisify(exec);
+async function execAsync(cmd: string, options?: any): Promise<{ stdout: string; stderr: string }> {
+  try {
+    const cp = await import('node:child_process');
+    return new Promise((resolve, reject) => {
+      cp.exec(cmd, options, (err: any, stdout: any, stderr: any) => {
+        if (err) reject(err);
+        else resolve({ stdout: String(stdout || ''), stderr: String(stderr || '') });
+      });
+    });
+  } catch {
+    return { stdout: '', stderr: '' };
+  }
+}
 
 export interface ChatReplyOptions {
   replyText: string;

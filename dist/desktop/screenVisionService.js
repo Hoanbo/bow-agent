@@ -24,18 +24,41 @@ async function execAsync(cmd, options) {
 export const SAMPLE_FALLBACK_SCREEN_PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 export class ScreenVisionService {
     /**
-     * Capture the primary Windows screen as a Base64 PNG using native PowerShell (0% GPU, pure OS)
+     * Capture Windows screen as Base64 PNG supporting Multi-Monitor setup (0% GPU, pure OS)
+     * @param target 'primary' (màn chính của Sếp) | 'secondary' (màn phụ) | 'screen_1' | 'screen_2' | 'all' | number
      */
-    async captureScreenBase64() {
+    async captureScreenBase64(target = 'primary') {
         try {
-            // Native PowerShell script to capture screen without external binary dependencies
+            const targetStr = String(target).toLowerCase();
+            // Native PowerShell script supporting smart multi-screen selection
             const psScript = `
         Add-Type -AssemblyName System.Windows.Forms;
         Add-Type -AssemblyName System.Drawing;
-        $screen = [System.Windows.Forms.Screen]::PrimaryScreen;
-        $bitmap = New-Object System.Drawing.Bitmap($screen.Bounds.Width, $screen.Bounds.Height);
-        $graphics = [System.Drawing.Graphics]::FromImage($bitmap);
-        $graphics.CopyFromScreen($screen.Bounds.X, $screen.Bounds.Y, 0, 0, $bitmap.Size);
+        $screens = [System.Windows.Forms.Screen]::AllScreens;
+        $target = '${targetStr}';
+
+        if ($target -eq 'all' -or $target -eq 'both') {
+            $left = [System.Windows.Forms.SystemInformation]::VirtualScreen.Left;
+            $top = [System.Windows.Forms.SystemInformation]::VirtualScreen.Top;
+            $width = [System.Windows.Forms.SystemInformation]::VirtualScreen.Width;
+            $height = [System.Windows.Forms.SystemInformation]::VirtualScreen.Height;
+            $bitmap = New-Object System.Drawing.Bitmap($width, $height);
+            $graphics = [System.Drawing.Graphics]::FromImage($bitmap);
+            $graphics.CopyFromScreen($left, $top, 0, 0, $bitmap.Size);
+        } else {
+            if ($target -eq 'primary' -or $target -eq '2' -or $target -eq 'screen_2') {
+                $screen = [System.Windows.Forms.Screen]::PrimaryScreen;
+            } elseif ($target -eq 'secondary' -or $target -eq '1' -or $target -eq 'screen_1') {
+                $screen = ($screens | Where-Object { -not $_.Primary } | Select-Object -First 1);
+                if (-not $screen) { $screen = [System.Windows.Forms.Screen]::PrimaryScreen; }
+            } else {
+                $screen = [System.Windows.Forms.Screen]::PrimaryScreen;
+            }
+            $bitmap = New-Object System.Drawing.Bitmap($screen.Bounds.Width, $screen.Bounds.Height);
+            $graphics = [System.Drawing.Graphics]::FromImage($bitmap);
+            $graphics.CopyFromScreen($screen.Bounds.X, $screen.Bounds.Y, 0, 0, $bitmap.Size);
+        }
+
         $memoryStream = New-Object System.IO.MemoryStream;
         $bitmap.Save($memoryStream, [System.Drawing.Imaging.ImageFormat]::Png);
         $base64 = [Convert]::ToBase64String($memoryStream.ToArray());
@@ -45,7 +68,7 @@ export class ScreenVisionService {
         Write-Output $base64;
       `.replace(/\r?\n\s+/g, ' ');
             const { stdout } = await execAsync(`powershell -NoProfile -Command "${psScript}"`, {
-                maxBuffer: 20 * 1024 * 1024,
+                maxBuffer: 30 * 1024 * 1024,
                 timeout: 8000,
             });
             const trimmed = stdout.trim();
@@ -60,7 +83,8 @@ export class ScreenVisionService {
      * Analyze screen image using Gemini Multimodal Vision API (Free Tier)
      */
     async inspectScreenForNotifications(options = {}) {
-        const base64Image = options.imageBase64 || (await this.captureScreenBase64());
+        const target = options.targetDisplay ?? options.screenIndex ?? 'primary';
+        const base64Image = options.imageBase64 || (await this.captureScreenBase64(target));
         const query = options.userQuery || 'Ai vừa nhắn tin cho tôi và nội dung tin nhắn là gì?';
         const apiKey = getGeminiApiKey();
         // 1. If Gemini API is not configured or in offline test mode, provide deterministic fallback

@@ -1,7 +1,7 @@
 {
     "name": "@bow/agent",
     "version": "4.0.0",
-    "description": "BOW Agent V4.0 — Fully Autonomous Embodied AI, Realtime Vision, Smart Home IoT & Co-Founder Engine",
+    "description": "BOW Con V4.0 — The Fully Autonomous Self-Evolving Embodied AI Co-Founder & Universal Brain (Level 4.0 Autonomy)",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "type": "module",
@@ -18,15 +18,11 @@
         "test:v4m2": "tsx tests/test_v4_milestone2_full_duplex.ts",
         "test:v4m3": "tsx tests/test_v4_milestone3_embodied.ts",
         "test:admin": "tsx tests/test_shop_admin_copilot.ts",
-        "test:all": "tsx tests/test_phase7_1_step4_extraction.ts && tsx tests/test_multichannel_v3_3.ts && tsx tests/test_executive_v3_4.ts && tsx tests/test_screen_vision_v3_5.ts && tsx tests/test_v3_6_combined.ts && tsx tests/test_v4_milestone1_local_speech.ts && tsx tests/test_v4_milestone2_full_duplex.ts && tsx tests/test_v4_milestone3_embodied.ts && tsx tests/test_shop_admin_copilot.ts"
+        "test:all": "tsx tests/test_phase7_1_step4_extraction.ts && tsx tests/test_multichannel_v3_3.ts && tsx tests/test_executive_v3_4.ts && tsx tests/test_screen_vision_v3_5.ts && tsx tests/test_v3_6_combined.ts && tsx tests/test_v4_milestone1_local_speech.ts && tsx tests/test_v4_milestone2_full_duplex.ts && tsx tests/test_v4_milestone3_embodied.ts && tsx tests/test_shop_admin_copilot.ts && tsx tests/test_bow_con_phase1_memory.ts && tsx tests/test_bow_con_phase2_self_tool.ts && tsx tests/test_bow_con_phase3_multiagent.ts",
+        "test:phase1": "tsx tests/test_bow_con_phase1_memory.ts",
+        "test:phase2": "tsx tests/test_bow_con_phase2_self_tool.ts",
+        "test:phase3": "tsx tests/test_bow_con_phase3_multiagent.ts"
     },
-
-
-
-
-
-
-
     "dependencies": {
         "@google/generative-ai": "^0.24.1",
         "dotenv": "^17.4.2",

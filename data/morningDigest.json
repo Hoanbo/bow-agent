@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-09-02T18:38:35.120Z",
+  "targetDate": "2026-09-02",
+  "greeting": "Chào buổi sáng Sếp! Chúc Sếp một ngày mới tràn đầy năng lượng và sáng tạo!",
+  "weatherForecast": "Thời tiết hôm nay dễ chịu, nhiệt độ phòng lý tưởng để tập trung lập trình.",
+  "techNews": [
+    {
+      "title": "DeepSeek R1 & Qwen 2.5: Đột phá mới trong việc suy luận cục bộ trên máy tính cá nhân",
+      "source": "AI Research Hub",
+      "summary": "Các mô hình mã nguồn mở thế hệ mới hiện có thể chạy hoàn toàn offline trên phần cứng 64GB RAM với tốc độ vượt trội.",
+      "relevanceToBoss": "Cực kỳ phù hợp để Sếp tích hợp trực tiếp vào dàn máy Dual-Xeon làm bộ não cục bộ."
+    },
+    {
+      "title": "ESP32-S3 phát hành bản cập nhật firmware hỗ trợ xử lý âm thanh AI thời gian thực",
+      "source": "Embedded Robotics Weekly",
+      "summary": "Tối ưu hóa khả năng thu âm và giải mã Opus audio với độ trễ chỉ dưới 15ms.",
+      "relevanceToBoss": "Hỗ trợ trực tiếp cho dự án phần cứng \"Robot Tự Hành BOW Robot\"."
+    },
+    {
+      "title": "Xu hướng tự động hóa Semi-Automatic (On-Demand Fulfillment) trong thương mại số 2026",
+      "source": "TechCommerce Insider",
+      "summary": "Mô hình không cần tồn kho, nhập hàng theo thời gian thực giúp biên lợi nhuận ròng đạt trên 40%.",
+      "relevanceToBoss": "Trùng khớp 100% với mô hình kinh doanh của Shop of BOW."
+    }
+  ],
+  "shopExecutiveSummary": {
+    "totalRevenueYesterday": 2850000,
+    "completedOrders": 22,
+    "pendingFulfillmentCount": 3,
+    "netProfitYesterday": 1200000
+  },
+  "recommendedActionsForToday": [
+    "Thưởng thức một ly sinh tố bơ vào buổi chiều nhé để khởi đầu ngày mới.",
+    "Có 3 đơn hàng khách đã thanh toán đang chờ bàn giao.",
+    "Tiếp tục nghiên cứu và hoàn thiện dự án \"Robot Tự Hành BOW Robot\"."
+  ]
+}

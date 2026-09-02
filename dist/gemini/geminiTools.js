@@ -372,6 +372,129 @@ export const geminiToolDeclarations = [
             required: ['action'],
         },
     },
+    {
+        name: 'boss_remember_fact',
+        description: 'Ghi nhớ sở thích, thói quen sinh hoạt, hoặc dự án công nghệ mới do Sếp chia sẻ.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                category: { type: SchemaType.STRING, description: 'Phân loại: habits, projects, health, preferences' },
+                key: { type: SchemaType.STRING, description: 'Tên trường hoặc tên dự án/thói quen' },
+                value: { type: SchemaType.STRING, description: 'Chi tiết nội dung cần nhớ' },
+            },
+            required: ['category', 'key', 'value'],
+        },
+    },
+    {
+        name: 'boss_recall_memory',
+        description: 'Truy xuất các thông tin ghi nhớ về thói quen, dự án hoặc sức khỏe của Sếp.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                query: { type: SchemaType.STRING, description: 'Từ khóa cần tra cứu' },
+            },
+        },
+    },
+    {
+        name: 'get_morning_briefing',
+        description: 'Lấy bản tin chào buổi sáng tổng hợp tin tức công nghệ AI/Robotics và số liệu Shop hôm qua.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                forceRefresh: { type: SchemaType.BOOLEAN, description: 'Có bắt buộc quét mới lại không' },
+            },
+        },
+    },
+    {
+        name: 'teach_boss_rule',
+        description: 'Ghi nhận một quy tắc ứng xử hoặc hướng dẫn mới do Sếp trực tiếp chỉ dạy.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                instruction: { type: SchemaType.STRING, description: 'Nội dung quy tắc Sếp dạy' },
+                category: { type: SchemaType.STRING, description: 'Phân loại quy tắc' },
+            },
+            required: ['instruction'],
+        },
+    },
+    {
+        name: 'create_dynamic_skill',
+        description: 'Tự động tạo và đăng ký một kỹ năng mới (tool mới) bằng cách viết mã trong Sandbox.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                skillId: { type: SchemaType.STRING, description: 'ID duy nhất của kỹ năng' },
+                name: { type: SchemaType.STRING, description: 'Tên kỹ năng' },
+                description: { type: SchemaType.STRING, description: 'Mô tả tác dụng' },
+                code: { type: SchemaType.STRING, description: 'Mã JavaScript thực thi nhận (args, context)' },
+            },
+            required: ['skillId', 'name', 'description', 'code'],
+        },
+    },
+    {
+        name: 'execute_dynamic_skill',
+        description: 'Thực thi một kỹ năng động đã được học và lưu trong kho kỹ năng.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                skillId: { type: SchemaType.STRING, description: 'ID của kỹ năng' },
+                args: { type: SchemaType.OBJECT, description: 'Tham số truyền vào kỹ năng', properties: {} },
+            },
+            required: ['skillId'],
+        },
+    },
+    {
+        name: 'list_dynamic_skills',
+        description: 'Xem danh sách toàn bộ các kỹ năng động do AI tự tổng hợp.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {},
+        },
+    },
+    {
+        name: 'switch_ai_brain_mode',
+        description: 'Chuyển đổi hoặc xem trạng thái của Kiến Trúc Não Đôi (Cloud Gemini / Local Ollama).',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                mode: { type: SchemaType.STRING, description: 'auto, cloud_preferred, local_preferred, local_only, deterministic_only' },
+            },
+        },
+    },
+    {
+        name: 'delegate_subagent_task',
+        description: 'Ủy thác nhiệm vụ cho Agent con chuyên trách (tech_scout, coder_devops, shop_operations, hardware_vision).',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                role: { type: SchemaType.STRING, description: 'tech_scout, coder_devops, shop_operations, hardware_vision' },
+                goal: { type: SchemaType.STRING, description: 'Mục tiêu cần hoàn thành' },
+            },
+            required: ['role', 'goal'],
+        },
+    },
+    {
+        name: 'robot_track_sound_source',
+        description: 'Tự động tính toán góc âm thanh giọng nói và điều khiển servo quay đầu nhìn thẳng vào Sếp.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                micLeftEnergy: { type: SchemaType.NUMBER, description: 'Năng lượng mic trái' },
+                micRightEnergy: { type: SchemaType.NUMBER, description: 'Năng lượng mic phải' },
+            },
+            required: ['micLeftEnergy', 'micRightEnergy'],
+        },
+    },
+    {
+        name: 'send_telegram_briefing_to_boss',
+        description: 'Gửi Bản Tin Sáng tự động hoặc thông báo khẩn vào điện thoại Telegram của Sếp.',
+        parameters: {
+            type: SchemaType.OBJECT,
+            properties: {
+                chatId: { type: SchemaType.STRING, description: 'Chat ID Telegram của Sếp' },
+            },
+        },
+    },
 ];
 /**
  * 2. Cầu nối thực thi Tool an toàn (Deterministic Safe Execution)
@@ -1139,6 +1262,149 @@ export async function executeGeminiTool(toolName, rawArgs, context, requestText)
                         type: 'desktop_action',
                         actionPayload,
                     },
+                };
+            }
+            case 'boss_remember_fact': {
+                const { globalBossMemory } = await import('../embodied/bossMemoryHub.js');
+                const category = typeof args.category === 'string' ? args.category : 'habits';
+                const key = typeof args.key === 'string' ? args.key : 'Sở thích';
+                const value = typeof args.value === 'string' ? args.value : '';
+                if (category === 'habits') {
+                    globalBossMemory.rememberHabit(key, value);
+                }
+                else if (category === 'projects') {
+                    globalBossMemory.addOrUpdateProject({
+                        id: 'proj_' + Date.now(),
+                        name: key,
+                        description: value,
+                        techStack: ['Chưa xác định'],
+                        status: 'active',
+                    });
+                }
+                return {
+                    toolName,
+                    success: true,
+                    data: { category, key, value },
+                    message: `Dạ con đã ghi nhớ thành công: "${key} - ${value}" vào bộ nhớ dài hạn rồi ạ!`,
+                };
+            }
+            case 'boss_recall_memory': {
+                const { globalBossMemory } = await import('../embodied/bossMemoryHub.js');
+                const profile = globalBossMemory.getProfile();
+                return {
+                    toolName,
+                    success: true,
+                    data: profile,
+                    message: `Dạ con đã tìm thấy hồ sơ của Sếp: ${profile.name}. Đang theo đuổi ${profile.projects.length} dự án.`,
+                };
+            }
+            case 'get_morning_briefing': {
+                const { globalMorningBriefing } = await import('../embodied/morningBriefingService.js');
+                const res = await globalMorningBriefing.executeMorningBriefing();
+                return {
+                    toolName,
+                    success: true,
+                    data: res,
+                    message: res.speechText,
+                };
+            }
+            case 'teach_boss_rule': {
+                const { globalBossFeedback } = await import('../embodied/bossFeedbackLearner.js');
+                const instruction = typeof args.instruction === 'string' ? args.instruction : '';
+                const rule = globalBossFeedback.addRule({
+                    pattern: 'Lời Sếp dạy',
+                    instruction,
+                    category: 'behavior',
+                });
+                return {
+                    toolName,
+                    success: true,
+                    data: rule,
+                    message: `Dạ con đã ghi nhớ vĩnh viễn quy tắc Sếp vừa dạy: "${instruction}". Con sẽ tuân thủ nghiêm túc ạ!`,
+                };
+            }
+            case 'create_dynamic_skill': {
+                const { globalSandboxRunner } = await import('../desktop/sandboxRunner.js');
+                const res = await globalSandboxRunner.testAndSynthesizeSkill({
+                    id: args.skillId,
+                    name: args.name,
+                    description: args.description,
+                    code: args.code,
+                    testArgs: args.testArgs || {},
+                    author: 'bow_con_synthesized',
+                });
+                return {
+                    toolName,
+                    success: res.success,
+                    data: res.synthesizedSkill,
+                    message: res.debugFeedback,
+                };
+            }
+            case 'execute_dynamic_skill': {
+                const { globalSkillManager } = await import('../skills/dynamicSkillManager.js');
+                const res = await globalSkillManager.executeSkill(args.skillId, args.args || {}, context);
+                return {
+                    toolName,
+                    success: res.success,
+                    data: res.result,
+                    message: res.error || `Kỹ năng "${args.skillId}" đã thực thi thành công trong ${res.executionTimeMs}ms.`,
+                };
+            }
+            case 'list_dynamic_skills': {
+                const { globalSkillManager } = await import('../skills/dynamicSkillManager.js');
+                const skills = globalSkillManager.listSkills();
+                return {
+                    toolName,
+                    success: true,
+                    data: skills,
+                    message: `Kho hiện có ${skills.length} kỹ năng động đang hoạt động.`,
+                };
+            }
+            case 'switch_ai_brain_mode': {
+                const { globalHybridRouter } = await import('../core/hybridModelRouter.js');
+                if (args.mode) {
+                    globalHybridRouter.setMode(args.mode);
+                }
+                const status = globalHybridRouter.getStatus();
+                return {
+                    toolName,
+                    success: true,
+                    data: status,
+                    message: `Chế độ Não Đôi hiện tại: "${status.activeMode}". Quyết định gần nhất: "${status.lastRoutingDecision}".`,
+                };
+            }
+            case 'delegate_subagent_task': {
+                const { globalMultiAgentMesh } = await import('../core/multiAgentMesh.js');
+                const role = typeof args.role === 'string' ? args.role : 'tech_scout';
+                const goal = typeof args.goal === 'string' ? args.goal : 'Thực thi nhiệm vụ';
+                const task = await globalMultiAgentMesh.delegateTask(role, goal, args.payload || {});
+                return {
+                    toolName,
+                    success: task.status === 'completed',
+                    data: task,
+                    message: `Agent con [${role}] đã hoàn thành: "${goal}" trong ${task.executionTimeMs}ms.`,
+                };
+            }
+            case 'robot_track_sound_source': {
+                const { globalSoundLocalization } = await import('../embodied/soundLocalization.js');
+                const left = typeof args.micLeftEnergy === 'number' ? args.micLeftEnergy : 10;
+                const right = typeof args.micRightEnergy === 'number' ? args.micRightEnergy : 10;
+                const res = await globalSoundLocalization.trackAndAimHeadAtSound(left, right);
+                return {
+                    toolName,
+                    success: res.success,
+                    data: res,
+                    message: `Robot đã xoay đầu ${res.targetAngle} độ về hướng ${res.direction} nhìn vào Sếp.`,
+                };
+            }
+            case 'send_telegram_briefing_to_boss': {
+                const { globalTelegramGateway } = await import('../gateway/telegramGateway.js');
+                const res = await globalTelegramGateway.pushMorningBriefingToPhone(args.chatId);
+                return {
+                    toolName,
+                    success: res.delivered,
+                    data: res,
+                    message: 'Bản Tin Chào Buổi Sáng đã được gửi vào điện thoại Telegram của Sếp!',
                 };
             }
             default:

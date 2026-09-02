@@ -6,8 +6,46 @@
 // Provides sub-80ms Voice Activity Detection (VAD) to instantly interrupt Robot speech
 // when the Boss speaks over it, matching OpenAI Advanced Voice / Gemini Live capabilities.
 
-import { EventEmitter } from 'node:events';
 import { sttEngine } from './sttEngine.js';
+
+export class SimpleEventEmitter {
+  private listeners: Map<string, Array<(...args: any[]) => void>> = new Map();
+
+  public on(event: string, fn: (...args: any[]) => void): this {
+    if (!this.listeners.has(event)) this.listeners.set(event, []);
+    this.listeners.get(event)!.push(fn);
+    return this;
+  }
+
+  public emit(event: string, ...args: any[]): boolean {
+    const list = this.listeners.get(event);
+    if (!list || list.length === 0) return false;
+    for (const fn of list) {
+      try { fn(...args); } catch {}
+    }
+    return true;
+  }
+
+  public removeListener(event: string, fn: (...args: any[]) => void): this {
+    const list = this.listeners.get(event);
+    if (list) {
+      this.listeners.set(event, list.filter(f => f !== fn));
+    }
+    return this;
+  }
+
+  public off(event: string, fn: (...args: any[]) => void): this {
+    return this.removeListener(event, fn);
+  }
+
+  public once(event: string, fn: (...args: any[]) => void): this {
+    const onceWrapper = (...args: any[]) => {
+      this.removeListener(event, onceWrapper);
+      fn(...args);
+    };
+    return this.on(event, onceWrapper);
+  }
+}
 
 export type DuplexConversationState = 'IDLE' | 'LISTENING' | 'THINKING' | 'SPEAKING' | 'INTERRUPTED';
 
@@ -27,7 +65,7 @@ export interface BargeInEvent {
   energyLevel: number;
 }
 
-export class FullDuplexAudioHub extends EventEmitter {
+export class FullDuplexAudioHub extends SimpleEventEmitter {
   private sessions: Map<string, AudioSessionState> = new Map();
   private pendingPlaybackQueues: Map<string, Array<any>> = new Map();
 

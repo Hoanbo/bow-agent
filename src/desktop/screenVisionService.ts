@@ -4,11 +4,21 @@
 // Allows BOW-Robot to "see" the PC monitor, detect active messaging apps (Facebook, Zalo, Telegram),
 // extract unread messages, senders, and synthesize voice briefings for the Boss.
 
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
 import { GEMINI_CONFIG, getGeminiApiKey } from '../gemini/config.js';
 
-const execAsync = promisify(exec);
+async function execAsync(cmd: string, options?: any): Promise<{ stdout: string; stderr: string }> {
+  try {
+    const cp = await import('node:child_process');
+    return new Promise((resolve, reject) => {
+      cp.exec(cmd, options, (err: any, stdout: any, stderr: any) => {
+        if (err) reject(err);
+        else resolve({ stdout: String(stdout || ''), stderr: String(stderr || '') });
+      });
+    });
+  } catch {
+    return { stdout: '', stderr: '' };
+  }
+}
 
 export interface ScreenNotificationResult {
   success: boolean;
@@ -25,6 +35,8 @@ export interface ScreenNotificationResult {
 export interface ScreenInspectionOptions {
   userQuery?: string;
   focusApp?: string;
+  targetDisplay?: 'primary' | 'secondary' | 'screen_1' | 'screen_2' | 'all' | number;
+  screenIndex?: number;
   imageBase64?: string; // Optional direct image for testing or custom capture
 }
 
@@ -33,18 +45,41 @@ export const SAMPLE_FALLBACK_SCREEN_PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAA
 
 export class ScreenVisionService {
   /**
-   * Capture the primary Windows screen as a Base64 PNG using native PowerShell (0% GPU, pure OS)
+   * Capture Windows screen as Base64 PNG supporting Multi-Monitor setup (0% GPU, pure OS)
+   * @param target 'primary' (màn chính của Sếp) | 'secondary' (màn phụ) | 'screen_1' | 'screen_2' | 'all' | number
    */
-  public async captureScreenBase64(): Promise<string> {
+  public async captureScreenBase64(target: string | number = 'primary'): Promise<string> {
     try {
-      // Native PowerShell script to capture screen without external binary dependencies
+      const targetStr = String(target).toLowerCase();
+      // Native PowerShell script supporting smart multi-screen selection
       const psScript = `
         Add-Type -AssemblyName System.Windows.Forms;
         Add-Type -AssemblyName System.Drawing;
-        $screen = [System.Windows.Forms.Screen]::PrimaryScreen;
-        $bitmap = New-Object System.Drawing.Bitmap($screen.Bounds.Width, $screen.Bounds.Height);
-        $graphics = [System.Drawing.Graphics]::FromImage($bitmap);
-        $graphics.CopyFromScreen($screen.Bounds.X, $screen.Bounds.Y, 0, 0, $bitmap.Size);
+        $screens = [System.Windows.Forms.Screen]::AllScreens;
+        $target = '${targetStr}';
+
+        if ($target -eq 'all' -or $target -eq 'both') {
+            $left = [System.Windows.Forms.SystemInformation]::VirtualScreen.Left;
+            $top = [System.Windows.Forms.SystemInformation]::VirtualScreen.Top;
+            $width = [System.Windows.Forms.SystemInformation]::VirtualScreen.Width;
+            $height = [System.Windows.Forms.SystemInformation]::VirtualScreen.Height;
+            $bitmap = New-Object System.Drawing.Bitmap($width, $height);
+            $graphics = [System.Drawing.Graphics]::FromImage($bitmap);
+            $graphics.CopyFromScreen($left, $top, 0, 0, $bitmap.Size);
+        } else {
+            if ($target -eq 'primary' -or $target -eq '2' -or $target -eq 'screen_2') {
+                $screen = [System.Windows.Forms.Screen]::PrimaryScreen;
+            } elseif ($target -eq 'secondary' -or $target -eq '1' -or $target -eq 'screen_1') {
+                $screen = ($screens | Where-Object { -not $_.Primary } | Select-Object -First 1);
+                if (-not $screen) { $screen = [System.Windows.Forms.Screen]::PrimaryScreen; }
+            } else {
+                $screen = [System.Windows.Forms.Screen]::PrimaryScreen;
+            }
+            $bitmap = New-Object System.Drawing.Bitmap($screen.Bounds.Width, $screen.Bounds.Height);
+            $graphics = [System.Drawing.Graphics]::FromImage($bitmap);
+            $graphics.CopyFromScreen($screen.Bounds.X, $screen.Bounds.Y, 0, 0, $bitmap.Size);
+        }
+
         $memoryStream = New-Object System.IO.MemoryStream;
         $bitmap.Save($memoryStream, [System.Drawing.Imaging.ImageFormat]::Png);
         $base64 = [Convert]::ToBase64String($memoryStream.ToArray());
@@ -55,7 +90,7 @@ export class ScreenVisionService {
       `.replace(/\r?\n\s+/g, ' ');
 
       const { stdout } = await execAsync(`powershell -NoProfile -Command "${psScript}"`, {
-        maxBuffer: 20 * 1024 * 1024,
+        maxBuffer: 30 * 1024 * 1024,
         timeout: 8000,
       });
 
@@ -71,7 +106,8 @@ export class ScreenVisionService {
    * Analyze screen image using Gemini Multimodal Vision API (Free Tier)
    */
   public async inspectScreenForNotifications(options: ScreenInspectionOptions = {}): Promise<ScreenNotificationResult> {
-    const base64Image = options.imageBase64 || (await this.captureScreenBase64());
+    const target = options.targetDisplay ?? options.screenIndex ?? 'primary';
+    const base64Image = options.imageBase64 || (await this.captureScreenBase64(target));
     const query = options.userQuery || 'Ai vừa nhắn tin cho tôi và nội dung tin nhắn là gì?';
     const apiKey = getGeminiApiKey();
 

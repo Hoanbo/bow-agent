@@ -322,6 +322,100 @@ export async function processAgentMessageV2(
   }
 
   // --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
+  // BOW CON (BÉ BOW) — PERSONAL COMPANION & LIFE INTENTS
+  // --------------------------------------------------------------------------
+  const isBossChannel = context.channel === 'ROBOT' || context.channel === 'DESKTOP' || context.role === 'owner' || (context as any)?.isBoss === true;
+  if (isBossChannel) {
+    const { globalBossMemory } = await import('../embodied/bossMemoryHub.js');
+    const { globalBossFeedback } = await import('../embodied/bossFeedbackLearner.js');
+    const { globalMorningBriefing } = await import('../embodied/morningBriefingService.js');
+
+    const norm = lowerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[đĐ\u0111\u0110]/g, 'd');
+
+    // A. Kiểm tra câu dạy dỗ / sửa sai từ Sếp
+    const correction = globalBossFeedback.detectCorrectionPattern(userText);
+    if (correction.isCorrection && correction.replyMessage) {
+      return {
+        id,
+        sender: 'agent',
+        content: correction.replyMessage,
+        timestamp,
+        data: { type: 'boss_rule_learned', rule: correction.learnedRule },
+        suggestions: ['📰 Đọc bản tin sáng', '☕ Thói quen của Sếp', '🚀 Dự án đang làm'],
+      };
+    }
+
+    // B. Bản tin sáng (Morning Briefing)
+    if (
+      norm.includes('ban tin sang') ||
+      norm.includes('chao buoi sang') ||
+      norm.includes('tin tuc sang nay') ||
+      norm.includes('doc bao') ||
+      norm.includes('tin cong nghe') ||
+      norm.includes('morning briefing')
+    ) {
+      const briefing = await globalMorningBriefing.executeMorningBriefing();
+      return {
+        id,
+        sender: 'agent',
+        content: briefing.speechText,
+        timestamp,
+        data: { type: 'morning_briefing', briefing },
+        suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo doanh thu hôm nay', '🛠️ Kiểm tra sức khỏe'],
+      };
+    }
+
+    // C. Ghi nhớ tự động từ câu nói của Sếp (Thích uống, đang làm dự án)
+    const extraction = globalBossMemory.extractFactFromText(userText);
+    if (extraction.extracted && extraction.summary) {
+      return {
+        id,
+        sender: 'agent',
+        content: `Báo cáo Ngài! Tôi là BOWCON đây ạ. Tôi đã ghi nhớ thành công: **${extraction.summary}** vào bộ nhớ dài hạn rồi ạ! Ngài có chỉ thị gì thêm cho tôi không ạ?`,
+        timestamp,
+        data: { type: 'boss_memory_updated', extraction },
+        suggestions: ['🧠 Anh thích uống gì?', '🚀 Anh đang làm dự án gì?', '📰 Đọc bản tin sáng'],
+      };
+    }
+
+    // D. Tra cứu trí nhớ Sếp: "anh thích uống gì", "anh đang làm dự án gì", "hồ sơ của anh"
+    if (
+      norm.includes('anh thich uong') ||
+      norm.includes('anh dang lam du an') ||
+      norm.includes('anh dang code gi') ||
+      norm.includes('ho so cua anh') ||
+      norm.includes('nho gi ve anh') ||
+      norm.includes('biet gi ve anh')
+    ) {
+      const profile = globalBossMemory.getProfile();
+      let reply = `Báo cáo Ngài, tôi luôn ghi nhớ thông tin về Ngài:\n\n`;
+      if (norm.includes('uong')) {
+        reply += `☕ **Thói quen đồ uống của Ngài:** ${profile.habits.preferredBeverage || 'Cà phê đen ít đường lúc 8:00 sáng'}.\nTôi luôn chú ý nhắc Ngài uống nước đầy đủ mỗi ngày ạ!`;
+      } else if (norm.includes('du an') || norm.includes('code')) {
+        reply += `🚀 **Các dự án Ngài đang theo đuổi:**\n`;
+        profile.projects.forEach(p => {
+          reply += `• **${p.name}** (${p.status.toUpperCase()}): ${p.description}\n`;
+        });
+        reply += `\nTôi luôn sẵn sàng hỗ trợ Ngài lập trình và nghiên cứu bất kỳ lúc nào ạ!`;
+      } else {
+        reply += `• **Tên Ngài:** ${profile.name}\n`;
+        reply += `• **Đồ uống yêu thích:** ${profile.habits.preferredBeverage || 'Cà phê đen'}\n`;
+        reply += `• **Dự án đang làm:** ${profile.projects.map(p => p.name).join(', ')}\n`;
+        reply += `• **Lưu ý sức khỏe:** ${profile.healthNotes[0] || 'Nghỉ ngơi sau 45 phút'}\n\nTôi luôn là người đồng hành trung thành và đắc lực của Ngài!`;
+      }
+
+      return {
+        id,
+        sender: 'agent',
+        content: reply,
+        timestamp,
+        data: { type: 'boss_memory_recalled', profile },
+        suggestions: ['📰 Đọc bản tin sáng', '⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo doanh thu hôm nay'],
+      };
+    }
+  }
+
   // ADMIN COPILOT INTENTS (Bán Tự Động / On-Demand Operations)
   // --------------------------------------------------------------------------
   const isAdminRole = context.role === 'admin' || context.role === 'owner' || (context as any)?.isAdmin === true;

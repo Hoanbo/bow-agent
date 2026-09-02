@@ -84,3 +84,17 @@ export * from './gemini/geminiTools.js';
 export * from './config.js';
 // export * from './server.js'; // (Server-only Node.js module)
 // export * from './gateway.js'; // (Server-only Node.js module)
+// 11. BOW Con V4.0 — Embodied Memory, Nightly Hunter & Boss Companion
+export * from './embodied/bossMemoryHub.js';
+export * from './embodied/bossFeedbackLearner.js';
+export * from './embodied/nightlyHunterDaemon.js';
+export * from './embodied/morningBriefingService.js';
+// 12. BOW Con V4.0 — Phase 2: Dynamic Skills, Sandbox & Hybrid Dual-Brain
+export * from './skills/dynamicSkillManager.js';
+export * from './desktop/sandboxRunner.js';
+export * from './core/hybridModelRouter.js';
+// 13. BOW Con V4.0 — Phase 3: Multi-Agent Mesh, Embodied Reflexes & Telegram Gateway
+export * from './core/multiAgentMesh.js';
+export * from './embodied/soundLocalization.js';
+export * from './embodied/oledEmpathyEngine.js';
+export * from './gateway/telegramGateway.js';

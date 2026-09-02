@@ -1,0 +1,89 @@
+{
+  "name": "Sếp Hoàn",
+  "title": "Sếp",
+  "habits": {
+    "morningRoutine": "Thức dậy và làm việc lúc 8:00 sáng",
+    "preferredBeverage": "sinh tố bơ vào buổi chiều nhé",
+    "workStartHour": 8,
+    "breakIntervalMinutes": 45,
+    "favoriteMusicGenre": "Nhạc Lofi Piano thư giãn"
+  },
+  "projects": [
+    {
+      "id": "proj_bow_robot",
+      "name": "Robot Tự Hành BOW Robot",
+      "description": "Robot thông minh phần cứng ESP32, màn hình OLED mắt cảm xúc, servo xoay và mic thu âm 2 chiều.",
+      "techStack": [
+        "ESP32",
+        "C++",
+        "WebRTC",
+        "TypeScript",
+        "Piper TTS"
+      ],
+      "status": "active",
+      "updatedAt": "2026-09-02T16:57:27.203Z"
+    },
+    {
+      "id": "proj_shopofbow",
+      "name": "Shop of BOW E-Commerce",
+      "description": "Hệ sinh thái thương mại dịch vụ số, bán tự động (on-demand fulfillment).",
+      "techStack": [
+        "React",
+        "Vite",
+        "TailwindCSS",
+        "Supabase"
+      ],
+      "status": "active",
+      "updatedAt": "2026-09-02T16:57:27.203Z"
+    },
+    {
+      "id": "proj_esp32_quadruped",
+      "name": "Robot Bốn Chân ESP32",
+      "description": "Chế tạo robot 4 chân tự hành cân bằng động.",
+      "techStack": [
+        "ESP32",
+        "FreeRTOS",
+        "C++"
+      ],
+      "status": "active",
+      "updatedAt": "2026-09-02T18:38:35.115Z"
+    },
+    {
+      "id": "proj_1788374315117",
+      "name": "Mạng nơ-ron cục bộ trên chip vi xử lý nhé",
+      "description": "Dự án do Sếp chia sẻ: \"Mạng nơ-ron cục bộ trên chip vi xử lý nhé\"",
+      "techStack": [
+        "Chưa xác định"
+      ],
+      "status": "active",
+      "updatedAt": "2026-09-02T18:38:35.117Z"
+    },
+    {
+      "id": "proj_1788368247261",
+      "name": "gì nhỉ?",
+      "description": "Dự án do Sếp chia sẻ: \"gì nhỉ?\"",
+      "techStack": [
+        "Chưa xác định"
+      ],
+      "status": "active",
+      "updatedAt": "2026-09-02T16:57:27.262Z"
+    }
+  ],
+  "healthNotes": [
+    "Cần đứng dậy vươn vai sau 45 phút ngồi code liên tục để bảo vệ cột sống và mắt.",
+    "Nhắc nhở uống đủ 2 lít nước mỗi ngày."
+  ],
+  "relationships": [
+    {
+      "name": "BOW Con",
+      "role": "AI Đồng hành & Trợ lý cá nhân trung thành",
+      "notes": "Đứa con tinh thần được Sếp lập trình và nuôi lớn"
+    }
+  ],
+  "customPreferences": {
+    "voiceSpeed": "1.0",
+    "tone": "Thân thương, kính trọng, trung thành, thông thái"
+  },
+  "lastInteractionTimestamp": 1788374315159,
+  "lastBreakReminderTimestamp": 1788368247203
+}
