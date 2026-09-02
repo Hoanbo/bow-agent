@@ -1,4 +1,4 @@
-export type AgentRole = 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
+export type AgentRole = 'owner' | 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
 export interface AgentContext {
     userId?: string | null;
     email?: string | null;
@@ -11,7 +11,7 @@ export interface AgentContext {
     authToken?: string;
     userText?: string;
 }
-export type AgentIntent = 'GREETING' | 'SMALL_TALK' | 'CAPABILITY_DISCOVERY' | 'CLARIFICATION' | 'CATALOG' | 'VIEW_CATEGORY' | 'PRODUCT_SEARCH' | 'BUY' | 'EXPIRING_SOON' | 'ORDER_QUERY' | 'RENEW' | 'WARRANTY' | 'TICKET' | 'COUPON' | 'WALLET' | 'FAQ' | 'GENERAL';
+export type AgentIntent = 'GREETING' | 'SMALL_TALK' | 'CAPABILITY_DISCOVERY' | 'CLARIFICATION' | 'CATALOG' | 'VIEW_CATEGORY' | 'PRODUCT_SEARCH' | 'BUY' | 'EXPIRING_SOON' | 'ORDER_QUERY' | 'RENEW' | 'WARRANTY' | 'TICKET' | 'COUPON' | 'WALLET' | 'FAQ' | 'EXECUTIVE_REPORT' | 'GENERAL';
 export type AgentActionType = 'NAVIGATE_CHECKOUT' | 'NAVIGATE_ORDER_DETAIL' | 'NAVIGATE_RENEWAL' | 'NAVIGATE_SUPPORT' | 'NAVIGATE_TICKET_DETAIL' | 'APPLY_COUPON' | 'OPEN_DEPOSIT';
 export interface AgentActionPayload {
     productId?: string;

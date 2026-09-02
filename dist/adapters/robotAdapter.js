@@ -1,10 +1,10 @@
-// src/adapters/robotAdapter.ts
-// BOW AGENT V3.3 — ROBOT CHANNEL ADAPTER (bow-robot 2-Way Audio/OLED/Servo Gateway)
 import { processAgentMessage } from '../core/engine.js';
 import { ttsEngine } from '../speech/ttsEngine.js';
 import { sttEngine } from '../speech/sttEngine.js';
+import { fullDuplexAudioHub } from '../speech/fullDuplexAudioHub.js';
 export class RobotChannelAdapter {
     online = true;
+    eventListeners = new Set();
     currentSensors = {
         batteryPercent: 95,
         isCharging: false,
@@ -13,8 +13,39 @@ export class RobotChannelAdapter {
         activeSensors: ['ultrasonic', 'imu', 'microphone', 'oled_eye'],
         timestamp: new Date().toISOString(),
     };
+    constructor() {
+        fullDuplexAudioHub.on('bargeIn', (bargeIn) => {
+            const interruptCommand = {
+                type: 'robot.interrupt',
+                sessionId: bargeIn.sessionId,
+                action: 'stop_playback',
+                reason: 'barge_in',
+                text: 'Dạ, em nghe Sếp!',
+                emotion: 'listening',
+                servo: { panAngle: 0, tiltAngle: 10 },
+                interrupt: {
+                    action: 'stop_playback',
+                    reason: 'barge_in',
+                    detectionLatencyMs: bargeIn.detectionLatencyMs,
+                },
+                timestamp: new Date().toISOString(),
+            };
+            for (const listener of this.eventListeners) {
+                try {
+                    listener(interruptCommand);
+                }
+                catch (err) {
+                    console.error('[ROBOT-ADAPTER] Error dispatching interrupt to listener:', err);
+                }
+            }
+        });
+    }
     isOnline() {
         return this.online;
+    }
+    registerListener(listener) {
+        this.eventListeners.add(listener);
+        return () => this.eventListeners.delete(listener);
     }
     updateSensorState(snapshot) {
         this.currentSensors = {
@@ -28,18 +59,19 @@ export class RobotChannelAdapter {
     }
     /**
      * Process voice audio from robot microphone -> STT -> Agent Brain -> TTS -> Robot Command
+     * (BOW-Robot phục vụ riêng Chủ nhân/Boss với quyền role: 'owner')
      */
     async handleAudioIn(audioPayload, context = {}) {
         const sessionId = context.sessionId || 'robot_' + Date.now();
         // 1. Transcribe audio to text
         const sttResult = await sttEngine.transcribe(audioPayload, { language: 'vi' });
         const userText = sttResult.text || 'Xin chào';
-        // 2. Process with Agent Engine
+        // 2. Process with Agent Engine (Mặc định phục vụ Boss: role = 'owner')
         const agentCtx = {
             sessionId,
             channel: 'ROBOT',
-            role: 'customer',
-            isAuthenticated: Boolean(context.isAuthenticated),
+            role: context.role || 'owner',
+            isAuthenticated: true,
             ...context,
         };
         const brainResponse = await processAgentMessage(userText, agentCtx);
@@ -51,7 +83,7 @@ export class RobotChannelAdapter {
             emotion = 'surprised';
             servo = { panAngle: -15, tiltAngle: -10 };
         }
-        else if (lower.includes('tuyệt vời') || lower.includes('cảm ơn') || lower.includes('chào bạn')) {
+        else if (lower.includes('tuyệt vời') || lower.includes('cảm ơn') || lower.includes('chào bạn') || lower.includes('sếp') || lower.includes('doanh thu')) {
             emotion = 'happy';
             servo = { panAngle: 10, tiltAngle: 15 };
         }
@@ -74,6 +106,84 @@ export class RobotChannelAdapter {
             servo,
             timestamp: new Date().toISOString(),
         };
+    }
+    /**
+     * PROACTIVE NOTIFICATION: Shop phát sinh event (tiền về, đơn mới, tồn kho thấp)
+     * Robot chủ động đổi mắt OLED, xoay servo và cất tiếng báo cho Boss.
+     */
+    async pushShopEventToOwner(event) {
+        let alertText = '';
+        let emotion = 'speaking';
+        let servo = { panAngle: 0, tiltAngle: 10 };
+        switch (event.type) {
+            case 'order.paid': {
+                const formattedAmount = event.amount ? `${event.amount.toLocaleString('vi-VN')} đồng` : '';
+                alertText = `Sếp ơi! Vừa có đơn hàng mới thành công: ${event.productName || 'gói cước'} ${formattedAmount ? `trị giá ${formattedAmount}` : ''}!`;
+                emotion = 'happy';
+                servo = { panAngle: 20, tiltAngle: 15 };
+                break;
+            }
+            case 'wallet.deposit': {
+                const formattedAmount = event.amount ? `${event.amount.toLocaleString('vi-VN')} đồng` : '';
+                alertText = `Sếp ơi, tài khoản ví vừa được nạp thêm ${formattedAmount} từ khách hàng ${event.customerName || ''}!`;
+                emotion = 'happy';
+                servo = { panAngle: 15, tiltAngle: 10 };
+                break;
+            }
+            case 'stock.low': {
+                alertText = `Cảnh báo sếp ơi, sản phẩm ${event.productName || 'này'} chỉ còn ít slot trong kho, sếp nhớ bổ sung nhé!`;
+                emotion = 'surprised';
+                servo = { panAngle: -10, tiltAngle: -5 };
+                break;
+            }
+            case 'ticket.urgent': {
+                alertText = `Sếp ơi, có một yêu cầu bảo hành khẩn cấp cần xem qua: ${event.title}!`;
+                emotion = 'surprised';
+                servo = { panAngle: -15, tiltAngle: 0 };
+                break;
+            }
+            default: {
+                alertText = `Sếp ơi, Shop of BOW có thông báo mới: ${event.title}. ${event.description}`;
+                emotion = 'speaking';
+                servo = { panAngle: 0, tiltAngle: 5 };
+            }
+        }
+        // Synthesize TTS
+        const ttsResult = await ttsEngine.synthesize(alertText, {
+            voice: 'vi-VN-HoaiMyNeural',
+            rate: '+5%',
+        });
+        const command = {
+            type: 'robot.proactive_event',
+            sessionId: `event_${event.eventId || Date.now()}`,
+            text: alertText,
+            emotion,
+            tts: {
+                ssml: ttsResult.ssml,
+                voice: ttsResult.voice,
+                format: ttsResult.format,
+                durationEstimateMs: ttsResult.durationEstimateMs,
+            },
+            servo,
+            event,
+            timestamp: new Date().toISOString(),
+        };
+        // Broadcast to all active listeners (e.g. WebSocket connection from physical Robot)
+        for (const listener of this.eventListeners) {
+            try {
+                listener(command);
+            }
+            catch (err) {
+                console.error('[ROBOT-ADAPTER] Error dispatching proactive event to listener:', err);
+            }
+        }
+        return command;
+    }
+    /**
+     * Process real-time streaming audio chunk from microphone with instant sub-80ms Barge-in
+     */
+    handleStreamingAudioChunk(chunk, sessionId = 'robot_default_session') {
+        return fullDuplexAudioHub.processIncomingAudioChunk(sessionId, chunk);
     }
 }
 export const robotChannelAdapter = new RobotChannelAdapter();

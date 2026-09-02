@@ -12,7 +12,12 @@ import { robotChannelAdapter } from './adapters/robotAdapter.js';
 import { desktopChannelAdapter } from './adapters/desktopAdapter.js';
 import { ttsEngine } from './speech/ttsEngine.js';
 import { sttEngine } from './speech/sttEngine.js';
+import { hybridLlmRouter } from './llm/hybridLlmRouter.js';
+import { watchdogDaemon } from './embodied/watchdogDaemon.js';
 import { getKnowledgeGaps } from './knowledge/knowledgeReviewService.js';
+
+
+
 
 export interface ServerOptions {
   port?: number;
@@ -54,12 +59,17 @@ export class BowCentralAgentServer {
         res.end(JSON.stringify({
           status: 'ok',
           service: 'bow-agent-central-brain',
-          version: '3.3.0',
+          version: '4.0.0',
           geminiConfigured: isGeminiConfigured(),
+          hybridRouting: hybridLlmRouter.getHealthStatus(),
+          speechEngine: ttsEngine.getTtsStatus(),
+          embodiedWatchdog: watchdogDaemon.runHealthCheck(),
           channels: ['WEB', 'ROBOT', 'DESKTOP'],
           timestamp: new Date().toISOString(),
         }));
         return;
+
+
       }
 
       // Helper to parse JSON body
@@ -149,6 +159,20 @@ export class BowCentralAgentServer {
         return;
       }
 
+      // 7. Realtime Shop Business Event Webhook Endpoint (Triggers Robot Proactive Notification)
+      if (url.pathname === '/api/events/shop' && req.method === 'POST') {
+        try {
+          const body = await parseJsonBody();
+          const robotCommand = await robotChannelAdapter.pushShopEventToOwner(body);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: true, dispatchedToRobot: true, robotCommand }));
+        } catch (err: any) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: err?.message || 'Event dispatch error' }));
+        }
+        return;
+      }
+
       // 404
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Endpoint not found' }));
@@ -161,8 +185,32 @@ export class BowCentralAgentServer {
       const pathname = req.url ? new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname : '/';
       console.log(`[BOW-SERVER] WebSocket client connected on path: ${pathname}`);
 
-      ws.on('message', async (data) => {
+      // Nếu client kết nối từ Robot hoặc Audio Stream, đăng ký nhận các sự kiện chủ động và lệnh ngắt (robot.interrupt)
+      let unregisterRobotListener: (() => void) | undefined;
+      if (pathname.includes('robot') || pathname.includes('audio-stream')) {
+        unregisterRobotListener = robotChannelAdapter.registerListener((command) => {
+          if (ws.readyState === WebSocket.OPEN) {
+            ws.send(JSON.stringify(command));
+          }
+        });
+      }
+
+      ws.on('message', async (data, isBinary) => {
         try {
+          // 1. Handle Binary PCM Audio Chunks directly from microphone
+          if (isBinary || (Buffer.isBuffer(data) && !data.toString().trim().startsWith('{'))) {
+            const result = robotChannelAdapter.handleStreamingAudioChunk(data as Buffer);
+            if (result.isInterrupted && ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({
+                type: 'robot.interrupt',
+                action: 'stop_playback',
+                reason: 'barge_in',
+                detectionLatencyMs: result.latencyMs,
+              }));
+            }
+            return;
+          }
+
           const payload = JSON.parse(data.toString());
 
           // Ping / Heartbeat
@@ -171,9 +219,25 @@ export class BowCentralAgentServer {
             return;
           }
 
+          // Audio Stream Chunk (JSON wrapper)
+          if (payload.type === 'audio_chunk' || pathname.includes('audio-stream')) {
+            const chunk = payload.chunk || payload.data || payload.audio || '';
+            const result = robotChannelAdapter.handleStreamingAudioChunk(chunk, payload.sessionId);
+            if (result.isInterrupted && ws.readyState === WebSocket.OPEN) {
+              ws.send(JSON.stringify({
+                type: 'robot.interrupt',
+                action: 'stop_playback',
+                reason: 'barge_in',
+                detectionLatencyMs: result.latencyMs,
+              }));
+            }
+            return;
+          }
+
           // Robot Audio Inbound
           if (pathname.includes('robot') || payload.type === 'robot.audio_in' || payload.channel === 'ROBOT') {
             const result = await robotChannelAdapter.handleAudioIn(payload.audio || payload.text || '', payload.context);
+
             ws.send(JSON.stringify({ ...result, requestId: payload.requestId }));
             return;
           }
@@ -202,9 +266,13 @@ export class BowCentralAgentServer {
       });
 
       ws.on('close', () => {
+        if (unregisterRobotListener) {
+          unregisterRobotListener();
+        }
         console.log(`[BOW-SERVER] WebSocket client disconnected from: ${pathname}`);
       });
     });
+
 
     return new Promise((resolve, reject) => {
       this.server!.listen(this.port, this.host, () => {

@@ -15,6 +15,7 @@ import { matchNegativePolicy } from '../knowledge/negativePolicyService.js';
 import { isCircuitOpen, recordExecutionSuccess, recordExecutionFailure } from '../production/productionCircuitBreaker.js';
 import { shouldRouteToV3, getRolloutState } from '../production/productionRolloutService.js';
 import { recordProductionMetric } from '../production/productionTelemetryService.js';
+import { getActiveShopAdapter } from '../contracts/shopAdapter.js';
 export * from './types.js';
 export { resetGeminiHistory };
 export { validateAction, validateAgentAction } from './actionValidator.js';
@@ -239,6 +240,131 @@ export async function processAgentMessageV2(userText, context) {
             timestamp,
             suggestions: ['🛍️ Xem danh mục', '🔎 Tìm sản phẩm', '📦 Kiểm tra đơn hàng'],
         };
+    }
+    // --------------------------------------------------------------------------
+    // ADMIN COPILOT INTENTS (Bán Tự Động / On-Demand Fulfillment)
+    // --------------------------------------------------------------------------
+    const isAdmin = context.role === 'admin' || context.role === 'owner' || context?.isAdmin === true;
+    if (isAdmin) {
+        const norm = lowerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+        // 1. Pending Fulfillment Queue Intent
+        if (norm.includes('cho ban giao') ||
+            norm.includes('don cho') ||
+            norm.includes('don hang cho') ||
+            norm.includes('cho nhap hang') ||
+            norm.includes('chua ban giao') ||
+            norm.includes('cho giao') ||
+            norm.includes('hang doi') ||
+            norm.includes('dang cho')) {
+            const adapter = getActiveShopAdapter();
+            if (adapter.admin?.getPendingFulfillmentQueue) {
+                const queue = await adapter.admin.getPendingFulfillmentQueue();
+                const urgentNote = queue.urgentCount > 0 ? `\n\n⚠️ Có **${queue.urgentCount} đơn** khách đã chờ trên 15 phút cần xử lý gấp!` : '';
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `⏳ **Hàng đợi đơn hàng chờ bàn giao:**\n\nHiện tại có **${queue.totalPendingCount} đơn hàng** khách đã thanh toán đang chờ Admin nhập hàng từ đối tác.${urgentNote}\n\nBạn có thể bấm **"Bàn giao nhanh"** bên dưới hoặc gửi thông tin tài khoản cho mình nhé!`,
+                    timestamp,
+                    data: {
+                        type: 'pending_fulfillment',
+                        pendingQueue: queue,
+                    },
+                    suggestions: ['📈 Báo cáo doanh thu & lợi nhuận hôm nay', '🎟️ Tạo voucher giảm 20%', '🛠️ Kiểm tra khiếu nại'],
+                };
+            }
+        }
+        // 2. Profit Margin & Revenue Report Intent
+        if (norm.includes('doanh thu') ||
+            norm.includes('loi nhuan') ||
+            norm.includes('bao cao') ||
+            norm.includes('gia von') ||
+            norm.includes('doanh so') ||
+            norm.includes('bien loi nhuan')) {
+            const adapter = getActiveShopAdapter();
+            if (adapter.admin?.getProfitMarginReport) {
+                const report = await adapter.admin.getProfitMarginReport('today');
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `📈 **Báo cáo kinh doanh & Lợi nhuận ròng hôm nay:**\n\n• **Tổng doanh thu:** ${report.totalRevenue.toLocaleString('vi-VN')}đ\n• **Chi phí nhập hàng đối tác:** ${report.totalSupplierCost.toLocaleString('vi-VN')}đ\n• **Lợi nhuận ròng thực thu:** **${report.netProfit.toLocaleString('vi-VN')}đ**\n• **Biên lợi nhuận:** **${report.profitMarginPercent}%**\n• **Số đơn hoàn thành:** ${report.totalFulfilledOrders} đơn\n\n*(Mô hình Bán Tự Động: Doanh thu bán - Giá vốn nhập = Lợi nhuận ròng)*`,
+                    timestamp,
+                    data: {
+                        type: 'profit_margin',
+                        profitReport: report,
+                    },
+                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '🎟️ Tạo voucher khuyến mãi', '🛠️ Kiểm tra khiếu nại'],
+                };
+            }
+        }
+        // 3. Fulfill Handover Intent (giao tài khoản cho đơn...)
+        if ((norm.includes('giao tai khoan') || norm.includes('ban giao') || norm.includes('gan tai khoan') || norm.includes('gui key')) &&
+            (norm.includes('bow-ord') || norm.includes('don'))) {
+            const adapter = getActiveShopAdapter();
+            if (adapter.admin?.fulfillOrderHandover) {
+                const orderIdMatch = userText.match(/BOW-ORD-[\w-]+/i) || userText.match(/#?[\w-]+/);
+                const orderId = orderIdMatch ? orderIdMatch[0].replace('#', '') : 'BOW-ORD-8812';
+                const res = await adapter.admin.fulfillOrderHandover({
+                    orderId,
+                    accountDetails: userText,
+                });
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `🚀 **${res.message}**\n\nThông tin tài khoản đã được gửi trực tiếp đến khách hàng **${res.customerName}**. Đơn hàng chuyển sang trạng thái \`COMPLETED\`.`,
+                    timestamp,
+                    data: {
+                        type: 'order_handover',
+                        handover: res,
+                    },
+                    suggestions: ['⏳ Xem các đơn còn lại', '📈 Xem lợi nhuận hôm nay'],
+                };
+            }
+        }
+        // 4. Voucher Creation Intent
+        if (norm.includes('voucher') || norm.includes('ma giam') || norm.includes('khuyen mai') || norm.includes('tao ma')) {
+            const adapter = getActiveShopAdapter();
+            if (adapter.admin?.createVoucher) {
+                const percentMatch = userText.match(/(\d+)\s*%/);
+                const discountPercent = percentMatch ? parseInt(percentMatch[1], 10) : 20;
+                const code = 'BOW' + Math.random().toString(36).substring(2, 6).toUpperCase();
+                const res = await adapter.admin.createVoucher({
+                    code,
+                    discountPercent,
+                    minOrderValue: 100000,
+                });
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `🎟️ **Đã tạo thành công voucher khuyến mãi:**\n\n• **Mã Voucher:** \`${res.voucher.code}\`\n• **Mức giảm:** Giảm **${res.voucher.discountDisplay}**\n• **Đơn tối thiểu:** ${res.voucher.minOrderValue.toLocaleString('vi-VN')}đ\n• **Trạng thái:** Đang hoạt động trên hệ thống`,
+                    timestamp,
+                    data: {
+                        type: 'shop_voucher',
+                        voucher: res.voucher,
+                    },
+                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo doanh thu & lợi nhuận'],
+                };
+            }
+        }
+        // 5. Dispute / Warranty Lookup Intent
+        if (norm.includes('khieu nai') || norm.includes('bao hanh') || norm.includes('loi don') || norm.includes('vang tai khoan') || norm.includes('tra cuu')) {
+            const adapter = getActiveShopAdapter();
+            if (adapter.admin?.inspectOrderDispute) {
+                const orderIdMatch = userText.match(/BOW-ORD-[\w-]+/i);
+                const identifier = orderIdMatch ? orderIdMatch[0] : 'BOW-ORD-9921';
+                const dispute = await adapter.admin.inspectOrderDispute(identifier);
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `🛠️ **Thông tin khiếu nại bảo hành đơn #${dispute.orderId}:**\n\n• **Khách hàng:** ${dispute.customerName} (${dispute.customerPhone || 'N/A'})\n• **Sản phẩm:** ${dispute.productName}\n• **Vấn đề báo:** ${dispute.issueReported}\n• **Tình trạng:** ${dispute.warrantyStatus === 'valid' ? '✅ Còn hạn bảo hành' : '⚠️ Hết hạn'}\n\n👉 **Đề xuất xử lý:** ${dispute.recommendedAction}`,
+                    timestamp,
+                    data: {
+                        type: 'order_dispute',
+                        dispute,
+                    },
+                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo doanh thu hôm nay'],
+                };
+            }
+        }
     }
     // V3.3 Phase 4.5: Nhận diện nhu cầu mơ hồ (AMBIGUOUS Demand State) mạnh mẽ và toàn diện
     const isAmbiguousQuery = isAmbiguousDemandQuery(userText);

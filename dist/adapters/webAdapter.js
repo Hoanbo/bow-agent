@@ -21,6 +21,7 @@ export class WebAdapter {
         const intent = message.data?.type || 'GENERAL';
         const actionCard = message.action || (message.actions && message.actions.length > 0 ? message.actions[0] : null);
         const knowledgeGap = message.data?.type === 'knowledge_gap' || false;
+        const adminData = (agentCtx.role === 'admin' || agentCtx.role === 'owner') ? message.data : undefined;
         return {
             id: message.id,
             query: rawQuery,
@@ -35,6 +36,7 @@ export class WebAdapter {
             suggestions: message.suggestions || [],
             knowledgeGap,
             data: message.data,
+            adminData,
             timestamp: message.timestamp,
         };
     }

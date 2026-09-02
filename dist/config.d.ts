@@ -10,6 +10,10 @@ export interface BowAgentEnvConfig {
     edgeTtsVoiceMale: string;
     fasterWhisperUrl: string;
     openaiApiKey: string | null;
+    localLlmUrl: string;
+    localLlmModel: string;
+    localWhisperUrl: string;
+    speechPreferLocal: boolean;
 }
 export declare const CONFIG: BowAgentEnvConfig;
 export declare function isDesktopAuthValid(token?: string): boolean;

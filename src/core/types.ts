@@ -1,6 +1,6 @@
 // src/services/agent/types.ts — Trung tâm toàn bộ Type Definitions cho BOW Agent V2
 
-export type AgentRole = 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
+export type AgentRole = 'owner' | 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
 
 export interface AgentContext {
   userId?: string | null;
@@ -32,7 +32,9 @@ export type AgentIntent =
   | 'COUPON'               // Tra cứu / áp dụng mã giảm giá
   | 'WALLET'               // Tra cứu số dư / nạp tiền vào ví
   | 'FAQ'                  // Câu hỏi thường gặp / hướng dẫn sử dụng
+  | 'EXECUTIVE_REPORT'     // Báo cáo doanh thu, tình hình kinh doanh cho Boss
   | 'GENERAL';             // Liên hệ hỗ trợ viên, admin
+
 
 export type AgentActionType =
   | 'NAVIGATE_CHECKOUT'       // Mở CheckoutModal với đúng productId & planId

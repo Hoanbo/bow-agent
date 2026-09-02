@@ -25,6 +25,10 @@ export const CONFIG = {
     edgeTtsVoiceMale: getEnvValue('EDGE_TTS_VOICE_MALE', 'vi-VN-NamMinhNeural'),
     fasterWhisperUrl: getEnvValue('FASTER_WHISPER_URL', 'http://127.0.0.1:8000/v1/audio/transcriptions'),
     openaiApiKey: getEnvValue('OPENAI_API_KEY') || null,
+    localLlmUrl: getEnvValue('LOCAL_LLM_URL', 'http://127.0.0.1:11434/v1'),
+    localLlmModel: getEnvValue('LOCAL_LLM_MODEL', 'qwen2.5:1.5b'),
+    localWhisperUrl: getEnvValue('LOCAL_WHISPER_URL', 'http://127.0.0.1:8080/v1/audio/transcriptions'),
+    speechPreferLocal: getEnvValue('SPEECH_PREFER_LOCAL', 'true') === 'true',
 };
 export function isDesktopAuthValid(token) {
     if (!token)

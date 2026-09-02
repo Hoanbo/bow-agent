@@ -3,8 +3,10 @@
 
 import type { AgentContext, AgentMessage, AgentAction } from '../core/types.js';
 import { GEMINI_CONFIG, getGeminiApiKey, sanitizeLogOutput } from './config.js';
-import { BOW_AGENT_SYSTEM_PROMPT } from './geminiPrompt.js';
+import { BOW_AGENT_SYSTEM_PROMPT, BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT, BOW_ADMIN_COPILOT_SYSTEM_PROMPT } from './geminiPrompt.js';
 import { geminiToolDeclarations, executeGeminiTool, type GeminiToolExecutionOutput } from './geminiTools.js';
+
+
 import {
   planCheckoutAction,
   planMultipleCheckoutActions,
@@ -77,6 +79,15 @@ export async function processAgentMessageWithGemini(
       const MAX_TOOL_ITERATIONS = 2;
       let responseText = '';
 
+      const isOwnerPersona = context?.role === 'owner' || context?.channel === 'ROBOT';
+      const isAdminPersona = context?.role === 'admin' || (context as any)?.isAdmin === true;
+      const activeSystemPrompt = isOwnerPersona
+        ? BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT
+        : isAdminPersona
+        ? BOW_ADMIN_COPILOT_SYSTEM_PROMPT
+        : BOW_AGENT_SYSTEM_PROMPT;
+
+
       while (iteration < MAX_TOOL_ITERATIONS) {
         iteration++;
 
@@ -84,7 +95,7 @@ export async function processAgentMessageWithGemini(
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            systemInstruction: { parts: [{ text: BOW_AGENT_SYSTEM_PROMPT }] },
+            systemInstruction: { parts: [{ text: activeSystemPrompt }] },
             contents,
             tools: [{ functionDeclarations: geminiToolDeclarations }],
             generationConfig: {
@@ -92,6 +103,7 @@ export async function processAgentMessageWithGemini(
             },
           }),
         });
+
 
         if (!apiRes.ok) {
           const errData = await apiRes.json().catch(() => ({}));

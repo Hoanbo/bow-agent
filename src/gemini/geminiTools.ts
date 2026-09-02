@@ -18,11 +18,205 @@ import { resolveProductQuery } from '../core/productResolver.js';
 import { detectPluralDiscoveryIntent } from '../core/intentResolver.js';
 import { findRelevantWarrantyOrder } from '../core/actionPlanner.js';
 import { rememberOrderContext } from '../core/sessionContext.js';
+import { getActiveShopAdapter } from '../contracts/shopAdapter.js';
 
 /**
  * 1. Khai báo Function Declarations (Tools) cho Gemini
  */
 export const geminiToolDeclarations: FunctionDeclaration[] = [
+  {
+    name: 'get_sales_report',
+    description: 'Tra cứu báo cáo kinh doanh, doanh thu, lợi nhuận, số lượng đơn hàng, top sản phẩm bán chạy của Shop of BOW (Dành riêng cho Quản trị viên / Chủ nhân).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        timeframe: {
+          type: SchemaType.STRING,
+          description: 'Khoảng thời gian: "today", "yesterday", "this_week", "last_week", "this_month", hoặc "all_time".',
+        },
+      },
+    },
+  },
+  {
+    name: 'get_inventory_health',
+    description: 'Kiểm tra tồn kho các sản phẩm, số slot còn lại, và các SKU sắp hết hàng cần nhập gấp (Dành riêng cho Quản trị viên / Chủ nhân).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {},
+    },
+  },
+  {
+    name: 'manage_shop_vouchers',
+    description: 'Tạo mã khuyến mãi / voucher giảm giá mới cho Shop of BOW (Dành riêng cho Quản trị viên / Chủ shop).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        code: {
+          type: SchemaType.STRING,
+          description: 'Mã voucher (vd: "BOWSALE20", "CHAOHE50").',
+        },
+        discountPercent: {
+          type: SchemaType.NUMBER,
+          description: 'Phần trăm giảm giá (vd: 20 cho 20%).',
+        },
+        discountAmount: {
+          type: SchemaType.NUMBER,
+          description: 'Số tiền giảm cố định (vd: 50000).',
+        },
+        minOrderValue: {
+          type: SchemaType.NUMBER,
+          description: 'Giá trị đơn hàng tối thiểu để áp dụng voucher.',
+        },
+        description: {
+          type: SchemaType.STRING,
+          description: 'Mô tả chương trình khuyến mãi.',
+        },
+      },
+      required: ['code'],
+    },
+  },
+  {
+    name: 'inspect_order_dispute',
+    description: 'Tra cứu thông tin chi tiết đơn hàng lỗi, tài khoản bảo hành để giải quyết khiếu nại của khách hàng (Dành riêng cho Quản trị viên / Chủ shop).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        identifier: {
+          type: SchemaType.STRING,
+          description: 'Mã đơn hàng, số điện thoại, hoặc email của khách hàng.',
+        },
+      },
+      required: ['identifier'],
+    },
+  },
+  {
+    name: 'get_pending_fulfillment_queue',
+    description: 'Kiểm tra danh sách các đơn hàng khách đã thanh toán đang chờ Admin nhập hàng từ đối tác và bàn giao (Dành riêng cho Quản trị viên / Chủ shop).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {},
+    },
+  },
+  {
+    name: 'fulfill_order_handover',
+    description: 'Gán thông tin tài khoản hoặc key bản quyền vừa nhập từ đối tác cho đơn hàng và bàn giao cho khách (Dành riêng cho Quản trị viên / Chủ shop).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        orderId: {
+          type: SchemaType.STRING,
+          description: 'Mã đơn hàng cần bàn giao (vd: "BOW-ORD-8812").',
+        },
+        accountDetails: {
+          type: SchemaType.STRING,
+          description: 'Thông tin tài khoản/key bàn giao (vd: "email: user@gmail.com | pass: 123456 | profile: 2").',
+        },
+        supplierCost: {
+          type: SchemaType.NUMBER,
+          description: 'Giá vốn nhập hàng từ đối tác để tính lợi nhuận ròng.',
+        },
+      },
+      required: ['orderId', 'accountDetails'],
+    },
+  },
+  {
+    name: 'get_profit_margin_report',
+    description: 'Báo cáo doanh thu, giá vốn nhập hàng, và lợi nhuận ròng thực tế theo mô hình bán tự động (Dành riêng cho Quản trị viên / Chủ shop).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        timeframe: {
+          type: SchemaType.STRING,
+          description: 'Khoảng thời gian: "today", "yesterday", "this_week", "this_month", "all_time".',
+        },
+      },
+    },
+  },
+
+
+  {
+    name: 'inspect_screen_notifications',
+    description: 'Chụp ảnh màn hình desktop hiện tại và dùng Gemini Vision để kiểm tra xem ai vừa nhắn tin Facebook, Zalo, Telegram hoặc đọc thông báo trên màn hình cho Sếp.',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        userQuery: {
+          type: SchemaType.STRING,
+          description: 'Mục tiêu kiểm tra (vd: "Ai vừa nhắn tin Facebook?", "Màn hình đang báo lỗi gì?", "Đọc tin nhắn mới")',
+        },
+        focusApp: {
+          type: SchemaType.STRING,
+          description: 'Ứng dụng cần ưu tiên kiểm tra: "Facebook", "Zalo", "Telegram", "Gmail".',
+        },
+      },
+    },
+  },
+  {
+    name: 'desktop_reply_message',
+    description: 'Tự động gửi tin nhắn trả lời trên cửa sổ chat Facebook Messenger, Zalo, hoặc Telegram đang mở theo lệnh giọng nói của Sếp.',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        replyText: {
+          type: SchemaType.STRING,
+          description: 'Nội dung tin nhắn cần gửi trả lời.',
+        },
+        targetApp: {
+          type: SchemaType.STRING,
+          description: 'Ứng dụng cần gửi: "Facebook", "Zalo", "Telegram".',
+        },
+        recipientName: {
+          type: SchemaType.STRING,
+          description: 'Tên người nhận tin nhắn nếu có.',
+        },
+      },
+      required: ['replyText'],
+    },
+  },
+  {
+    name: 'desktop_execute_code',
+    description: 'Thực thi mã JavaScript/TypeScript trong Sandbox an toàn để tính toán, lọc dữ liệu phức tạp hoặc tạo kết quả theo bất kỳ yêu cầu mới nào của Sếp mà không cần tạo tool trước.',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        code: {
+          type: SchemaType.STRING,
+          description: 'Đoạn mã JavaScript/TypeScript hoàn chỉnh cần thực thi (vd: console.log(...) hoặc return ...).',
+        },
+        description: {
+          type: SchemaType.STRING,
+          description: 'Mô tả ngắn gọn mục đích của đoạn mã.',
+        },
+      },
+      required: ['code'],
+    },
+  },
+  {
+    name: 'desktop_smarthome_control',
+    description: 'Điều khiển các thiết bị nhà thông minh và văn phòng của Sếp (bật/tắt đèn bàn, đèn trần, chỉnh nhiệt độ điều hòa, quạt, ổ cắm thông minh).',
+    parameters: {
+      type: SchemaType.OBJECT,
+      properties: {
+        device: {
+          type: SchemaType.STRING,
+          description: 'Tên hoặc loại thiết bị: "desk_light", "air_conditioner", "main_light", "smart_plug".',
+        },
+        action: {
+          type: SchemaType.STRING,
+          description: 'Hành động: "turn_on", "turn_off", "set_temperature", "set_brightness", "get_status".',
+        },
+        value: {
+          type: SchemaType.NUMBER,
+          description: 'Giá trị nếu có (vd: 25 độ C hoặc 80% độ sáng).',
+        },
+      },
+      required: ['device', 'action'],
+    },
+  },
+
+
+
+
   {
     name: 'search_products',
     description: 'Tìm kiếm sản phẩm trong kho của Shop of BOW theo từ khóa, nhu cầu sử dụng, hoặc danh mục.',
@@ -209,7 +403,24 @@ export interface GeminiToolExecutionOutput {
   message?: string;
   // Dữ liệu có cấu trúc để sinh Action Card tương ứng
   actionData?: {
-    type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected' | 'desktop_action';
+    type:
+      | 'product_detail'
+      | 'products_list'
+      | 'wallet'
+      | 'orders'
+      | 'vouchers'
+      | 'tickets'
+      | 'support'
+      | 'warranty_ticket'
+      | 'warranty_rejected'
+      | 'desktop_action'
+      | 'sales_report'
+      | 'inventory_health'
+      | 'shop_voucher'
+      | 'order_dispute'
+      | 'pending_fulfillment'
+      | 'order_handover'
+      | 'profit_margin';
     actionPayload?: Record<string, any>;
     product?: ProductItemResult;
     products?: ProductItemResult[];
@@ -219,6 +430,13 @@ export interface GeminiToolExecutionOutput {
     tickets?: any[];
     order?: any;
     reason?: string;
+    report?: any;
+    inventory?: any;
+    voucher?: any;
+    dispute?: any;
+    pendingQueue?: any;
+    handover?: any;
+    profitReport?: any;
   };
 }
 
@@ -647,7 +865,407 @@ export async function executeGeminiTool(
         };
       }
 
+      case 'get_sales_report': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền xem báo cáo doanh thu nội bộ của Shop of BOW.',
+          };
+        }
+
+        const timeframe = typeof args.timeframe === 'string' ? args.timeframe.trim() : 'today';
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Nhà cung cấp dữ liệu quản trị chưa sẵn sàng.',
+          };
+        }
+
+        const report = await adapter.admin.getSalesReport(timeframe as any);
+        return {
+          toolName,
+          success: true,
+          data: report,
+          message: `Báo cáo doanh thu ${report.timeframe}: ${report.totalRevenue.toLocaleString('vi-VN')}đ, ${report.totalOrders} đơn hàng, tăng trưởng ${report.growthRatePercent || 0}%.`,
+          actionData: {
+            type: 'sales_report',
+            report,
+          },
+        };
+      }
+
+      case 'get_inventory_health': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền kiểm tra trạng thái tồn kho nội bộ.',
+          };
+        }
+
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Nhà cung cấp dữ liệu quản trị chưa sẵn sàng.',
+          };
+        }
+
+        const inventory = await adapter.admin.getInventoryHealth();
+        return {
+          toolName,
+          success: true,
+          data: inventory,
+          message: `Tồn kho: ${inventory.healthySkus}/${inventory.totalSkus} SKU an toàn. Cần nhập gấp: ${inventory.lowStockSkus} SKU.`,
+          actionData: {
+            type: 'inventory_health',
+            inventory,
+          },
+        };
+      }
+
+      case 'manage_shop_vouchers': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền tạo hoặc quản lý mã voucher của shop.',
+          };
+        }
+
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin?.createVoucher) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Chức năng tạo voucher chưa sẵn sàng.',
+          };
+        }
+
+        const voucherResult = await adapter.admin.createVoucher({
+          code: typeof args.code === 'string' ? args.code : 'BOW_DISCOUNT',
+          discountPercent: typeof args.discountPercent === 'number' ? args.discountPercent : undefined,
+          discountAmount: typeof args.discountAmount === 'number' ? args.discountAmount : undefined,
+          minOrderValue: typeof args.minOrderValue === 'number' ? args.minOrderValue : undefined,
+          description: typeof args.description === 'string' ? args.description : undefined,
+        });
+
+        return {
+          toolName,
+          success: voucherResult.success,
+          data: voucherResult,
+          message: voucherResult.message,
+          actionData: {
+            type: 'shop_voucher',
+            voucher: voucherResult.voucher,
+          },
+        };
+      }
+
+      case 'inspect_order_dispute': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền tra cứu thông tin khiếu nại đơn hàng.',
+          };
+        }
+
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin?.inspectOrderDispute) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Chức năng tra cứu đơn hàng lỗi chưa sẵn sàng.',
+          };
+        }
+
+        const identifier = typeof args.identifier === 'string' ? args.identifier.trim() : '';
+        const disputeResult = await adapter.admin.inspectOrderDispute(identifier);
+
+        return {
+          toolName,
+          success: true,
+          data: disputeResult,
+          message: `Đơn ${disputeResult.orderId} của khách ${disputeResult.customerName} (${disputeResult.productName}): ${disputeResult.recommendedAction}`,
+          actionData: {
+            type: 'order_dispute',
+            dispute: disputeResult,
+          },
+        };
+      }
+
+      case 'get_pending_fulfillment_queue': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền xem hàng đợi bàn giao đơn hàng của shop.',
+          };
+        }
+
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin?.getPendingFulfillmentQueue) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Chức năng xem hàng đợi đơn hàng chưa sẵn sàng.',
+          };
+        }
+
+        const queueResult = await adapter.admin.getPendingFulfillmentQueue();
+        return {
+          toolName,
+          success: true,
+          data: queueResult,
+          message: `Hàng đợi: Có ${queueResult.totalPendingCount} đơn chờ bàn giao (trong đó có ${queueResult.urgentCount} đơn chờ > 15 phút cần xử lý gấp).`,
+          actionData: {
+            type: 'pending_fulfillment',
+            pendingQueue: queueResult,
+          },
+        };
+      }
+
+      case 'fulfill_order_handover': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền thực hiện bàn giao đơn hàng.',
+          };
+        }
+
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin?.fulfillOrderHandover) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Chức năng bàn giao đơn hàng chưa sẵn sàng.',
+          };
+        }
+
+        const orderId = typeof args.orderId === 'string' ? args.orderId.trim() : '';
+        const accountDetails = typeof args.accountDetails === 'string' ? args.accountDetails.trim() : '';
+        const supplierCost = typeof args.supplierCost === 'number' ? args.supplierCost : undefined;
+
+        const handoverResult = await adapter.admin.fulfillOrderHandover({
+          orderId,
+          accountDetails,
+          supplierCost,
+        });
+
+        return {
+          toolName,
+          success: handoverResult.success,
+          data: handoverResult,
+          message: handoverResult.message,
+          actionData: {
+            type: 'order_handover',
+            handover: handoverResult,
+          },
+        };
+      }
+
+      case 'get_profit_margin_report': {
+        const isAuthorized = context?.role === 'owner' || context?.role === 'admin' || context?.channel === 'ROBOT' || (context as any)?.isAdmin === true;
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền xem báo cáo lợi nhuận ròng.',
+          };
+        }
+
+        const adapter = getActiveShopAdapter();
+        if (!adapter.admin?.getProfitMarginReport) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'ADMIN_PROVIDER_UNAVAILABLE: Chức năng báo cáo lợi nhuận chưa sẵn sàng.',
+          };
+        }
+
+        const timeframe = typeof args.timeframe === 'string' ? args.timeframe.trim() : 'today';
+        const profitResult = await adapter.admin.getProfitMarginReport(timeframe as any);
+
+        return {
+          toolName,
+          success: true,
+          data: profitResult,
+          message: `Lợi nhuận ròng ${profitResult.timeframe}: ${profitResult.netProfit.toLocaleString('vi-VN')}đ (Biên lợi nhuận ${profitResult.profitMarginPercent}%) trên tổng doanh thu ${profitResult.totalRevenue.toLocaleString('vi-VN')}đ (${profitResult.totalFulfilledOrders} đơn hoàn thành).`,
+          actionData: {
+            type: 'profit_margin',
+            profitReport: profitResult,
+          },
+        };
+      }
+
+      case 'inspect_screen_notifications': {
+
+        const isAuthorized = context?.role === 'owner' || context?.channel === 'ROBOT' || context?.channel === 'DESKTOP';
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền truy cập thị giác màn hình của Sếp.',
+          };
+        }
+
+        const { screenVisionService } = await import('../desktop/screenVisionService.js');
+        const result = await screenVisionService.inspectScreenForNotifications({
+          userQuery: typeof args.userQuery === 'string' ? args.userQuery.trim() : undefined,
+          focusApp: typeof args.focusApp === 'string' ? args.focusApp.trim() : undefined,
+        });
+
+        return {
+          toolName,
+          success: result.success,
+          data: result,
+          message: result.summary,
+          actionData: {
+            type: 'desktop_action',
+            actionPayload: {
+              action: 'inspect_screen_notifications',
+              visionResult: result,
+            },
+          },
+        };
+      }
+
+      case 'desktop_reply_message': {
+        const isAuthorized = context?.role === 'owner' || context?.channel === 'ROBOT' || context?.channel === 'DESKTOP';
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền gửi tin nhắn từ máy tính của Sếp.',
+          };
+        }
+
+        const { chatReplyService } = await import('../desktop/chatReplyService.js');
+        const replyResult = await chatReplyService.sendChatReply({
+          replyText: typeof args.replyText === 'string' ? args.replyText.trim() : '',
+          targetApp: typeof args.targetApp === 'string' ? args.targetApp.trim() : 'Facebook',
+          recipientName: typeof args.recipientName === 'string' ? args.recipientName.trim() : undefined,
+        });
+
+        return {
+          toolName,
+          success: replyResult.success,
+          data: replyResult,
+          message: replyResult.message,
+          actionData: {
+            type: 'desktop_action',
+            actionPayload: {
+              action: 'desktop_reply_message',
+              replyResult,
+            },
+          },
+        };
+      }
+
+      case 'desktop_execute_code': {
+        const isAuthorized = context?.role === 'owner' || context?.channel === 'ROBOT' || context?.channel === 'DESKTOP';
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền thực thi mã trong Code Sandbox.',
+          };
+        }
+
+        const { codeSandboxService } = await import('../desktop/codeSandboxService.js');
+        const sandboxResult = await codeSandboxService.executeCode({
+          code: typeof args.code === 'string' ? args.code : '',
+          language: (typeof args.language === 'string' && ['javascript', 'typescript', 'js', 'ts'].includes(args.language)
+            ? args.language
+            : 'javascript') as any,
+        });
+
+
+        return {
+          toolName,
+          success: sandboxResult.success,
+          data: sandboxResult,
+          message: sandboxResult.success
+            ? `Thực thi mã thành công trong ${sandboxResult.executionTimeMs}ms. Kết quả: ${JSON.stringify(sandboxResult.result)}`
+            : `Lỗi thực thi mã: ${sandboxResult.error}`,
+          actionData: {
+            type: 'desktop_action',
+            actionPayload: {
+              action: 'desktop_execute_code',
+              sandboxResult,
+            },
+          },
+        };
+      }
+
+      case 'desktop_smarthome_control': {
+        const isAuthorized = context?.role === 'owner' || context?.channel === 'ROBOT' || context?.channel === 'DESKTOP';
+        if (!isAuthorized) {
+          return {
+            toolName,
+            success: false,
+            data: null,
+            message: 'FORBIDDEN_ACCESS: Bạn không có quyền điều khiển thiết bị nhà thông minh của Sếp.',
+          };
+        }
+
+        const { smartHomeService } = await import('../embodied/smartHomeService.js');
+        const smartResult = await smartHomeService.executeCommand({
+          device: typeof args.device === 'string' ? args.device : 'desk_light',
+          action: (typeof args.action === 'string' ? args.action : 'get_status') as any,
+          value: typeof args.value === 'number' ? args.value : undefined,
+        });
+
+
+        return {
+          toolName,
+          success: smartResult.success,
+          data: smartResult,
+          message: smartResult.message,
+          actionData: {
+            type: 'desktop_action',
+            actionPayload: {
+              action: 'desktop_smarthome_control',
+              smartResult,
+            },
+          },
+        };
+      }
+
       case 'desktop_action': {
+
+
+
+
         const action = typeof args.action === 'string' ? args.action.trim() : 'open_app';
         const target = typeof args.target === 'string' ? args.target.trim() : undefined;
         const url = typeof args.url === 'string' ? args.url.trim() : undefined;

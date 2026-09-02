@@ -20,6 +20,7 @@ export interface WebAgentResponsePayload {
     knowledgeGap?: boolean;
     telemetryEvents?: any[];
     data?: any;
+    adminData?: any;
     timestamp: string;
 }
 export declare class WebAdapter {

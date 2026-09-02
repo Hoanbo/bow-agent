@@ -21,17 +21,32 @@ export * from './core/sessionContext.js';
 export * from './core/tools.js';
 export * from './core/productResolver.js';
 export * from './core/categoryResolver.js';
+export * from './core/fastPathRouter.js';
 
-// 3. Extensible Tools & Plugins
+// 3. Extensible Tools, Plugins & Desktop Vision
 export * from './tools/registry.js';
 export * from './tools/shopTools.js';
 export * from './tools/desktopTools.js';
+export * from './desktop/screenVisionService.js';
+export * from './desktop/chatReplyService.js';
+export * from './desktop/codeSandboxService.js';
 
-// 4. Vietnamese Voice Processing Hub
+// 4. Hybrid Edge-Cloud LLM & Offline Inference
+export * from './llm/localLlmProvider.js';
+export * from './llm/hybridLlmRouter.js';
+
+// 5. Vietnamese Voice Processing Hub (Local Piper & Whisper)
 export * from './speech/ttsEngine.js';
 export * from './speech/sttEngine.js';
+export * from './speech/fullDuplexAudioHub.js';
 
-// 5. Multi-Channel Inbound Adapters
+// 6. Embodied Physical AI, Smart Home & Watchdog Hub
+export * from './embodied/physicalVisionService.js';
+export * from './embodied/smartHomeService.js';
+export * from './embodied/watchdogDaemon.js';
+
+// 7. Multi-Channel Inbound Adapters
+
 export * from './adapters/webAdapter.js';
 export * from './adapters/robotAdapter.js';
 export * from './adapters/desktopAdapter.js';

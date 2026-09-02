@@ -1,7 +1,7 @@
 // src/services/agent/gemini/geminiClient.ts
 // BOW Agent V3 — Gemini Client & Orchestrator with Direct REST API & Safe Tool Calling
 import { GEMINI_CONFIG, getGeminiApiKey, sanitizeLogOutput } from './config.js';
-import { BOW_AGENT_SYSTEM_PROMPT } from './geminiPrompt.js';
+import { BOW_AGENT_SYSTEM_PROMPT, BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT, BOW_ADMIN_COPILOT_SYSTEM_PROMPT } from './geminiPrompt.js';
 import { geminiToolDeclarations, executeGeminiTool } from './geminiTools.js';
 import { planCheckoutAction, planMultipleCheckoutActions, planDepositAction, planOrderDetailAction, planApplyCouponAction, planTicketDetailAction, planSupportTicketAction, findRelevantWarrantyOrder, } from '../core/actionPlanner.js';
 import { agentAnalytics, normalizeUserDemand } from '../monitoring/agentAnalytics.js';
@@ -45,13 +45,20 @@ export async function processAgentMessageWithGemini(userText, context) {
             let iteration = 0;
             const MAX_TOOL_ITERATIONS = 2;
             let responseText = '';
+            const isOwnerPersona = context?.role === 'owner' || context?.channel === 'ROBOT';
+            const isAdminPersona = context?.role === 'admin' || context?.isAdmin === true;
+            const activeSystemPrompt = isOwnerPersona
+                ? BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT
+                : isAdminPersona
+                    ? BOW_ADMIN_COPILOT_SYSTEM_PROMPT
+                    : BOW_AGENT_SYSTEM_PROMPT;
             while (iteration < MAX_TOOL_ITERATIONS) {
                 iteration++;
                 const apiRes = await fetch(endpoint, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        systemInstruction: { parts: [{ text: BOW_AGENT_SYSTEM_PROMPT }] },
+                        systemInstruction: { parts: [{ text: activeSystemPrompt }] },
                         contents,
                         tools: [{ functionDeclarations: geminiToolDeclarations }],
                         generationConfig: {
