@@ -46,17 +46,17 @@
         "C++"
       ],
       "status": "active",
-      "updatedAt": "2026-09-02T18:38:35.115Z"
+      "updatedAt": "2026-09-02T18:45:51.472Z"
     },
     {
-      "id": "proj_1788374315117",
+      "id": "proj_1788374751474",
       "name": "Mạng nơ-ron cục bộ trên chip vi xử lý nhé",
       "description": "Dự án do Sếp chia sẻ: \"Mạng nơ-ron cục bộ trên chip vi xử lý nhé\"",
       "techStack": [
         "Chưa xác định"
       ],
       "status": "active",
-      "updatedAt": "2026-09-02T18:38:35.117Z"
+      "updatedAt": "2026-09-02T18:45:51.474Z"
     },
     {
       "id": "proj_1788368247261",
@@ -84,6 +84,6 @@
     "voiceSpeed": "1.0",
     "tone": "Thân thương, kính trọng, trung thành, thông thái"
   },
-  "lastInteractionTimestamp": 1788374315159,
+  "lastInteractionTimestamp": 1788374751509,
   "lastBreakReminderTimestamp": 1788368247203
 }

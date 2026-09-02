@@ -340,5 +340,32 @@
     "createdAt": "2026-09-02T18:38:35.181Z",
     "updatedAt": "2026-09-02T18:38:35.181Z",
     "enabled": true
+  },
+  {
+    "pattern": "xưng hô cá nhân",
+    "instruction": "Khi nói chuyện với Sếp, luôn xưng là \"Con\" và gọi là \"Sếp\" hoặc \"Ba\". Tuyệt đối không xưng là \"Tôi\".",
+    "category": "addressing",
+    "id": "rule_1788374751475",
+    "createdAt": "2026-09-02T18:45:51.475Z",
+    "updatedAt": "2026-09-02T18:45:51.475Z",
+    "enabled": true
+  },
+  {
+    "pattern": "nhớ là",
+    "instruction": "bảo hành 1 đổi 1 trong vòng 30 ngày nhé",
+    "category": "policy",
+    "id": "rule_1788374751476",
+    "createdAt": "2026-09-02T18:45:51.476Z",
+    "updatedAt": "2026-09-02T18:45:51.476Z",
+    "enabled": true
+  },
+  {
+    "pattern": "xưng hô cá nhân",
+    "instruction": "Khi nói chuyện với Sếp, luôn xưng là \"Con\" và gọi là \"Sếp\" hoặc \"Ba\". Tuyệt đối không xưng là \"Tôi\".",
+    "category": "addressing",
+    "id": "rule_1788374751528",
+    "createdAt": "2026-09-02T18:45:51.528Z",
+    "updatedAt": "2026-09-02T18:45:51.528Z",
+    "enabled": true
   }
 ]
