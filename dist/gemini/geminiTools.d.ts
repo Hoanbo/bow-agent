@@ -13,7 +13,7 @@ export interface GeminiToolExecutionOutput {
     data: any;
     message?: string;
     actionData?: {
-        type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected' | 'desktop_action' | 'sales_report' | 'inventory_health' | 'shop_voucher' | 'order_dispute' | 'pending_fulfillment' | 'order_handover' | 'profit_margin';
+        type: 'product_detail' | 'products_list' | 'wallet' | 'orders' | 'vouchers' | 'tickets' | 'support' | 'warranty_ticket' | 'warranty_rejected' | 'desktop_action' | 'sales_report' | 'inventory_health' | 'shop_voucher' | 'order_dispute' | 'pending_fulfillment' | 'order_handover' | 'profit_margin' | 'order_lookup' | 'daily_summary' | 'task_prioritization' | 'customer_lookup' | 'vouchers_list';
         actionPayload?: Record<string, any>;
         product?: ProductItemResult;
         products?: ProductItemResult[];
@@ -30,6 +30,9 @@ export interface GeminiToolExecutionOutput {
         pendingQueue?: any;
         handover?: any;
         profitReport?: any;
+        summary?: any;
+        tasks?: any;
+        customer?: any;
     };
 }
 /**

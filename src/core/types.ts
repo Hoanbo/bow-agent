@@ -2,6 +2,8 @@
 
 export type AgentRole = 'owner' | 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
 
+export type AgentSurface = 'customer' | 'admin' | 'desktop' | 'robot' | 'system';
+
 export interface AgentContext {
   userId?: string | null;
   email?: string | null;
@@ -13,6 +15,8 @@ export interface AgentContext {
   channel?: 'WEB' | 'ROBOT' | 'DESKTOP' | 'SYSTEM' | string;
   authToken?: string;
   userText?: string;
+  surface?: AgentSurface;
+  route?: string;
 }
 
 export type AgentIntent =
@@ -33,6 +37,17 @@ export type AgentIntent =
   | 'WALLET'               // Tra cứu số dư / nạp tiền vào ví
   | 'FAQ'                  // Câu hỏi thường gặp / hướng dẫn sử dụng
   | 'EXECUTIVE_REPORT'     // Báo cáo doanh thu, tình hình kinh doanh cho Boss
+  | 'ADMIN_PENDING_HANDOVER'    // Hàng đợi đơn chờ bàn giao (Admin Copilot)
+  | 'ADMIN_ORDER_HANDOVER'      // Bàn giao tài khoản / gửi key cho khách (Admin Copilot)
+  | 'ADMIN_ORDER_LOOKUP'        // Tra cứu trạng thái và chi tiết đơn hàng (Admin Copilot)
+  | 'ADMIN_DAILY_SUMMARY'       // Báo cáo tổng hợp vận hành hôm nay (Admin Copilot)
+  | 'ADMIN_TASK_PRIORITIZATION' // Đề xuất thứ tự ưu tiên xử lý trong ngày (Admin Copilot)
+  | 'ADMIN_REVENUE_REPORT'      // Báo cáo doanh thu & lợi nhuận ròng (Admin Copilot)
+  | 'ADMIN_SALES_ANALYTICS'     // Phân tích sản phẩm bán chạy / doanh số (Admin Copilot)
+  | 'ADMIN_VOUCHER_CREATE'      // Tạo / quản lý mã khuyến mãi (Admin Copilot)
+  | 'ADMIN_CUSTOMER_LOOKUP'     // Tra cứu thông tin lịch sử khách hàng (Admin Copilot)
+  | 'ADMIN_DISPUTE_INSPECT'     // Tra cứu xử lý khiếu nại đơn hàng (Admin Copilot)
+  | 'ADMIN_INVENTORY_HEALTH'    // [DEFERRED] Kiểm tra sức khỏe tồn kho SKU (Admin Copilot)
   | 'GENERAL';             // Liên hệ hỗ trợ viên, admin
 
 

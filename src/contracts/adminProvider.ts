@@ -149,6 +149,71 @@ export interface ProfitMarginReportResult {
   timestamp: string;
 }
 
+export interface AdminOrderLookupResult {
+  orderId: string;
+  customerName: string;
+  customerEmail?: string;
+  productName: string;
+  planLabel?: string;
+  amount: number;
+  status: 'paid' | 'pending' | 'completed' | 'cancelled' | 'refunded' | string;
+  paymentStatus: 'paid' | 'pending' | 'failed' | string;
+  handoverStatus: 'delivered' | 'pending_procurement' | 'failed' | string;
+  createdAt: string;
+  accountDetails?: string;
+  notes?: string;
+  timeline: Array<{ time: string; event: string }>;
+}
+
+export interface AdminDailySummaryResult {
+  date: string;
+  pendingHandoverCount: number;
+  urgentOrdersCount: number;
+  unresolvedDisputesCount: number;
+  todayRevenue: number;
+  todayProfit: number;
+  activeVouchersCount: number;
+  summaryHighlights: string[];
+  recommendedFocus: string;
+}
+
+export interface AdminTaskPriorityItem {
+  priority: number;
+  category: 'URGENT_HANDOVER' | 'DISPUTE_REVIEW' | 'VOUCHER_EXPIRY' | 'SUPPLIER_FOLLOWUP' | 'GENERAL';
+  title: string;
+  description: string;
+  actionRequired: string;
+  targetId?: string;
+}
+
+export interface AdminTaskPrioritizationResult {
+  tasks: AdminTaskPriorityItem[];
+  generatedAt: string;
+  summary: string;
+}
+
+export interface AdminCustomerLookupResult {
+  customerId: string;
+  customerName: string;
+  email?: string;
+  totalOrders: number;
+  totalSpent: number;
+  recentOrders: Array<{ orderId: string; productName: string; amount: number; createdAt: string; status: string }>;
+  disputeHistoryCount: number;
+  notes?: string;
+}
+
+export interface VoucherListResult {
+  vouchers: Array<{
+    code: string;
+    discountDisplay: string;
+    minOrderValue: number;
+    expiresAt: string;
+    status: 'active' | 'inactive';
+  }>;
+  totalActive: number;
+}
+
 export interface AdminProvider {
   /**
    * Fetch comprehensive sales, revenue, and order metrics for a given timeframe
@@ -184,6 +249,31 @@ export interface AdminProvider {
    * Inspect and resolve an order dispute or warranty issue
    */
   inspectOrderDispute?(identifier: string): Promise<OrderDisputeResult>;
+
+  /**
+   * Lookup complete details and timeline for a specific order
+   */
+  getOrderLookup?(orderId: string): Promise<AdminOrderLookupResult | null>;
+
+  /**
+   * Generate daily operational summary for the Shop Admin
+   */
+  getDailySummary?(): Promise<AdminDailySummaryResult>;
+
+  /**
+   * Generate prioritized actionable tasks list for the day
+   */
+  getTaskPrioritization?(): Promise<AdminTaskPrioritizationResult>;
+
+  /**
+   * Lookup customer purchase history safely (no credentials)
+   */
+  getCustomerLookup?(query: string): Promise<AdminCustomerLookupResult | null>;
+
+  /**
+   * List active promotional vouchers
+   */
+  getActiveVouchers?(): Promise<VoucherListResult>;
 
   /**
    * Dispatch a business event into the agent internal event mesh

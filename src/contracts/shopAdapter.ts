@@ -249,6 +249,101 @@ export const fallbackShopAdapter: ShopAdapter = {
         timestamp: new Date().toISOString(),
       };
     },
+    getOrderLookup: async (orderId: string) => {
+      const id = orderId || 'BOW-ORD-1234';
+      return {
+        orderId: id,
+        customerName: 'Trần Minh Đức',
+        customerEmail: 'duc.tran@gmail.com',
+        productName: 'ChatGPT Plus 1 Tháng',
+        planLabel: 'Gói 1 Tháng Riêng Tư',
+        amount: 450000,
+        status: 'paid',
+        paymentStatus: 'paid',
+        handoverStatus: 'pending_procurement',
+        createdAt: new Date(Date.now() - 25 * 60000).toISOString(),
+        timeline: [
+          { time: new Date(Date.now() - 30 * 60000).toISOString(), event: 'Khách hàng tạo đơn hàng' },
+          { time: new Date(Date.now() - 25 * 60000).toISOString(), event: 'Thanh toán thành công qua SePay VietQR (450.000đ)' },
+          { time: new Date(Date.now() - 24 * 60000).toISOString(), event: 'Đưa vào hàng đợi chờ Admin bàn giao tài khoản' },
+        ],
+        notes: 'Khách yêu cầu gửi qua email duc.tran@gmail.com',
+      };
+    },
+    getDailySummary: async () => {
+      return {
+        date: new Date().toISOString().split('T')[0],
+        pendingHandoverCount: 3,
+        urgentOrdersCount: 1,
+        unresolvedDisputesCount: 1,
+        todayRevenue: 2850000,
+        todayProfit: 1200000,
+        activeVouchersCount: 4,
+        summaryHighlights: [
+          'Có 3 đơn chờ bàn giao (1 đơn cần xử lý gấp > 15p)',
+          '1 khiếu nại văng tài khoản Netflix đơn #BOW-ORD-9921',
+          'Doanh thu hôm nay đạt 2.850.000đ (Lợi nhuận ròng: 1.200.000đ)',
+        ],
+        recommendedFocus: 'Ưu tiên bàn giao đơn ChatGPT Plus #BOW-ORD-8812 và xử lý khiếu nại Netflix #BOW-ORD-9921.',
+      };
+    },
+    getTaskPrioritization: async () => {
+      return {
+        generatedAt: new Date().toISOString(),
+        summary: 'Có 3 việc cần ưu tiên xử lý trong ngày hôm nay theo thứ tự:',
+        tasks: [
+          {
+            priority: 1,
+            category: 'URGENT_HANDOVER',
+            title: 'Bàn giao đơn gấp #BOW-ORD-8812',
+            description: 'Khách Trần Minh Đức đã thanh toán 450k đang chờ 25 phút.',
+            actionRequired: 'Nhập tài khoản ChatGPT Plus và bấm Bàn giao',
+            targetId: 'BOW-ORD-8812',
+          },
+          {
+            priority: 2,
+            category: 'DISPUTE_REVIEW',
+            title: 'Xử lý khiếu nại đơn #BOW-ORD-9921',
+            description: 'Khách Nguyễn Văn An báo văng tài khoản Netflix Premium.',
+            actionRequired: 'Cấp mã PIN mới hoặc đổi profile 3',
+            targetId: 'BOW-ORD-9921',
+          },
+          {
+            priority: 3,
+            category: 'VOUCHER_EXPIRY',
+            title: 'Kiểm tra voucher cuối tuần',
+            description: 'Voucher BOWFLASH30 sẽ hết hạn trong 48h tới.',
+            actionRequired: 'Xem xét gia hạn hoặc tạo mã mới cho khách',
+          },
+        ],
+      };
+    },
+    getCustomerLookup: async (query: string) => {
+      return {
+        customerId: 'cust_minhduc_88',
+        customerName: 'Trần Minh Đức',
+        email: 'duc.tran@gmail.com',
+        totalOrders: 4,
+        totalSpent: 1350000,
+        recentOrders: [
+          { orderId: 'BOW-ORD-8812', productName: 'ChatGPT Plus 1 Tháng', amount: 450000, createdAt: new Date().toISOString(), status: 'paid' },
+          { orderId: 'BOW-ORD-7210', productName: 'Canva Pro 1 Năm', amount: 250000, createdAt: new Date(Date.now() - 30 * 86400000).toISOString(), status: 'completed' },
+          { orderId: 'BOW-ORD-6511', productName: 'YouTube Premium 1 Năm', amount: 450000, createdAt: new Date(Date.now() - 90 * 86400000).toISOString(), status: 'completed' },
+        ],
+        disputeHistoryCount: 0,
+        notes: 'Khách hàng thân thiết, thanh toán nhanh qua VietQR.',
+      };
+    },
+    getActiveVouchers: async () => {
+      return {
+        totalActive: 3,
+        vouchers: [
+          { code: 'BOWFLASH20', discountDisplay: '20%', minOrderValue: 100000, expiresAt: new Date(Date.now() + 5 * 86400000).toISOString(), status: 'active' },
+          { code: 'BOWVIP30', discountDisplay: '30%', minOrderValue: 300000, expiresAt: new Date(Date.now() + 3 * 86400000).toISOString(), status: 'active' },
+          { code: 'CHAOBOW10K', discountDisplay: '10.000đ', minOrderValue: 50000, expiresAt: new Date(Date.now() + 10 * 86400000).toISOString(), status: 'active' },
+        ],
+      };
+    },
     dispatchShopEvent: async () => {},
   },
 };

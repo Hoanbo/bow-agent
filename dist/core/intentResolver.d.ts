@@ -3,7 +3,7 @@
  * Standalone equivalent: @bow/agent/src/core/intentResolver.ts
  * Do NOT import directly from production UI code.
  */
-import type { AgentIntent, MultiIntentResult, DeferredContext, PlanItemResult } from './types.js';
+import type { AgentIntent, MultiIntentResult, DeferredContext, PlanItemResult, AgentContext } from './types.js';
 /**
  * Trích xuất thời hạn (duration) bằng Regex toàn diện: 6 tháng, 12 tháng, 1 năm, 3 tháng, 1 tháng, token, v.v.
  * BUG-001 Hotfix: Hỗ trợ tiếng Việt có dấu, không dấu, NFD/NFC Unicode normalization và viết tắt (6t, 6 t, nửa năm, 180 ngày)
@@ -16,13 +16,17 @@ export declare function matchPlanByDuration(plans: PlanItemResult[], durationOrT
  */
 export declare function extractDeferredBuyContext(text: string): DeferredContext;
 /**
+ * Nhận diện ý định Quản trị viên (Admin Copilot)
+ */
+export declare function detectAdminIntent(text: string): AgentIntent | null;
+/**
  * Phân loại đa ý định từ câu nói của người dùng, phân bổ Primary Intent và Deferred Context
  */
-export declare function resolveMultiIntent(text: string): MultiIntentResult;
+export declare function resolveMultiIntent(text: string, agentContext?: AgentContext): MultiIntentResult;
 /**
  * Phân loại ý định từ câu nói của người dùng (tương thích ngược)
  */
-export declare function resolveIntent(text: string): AgentIntent;
+export declare function resolveIntent(text: string, agentContext?: AgentContext): AgentIntent;
 /**
  * BOW Agent V3.3 Phase 4.2 — Plural Discovery Intent Detector
  *

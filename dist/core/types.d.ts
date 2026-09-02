@@ -1,4 +1,5 @@
 export type AgentRole = 'owner' | 'admin' | 'ctv' | 'user' | 'guest' | 'customer';
+export type AgentSurface = 'customer' | 'admin' | 'desktop' | 'robot' | 'system';
 export interface AgentContext {
     userId?: string | null;
     email?: string | null;
@@ -10,8 +11,10 @@ export interface AgentContext {
     channel?: 'WEB' | 'ROBOT' | 'DESKTOP' | 'SYSTEM' | string;
     authToken?: string;
     userText?: string;
+    surface?: AgentSurface;
+    route?: string;
 }
-export type AgentIntent = 'GREETING' | 'SMALL_TALK' | 'CAPABILITY_DISCOVERY' | 'CLARIFICATION' | 'CATALOG' | 'VIEW_CATEGORY' | 'PRODUCT_SEARCH' | 'BUY' | 'EXPIRING_SOON' | 'ORDER_QUERY' | 'RENEW' | 'WARRANTY' | 'TICKET' | 'COUPON' | 'WALLET' | 'FAQ' | 'EXECUTIVE_REPORT' | 'GENERAL';
+export type AgentIntent = 'GREETING' | 'SMALL_TALK' | 'CAPABILITY_DISCOVERY' | 'CLARIFICATION' | 'CATALOG' | 'VIEW_CATEGORY' | 'PRODUCT_SEARCH' | 'BUY' | 'EXPIRING_SOON' | 'ORDER_QUERY' | 'RENEW' | 'WARRANTY' | 'TICKET' | 'COUPON' | 'WALLET' | 'FAQ' | 'EXECUTIVE_REPORT' | 'ADMIN_PENDING_HANDOVER' | 'ADMIN_ORDER_HANDOVER' | 'ADMIN_ORDER_LOOKUP' | 'ADMIN_DAILY_SUMMARY' | 'ADMIN_TASK_PRIORITIZATION' | 'ADMIN_REVENUE_REPORT' | 'ADMIN_SALES_ANALYTICS' | 'ADMIN_VOUCHER_CREATE' | 'ADMIN_CUSTOMER_LOOKUP' | 'ADMIN_DISPUTE_INSPECT' | 'ADMIN_INVENTORY_HEALTH' | 'GENERAL';
 export type AgentActionType = 'NAVIGATE_CHECKOUT' | 'NAVIGATE_ORDER_DETAIL' | 'NAVIGATE_RENEWAL' | 'NAVIGATE_SUPPORT' | 'NAVIGATE_TICKET_DETAIL' | 'APPLY_COUPON' | 'OPEN_DEPOSIT';
 export interface AgentActionPayload {
     productId?: string;

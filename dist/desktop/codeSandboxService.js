@@ -4,7 +4,6 @@
 // Allows Agent to dynamically synthesize JavaScript/TypeScript code and execute it
 // in an isolated, secure, timeout-guarded environment to answer ANY ad-hoc calculation,
 // data transformation, or custom query without requiring hardcoded tools.
-import vm from 'node:vm';
 export class CodeSandboxService {
     /**
      * Execute dynamic JavaScript code safely with isolated context and strict timeout guard
@@ -49,22 +48,30 @@ export class CodeSandboxService {
             ...(options.initialContext || {}),
         };
         try {
-            const context = vm.createContext(sandboxEnv);
-            // Wrap code in an IIFE if it contains await or return statements
-            let executableCode = options.code.trim();
-            const hasAwait = /\bawait\s+/.test(executableCode);
-            const hasReturn = /\breturn\s+/.test(executableCode);
-            if (hasAwait) {
-                executableCode = `(async () => {\n${executableCode}\n})()`;
+            let evalResult;
+            if (typeof process !== 'undefined' && process.versions?.node) {
+                const vm = await import('node:vm');
+                const context = vm.createContext(sandboxEnv);
+                // Wrap code in an IIFE if it contains await or return statements
+                let executableCode = options.code.trim();
+                const hasAwait = /\bawait\s+/.test(executableCode);
+                const hasReturn = /\breturn\s+/.test(executableCode);
+                if (hasAwait) {
+                    executableCode = `(async () => {\n${executableCode}\n})()`;
+                }
+                else if (hasReturn) {
+                    executableCode = `(() => {\n${executableCode}\n})()`;
+                }
+                const script = new vm.Script(executableCode);
+                evalResult = script.runInContext(context, {
+                    timeout,
+                    displayErrors: true,
+                });
             }
-            else if (hasReturn) {
-                executableCode = `(() => {\n${executableCode}\n})()`;
+            else {
+                const fn = new Function(...Object.keys(sandboxEnv), `return (async () => { ${options.code} })();`);
+                evalResult = await fn(...Object.values(sandboxEnv));
             }
-            const script = new vm.Script(executableCode);
-            const evalResult = script.runInContext(context, {
-                timeout,
-                displayErrors: true,
-            });
             // Handle thenable across VM realms safely
             const finalResult = evalResult && typeof evalResult.then === 'function'
                 ? await evalResult

@@ -390,6 +390,93 @@ export function synthesizeActionsAndSuggestions(
         suggestions.push('Zalo hỗ trợ: 0966 821 315', 'Facebook Admin');
         break;
       }
+
+      // ======================================================================
+      // ADMIN AI COPILOT ACTION CARDS
+      // ======================================================================
+      case 'pending_fulfillment': {
+        const queue = out.actionData.pendingQueue || out.data;
+        responseData = { type: 'pending_fulfillment', pendingQueue: queue };
+        suggestions.push('📈 Báo cáo doanh thu & lợi nhuận hôm nay', '🎟️ Tạo voucher giảm 20%', '🛠️ Kiểm tra khiếu nại');
+        break;
+      }
+
+      case 'profit_margin': {
+        const report = out.actionData.profitReport || out.data;
+        responseData = { type: 'profit_margin', profitReport: report };
+        suggestions.push('⏳ Đơn nào đang chờ bàn giao?', '🎟️ Tạo voucher khuyến mãi', '🛠️ Kiểm tra khiếu nại');
+        break;
+      }
+
+      case 'order_handover': {
+        const handover = out.actionData.handover || out.data;
+        responseData = { type: 'order_handover', handover };
+        suggestions.push('⏳ Xem các đơn còn lại', '📈 Xem lợi nhuận hôm nay');
+        break;
+      }
+
+      case 'shop_voucher': {
+        const voucher = out.actionData.voucher || out.data?.voucher || out.data;
+        responseData = { type: 'shop_voucher', voucher };
+        suggestions.push('⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo doanh thu & lợi nhuận');
+        break;
+      }
+
+      case 'order_dispute': {
+        const dispute = out.actionData.dispute || out.data;
+        responseData = { type: 'order_dispute', dispute };
+        suggestions.push('⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo kinh doanh');
+        break;
+      }
+
+      case 'inventory_health': {
+        const inventory = out.actionData.inventory || out.data;
+        responseData = { type: 'inventory_health', inventory };
+        suggestions.push('⏳ Đơn nào đang chờ bàn giao?', '📈 Báo cáo kinh doanh');
+        break;
+      }
+
+      case 'sales_report': {
+        const report = out.actionData.report || out.data;
+        responseData = { type: 'sales_report', report };
+        suggestions.push('⏳ Đơn nào đang chờ bàn giao?', '🎟️ Tạo voucher khuyến mãi');
+        break;
+      }
+
+      case 'order_lookup': {
+        const order = out.actionData.order || out.data;
+        responseData = { type: 'order_lookup', order };
+        suggestions.push(`🚀 Bàn giao đơn #${order?.orderId || ''}`, '⏳ Xem hàng đợi chờ giao', '📈 Xem doanh thu hôm nay');
+        break;
+      }
+
+      case 'daily_summary': {
+        const summary = out.actionData.summary || out.data;
+        responseData = { type: 'daily_summary', summary };
+        suggestions.push('⏳ Xử lý đơn chờ giao', '🛠️ Xử lý khiếu nại', '📈 Xem báo cáo chi tiết');
+        break;
+      }
+
+      case 'task_prioritization': {
+        const tasks = out.actionData.tasks || out.data;
+        responseData = { type: 'task_prioritization', tasks };
+        suggestions.push('⏳ Bàn giao đơn gấp nhất', '🛠️ Kiểm tra khiếu nại', '📋 Xem tổng quan ngày');
+        break;
+      }
+
+      case 'customer_lookup': {
+        const customer = out.actionData.customer || out.data;
+        responseData = { type: 'customer_lookup', customer };
+        suggestions.push('📦 Xem tất cả đơn của khách', '🎟️ Tạo voucher tặng khách');
+        break;
+      }
+
+      case 'vouchers_list': {
+        const vouchers = out.actionData.vouchers || out.data;
+        responseData = { type: 'vouchers_list', vouchers };
+        suggestions.push('🎟️ Tạo voucher mới', '📈 Xem doanh thu');
+        break;
+      }
     }
   }
 

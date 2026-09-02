@@ -242,12 +242,14 @@ export async function processAgentMessageV2(userText, context) {
         };
     }
     // --------------------------------------------------------------------------
-    // ADMIN COPILOT INTENTS (Bán Tự Động / On-Demand Fulfillment)
+    // ADMIN COPILOT INTENTS (Bán Tự Động / On-Demand Operations)
     // --------------------------------------------------------------------------
-    const isAdmin = context.role === 'admin' || context.role === 'owner' || context?.isAdmin === true;
-    if (isAdmin) {
+    const isAdminRole = context.role === 'admin' || context.role === 'owner' || context?.isAdmin === true;
+    const isAdminSurface = context.surface === 'admin' || (isAdminRole && context.surface !== 'customer');
+    if (isAdminRole && isAdminSurface) {
         const norm = lowerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
-        // 1. Pending Fulfillment Queue Intent
+        const adapter = getActiveShopAdapter();
+        // 1. Pending Fulfillment Queue Intent (Ưu tiên cao nhất cho vận hành)
         if (norm.includes('cho ban giao') ||
             norm.includes('don cho') ||
             norm.includes('don hang cho') ||
@@ -255,8 +257,14 @@ export async function processAgentMessageV2(userText, context) {
             norm.includes('chua ban giao') ||
             norm.includes('cho giao') ||
             norm.includes('hang doi') ||
-            norm.includes('dang cho')) {
-            const adapter = getActiveShopAdapter();
+            norm.includes('dang cho') ||
+            norm.includes('chua giao tai khoan') ||
+            norm.includes('don can xu ly') ||
+            norm.includes('danh sach don cho') ||
+            norm.includes('pending fulfillment') ||
+            norm.includes('pending handover') ||
+            norm.includes('don nao chua giao') ||
+            norm.includes('don nao dang cho')) {
             if (adapter.admin?.getPendingFulfillmentQueue) {
                 const queue = await adapter.admin.getPendingFulfillmentQueue();
                 const urgentNote = queue.urgentCount > 0 ? `\n\n⚠️ Có **${queue.urgentCount} đơn** khách đã chờ trên 15 phút cần xử lý gấp!` : '';
@@ -273,33 +281,101 @@ export async function processAgentMessageV2(userText, context) {
                 };
             }
         }
-        // 2. Profit Margin & Revenue Report Intent
-        if (norm.includes('doanh thu') ||
-            norm.includes('loi nhuan') ||
-            norm.includes('bao cao') ||
-            norm.includes('gia von') ||
-            norm.includes('doanh so') ||
-            norm.includes('bien loi nhuan')) {
-            const adapter = getActiveShopAdapter();
-            if (adapter.admin?.getProfitMarginReport) {
-                const report = await adapter.admin.getProfitMarginReport('today');
+        // 2. Daily Operational Summary Intent
+        if (norm.includes('hom nay shop co gi can toi xu ly') ||
+            norm.includes('can toi xu ly') ||
+            norm.includes('can xu ly gi hom nay') ||
+            norm.includes('tong quan hom nay') ||
+            norm.includes('daily summary') ||
+            norm.includes('tinh hinh shop hom nay') ||
+            norm.includes('bao cao tong hop hom nay') ||
+            norm.includes('tong ket ngay') ||
+            norm.includes('hom nay can xu ly gi') ||
+            norm.includes('hom nay toi can xu ly gi')) {
+            if (adapter.admin?.getDailySummary) {
+                const summary = await adapter.admin.getDailySummary();
+                const highlightsText = summary.summaryHighlights.map((h) => `• ${h}`).join('\n');
                 return {
                     id,
                     sender: 'agent',
-                    content: `📈 **Báo cáo kinh doanh & Lợi nhuận ròng hôm nay:**\n\n• **Tổng doanh thu:** ${report.totalRevenue.toLocaleString('vi-VN')}đ\n• **Chi phí nhập hàng đối tác:** ${report.totalSupplierCost.toLocaleString('vi-VN')}đ\n• **Lợi nhuận ròng thực thu:** **${report.netProfit.toLocaleString('vi-VN')}đ**\n• **Biên lợi nhuận:** **${report.profitMarginPercent}%**\n• **Số đơn hoàn thành:** ${report.totalFulfilledOrders} đơn\n\n*(Mô hình Bán Tự Động: Doanh thu bán - Giá vốn nhập = Lợi nhuận ròng)*`,
+                    content: `📊 **Tổng quan tình hình kinh doanh & vận hành hôm nay (${summary.date}):**\n\n${highlightsText}\n\n👉 **Đề xuất trọng tâm:** ${summary.recommendedFocus}`,
                     timestamp,
                     data: {
-                        type: 'profit_margin',
-                        profitReport: report,
+                        type: 'daily_summary',
+                        summary,
                     },
-                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '🎟️ Tạo voucher khuyến mãi', '🛠️ Kiểm tra khiếu nại'],
+                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '🛠️ Kiểm tra khiếu nại', '📈 Báo cáo doanh thu & lợi nhuận'],
                 };
             }
         }
-        // 3. Fulfill Handover Intent (giao tài khoản cho đơn...)
+        // 3. Task Prioritization Intent
+        if (norm.includes('xu ly gi truoc') ||
+            norm.includes('thu tu uu tien') ||
+            norm.includes('viec can lam truoc') ||
+            norm.includes('nen xu ly gi truoc') ||
+            norm.includes('task priority') ||
+            norm.includes('uu tien gi hom nay') ||
+            norm.includes('hom nay toi nen xu ly gi truoc')) {
+            if (adapter.admin?.getTaskPrioritization) {
+                const taskResult = await adapter.admin.getTaskPrioritization();
+                const tasksList = taskResult.tasks
+                    .map((t) => `**${t.priority}. [${t.title}]**\n   └ ${t.description}\n   └ *Hành động:* ${t.actionRequired}`)
+                    .join('\n\n');
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `📋 **Thứ tự ưu tiên xử lý trong ngày:**\n\n${tasksList}\n\n*(Hệ thống tự động sắp xếp theo mức độ cấp bách của khách hàng)*`,
+                    timestamp,
+                    data: {
+                        type: 'task_prioritization',
+                        tasks: taskResult,
+                    },
+                    suggestions: ['⏳ Bàn giao đơn gấp nhất', '🛠️ Kiểm tra khiếu nại', '📈 Xem báo cáo ngày'],
+                };
+            }
+        }
+        // 4. Order Lookup / Inspection Intent
+        if (norm.includes('kiem tra don') ||
+            norm.includes('tra cuu don') ||
+            norm.includes('trang thai don') ||
+            norm.includes('don nay da ban giao chua') ||
+            norm.includes('da ban giao chua') ||
+            norm.includes('khach da thanh toan chua') ||
+            ((norm.includes('bow-ord') || /#bow-ord/i.test(userText) || norm.includes('ord-')) &&
+                !norm.includes('khieu nai') &&
+                !norm.includes('loi don') &&
+                !norm.includes('giao tai khoan') &&
+                !norm.includes('ban giao tai khoan'))) {
+            if (adapter.admin?.getOrderLookup) {
+                const orderIdMatch = userText.match(/BOW-ORD-[\w-]+/i) || userText.match(/#?[\w-]+/);
+                const orderId = orderIdMatch ? orderIdMatch[0].replace('#', '') : 'BOW-ORD-1234';
+                const order = await adapter.admin.getOrderLookup(orderId);
+                if (order) {
+                    const statusBadge = order.status === 'completed' ? '✅ Đã hoàn thành' : order.status === 'paid' ? '⏳ Đã thanh toán (Chờ bàn giao)' : '⚠️ Chưa thanh toán';
+                    const timelineText = (order.timeline || []).map((t) => `• \`${t.time.split('T')[1]?.slice(0, 5) || t.time}\`: ${t.event}`).join('\n');
+                    return {
+                        id,
+                        sender: 'agent',
+                        content: `📦 **Thông tin chi tiết đơn hàng #${order.orderId}:**\n\n• **Khách hàng:** ${order.customerName} (${order.customerEmail || 'N/A'})\n• **Sản phẩm:** ${order.productName} - ${order.planLabel || 'Gói chuẩn'}\n• **Tổng tiền:** ${order.amount.toLocaleString('vi-VN')}đ\n• **Trạng thái:** ${statusBadge}\n\n⏱️ **Timeline đơn hàng:**\n${timelineText}\n\n${order.notes ? `📝 *Ghi chú:* ${order.notes}` : ''}`,
+                        timestamp,
+                        data: {
+                            type: 'order_lookup',
+                            order,
+                        },
+                        suggestions: [`🚀 Bàn giao đơn #${order.orderId}`, '⏳ Xem hàng đợi chờ giao', '📈 Xem doanh thu'],
+                    };
+                }
+            }
+        }
+        // 5. Fulfill Handover Intent (giao tài khoản cho đơn...)
         if ((norm.includes('giao tai khoan') || norm.includes('ban giao') || norm.includes('gan tai khoan') || norm.includes('gui key')) &&
-            (norm.includes('bow-ord') || norm.includes('don'))) {
-            const adapter = getActiveShopAdapter();
+            (norm.includes('bow-ord') || norm.includes('don')) &&
+            !norm.includes('cho ban giao') &&
+            !norm.includes('don cho') &&
+            !norm.includes('dang cho') &&
+            !norm.includes('chua ban giao') &&
+            !norm.includes('da ban giao chua') &&
+            !norm.includes('don nao')) {
             if (adapter.admin?.fulfillOrderHandover) {
                 const orderIdMatch = userText.match(/BOW-ORD-[\w-]+/i) || userText.match(/#?[\w-]+/);
                 const orderId = orderIdMatch ? orderIdMatch[0].replace('#', '') : 'BOW-ORD-8812';
@@ -320,9 +396,95 @@ export async function processAgentMessageV2(userText, context) {
                 };
             }
         }
-        // 4. Voucher Creation Intent
+        // 6. Customer Lookup Intent
+        if (norm.includes('kiem tra khach hang') ||
+            norm.includes('khach nay mua gi') ||
+            norm.includes('thong tin khach hang') ||
+            norm.includes('lich su khach hang')) {
+            if (adapter.admin?.getCustomerLookup) {
+                const customer = await adapter.admin.getCustomerLookup(userText);
+                if (customer) {
+                    const recentText = customer.recentOrders
+                        .map((o) => `• #${o.orderId}: ${o.productName} (${o.amount.toLocaleString('vi-VN')}đ) - \`${o.status}\``)
+                        .join('\n');
+                    return {
+                        id,
+                        sender: 'agent',
+                        content: `👤 **Hồ sơ khách hàng: ${customer.customerName}**\n\n• **Email:** ${customer.email || 'N/A'}\n• **Tổng số đơn đã mua:** ${customer.totalOrders} đơn\n• **Tổng chi tiêu:** **${customer.totalSpent.toLocaleString('vi-VN')}đ**\n• **Lịch sử khiếu nại:** ${customer.disputeHistoryCount === 0 ? '✅ 0 lần (Khách VIP uy tín)' : `⚠️ ${customer.disputeHistoryCount} lần`}\n\n📦 **Đơn hàng gần đây:**\n${recentText}`,
+                        timestamp,
+                        data: {
+                            type: 'customer_lookup',
+                            customer,
+                        },
+                        suggestions: ['🎟️ Tạo voucher tặng khách', '⏳ Xem đơn chờ bàn giao'],
+                    };
+                }
+            }
+        }
+        // 7. Sales Analytics Intent
+        if (norm.includes('ban chay nhat') ||
+            norm.includes('san pham nao ban chay') ||
+            norm.includes('goi nao khach mua nhieu') ||
+            norm.includes('top san pham')) {
+            if (adapter.admin?.getSalesReport) {
+                const report = await adapter.admin.getSalesReport('today');
+                const topText = (report.topProducts || [])
+                    .map((p, idx) => `**${idx + 1}. ${p.productName || p.name}**\n   └ Đã bán: **${p.unitsSold} gói** | Doanh thu: ${p.revenue.toLocaleString('vi-VN')}đ`)
+                    .join('\n');
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `🏆 **Top sản phẩm bán chạy hôm nay:**\n\n${topText}\n\n📈 **Tăng trưởng:** +${report.growthRatePercent || 15}% so với hôm qua.`,
+                    timestamp,
+                    data: {
+                        type: 'sales_report',
+                        report,
+                    },
+                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '📈 Xem lợi nhuận ròng', '🎟️ Tạo voucher'],
+                };
+            }
+        }
+        // 8. Profit Margin & Revenue Report Intent
+        if (norm.includes('doanh thu') ||
+            norm.includes('loi nhuan') ||
+            norm.includes('bao cao') ||
+            norm.includes('gia von') ||
+            norm.includes('doanh so') ||
+            norm.includes('bien loi nhuan')) {
+            if (adapter.admin?.getProfitMarginReport) {
+                const report = await adapter.admin.getProfitMarginReport('today');
+                return {
+                    id,
+                    sender: 'agent',
+                    content: `📈 **Báo cáo kinh doanh & Lợi nhuận ròng hôm nay:**\n\n• **Tổng doanh thu:** ${report.totalRevenue.toLocaleString('vi-VN')}đ\n• **Chi phí nhập hàng đối tác:** ${report.totalSupplierCost.toLocaleString('vi-VN')}đ\n• **Lợi nhuận ròng thực thu:** **${report.netProfit.toLocaleString('vi-VN')}đ**\n• **Biên lợi nhuận:** **${report.profitMarginPercent}%**\n• **Số đơn hoàn thành:** ${report.totalFulfilledOrders} đơn\n\n*(Mô hình Bán Tự Động: Doanh thu bán - Giá vốn nhập = Lợi nhuận ròng)*`,
+                    timestamp,
+                    data: {
+                        type: 'profit_margin',
+                        profitReport: report,
+                    },
+                    suggestions: ['⏳ Đơn nào đang chờ bàn giao?', '🎟️ Tạo voucher khuyến mãi', '🛠️ Kiểm tra khiếu nại'],
+                };
+            }
+        }
+        // 9. Voucher Creation / Management Intent
         if (norm.includes('voucher') || norm.includes('ma giam') || norm.includes('khuyen mai') || norm.includes('tao ma')) {
-            const adapter = getActiveShopAdapter();
+            if (norm.includes('co voucher') || norm.includes('danh sach voucher') || norm.includes('dang hoat dong')) {
+                if (adapter.admin?.getActiveVouchers) {
+                    const res = await adapter.admin.getActiveVouchers();
+                    const vList = res.vouchers.map((v) => `• \`${v.code}\`: Giảm **${v.discountDisplay}** (Đơn từ ${v.minOrderValue.toLocaleString('vi-VN')}đ)`).join('\n');
+                    return {
+                        id,
+                        sender: 'agent',
+                        content: `🎟️ **Danh sách voucher đang hoạt động (${res.totalActive} mã):**\n\n${vList}`,
+                        timestamp,
+                        data: {
+                            type: 'vouchers_list',
+                            vouchers: res,
+                        },
+                        suggestions: ['🎟️ Tạo voucher giảm 20%', '⏳ Xem đơn chờ bàn giao'],
+                    };
+                }
+            }
             if (adapter.admin?.createVoucher) {
                 const percentMatch = userText.match(/(\d+)\s*%/);
                 const discountPercent = percentMatch ? parseInt(percentMatch[1], 10) : 20;
@@ -345,9 +507,8 @@ export async function processAgentMessageV2(userText, context) {
                 };
             }
         }
-        // 5. Dispute / Warranty Lookup Intent
+        // 10. Dispute / Warranty Lookup Intent
         if (norm.includes('khieu nai') || norm.includes('bao hanh') || norm.includes('loi don') || norm.includes('vang tai khoan') || norm.includes('tra cuu')) {
-            const adapter = getActiveShopAdapter();
             if (adapter.admin?.inspectOrderDispute) {
                 const orderIdMatch = userText.match(/BOW-ORD-[\w-]+/i);
                 const identifier = orderIdMatch ? orderIdMatch[0] : 'BOW-ORD-9921';
@@ -387,7 +548,7 @@ export async function processAgentMessageV2(userText, context) {
         };
     }
     // 1. Phân loại Multi-Intent có hiểu ngữ cảnh
-    const multiIntent = resolveMultiIntent(userText);
+    const multiIntent = resolveMultiIntent(userText, context);
     let intent = multiIntent.primaryIntent;
     // V3.3 Phase 4.2 — Plural Discovery: detect if user wants a list of products
     // Must be computed from rawQuery before cleanQueryTokens strips plural markers

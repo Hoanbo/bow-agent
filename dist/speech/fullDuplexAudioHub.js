@@ -5,9 +5,46 @@
 // Tracks conversational states (IDLE, LISTENING, THINKING, SPEAKING, INTERRUPTED).
 // Provides sub-80ms Voice Activity Detection (VAD) to instantly interrupt Robot speech
 // when the Boss speaks over it, matching OpenAI Advanced Voice / Gemini Live capabilities.
-import { EventEmitter } from 'node:events';
 import { sttEngine } from './sttEngine.js';
-export class FullDuplexAudioHub extends EventEmitter {
+export class SimpleEventEmitter {
+    listeners = new Map();
+    on(event, fn) {
+        if (!this.listeners.has(event))
+            this.listeners.set(event, []);
+        this.listeners.get(event).push(fn);
+        return this;
+    }
+    emit(event, ...args) {
+        const list = this.listeners.get(event);
+        if (!list || list.length === 0)
+            return false;
+        for (const fn of list) {
+            try {
+                fn(...args);
+            }
+            catch { }
+        }
+        return true;
+    }
+    removeListener(event, fn) {
+        const list = this.listeners.get(event);
+        if (list) {
+            this.listeners.set(event, list.filter(f => f !== fn));
+        }
+        return this;
+    }
+    off(event, fn) {
+        return this.removeListener(event, fn);
+    }
+    once(event, fn) {
+        const onceWrapper = (...args) => {
+            this.removeListener(event, onceWrapper);
+            fn(...args);
+        };
+        return this.on(event, onceWrapper);
+    }
+}
+export class FullDuplexAudioHub extends SimpleEventEmitter {
     sessions = new Map();
     pendingPlaybackQueues = new Map();
     /**

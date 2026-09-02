@@ -1,4 +1,11 @@
-import { EventEmitter } from 'node:events';
+export declare class SimpleEventEmitter {
+    private listeners;
+    on(event: string, fn: (...args: any[]) => void): this;
+    emit(event: string, ...args: any[]): boolean;
+    removeListener(event: string, fn: (...args: any[]) => void): this;
+    off(event: string, fn: (...args: any[]) => void): this;
+    once(event: string, fn: (...args: any[]) => void): this;
+}
 export type DuplexConversationState = 'IDLE' | 'LISTENING' | 'THINKING' | 'SPEAKING' | 'INTERRUPTED';
 export interface AudioSessionState {
     sessionId: string;
@@ -14,7 +21,7 @@ export interface BargeInEvent {
     detectionLatencyMs: number;
     energyLevel: number;
 }
-export declare class FullDuplexAudioHub extends EventEmitter {
+export declare class FullDuplexAudioHub extends SimpleEventEmitter {
     private sessions;
     private pendingPlaybackQueues;
     /**

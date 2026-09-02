@@ -3,10 +3,23 @@
 //
 // Allows BOW-Robot to "see" the PC monitor, detect active messaging apps (Facebook, Zalo, Telegram),
 // extract unread messages, senders, and synthesize voice briefings for the Boss.
-import { exec } from 'node:child_process';
-import { promisify } from 'node:util';
 import { GEMINI_CONFIG, getGeminiApiKey } from '../gemini/config.js';
-const execAsync = promisify(exec);
+async function execAsync(cmd, options) {
+    try {
+        const cp = await import('node:child_process');
+        return new Promise((resolve, reject) => {
+            cp.exec(cmd, options, (err, stdout, stderr) => {
+                if (err)
+                    reject(err);
+                else
+                    resolve({ stdout: String(stdout || ''), stderr: String(stderr || '') });
+            });
+        });
+    }
+    catch {
+        return { stdout: '', stderr: '' };
+    }
+}
 // Minimal 1x1 transparent PNG for deterministic offline fallback
 export const SAMPLE_FALLBACK_SCREEN_PNG = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 export class ScreenVisionService {

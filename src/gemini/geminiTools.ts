@@ -420,7 +420,12 @@ export interface GeminiToolExecutionOutput {
       | 'order_dispute'
       | 'pending_fulfillment'
       | 'order_handover'
-      | 'profit_margin';
+      | 'profit_margin'
+      | 'order_lookup'
+      | 'daily_summary'
+      | 'task_prioritization'
+      | 'customer_lookup'
+      | 'vouchers_list';
     actionPayload?: Record<string, any>;
     product?: ProductItemResult;
     products?: ProductItemResult[];
@@ -437,6 +442,9 @@ export interface GeminiToolExecutionOutput {
     pendingQueue?: any;
     handover?: any;
     profitReport?: any;
+    summary?: any;
+    tasks?: any;
+    customer?: any;
   };
 }
 
