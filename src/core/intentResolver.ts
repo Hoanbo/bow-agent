@@ -35,6 +35,10 @@ export function extractDuration(text: string): string | undefined {
   if (/\b(50m|50\s*trieu)\s*token\b/.test(norm)) return '50M Token';
   if (/\b(10m|10\s*trieu)\s*token\b/.test(norm)) return '10M Token';
 
+  // Preserve every explicit numeric month before any generic month alias.
+  const numericMonth = norm.match(/\b(\d+)\s*thang\b/);
+  if (numericMonth) return `${numericMonth[1]} tháng`;
+
   // 6 tháng / nửa năm / 180 ngày (Ưu tiên trước 1 tháng)
   if (/\b(6\s*thang|6thang|6\s*t|nua\s*nam|180\s*ngay)\b/.test(norm)) return '6 tháng';
 
@@ -45,7 +49,7 @@ export function extractDuration(text: string): string | undefined {
   if (/\b(3\s*thang|3thang|3\s*t|1\s*quy|90\s*ngay)\b/.test(norm)) return '3 tháng';
 
   // 1 tháng / 30 ngày
-  if (/\b(1\s*thang|1thang|1\s*t|30\s*ngay|thang)\b/.test(norm)) return '1 tháng';
+  if (/\b(1\s*thang|1thang|1\s*t|30\s*ngay)\b/.test(norm)) return '1 tháng';
 
   // 1 tuần / 7 ngày
   if (/\b(1\s*tuan|1tuan|7\s*ngay|tuan)\b/.test(norm)) return '1 tuần';
@@ -830,4 +834,3 @@ export function isAmbiguousDemandQuery(rawText: string): boolean {
 }
 
 export const resolveAgentIntent = resolveMultiIntent;
-
