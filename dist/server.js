@@ -195,7 +195,7 @@ export class BowCentralAgentServer {
                         return;
                     }
                     // Audio Stream Chunk (JSON wrapper)
-                    if (payload.type === 'audio_chunk' || pathname.includes('audio-stream')) {
+                    if (payload.type === 'audio_chunk') {
                         const chunk = payload.chunk || payload.data || payload.audio || '';
                         const result = robotChannelAdapter.handleStreamingAudioChunk(chunk, payload.sessionId);
                         if (result.isInterrupted && ws.readyState === WebSocket.OPEN) {
