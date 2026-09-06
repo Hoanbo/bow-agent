@@ -15,6 +15,8 @@ import {
   // Prompts & Engine
   BOW_AGENT_SYSTEM_PROMPT,
   BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT,
+  CONFIG,
+  createShopWebhookHeaders,
 } from '../src/index.js';
 
 import { BowCentralAgentServer } from '../src/server.js';
@@ -223,10 +225,14 @@ async function runExecutiveSuite() {
 
   try {
     // 5a. HTTP POST /api/events/shop
+    const paidPayload = JSON.stringify(paidEvent);
     const webhookRes = await fetch(`http://127.0.0.1:${testPort}/api/events/shop`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(paidEvent),
+      headers: {
+        'Content-Type': 'application/json',
+        ...createShopWebhookHeaders(paidPayload),
+      },
+      body: paidPayload,
     });
 
     assert(webhookRes.status === 200, 'HTTP POST /api/events/shop returns status 200');
@@ -236,7 +242,7 @@ async function runExecutiveSuite() {
     assert(webhookJson.robotCommand?.emotion === 'happy', 'Webhook returned robot command with happy emotion');
 
     // 5b. WebSocket Robot Client Receiving Realtime Events
-    const wsRobot = new WebSocket(`ws://127.0.0.1:${testPort}/ws/robot`);
+    const wsRobot = new WebSocket(`ws://127.0.0.1:${testPort}/ws/robot?secret=${encodeURIComponent(CONFIG.robotGatewaySecret)}`);
     await new Promise<void>((resolve) => wsRobot.on('open', () => resolve()));
 
     const receivedWsPromise = new Promise<any>((resolve) => {
@@ -249,10 +255,14 @@ async function runExecutiveSuite() {
     });
 
     // Post an event while Robot WebSocket is connected
+    const stockPayload = JSON.stringify(stockEvent);
     await fetch(`http://127.0.0.1:${testPort}/api/events/shop`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(stockEvent),
+      headers: {
+        'Content-Type': 'application/json',
+        ...createShopWebhookHeaders(stockPayload),
+      },
+      body: stockPayload,
     });
 
     const receivedWsMsg = await Promise.race([

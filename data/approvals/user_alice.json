@@ -1,0 +1,14 @@
+[
+  {
+    "id": "appr_1788701302272_aa1eda",
+    "ownerUserId": "user_alice",
+    "actionName": "test_multi_idem_tool",
+    "targetDomain": "shop",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "user_alice",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:28:22.272Z",
+    "expiresAt": "2026-09-06T13:33:22.272Z"
+  }
+]

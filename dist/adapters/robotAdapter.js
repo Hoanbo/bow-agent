@@ -2,6 +2,7 @@ import { processAgentMessage } from '../core/engine.js';
 import { ttsEngine } from '../speech/ttsEngine.js';
 import { sttEngine } from '../speech/sttEngine.js';
 import { fullDuplexAudioHub } from '../speech/fullDuplexAudioHub.js';
+import { globalRobotSafety } from '../embodied/robotSafetyController.js';
 export class RobotChannelAdapter {
     online = true;
     eventListeners = new Set();
@@ -13,6 +14,19 @@ export class RobotChannelAdapter {
         activeSensors: ['ultrasonic', 'imu', 'microphone', 'oled_eye'],
         timestamp: new Date().toISOString(),
     };
+    sanitizeServoCommand(servo) {
+        if (!servo)
+            return undefined;
+        const motion = globalRobotSafety.validateAndClampMotion(servo.panAngle || 0, servo.tiltAngle || 0);
+        if (!motion.allowed) {
+            return { panAngle: 0, tiltAngle: 0, speed: 0 };
+        }
+        return {
+            ...servo,
+            panAngle: motion.safePan,
+            tiltAngle: motion.safeTilt,
+        };
+    }
     constructor() {
         fullDuplexAudioHub.on('bargeIn', (bargeIn) => {
             const interruptCommand = {
@@ -22,7 +36,7 @@ export class RobotChannelAdapter {
                 reason: 'barge_in',
                 text: 'Dạ, em nghe Sếp!',
                 emotion: 'listening',
-                servo: { panAngle: 0, tiltAngle: 10 },
+                servo: this.sanitizeServoCommand({ panAngle: 0, tiltAngle: 10 }),
                 interrupt: {
                     action: 'stop_playback',
                     reason: 'barge_in',
@@ -53,6 +67,10 @@ export class RobotChannelAdapter {
             ...snapshot,
             timestamp: new Date().toISOString(),
         };
+        globalRobotSafety.recordFirmwareHeartbeat({
+            batteryLevel: snapshot.batteryPercent,
+            batteryTempC: snapshot.temperatureCelsius,
+        });
     }
     async getSensorState() {
         return this.currentSensors;
@@ -103,7 +121,7 @@ export class RobotChannelAdapter {
                 format: ttsResult.format,
                 durationEstimateMs: ttsResult.durationEstimateMs,
             },
-            servo,
+            servo: this.sanitizeServoCommand(servo),
             timestamp: new Date().toISOString(),
         };
     }
@@ -164,7 +182,7 @@ export class RobotChannelAdapter {
                 format: ttsResult.format,
                 durationEstimateMs: ttsResult.durationEstimateMs,
             },
-            servo,
+            servo: this.sanitizeServoCommand(servo),
             event,
             timestamp: new Date().toISOString(),
         };

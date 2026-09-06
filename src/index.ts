@@ -117,3 +117,50 @@ export * from './core/multiAgentMesh.js';
 export * from './embodied/soundLocalization.js';
 export * from './embodied/oledEmpathyEngine.js';
 export * from './gateway/telegramGateway.js';
+
+// 14. BOWCON V4.0 — International Level 4.0 Autonomy Governance & Policy Decision Point (PDP)
+export * from './core/policyDecisionPoint.js';
+
+// 15. BOWCON V4.0 — Embodied Robot Physical Safety Controller & Hardware Interlocks
+export * from './embodied/robotSafetyController.js';
+
+// 16. BOWCON V4.0 — Milestone 1.2: Core Agent Loop
+export * from './core/agentLoop.js';
+
+// 17. BOWCON V4.0 — Milestone 1.3.2: Durable Memory Persistence & Runtime Schema Validation
+export * from './core/persistence/durableJsonStore.js';
+export * from './embodied/schemas/bossMemorySchemas.js';
+
+// 18. BOWCON V4.0 — Milestone 1.3.3: Multi-User Durable Memory Partitioning
+export * from './core/persistence/userPartitionResolver.js';
+
+// 19. BOWCON V4.0 — Milestone 1.3.4: Multi-Tenant Approval & Idempotency Durable Storage
+export * from './core/persistence/governanceSchemas.js';
+
+// 20. BOWCON V4.0 — Milestone 1.3.5 & 1.3.6: Agent Voice Runtime & Conversational TTS
+export * from './core/voice/voiceErrors.js';
+export * from './core/voice/voiceConfig.js';
+export * from './core/voice/voiceCapabilities.js';
+export * from './core/voice/voicePersonality.js';
+export * from './core/voice/speechSegmenter.js';
+export * from './core/voice/speechNumberNormalizer.js';
+export * from './core/voice/pronunciationNormalizer.js';
+export * from './core/voice/voiceProsody.js';
+export * from './core/voice/audioAssembler.js';
+export * from './core/voice/speechTextProcessor.js';
+export * from './core/voice/providers/ttsProvider.js';
+export * from './core/voice/providers/mockTtsProvider.js';
+export * from './core/voice/providers/openAiTtsProvider.js';
+export * from './core/voice/providers/elevenLabsProvider.js';
+export * from './core/voice/voiceService.js';
+
+// 21. BOWCON V4.0 — Milestone 1.3.7: Agent Conversation Context & Intelligent Response Memory
+export * from './core/context/conversationContext.js';
+export * from './core/context/contextStore.js';
+export * from './core/context/contextClassifier.js';
+export * from './core/context/topicTracker.js';
+export * from './core/context/referenceResolver.js';
+export * from './core/context/contextRanker.js';
+export * from './core/context/contextCompactor.js';
+export * from './core/context/contextManager.js';
+

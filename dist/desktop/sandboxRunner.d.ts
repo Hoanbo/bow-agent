@@ -20,7 +20,7 @@ export declare class SandboxRunner {
     private timeoutMs;
     constructor(timeoutMs?: number);
     /**
-     * Kiểm tra cú pháp mã code JavaScript/TypeScript
+     * Kiểm tra cú pháp mã code JavaScript/TypeScript an toàn thông qua vm.Script
      */
     validateSyntax(code: string): {
         valid: boolean;

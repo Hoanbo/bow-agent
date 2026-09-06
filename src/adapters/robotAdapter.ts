@@ -4,6 +4,7 @@ import { processAgentMessage } from '../core/engine.js';
 import { ttsEngine } from '../speech/ttsEngine.js';
 import { sttEngine } from '../speech/sttEngine.js';
 import { fullDuplexAudioHub } from '../speech/fullDuplexAudioHub.js';
+import { globalRobotSafety } from '../embodied/robotSafetyController.js';
 import type { AgentContext } from '../core/types.js';
 
 export type RobotEmotion = 'neutral' | 'happy' | 'thinking' | 'surprised' | 'sleeping' | 'listening' | 'speaking' | 'error';
@@ -58,6 +59,19 @@ export class RobotChannelAdapter {
     timestamp: new Date().toISOString(),
   };
 
+  private sanitizeServoCommand(servo?: RobotServoCommand): RobotServoCommand | undefined {
+    if (!servo) return undefined;
+    const motion = globalRobotSafety.validateAndClampMotion(servo.panAngle || 0, servo.tiltAngle || 0);
+    if (!motion.allowed) {
+      return { panAngle: 0, tiltAngle: 0, speed: 0 };
+    }
+    return {
+      ...servo,
+      panAngle: motion.safePan,
+      tiltAngle: motion.safeTilt,
+    };
+  }
+
   constructor() {
     fullDuplexAudioHub.on('bargeIn', (bargeIn) => {
       const interruptCommand: RobotCommandPayload = {
@@ -67,7 +81,7 @@ export class RobotChannelAdapter {
         reason: 'barge_in',
         text: 'Dạ, em nghe Sếp!',
         emotion: 'listening',
-        servo: { panAngle: 0, tiltAngle: 10 },
+        servo: this.sanitizeServoCommand({ panAngle: 0, tiltAngle: 10 }),
         interrupt: {
           action: 'stop_playback',
           reason: 'barge_in',
@@ -75,7 +89,6 @@ export class RobotChannelAdapter {
         },
         timestamp: new Date().toISOString(),
       };
-
 
       for (const listener of this.eventListeners) {
         try {
@@ -88,7 +101,6 @@ export class RobotChannelAdapter {
   }
 
   public isOnline(): boolean {
-
     return this.online;
   }
 
@@ -103,6 +115,10 @@ export class RobotChannelAdapter {
       ...snapshot,
       timestamp: new Date().toISOString(),
     };
+    globalRobotSafety.recordFirmwareHeartbeat({
+      batteryLevel: snapshot.batteryPercent,
+      batteryTempC: snapshot.temperatureCelsius,
+    });
   }
 
   public async getSensorState(): Promise<RobotSensorSnapshot> {
@@ -164,7 +180,7 @@ export class RobotChannelAdapter {
         format: ttsResult.format,
         durationEstimateMs: ttsResult.durationEstimateMs,
       },
-      servo,
+      servo: this.sanitizeServoCommand(servo),
       timestamp: new Date().toISOString(),
     };
   }
@@ -229,7 +245,7 @@ export class RobotChannelAdapter {
         format: ttsResult.format,
         durationEstimateMs: ttsResult.durationEstimateMs,
       },
-      servo,
+      servo: this.sanitizeServoCommand(servo),
       event,
       timestamp: new Date().toISOString(),
     };

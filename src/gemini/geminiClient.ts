@@ -20,20 +20,22 @@ import {
 import { agentAnalytics, normalizeUserDemand } from '../monitoring/agentAnalytics.js';
 import { getSessionContext, rememberProductContext, rememberRecommendedCandidates } from '../core/sessionContext.js';
 import { extractDuration, matchPlanByDuration, resolveMultiIntent } from '../core/intentResolver.js';
+import { memoryStore, type MemoryScope } from '../core/memory.js';
 
-// In-memory conversation history for multi-turn dialogue context
-interface ConversationTurn {
+// In-memory conversation history turn representation for Gemini API payload
+export interface GeminiConversationTurn {
   role: 'user' | 'model';
-  parts: Array<any>;
+  parts: Array<{ text: string }>;
 }
-
-let conversationHistory: ConversationTurn[] = [];
 
 /**
  * Reset lịch sử hội thoại khi người dùng làm mới phiên
+ * In Milestone 1.3.1, clears the session working memory for the given scope without global mutable state.
  */
-export function resetGeminiHistory(): void {
-  conversationHistory = [];
+export function resetGeminiHistory(scope?: MemoryScope | string, userId?: string): void {
+  if (scope) {
+    memoryStore.clearSession(scope, userId);
+  }
 }
 
 /**
@@ -41,14 +43,16 @@ export function resetGeminiHistory(): void {
  */
 export async function processAgentMessageWithGemini(
   userText: string,
-  context: AgentContext
+  context: AgentContext,
+  historyTurns?: GeminiConversationTurn[]
 ): Promise<{ success: boolean; message?: AgentMessage; error?: any }> {
   const apiKey = getGeminiApiKey();
   if (!apiKey) {
     return { success: false, error: new Error('GEMINI_API_KEY_MISSING') };
   }
 
-  const sessionId = getSessionContext().updatedAt.toString();
+  const sessionId = context.sessionId || getSessionContext().updatedAt.toString();
+  const userId = context.userId || undefined;
 
   // Track GEMINI_REQUEST
   agentAnalytics.track({
@@ -70,8 +74,19 @@ export async function processAgentMessageWithGemini(
     const executionPromise = (async (): Promise<{ success: boolean; message?: AgentMessage; error?: any }> => {
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_CONFIG.modelName}:generateContent?key=${apiKey}`;
 
-      // Giới hạn số lượt lịch sử gần nhất theo config
-      const recentHistory = conversationHistory.slice(-GEMINI_CONFIG.maxHistoryTurns * 2);
+      // Giới hạn số lượt lịch sử gần nhất theo config từ caller hoặc từ scoped memoryStore (ZERO GLOBAL STATE)
+      let recentHistory: GeminiConversationTurn[] = [];
+      if (historyTurns && Array.isArray(historyTurns)) {
+        recentHistory = historyTurns.slice(-GEMINI_CONFIG.maxHistoryTurns * 2);
+      } else if (sessionId) {
+        const scope: MemoryScope = { sessionId, userId };
+        const turns = memoryStore.getRecentTurns(scope, GEMINI_CONFIG.maxHistoryTurns * 2);
+        recentHistory = turns.map((t) => ({
+          role: t.sender === 'user' ? 'user' : 'model',
+          parts: [{ text: t.content }],
+        }));
+      }
+
       const contents: any[] = [...recentHistory, { role: 'user', parts: [{ text: userText }] }];
 
       const collectedToolOutputs: GeminiToolExecutionOutput[] = [];
@@ -178,14 +193,9 @@ export async function processAgentMessageWithGemini(
         responseText = 'Chào bạn! Mình có thể hỗ trợ gì cho bạn về các gói tài khoản hôm nay?';
       }
 
-      // Cập nhật bộ nhớ hội thoại đa lượt an toàn (giới hạn tối đa 12 turns, loại bỏ chuỗi quá dài)
-      const sanitizedUserText = userText.slice(0, 300);
-      const sanitizedModelText = responseText.slice(0, 800);
-      conversationHistory.push({ role: 'user', parts: [{ text: sanitizedUserText }] });
-      conversationHistory.push({ role: 'model', parts: [{ text: sanitizedModelText }] });
-      if (conversationHistory.length > 12) {
-        conversationHistory = conversationHistory.slice(-12);
-      }
+      // In Milestone 1.3.1: Zero global mutable history.
+      // GeminiClient is stateless and does NOT mutate any global conversationHistory.
+      // Working memory mutation is managed via MemoryStore and the AgentLoop UPDATE lifecycle stage.
 
       // Track GEMINI_RESPONSE
       agentAnalytics.track({

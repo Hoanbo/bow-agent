@@ -1,3 +1,4 @@
+import 'dotenv/config';
 export interface BowAgentEnvConfig {
     env: 'development' | 'production' | 'test';
     port: number;
@@ -6,6 +7,9 @@ export interface BowAgentEnvConfig {
     geminiModel: string;
     desktopAuthToken: string;
     robotGatewaySecret: string;
+    shopWebhookSecret: string;
+    webhookMaxAgeSeconds: number;
+    dynamicCodeEnabled: boolean;
     edgeTtsVoiceFemale: string;
     edgeTtsVoiceMale: string;
     fasterWhisperUrl: string;
@@ -14,6 +18,8 @@ export interface BowAgentEnvConfig {
     localLlmModel: string;
     localWhisperUrl: string;
     speechPreferLocal: boolean;
+    corsAllowedOrigins: string[];
+    maxRequestBodyBytes: number;
 }
 export declare const CONFIG: BowAgentEnvConfig;
 export declare function isDesktopAuthValid(token?: string): boolean;

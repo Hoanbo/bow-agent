@@ -50,7 +50,15 @@ export class DesktopChannelAdapter {
       const result: DesktopActionResult = await toolRegistry.executeTool(
         toolName,
         req.parameters || {},
-        { channel: 'DESKTOP', authToken: req.authToken }
+        {
+          channel: 'DESKTOP',
+          authToken: req.authToken,
+          role: 'desktop_agent',
+          userId: 'desktop_agent',
+          isOwner: false,
+          executionToken: (req as any).executionToken || req.parameters?.executionToken,
+          idempotencyKey: (req as any).idempotencyKey || req.parameters?.idempotencyKey,
+        }
       );
 
       return {

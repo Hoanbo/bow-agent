@@ -1,0 +1,108 @@
+[
+  {
+    "id": "appr_1788701114491_45d7af",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:25:14.491Z",
+    "expiresAt": "2026-09-06T13:27:14.491Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_5e65e035c232c55a1b23058627719c87200349ecfcdd6d61"
+  },
+  {
+    "id": "appr_1788701143623_6c160d",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:25:43.623Z",
+    "expiresAt": "2026-09-06T13:27:43.623Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:25:43.635Z",
+    "executionToken": "tok_9cf61cf9109bec3c2e4851294ed5275fcadc7daef870f22b"
+  },
+  {
+    "id": "appr_1788701724892_14f08b",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:35:24.892Z",
+    "expiresAt": "2026-09-06T13:37:24.892Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:35:24.905Z",
+    "executionToken": "tok_d525970f92004d184c5579e807eb6252453017bc71efe3ac"
+  },
+  {
+    "id": "appr_1788702856466_7972b0",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:54:16.466Z",
+    "expiresAt": "2026-09-06T13:56:16.466Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_fbe1b457bf5538f5cf73e3f1af13fe55c0132f5669daa7da"
+  },
+  {
+    "id": "appr_1788702978687_139787",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:56:18.687Z",
+    "expiresAt": "2026-09-06T13:58:18.687Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:56:18.699Z",
+    "executionToken": "tok_67ab063fd1b36c4fd2a61ced1846e0469ff971c83d7e4ae4"
+  },
+  {
+    "id": "appr_1788703793662_a386e9",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T14:09:53.662Z",
+    "expiresAt": "2026-09-06T14:11:53.662Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T14:09:53.674Z",
+    "executionToken": "tok_a01c4b79e6c16709a3ea9a7ae8050adbc5822544c16932b9"
+  }
+]

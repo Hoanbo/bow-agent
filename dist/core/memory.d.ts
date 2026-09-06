@@ -1,4 +1,8 @@
 import type { ProductItemResult, PlanItemResult, CategoryItemResult, OrderItemResult } from './types.js';
+export interface MemoryScope {
+    sessionId: string;
+    userId?: string;
+}
 export interface DeferredPurchaseContext {
     intent: 'BUY' | 'RENEW';
     productName?: string;
@@ -26,17 +30,28 @@ export interface SessionMemoryState {
     createdAt: number;
     updatedAt: number;
 }
-declare class MemoryStore {
+export declare class MemoryStore {
     private sessions;
     private maxTurnsPerSession;
-    getOrCreateSession(sessionId: string, userId?: string): SessionMemoryState;
-    addTurn(sessionId: string, turn: ConversationTurn): void;
-    setDeferredContext(sessionId: string, deferred: DeferredPurchaseContext | undefined): void;
-    setProductContext(sessionId: string, product?: ProductItemResult, plan?: PlanItemResult): void;
-    setCategoryContext(sessionId: string, category?: CategoryItemResult): void;
-    setOrderContext(sessionId: string, order?: OrderItemResult): void;
-    clearSession(sessionId: string): void;
-    getRecentTurns(sessionId: string, limit?: number): ConversationTurn[];
+    /**
+     * Resolve composite key for session storage:
+     * Format: `${userId}::${sessionId}`
+     */
+    buildScopeKey(scope: MemoryScope | string, userId?: string): string;
+    getSessionMemory(scope: MemoryScope): SessionMemoryState;
+    appendTurn(scope: MemoryScope, turn: ConversationTurn): void;
+    clearSessionMemory(scope: MemoryScope): void;
+    getOrCreateSession(scope: MemoryScope | string, userId?: string): SessionMemoryState;
+    addTurn(scope: MemoryScope | string, turn: ConversationTurn, userId?: string): void;
+    setDeferredContext(scope: MemoryScope | string, deferred: DeferredPurchaseContext | undefined, userId?: string): void;
+    setProductContext(scope: MemoryScope | string, product?: ProductItemResult, plan?: PlanItemResult, userId?: string): void;
+    setCategoryContext(scope: MemoryScope | string, category?: CategoryItemResult, userId?: string): void;
+    setOrderContext(scope: MemoryScope | string, order?: OrderItemResult, userId?: string): void;
+    clearSession(scope: MemoryScope | string, userId?: string): void;
+    getRecentTurns(scope: MemoryScope | string, limit?: number, userId?: string): ConversationTurn[];
+    getAllSessionKeys(): string[];
 }
 export declare const memoryStore: MemoryStore;
-export {};
+export declare function getSessionMemory(scope: MemoryScope): SessionMemoryState;
+export declare function appendTurn(scope: MemoryScope, turn: ConversationTurn): void;
+export declare function clearSessionMemory(scope: MemoryScope): void;

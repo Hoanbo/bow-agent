@@ -1,6 +1,9 @@
 // tests/test_screen_vision_v3_5.ts
 // BOW AGENT V3.5 — SCREEN VISION ASSISTANT & V2 FAST-PATH TEST SUITE
 
+process.env.NODE_ENV = 'test';
+process.env.BOW_TEST_MODE = '1';
+
 import {
   // Fast Path & Core
   fastPathRouter,

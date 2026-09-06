@@ -1,3 +1,5 @@
+export * from '../security/webhookVerifier.js';
+export * from '../security/requestGuard.js';
 export interface SecurityScanResult {
     isSafe: boolean;
     containsPii: boolean;
@@ -29,3 +31,12 @@ export declare function verifyChannelAccess(auth: AuthContext, requiredPrivilege
  * Zero Auto-Mutation: Generate Cryptographic Decision Fingerprint (SHA-256)
  */
 export declare function generateDecisionFingerprint(actionType: string, payload: any): string;
+/**
+ * Verify a versioned HMAC webhook signature and reject stale requests.
+ * Signature format: `v1=<hex sha256 of timestamp + '.' + raw body>`.
+ */
+export declare function verifyShopWebhookSignature(rawBody: string, timestamp?: string, signature?: string): boolean;
+/**
+ * Generate authenticated HMAC headers for outgoing or test webhooks.
+ */
+export declare function createShopWebhookHeaders(rawBody: string, secret?: string): Record<string, string>;

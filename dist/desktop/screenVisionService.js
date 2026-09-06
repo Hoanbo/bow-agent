@@ -88,7 +88,7 @@ export class ScreenVisionService {
         const query = options.userQuery || 'Ai vừa nhắn tin cho tôi và nội dung tin nhắn là gì?';
         const apiKey = getGeminiApiKey();
         // 1. If Gemini API is not configured or in offline test mode, provide deterministic fallback
-        if (!apiKey) {
+        if (!apiKey || process.env.NODE_ENV === 'test' || process.env.BOW_TEST_MODE === '1') {
             return {
                 success: true,
                 detectedApp: 'Facebook',

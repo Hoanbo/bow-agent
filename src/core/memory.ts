@@ -1,7 +1,13 @@
 // src/core/memory.ts
 // BOW AGENT V3.3 — SHORT-TERM SESSION & LONG-TERM CONTEXT MEMORY
+// BOWCON V4.0 — MILESTONE 1.3.1: SESSION MEMORY ISOLATION & SCOPED WORKING MEMORY
 
 import type { AgentMessage, ProductItemResult, PlanItemResult, CategoryItemResult, OrderItemResult } from './types.js';
+
+export interface MemoryScope {
+  sessionId: string;
+  userId?: string;
+}
 
 export interface DeferredPurchaseContext {
   intent: 'BUY' | 'RENEW';
@@ -33,29 +39,66 @@ export interface SessionMemoryState {
   updatedAt: number;
 }
 
-class MemoryStore {
+export class MemoryStore {
   private sessions = new Map<string, SessionMemoryState>();
   private maxTurnsPerSession = 20;
 
-  public getOrCreateSession(sessionId: string, userId?: string): SessionMemoryState {
-    let session = this.sessions.get(sessionId);
+  /**
+   * Resolve composite key for session storage:
+   * Format: `${userId}::${sessionId}`
+   */
+  public buildScopeKey(scope: MemoryScope | string, userId?: string): string {
+    if (typeof scope === 'object' && scope !== null) {
+      const u = scope.userId && scope.userId.trim() ? scope.userId.trim() : 'anonymous';
+      const s = (scope.sessionId || '').trim();
+      return `${u}::${s}`;
+    }
+    const s = (scope || '').trim();
+    if (userId && userId.trim()) {
+      return `${userId.trim()}::${s}`;
+    }
+    // If no userId provided, check if there's an exact unique existing session with this sessionId
+    const matches = Array.from(this.sessions.values()).filter((session) => session.sessionId === s);
+    if (matches.length === 1 && matches[0].userId) {
+      return `${matches[0].userId}::${s}`;
+    }
+    return `anonymous::${s}`;
+  }
+
+  public getSessionMemory(scope: MemoryScope): SessionMemoryState {
+    return this.getOrCreateSession(scope);
+  }
+
+  public appendTurn(scope: MemoryScope, turn: ConversationTurn): void {
+    this.addTurn(scope, turn);
+  }
+
+  public clearSessionMemory(scope: MemoryScope): void {
+    this.clearSession(scope);
+  }
+
+  public getOrCreateSession(scope: MemoryScope | string, userId?: string): SessionMemoryState {
+    const key = this.buildScopeKey(scope, userId);
+    let session = this.sessions.get(key);
     if (!session) {
+      const resolvedSessionId = typeof scope === 'object' ? scope.sessionId : scope;
+      const resolvedUserId = typeof scope === 'object' ? scope.userId : userId;
       session = {
-        sessionId,
-        userId,
+        sessionId: resolvedSessionId,
+        userId: resolvedUserId,
         turns: [],
         candidateHistory: [],
         userPreferences: {},
         createdAt: Date.now(),
         updatedAt: Date.now(),
       };
-      this.sessions.set(sessionId, session);
+      this.sessions.set(key, session);
     }
     return session;
   }
 
-  public addTurn(sessionId: string, turn: ConversationTurn): void {
-    const session = this.getOrCreateSession(sessionId);
+  public addTurn(scope: MemoryScope | string, turn: ConversationTurn, userId?: string): void {
+    const session = this.getOrCreateSession(scope, userId);
     session.turns.push(turn);
     if (session.turns.length > this.maxTurnsPerSession) {
       session.turns.shift();
@@ -63,40 +106,58 @@ class MemoryStore {
     session.updatedAt = Date.now();
   }
 
-  public setDeferredContext(sessionId: string, deferred: DeferredPurchaseContext | undefined): void {
-    const session = this.getOrCreateSession(sessionId);
+  public setDeferredContext(scope: MemoryScope | string, deferred: DeferredPurchaseContext | undefined, userId?: string): void {
+    const session = this.getOrCreateSession(scope, userId);
     session.deferredContext = deferred;
     session.updatedAt = Date.now();
   }
 
-  public setProductContext(sessionId: string, product?: ProductItemResult, plan?: PlanItemResult): void {
-    const session = this.getOrCreateSession(sessionId);
+  public setProductContext(scope: MemoryScope | string, product?: ProductItemResult, plan?: PlanItemResult, userId?: string): void {
+    const session = this.getOrCreateSession(scope, userId);
     session.lastMentionedProduct = product;
     session.lastMentionedPlan = plan;
     session.updatedAt = Date.now();
   }
 
-  public setCategoryContext(sessionId: string, category?: CategoryItemResult): void {
-    const session = this.getOrCreateSession(sessionId);
+  public setCategoryContext(scope: MemoryScope | string, category?: CategoryItemResult, userId?: string): void {
+    const session = this.getOrCreateSession(scope, userId);
     session.lastMentionedCategory = category;
     session.updatedAt = Date.now();
   }
 
-  public setOrderContext(sessionId: string, order?: OrderItemResult): void {
-    const session = this.getOrCreateSession(sessionId);
+  public setOrderContext(scope: MemoryScope | string, order?: OrderItemResult, userId?: string): void {
+    const session = this.getOrCreateSession(scope, userId);
     session.lastMentionedOrder = order;
     session.updatedAt = Date.now();
   }
 
-  public clearSession(sessionId: string): void {
-    this.sessions.delete(sessionId);
+  public clearSession(scope: MemoryScope | string, userId?: string): void {
+    const key = this.buildScopeKey(scope, userId);
+    this.sessions.delete(key);
   }
 
-  public getRecentTurns(sessionId: string, limit = 8): ConversationTurn[] {
-    const session = this.sessions.get(sessionId);
+  public getRecentTurns(scope: MemoryScope | string, limit = 8, userId?: string): ConversationTurn[] {
+    const key = this.buildScopeKey(scope, userId);
+    const session = this.sessions.get(key);
     if (!session) return [];
     return session.turns.slice(-limit);
+  }
+
+  public getAllSessionKeys(): string[] {
+    return Array.from(this.sessions.keys());
   }
 }
 
 export const memoryStore = new MemoryStore();
+
+export function getSessionMemory(scope: MemoryScope): SessionMemoryState {
+  return memoryStore.getSessionMemory(scope);
+}
+
+export function appendTurn(scope: MemoryScope, turn: ConversationTurn): void {
+  memoryStore.appendTurn(scope, turn);
+}
+
+export function clearSessionMemory(scope: MemoryScope): void {
+  memoryStore.clearSessionMemory(scope);
+}

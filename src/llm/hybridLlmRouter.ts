@@ -8,7 +8,12 @@
 import { CONFIG } from '../config.js';
 import { isGeminiConfigured } from '../gemini/config.js';
 import { localLlmProvider } from './localLlmProvider.js';
+import { globalProviderHealth, ProviderHealthMonitor } from './providerHealth.js';
+import { globalCircuitBreaker, CircuitBreaker } from './resilience.js';
 import type { LlmResponse, LlmChatMessage } from '../contracts/llmProvider.js';
+
+export * from './providerHealth.js';
+export * from './resilience.js';
 
 export interface HybridRoutingResult extends LlmResponse {
   activeBackend: 'cloud_gemini' | 'local_slm_rx580';
@@ -21,20 +26,35 @@ export class HybridLlmRouter {
    * Check health and availability of both backends
    */
   public getHealthStatus() {
-    const cloudAvailable = isGeminiConfigured();
-    const localAvailable = localLlmProvider.isConfigured();
+    const cloudHealth = globalProviderHealth.getStatus('cloud_gemini');
+    const localHealth = globalProviderHealth.getStatus('local_slm_rx580');
+    const breakerCanExecute = globalCircuitBreaker.canExecute();
+    const breakerState = globalCircuitBreaker.getState();
+
+    const cloudAvailable = cloudHealth.status !== 'unavailable' && breakerCanExecute;
+    const localAvailable = localHealth.status !== 'unavailable';
+
+    let overallStatus: 'operational' | 'degraded' | 'unavailable' = 'degraded';
+    if (cloudAvailable && localAvailable) {
+      overallStatus = 'operational';
+    } else if (!cloudAvailable && !localAvailable) {
+      overallStatus = 'unavailable';
+    }
 
     return {
       activeBackend: cloudAvailable ? 'cloud_gemini' : 'local_slm_rx580',
       cloudAvailable,
       localAvailable,
-      preferLocal: false, // Default to Cloud when available, failover to Local
-      status: 'operational',
+      circuitBreakerState: breakerState,
+      cloudHealth,
+      localHealth,
+      preferLocal: false,
+      status: overallStatus,
     };
   }
 
   /**
-   * Route user message with automatic smart failover to local engine
+   * Route user message with bounded timeout, circuit breaker guard, and automatic failover
    */
   public async routeMessage(
     userText: string,
@@ -43,46 +63,92 @@ export class HybridLlmRouter {
     forceLocal: boolean = false
   ): Promise<HybridRoutingResult> {
     const startTime = Date.now();
+    const cloudHealth = globalProviderHealth.getStatus('cloud_gemini');
+    const canUseCloud = !forceLocal && isGeminiConfigured() && cloudHealth.status !== 'unavailable' && globalCircuitBreaker.canExecute();
 
-    // 1. If forced local or Gemini is not configured, execute via Local SLM immediately
-    if (forceLocal || !isGeminiConfigured()) {
-      const localRes = await localLlmProvider.sendMessage(userText, history, functionDeclarations);
-      return {
-        ...localRes,
-        activeBackend: 'local_slm_rx580',
-        latencyMs: Date.now() - startTime,
-        failoverTriggered: !forceLocal,
-      };
+    // 1. If forced local or cloud is not available/breaker tripped, route to Local SLM directly
+    if (!canUseCloud) {
+      const localStart = Date.now();
+      try {
+        const localRes = await localLlmProvider.sendMessage(userText, history, functionDeclarations);
+        globalProviderHealth.recordSuccess('local_slm_rx580', Date.now() - localStart);
+        return {
+          ...localRes,
+          activeBackend: 'local_slm_rx580',
+          latencyMs: Date.now() - startTime,
+          failoverTriggered: !forceLocal,
+        };
+      } catch (err: any) {
+        globalProviderHealth.recordFailure('local_slm_rx580', err?.message || 'LOCAL_EXECUTION_ERROR', Date.now() - localStart);
+        throw err;
+      }
     }
 
-    // 2. Attempt Cloud Gemini execution with failover guard
+    // 2. Attempt Cloud Gemini execution with Circuit Breaker and bounded timeout
     try {
-      const { processAgentMessageWithGemini } = await import('../gemini/geminiClient.js');
-      const geminiRes = await processAgentMessageWithGemini(userText, {
-        userId: 'owner',
-        role: 'owner',
-        channel: 'ROBOT',
-        isAuthenticated: true,
-      });
+      const geminiRes = await globalCircuitBreaker.execute(
+        async () => {
+          let timeoutTimer: NodeJS.Timeout;
+          const timeoutPromise = new Promise<never>((_, reject) => {
+            timeoutTimer = setTimeout(() => reject(new Error('GEMINI_TIMEOUT_5000MS')), 5000);
+          });
 
-      return {
-        success: geminiRes.success,
-        text: geminiRes.message?.content || '',
-        activeBackend: 'cloud_gemini',
-        latencyMs: Date.now() - startTime,
-        failoverTriggered: false,
-        rawResponse: geminiRes,
-      };
-    } catch {
+          const executionPromise = (async () => {
+            const { processAgentMessageWithGemini } = await import('../gemini/geminiClient.js');
+            return await processAgentMessageWithGemini(userText, {
+              userId: 'owner',
+              role: 'owner',
+              channel: 'ROBOT',
+              isAuthenticated: true,
+            });
+          })();
 
-      // 3. Cloud failed (network loss, API limit, DNS timeout) -> Seamless 0ms Failover to Local SLM!
+          try {
+            const res = await Promise.race([executionPromise, timeoutPromise]);
+            if (!res.success || !res.message) {
+              throw new Error(res.error || 'GEMINI_EMPTY_RESPONSE');
+            }
+            return res;
+          } finally {
+            clearTimeout(timeoutTimer!);
+          }
+        },
+        async () => {
+          return null; // Signals circuit breaker tripped or fallback needed
+        }
+      );
+
+      if (geminiRes && geminiRes.success && geminiRes.message) {
+        const latencyMs = Date.now() - startTime;
+        globalProviderHealth.recordSuccess('cloud_gemini', latencyMs);
+        return {
+          success: true,
+          text: geminiRes.message.content || '',
+          activeBackend: 'cloud_gemini',
+          latencyMs,
+          failoverTriggered: false,
+          rawResponse: geminiRes,
+        };
+      }
+    } catch (err: any) {
+      const latencyMs = Date.now() - startTime;
+      globalProviderHealth.recordFailure('cloud_gemini', err?.message || 'GEMINI_FAIL', latencyMs);
+    }
+
+    // 3. Cloud failed or timed out -> Fast failover to Local SLM with telemetry
+    const localStart = Date.now();
+    try {
       const fallbackRes = await localLlmProvider.sendMessage(userText, history, functionDeclarations);
+      globalProviderHealth.recordSuccess('local_slm_rx580', Date.now() - localStart);
       return {
         ...fallbackRes,
         activeBackend: 'local_slm_rx580',
         latencyMs: Date.now() - startTime,
         failoverTriggered: true,
       };
+    } catch (localErr: any) {
+      globalProviderHealth.recordFailure('local_slm_rx580', localErr?.message || 'LOCAL_FAIL', Date.now() - localStart);
+      throw localErr;
     }
   }
 }

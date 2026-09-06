@@ -4,6 +4,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { toolRegistry } from '../tools/registry.js';
+import { CONFIG } from '../config.js';
+import { globalIsolatedRunner } from './isolatedRunner.js';
+
+export * from './isolatedRunner.js';
 
 export interface DynamicSkill {
   id: string; // e.g., "skill_hardware_calc", "skill_gold_tracker"
@@ -16,6 +20,8 @@ export interface DynamicSkill {
   updatedAt: string;
   executionCount: number;
   lastExecutionSuccess?: boolean;
+  signature?: string;
+  isQuarantined?: boolean;
 }
 
 const DEFAULT_SKILLS_DIR = path.resolve(process.cwd(), 'data', 'dynamicSkills');
@@ -23,11 +29,20 @@ const DEFAULT_SKILLS_DIR = path.resolve(process.cwd(), 'data', 'dynamicSkills');
 export class DynamicSkillManager {
   private skillsDir: string;
   private skills: Map<string, DynamicSkill> = new Map();
+  private dynamicCodeOverride: boolean | null = null;
 
   constructor(customDir?: string) {
     this.skillsDir = customDir || DEFAULT_SKILLS_DIR;
     this.initStorage();
     this.loadAllSkills();
+  }
+
+  public setDynamicCodeEnabled(enabled: boolean): void {
+    this.dynamicCodeOverride = enabled;
+  }
+
+  public isDynamicCodeEnabled(): boolean {
+    return this.dynamicCodeOverride !== null ? this.dynamicCodeOverride : CONFIG.dynamicCodeEnabled;
   }
 
   private initStorage(): void {
@@ -36,14 +51,48 @@ export class DynamicSkillManager {
     }
   }
 
+  private validateCodeSafety(code: string): void {
+    const forbiddenPatterns = [
+      /\bprocess\.env\b/i,
+      /\bchild_process\b/i,
+      /\bfs\b/i,
+      /\brequire\s*\(/i,
+      /\bimport\s*\(/i,
+      /\bprocess\.exit\b/i,
+    ];
+    for (const pattern of forbiddenPatterns) {
+      if (pattern.test(code)) {
+        throw new Error(`DYNAMIC_CODE_SECURITY_VIOLATION: Code contains forbidden pattern: ${pattern}`);
+      }
+    }
+  }
+
   private loadAllSkills(): void {
+    if (!this.isDynamicCodeEnabled()) {
+      console.warn('[DynamicSkillManager] Dynamic code is disabled by production policy.');
+      return;
+    }
     try {
       const files = fs.readdirSync(this.skillsDir);
+      const secret = CONFIG.shopWebhookSecret || 'bow_dynamic_skill_secret';
       for (const file of files) {
         if (file.endsWith('.json')) {
           const filePath = path.join(this.skillsDir, file);
           const raw = fs.readFileSync(filePath, 'utf8');
           const skill: DynamicSkill = JSON.parse(raw);
+
+          // Verify artifact signature if present
+          if (skill.signature) {
+            const isValid = globalIsolatedRunner.verifySkillArtifact(skill.id, skill.code, skill.signature, secret);
+            if (!isValid) {
+              console.error(`[DynamicSkillManager] Signature mismatch for skill "${skill.id}". Quarantined.`);
+              globalIsolatedRunner.quarantineSkill(skill.id);
+              skill.isQuarantined = true;
+              this.skills.set(skill.id, skill);
+              continue; // Do not register quarantined skill
+            }
+          }
+
           this.skills.set(skill.id, skill);
           this.hotRegisterToToolRegistry(skill);
         }
@@ -73,18 +122,30 @@ export class DynamicSkillManager {
 
   /**
    * Thêm hoặc cập nhật một kỹ năng mới
+   * Thêm hoặc cập nhật một kỹ năng mới với chữ ký số toàn vẹn
    */
   public registerSkill(skillDraft: Omit<DynamicSkill, 'createdAt' | 'updatedAt' | 'executionCount'>): DynamicSkill {
+    if (!this.isDynamicCodeEnabled()) {
+      throw new Error('DYNAMIC_CODE_DISABLED_BY_POLICY');
+    }
+    this.validateCodeSafety(skillDraft.code);
+
+    const secret = CONFIG.shopWebhookSecret || 'bow_dynamic_skill_secret';
+    const signature = globalIsolatedRunner.signSkillArtifact(skillDraft.id, skillDraft.code, secret);
+
     const skill: DynamicSkill = {
       ...skillDraft,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       executionCount: 0,
+      signature,
+      isQuarantined: false,
     };
 
     this.skills.set(skill.id, skill);
 
     // Lưu ra đĩa
+    // Lưu ra đĩa kèm chữ ký
     const filePath = path.join(this.skillsDir, `${skill.id}.json`);
     fs.writeFileSync(filePath, JSON.stringify(skill, null, 2), 'utf8');
 
@@ -109,6 +170,12 @@ export class DynamicSkillManager {
     args: Record<string, any>,
     context?: any
   ): Promise<{ success: boolean; result?: any; error?: string; executionTimeMs: number }> {
+    if (!this.isDynamicCodeEnabled()) {
+      return { success: false, error: 'DYNAMIC_CODE_DISABLED_BY_POLICY', executionTimeMs: 0 };
+    }
+    if (globalIsolatedRunner.isQuarantined(id)) {
+      return { success: false, error: `SKILL_QUARANTINED: Skill "${id}" is quarantined due to security or integrity violation.`, executionTimeMs: 0 };
+    }
     const skill = this.skills.get(id);
     if (!skill) {
       return { success: false, error: `Skill "${id}" không tồn tại trong kho kỹ năng động.`, executionTimeMs: 0 };
@@ -116,14 +183,12 @@ export class DynamicSkillManager {
 
     const startTime = Date.now();
     try {
-      // Thực thi code thông qua Function constructor có bảo vệ
-      const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
-      const runner = new AsyncFunction('args', 'context', skill.code);
-
-      const result = await Promise.race([
-        runner(args, context),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('Skill execution timed out (limit: 5000ms)')), 5000)),
-      ]);
+      // Thực thi code thông qua M3 Isolated Sandbox Runner (loại bỏ hoàn toàn AsyncFunction trên host)
+      const sandboxRes = await globalIsolatedRunner.executeInSandbox(skill.code, { args, context });
+      if (!sandboxRes.success) {
+        throw new Error(sandboxRes.error || 'Lỗi thực thi mã trong sandbox');
+      }
+      const result = sandboxRes.result;
 
       const executionTimeMs = Date.now() - startTime;
       skill.executionCount++;

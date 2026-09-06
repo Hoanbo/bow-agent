@@ -24,6 +24,15 @@ export class LocalLlmProvider {
      */
     async sendMessage(userText, history, functionDeclarations) {
         const endpoint = `${this.localUrl.replace(/\/$/, '')}/chat/completions`;
+        // Fast-Path first: Sub-millisecond deterministic responses (0ms without network overhead)
+        const fastResult = fastPathRouter.evaluate(userText);
+        if (fastResult.matched && fastResult.textResponse) {
+            return {
+                success: true,
+                text: fastResult.textResponse,
+                rawResponse: { mode: 'local_deterministic_fast_path' },
+            };
+        }
         // Format conversation history for standard local endpoint
         const messages = (history || []).map(m => ({
             role: m.role === 'model' ? 'assistant' : m.role,
@@ -34,6 +43,7 @@ export class LocalLlmProvider {
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                signal: AbortSignal.timeout(2000),
                 body: JSON.stringify({
                     model: this.modelName,
                     messages,

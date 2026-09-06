@@ -4,15 +4,26 @@ import path from 'node:path';
 // Master Ecosystem Synchronizer
 // Synchronizes freshly compiled @bow/agent (dist & types) across all BOW projects safely
 
-const rootDir = path.resolve('C:/BOW');
-const sourceDist = path.join(rootDir, 'bow-agent', 'dist');
-const sourcePkg = path.join(rootDir, 'bow-agent', 'package.json');
+const currentDir = process.cwd();
+const parentDir = path.dirname(currentDir);
+const candidateRoots = [parentDir, path.resolve('C:/BOW')];
+const activeRootDir = candidateRoots.find(r => fs.existsSync(path.join(r, 'bow-agent', 'package.json'))) || currentDir;
 
-const targets = [
-  path.join(rootDir, 'shopofbow', 'node_modules', '@bow', 'agent', 'dist'),
-  path.join(rootDir, 'bow-test', 'node_modules', '@bow', 'agent', 'dist'),
-  path.join(rootDir, 'bow-mobile', 'node_modules', '@bow', 'agent', 'dist'),
-];
+const sourceDist = fs.existsSync(path.join(currentDir, 'dist'))
+  ? path.join(currentDir, 'dist')
+  : path.join(activeRootDir, 'bow-agent', 'dist');
+const sourcePkg = fs.existsSync(path.join(currentDir, 'package.json'))
+  ? path.join(currentDir, 'package.json')
+  : path.join(activeRootDir, 'bow-agent', 'package.json');
+
+const targets = [];
+for (const root of candidateRoots) {
+  targets.push(
+    path.join(root, 'shopofbow', 'node_modules', '@bow', 'agent', 'dist'),
+    path.join(root, 'bow-test', 'node_modules', '@bow', 'agent', 'dist'),
+    path.join(root, 'bow-mobile', 'node_modules', '@bow', 'agent', 'dist')
+  );
+}
 
 console.log('[ECOSYSTEM-SYNC] Checking source build at:', sourceDist);
 

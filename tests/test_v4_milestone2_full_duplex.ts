@@ -6,6 +6,7 @@ import {
   fullDuplexAudioHub,
   robotChannelAdapter,
   type RobotCommandPayload,
+  CONFIG,
 } from '../src/index.js';
 import { BowCentralAgentServer } from '../src/server.js';
 
@@ -121,7 +122,7 @@ async function runFullDuplexSuite() {
   await server.start();
 
   try {
-    const ws = new WebSocket(`ws://127.0.0.1:${testServerPort}/ws/audio-stream`);
+    const ws = new WebSocket(`ws://127.0.0.1:${testServerPort}/ws/audio-stream?secret=${encodeURIComponent(CONFIG.robotGatewaySecret)}`);
 
     await new Promise<void>((resolve, reject) => {
       ws.on('open', resolve);

@@ -39,8 +39,9 @@ export class AgentEngine {
             authToken: input.authToken,
             ...input.context,
         };
+        const scope = { sessionId, userId: fullContext.userId || undefined };
         // 3. Record User Turn in Memory
-        memoryStore.addTurn(sessionId, {
+        memoryStore.addTurn(scope, {
             id: 'turn_u_' + Date.now(),
             sender: 'user',
             content: secScan.sanitizedText,
@@ -49,7 +50,7 @@ export class AgentEngine {
         // 4. Process with Core Engine (V3 Gemini -> V2 Deterministic Fallback)
         const message = await processCoreAgentMessage(secScan.sanitizedText, fullContext);
         // 5. Record Agent Turn in Memory
-        memoryStore.addTurn(sessionId, {
+        memoryStore.addTurn(scope, {
             id: 'turn_a_' + Date.now(),
             sender: 'agent',
             content: message.content,

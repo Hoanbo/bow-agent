@@ -1,4 +1,4 @@
-// src/services/agent/gemini/config.ts
+// src/gemini/config.ts
 // Single source of truth configuration for BOW Agent V3 (Gemini Integration)
 
 export interface GeminiConfig {
@@ -12,7 +12,11 @@ export interface GeminiConfig {
 export const GEMINI_CONFIG: GeminiConfig = {
   // Model có thể dễ dàng thay đổi tại một nơi duy nhất:
   // 'gemini-3.6-flash' (nhanh, thông minh, hỗ trợ function calling xuất sắc)
-  modelName: 'gemini-3.6-flash',
+  // Kept in sync with GEMINI_MODEL so deployments can select a supported
+  // production model without a source-code change.
+  modelName: typeof process !== 'undefined' && process.env.GEMINI_MODEL?.trim()
+    ? process.env.GEMINI_MODEL.trim()
+    : 'gemini-3.6-flash',
   timeoutMs: 8000, // 8s timeout guard (fails fast to deterministic V2 on free-tier lag)
   maxHistoryTurns: 8, // Lưu trữ tối đa 8 lượt hội thoại gần nhất
   temperature: 0.3, // Nhiệt độ thấp để giảm thiểu ảo giác (hallucination)

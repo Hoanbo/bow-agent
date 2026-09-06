@@ -1,3 +1,4 @@
+import { DurableJsonStore } from '../core/persistence/durableJsonStore.js';
 export interface BossProject {
     id: string;
     name: string;
@@ -29,29 +30,34 @@ export interface BossProfile {
     lastBreakReminderTimestamp: number;
 }
 export declare class BossMemoryHub {
-    private profile;
-    private filePath;
-    constructor(customFilePath?: string);
-    private getDefaultProfile;
-    private loadMemory;
-    saveMemory(profileToSave?: BossProfile): void;
-    getProfile(): BossProfile;
+    readonly baseDir: string;
+    readonly legacyFilePath: string;
+    private singleFileOverride?;
+    private stores;
+    constructor(customBaseDirOrFilePath?: string, customLegacyFilePathOrAllowedDir?: string);
+    /**
+     * Resolve or initialize the isolated DurableJsonStore for the specified user.
+     */
+    getStore(userId?: string): DurableJsonStore<BossProfile>;
+    getDefaultProfile(userId?: string): BossProfile;
+    getProfile(userId?: string): BossProfile;
+    saveMemory(userIdOrProfile: string | BossProfile, maybeProfile?: BossProfile): void;
     /**
      * Ghi nhớ một sở thích hoặc thói quen mới của Sếp
      */
-    rememberHabit(key: keyof BossHabits, value: any): void;
+    rememberHabit(userIdOrKey: string, keyOrValue: any, maybeValue?: any): void;
     /**
      * Ghi nhớ hoặc cập nhật một dự án nghiên cứu của Sếp
      */
-    addOrUpdateProject(project: Omit<BossProject, 'updatedAt'>): BossProject;
+    addOrUpdateProject(userIdOrProject: string | Omit<BossProject, 'updatedAt'>, maybeProject?: Omit<BossProject, 'updatedAt'>): BossProject;
     /**
      * Thêm lưu ý sức khỏe
      */
-    addHealthNote(note: string): void;
+    addHealthNote(userIdOrNote: string, maybeNote?: string): void;
     /**
      * Kiểm tra xem đã đến lúc nhắc Sếp đứng dậy nghỉ ngơi chưa (mặc định 45 phút)
      */
-    checkHealthBreakNeeded(): {
+    checkHealthBreakNeeded(userId?: string): {
         needed: boolean;
         minutesSitting: number;
         message?: string;
@@ -59,11 +65,11 @@ export declare class BossMemoryHub {
     /**
      * Truy xuất ngữ cảnh tóm tắt về Sếp để nạp vào Prompt
      */
-    getPromptContext(): string;
+    getPromptContext(userId?: string): string;
     /**
      * Tự động trích xuất thông tin mới từ câu nói của Sếp (Extraction Heuristics)
      */
-    extractFactFromText(text: string): {
+    extractFactFromText(text: string, userId?: string): {
         extracted: boolean;
         category?: string;
         summary?: string;

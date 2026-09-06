@@ -1,0 +1,74 @@
+[
+  {
+    "id": "appr_1788701095865_05bb62",
+    "ownerUserId": "SubAgent-Shop",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "SubAgent-Shop",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:24:55.866Z",
+    "expiresAt": "2026-09-06T13:25:55.866Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:24:55.899Z",
+    "executionToken": "tok_f4b78737ac74cd2a752b8941a712f2a25bf0a0cd7c3fbef8"
+  },
+  {
+    "id": "appr_1788701713584_0b5f8d",
+    "ownerUserId": "SubAgent-Shop",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "SubAgent-Shop",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:35:13.585Z",
+    "expiresAt": "2026-09-06T13:36:13.585Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:35:13.607Z",
+    "executionToken": "tok_dc2167f4002e0d1637167fc9febbf813dc6b8eec96a0b230"
+  },
+  {
+    "id": "appr_1788702846766_f1f10b",
+    "ownerUserId": "SubAgent-Shop",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "SubAgent-Shop",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:54:06.766Z",
+    "expiresAt": "2026-09-06T13:55:06.766Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:54:06.790Z",
+    "executionToken": "tok_def5c9bec8692cae6a24fab0a975bc91f3f1bd289caf76d8"
+  },
+  {
+    "id": "appr_1788703785011_20be64",
+    "ownerUserId": "SubAgent-Shop",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "SubAgent-Shop",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T14:09:45.011Z",
+    "expiresAt": "2026-09-06T14:10:45.011Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T14:09:45.034Z",
+    "executionToken": "tok_3e2b3f6cf45b1c7fa207905dade30455a74c8f29bfad80d6"
+  }
+]

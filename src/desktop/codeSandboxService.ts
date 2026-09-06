@@ -5,6 +5,8 @@
 // in an isolated, secure, timeout-guarded environment to answer ANY ad-hoc calculation,
 // data transformation, or custom query without requiring hardcoded tools.
 
+import { CONFIG } from '../config.js';
+
 export interface CodeSandboxOptions {
   code: string;
   language?: 'javascript' | 'typescript' | 'js' | 'ts';
@@ -26,6 +28,15 @@ export class CodeSandboxService {
    */
   public async executeCode(options: CodeSandboxOptions): Promise<CodeSandboxExecutionResult> {
     const startTime = Date.now();
+    if (!CONFIG.dynamicCodeEnabled) {
+      return {
+        success: false,
+        stdout: '',
+        result: null,
+        error: 'DYNAMIC_CODE_DISABLED: Dynamic code execution is disabled by policy in this environment',
+        executionTimeMs: Date.now() - startTime,
+      };
+    }
     const timeout = options.timeoutMs || 5000; // 5s timeout guard against infinite loops
     const logs: string[] = [];
 
@@ -66,6 +77,36 @@ export class CodeSandboxService {
       ...(options.initialContext || {}),
     };
 
+    // Static security scan to reject forbidden host primitives
+    const FORBIDDEN_TOKENS = [
+      /\bprocess\b/,
+      /\brequire\b/,
+      /\bimport\b/,
+      /\bfs\b/,
+      /\bchild_process\b/,
+      /\bexec\b/,
+      /\bspawn\b/,
+      /\beval\b/,
+      /\bFunction\b/,
+      /\bAsyncFunction\b/,
+      /\b__proto__\b/,
+      /\bprototype\b/,
+      /\bglobal\b/,
+      /\bglobalThis\b/,
+      /\bfetch\b/,
+      /\bnet\b/,
+      /\bdgram\b/,
+    ];
+    if (FORBIDDEN_TOKENS.some(token => token.test(options.code))) {
+      return {
+        success: false,
+        stdout: '',
+        result: null,
+        error: 'SECURITY_VIOLATION: Code contains forbidden system or network primitives',
+        executionTimeMs: Date.now() - startTime,
+      };
+    }
+
     try {
       let evalResult: any;
       if (typeof process !== 'undefined' && process.versions?.node) {
@@ -89,8 +130,13 @@ export class CodeSandboxService {
           displayErrors: true,
         });
       } else {
-        const fn = new Function(...Object.keys(sandboxEnv), `return (async () => { ${options.code} })();`);
-        evalResult = await fn(...Object.values(sandboxEnv));
+        return {
+          success: false,
+          stdout: '',
+          result: null,
+          error: 'SANDBOX_UNAVAILABLE: Host Function execution is strictly forbidden by Level 4 policy',
+          executionTimeMs: Date.now() - startTime,
+        };
       }
 
       // Handle thenable across VM realms safely

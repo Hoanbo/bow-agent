@@ -51,8 +51,11 @@ export class WebAdapter {
 
     const message: AgentMessage = await processAgentMessage(rawQuery, agentCtx);
 
-    const intent = message.data?.type || 'GENERAL';
     const actionCard = message.action || (message.actions && message.actions.length > 0 ? message.actions[0] : null);
+    let intent = message.data?.type || 'GENERAL';
+    if (actionCard?.type === 'NAVIGATE_CHECKOUT') {
+      intent = 'buy_checkout';
+    }
     const knowledgeGap = message.data?.type === 'knowledge_gap' || false;
     const adminData = (agentCtx.role === 'admin' || agentCtx.role === 'owner') ? message.data : undefined;
 

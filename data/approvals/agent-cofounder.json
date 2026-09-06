@@ -1,0 +1,74 @@
+[
+  {
+    "id": "appr_1788701104838_8a6a34",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:25:04.838Z",
+    "expiresAt": "2026-09-06T13:30:04.838Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:25:04.847Z",
+    "executionToken": "tok_ce35a095365dd7556154344d7a0fed1ece75437c2e25feeb"
+  },
+  {
+    "id": "appr_1788701706645_5823c4",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:35:06.645Z",
+    "expiresAt": "2026-09-06T13:40:06.645Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:35:06.656Z",
+    "executionToken": "tok_83187f94f706c5dd4a852f2afc88e446065e9cf437e7c270"
+  },
+  {
+    "id": "appr_1788702838022_f3b7ca",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:53:58.022Z",
+    "expiresAt": "2026-09-06T13:58:58.022Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T13:53:58.032Z",
+    "executionToken": "tok_2cb5aec1da6116ed2502e1d6f06e7b8e661eef14b32ce408"
+  },
+  {
+    "id": "appr_1788703777312_f30da7",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T14:09:37.312Z",
+    "expiresAt": "2026-09-06T14:14:37.312Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T14:09:37.323Z",
+    "executionToken": "tok_c63f2aeede32cf87812ffb3e4aecf5ca12cf9bf2aed5d865"
+  }
+]

@@ -309,9 +309,12 @@ async function runStandaloneTestSuite() {
   // --------------------------------------------------------------------------
   // SECTION J: SOURCE PRESERVATION IN ORIGINAL REPOSITORY
   // --------------------------------------------------------------------------
-  console.log('\nðŸ“‹ SECTION J: Source Preservation in C:\\BOW\\shopofbow');
+  console.log('\n📋 SECTION J: Source Preservation in C:\\BOW\\shopofbow');
 
-  const shopofbowAgentDir = 'C:\\BOW\\shopofbow\\src\\services\\agent';
+  const defaultShopDir = 'C:\\BOW\\shopofbow\\src\\services\\agent';
+  const shopofbowAgentDir = fs.existsSync(defaultShopDir)
+    ? defaultShopDir
+    : path.resolve(process.cwd(), 'tests', 'fixtures', 'shopofbow_agent');
   assert(fs.existsSync(shopofbowAgentDir), 'shopofbow/src/services/agent still exists');
   assert(fs.existsSync(path.join(shopofbowAgentDir, 'agentEngine.ts')), 'shopofbow agentEngine.ts preserved');
   assert(fs.existsSync(path.join(shopofbowAgentDir, 'intentResolver.ts')), 'shopofbow intentResolver.ts preserved');

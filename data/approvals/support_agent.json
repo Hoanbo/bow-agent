@@ -1,0 +1,70 @@
+[
+  {
+    "id": "appr_1788701143757_fc4676",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:25:43.757Z",
+    "expiresAt": "2026-09-06T13:30:43.757Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_58509d6021173757ff7dd3f716d86116d7d520bc33a54951"
+  },
+  {
+    "id": "appr_1788701725035_7abe6a",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:35:25.035Z",
+    "expiresAt": "2026-09-06T13:40:25.035Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_a5e2f4269fbecf4a1b8dc14f314d605e8629e35d9beb4348"
+  },
+  {
+    "id": "appr_1788702978798_daabdb",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:56:18.798Z",
+    "expiresAt": "2026-09-06T14:01:18.798Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_56a3cd5525183cfb24d71f33ff1bf5d23bb261fbbfa6b834"
+  },
+  {
+    "id": "appr_1788703793824_205178",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T14:09:53.824Z",
+    "expiresAt": "2026-09-06T14:14:53.824Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_9bcd16dd9244646accba4cdd781187f425318d2607222757"
+  }
+]

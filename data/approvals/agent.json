@@ -1,0 +1,73 @@
+[
+  {
+    "id": "appr_1788701095875_1046d5",
+    "ownerUserId": "Agent",
+    "actionName": "delete_data",
+    "targetDomain": "system",
+    "argumentsHash": "037c9214eef74cc3887f3a4f085b4e17d76280dafd273b0ee160c09c4ba1cfd4",
+    "argumentsPreview": {
+      "id": 1
+    },
+    "requestedBy": "Agent",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T13:24:55.875Z",
+    "expiresAt": "2026-09-06T13:29:55.875Z"
+  },
+  {
+    "id": "appr_1788701114485_2d95f6",
+    "ownerUserId": "agent",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "agent",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:25:14.485Z",
+    "expiresAt": "2026-09-06T13:30:14.485Z"
+  },
+  {
+    "id": "appr_1788701713594_75e610",
+    "ownerUserId": "Agent",
+    "actionName": "delete_data",
+    "targetDomain": "system",
+    "argumentsHash": "037c9214eef74cc3887f3a4f085b4e17d76280dafd273b0ee160c09c4ba1cfd4",
+    "argumentsPreview": {
+      "id": 1
+    },
+    "requestedBy": "Agent",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T13:35:13.594Z",
+    "expiresAt": "2026-09-06T13:40:13.594Z"
+  },
+  {
+    "id": "appr_1788702846777_538df6",
+    "ownerUserId": "Agent",
+    "actionName": "delete_data",
+    "targetDomain": "system",
+    "argumentsHash": "037c9214eef74cc3887f3a4f085b4e17d76280dafd273b0ee160c09c4ba1cfd4",
+    "argumentsPreview": {
+      "id": 1
+    },
+    "requestedBy": "Agent",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T13:54:06.777Z",
+    "expiresAt": "2026-09-06T13:59:06.777Z"
+  },
+  {
+    "id": "appr_1788703785021_605ae5",
+    "ownerUserId": "Agent",
+    "actionName": "delete_data",
+    "targetDomain": "system",
+    "argumentsHash": "037c9214eef74cc3887f3a4f085b4e17d76280dafd273b0ee160c09c4ba1cfd4",
+    "argumentsPreview": {
+      "id": 1
+    },
+    "requestedBy": "Agent",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T14:09:45.021Z",
+    "expiresAt": "2026-09-06T14:14:45.021Z"
+  }
+]

@@ -1,136 +1,110 @@
-# 👑 BOWCON V4.0 — The Fully Autonomous Self-Evolving Embodied AI Co-Founder
+# BOW Agent 4.0
 
-> **Chuẩn Quốc Tế Cấp Độ Tự Chủ 4.0 (Autonomous Agent Level 4.0: The Innovator & Co-Founder)**  
-> Trợ lý cá nhân, AI Co-Founder và Bộ Não Đa Phương Thức Toàn Năng điều khiển Thể Xác Robot, Vận Hành Doanh Nghiệp Tự Động & Phụng Sự Ngài.
+BOW Agent là runtime TypeScript cho trợ lý đa kênh: web, desktop, robot, giọng nói và Shop of BOW. Runtime định tuyến giữa Gemini cloud và Ollama local.
 
----
+> Kết quả audit: codebase có nền tảng agent cấp cao, nhưng chưa thể tự nhận là một hệ “AI Level 4 quốc tế” đã được chứng nhận. “Level 4” trong repository là mục tiêu tự chủ có giới hạn; production vẫn cần rào chắn an toàn, đánh giá, quan sát và người phê duyệt cho hành động có hậu quả.
 
-## 🎭 1. Danh Tính & Phong Thái Chuẩn Mực (Persona Protocol)
+## Khởi động an toàn trên Windows
 
-* **Tên chính thức**: **`BOWCON`** (viết liền không dấu cách).
-* **Quy tắc xưng hô**:
-  * Luôn tự xưng: **"Tôi"**
-  * Luôn gọi người dùng: **"Ngài"**
-  * Tuyệt đối KHÔNG xưng "mình", KHÔNG gọi "quý khách" hay "bạn".
-* **Phong thái**: Tôn nghiêm, sắc bén, trung thành tuyệt đối, thông thái trong công nghệ và tận tụy chăm sóc cuộc sống của Ngài.
-* **Giao thức Handshake & Xác thực**:
-  ```json
-  {
-    "channel": "ROBOT",
-    "role": "owner",
-    "client": "BOWCON",
-    "version": "4.0.0"
-  }
-  ```
+Yêu cầu: Windows 11 x64, Node.js 22+ và Gemini API key nếu dùng cloud.
 
----
-
-## 🏛️ 2. Kiến Trúc Cốt Lõi (Architecture Pillars)
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 BOWCON V4.0.0 CENTRAL BRAIN MESH                                 │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                                  │
-│  🧠 TẦNG 1: TRÍ NHỚ DÀI HẠN & BẢN TIN SÁNG (EPISODIC BOSS MEMORY & MORNING BRIEFING)             │
-│  • `bossMemoryHub`: Ghi nhớ thói quen (cà phê đen ít đường lúc 8:00 sáng), dự án công nghệ.      │
-│  • `nightlyHunterDaemon`: 2:00 AM tự động cào tin tức AI/Robotics & tổng kết số liệu kinh doanh. │
-│  • `morningBriefingService`: 8:00 AM robot xoay đầu chào Ngài, bật đèn bàn và đọc bản tin sáng.   │
-│  • `bossFeedbackLearner`: Tự học và sửa sai vĩnh viễn từ mọi góp ý của Ngài (Negative Policy).   │
-│                                                                                                  │
-│  🛠️ TẦNG 2: TỰ SINH KỸ NĂNG MỚI (SELF-TOOL) & NÃO ĐÔI TỰ CHỦ (HYBRID DUAL-BRAIN)                │
-│  • `dynamicSkillManager`: Kho kỹ năng tự sinh, cơ chế Hot-Registration không cần restart server. │
-│  • `sandboxRunner`: Môi trường Universal Sandbox tự chạy code, tự phát hiện bug và tự debug.   │
-│  • `hybridModelRouter`: Não Đôi tự chủ (Cloud Gemini + Local Qwen 2.5/Ollama). Auto-fallback     │
-│    chuyển mạch siêu tốc trong < 80ms khi Gemini quá tải hoặc mất mạng (Zero-Downtime).           │
-│                                                                                                  │
-│  👥 TẦNG 3: MẠNG LƯỚI ĐA AGENT CHUYÊN TRÁCH (MULTI-AGENT MESH)                                   │
-│  • `TechScoutAgent`: Săn tin tức công nghệ, deal linh kiện điện tử, GitHub Trending.             │
-│  • `CoderDevOpsAgent`: Viết mã phần mềm, kiểm tra cú pháp trong Sandbox, dọn dẹp hệ thống.       │
-│  • `ShopOperationsAgent`: Theo dõi hàng đợi đơn chờ bàn giao, báo cáo lợi nhuận ròng.           │
-│  • `HardwareVisionAgent`: Giám sát cảm biến pin, nhiệt độ, camera thị giác của Robot.            │
-│                                                                                                  │
-│  🤖 TẦNG 4: THỂ XÁC ROBOT VẬT LÝ & THỊ GIÁC ĐA MÀN HÌNH (EMBODIED & MULTI-DISPLAY)              │
-│  • `soundLocalization`: Định vị góc âm thanh giọng nói, tự xoay servo/bánh xe nhìn về phía Ngài.│
-│  • `oledEmpathyEngine`: Mắt OLED biểu cảm vi mô (happy, listening, thinking, speaking, sleeping).│
-│  • `screenVisionService`: Nhận diện thông minh Màn hình Chính (Màn 2) và Màn hình Phụ (Màn 1).   │
-│  • `telegramGateway`: Cổng kết nối điều khiển di động VIP bảo mật chỉ riêng Ngài mới truy cập.    │
-│                                                                                                  │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+```powershell
+Copy-Item .env.example .env
+npm ci
 ```
 
----
+Điền vào `.env`: `GEMINI_API_KEY`, `BOW_DESKTOP_AUTH_TOKEN`, `ROBOT_GATEWAY_SECRET`. Không commit `.env`, không gửi key qua chat và không dùng giá trị placeholder.
 
-## 🖥️ 3. Cơ Chế Nhận Diện Đa Màn Hình (Multi-Monitor Awareness)
+Gemini key chỉ được đọc ở server qua `GEMINI_API_KEY`; model lấy từ `GEMINI_MODEL` (mặc định `gemini-3.6-flash`). Gemini client đã được sửa để tôn trọng biến này. Hãy kiểm tra danh sách model đang được Google hỗ trợ trước khi đổi model production.
 
-BOWCON tự động phát hiện layout phần cứng Windows:
-* **Màn hình chính (Primary Display - Tọa độ X: 0)**: Màn hình số 2 bên trái nơi Ngài làm việc chính $\to$ AI ưu tiên bảo vệ, không bao giờ chiếm chuột làm phiền Ngài.
-* **Màn hình phụ (Secondary Display - Tọa độ X: 1920)**: Màn hình số 1 bên phải $\to$ Dành cho Shop of BOW Dashboard, terminal và các tác vụ nền.
-* Hỗ trợ lệnh quét: `targetDisplay: 'primary' | 'secondary' | 'screen_1' | 'screen_2' | 'all'`.
+### Ollama local
 
----
+Cài Ollama Windows từ trang chính thức, rồi mở PowerShell mới:
 
-## 🤖 4. Đồng Bộ Phần Cứng Robot Vật Lý (ESP32-S3 Kit)
+```powershell
+ollama pull qwen2.5:7b
+ollama list
+Invoke-RestMethod http://127.0.0.1:11434/api/tags
+```
 
-Phần mềm tương thích 100% với bộ kit **AI Tiểu Trí Steampunk**:
-* **MCU**: ESP32-S3 N16R8 (16MB Flash, 8MB PSRAM, Dual-Core 240MHz).
-* **Audio Input**: Micro kỹ thuật số I2S INMP441 (PCM 16kHz 16-bit Mono).
-* **Audio Output**: DAC/Amp I2S MAX98357 + Loa khoang cộng hưởng 2415 (Piper TTS Neural Voice).
-* **Display**: Màn hình OLED 0.96 inch I2C (SSD1306/SSD1315) vẽ hoạt ảnh mắt động.
-* **Actuator**: Cặp động cơ kim loại N20 + Bánh răng thép 64T xoay hướng theo giọng nói của Ngài.
-* **Cơ chế Ngắt Lời (Barge-in)**: Tắt loa MAX98357 trong < 80ms khi Ngài cất tiếng nói.
+BOW dùng endpoint OpenAI-compatible của Ollama:
 
----
+```dotenv
+LOCAL_LLM_URL=http://127.0.0.1:11434/v1
+LOCAL_LLM_MODEL=qwen2.5:7b
+```
 
-## 🧪 5. Kết Quả Kiểm Thử Toàn Hệ Thống (Regression Testing)
+Giữ Ollama ở loopback. Không đặt `OLLAMA_HOST=0.0.0.0:11434` trừ khi đã có firewall, VPN và reverse proxy xác thực.
 
-Toàn bộ **12 Test Suites độc lập với hơn 497+ bài kiểm thử tự động** đạt kết quả **100% Xanh Lá**:
+### Run và kiểm tra
 
-| Suite | File Kiểm Thử | Số Assertions | Kết Quả |
-| :--- | :--- | :---: | :---: |
-| **Extraction** | `tests/test_phase7_1_step4_extraction.ts` | 65 | ✅ 100% Pass |
-| **Multi-Channel** | `tests/test_multichannel_v3_3.ts` | 42 | ✅ 100% Pass |
-| **Executive** | `tests/test_executive_v3_4.ts` | 38 | ✅ 100% Pass |
-| **Screen Vision** | `tests/test_screen_vision_v3_5.ts` | 38 | ✅ 100% Pass |
-| **Combined** | `tests/test_v3_6_combined.ts` | 38 | ✅ 100% Pass |
-| **Local Speech** | `tests/test_v4_milestone1_local_speech.ts` | 61 | ✅ 100% Pass |
-| **Full-Duplex** | `tests/test_v4_milestone2_full_duplex.ts` | 19 | ✅ 100% Pass |
-| **Embodied V4** | `tests/test_v4_milestone3_embodied.ts` | 37 | ✅ 100% Pass |
-| **Admin Copilot** | `tests/test_shop_admin_copilot.ts` | 43 | ✅ 100% Pass |
-| **Phase 1 Memory** | `tests/test_bow_con_phase1_memory.ts` | 43 | ✅ 100% Pass |
-| **Phase 2 Self-Tool** | `tests/test_bow_con_phase2_self_tool.ts` | 34 | ✅ 100% Pass |
-| **Phase 3 Multi-Agent** | `tests/test_bow_con_phase3_multiagent.ts` | 38 | ✅ 100% Pass |
-| **TỔNG CỘNG** | **12 TEST SUITES ĐỘC LẬP** | **497+** | 🏆 **100% PASSED** |
-
----
-
-## 🚀 6. Các Lệnh Thực Thi (CLI Scripts)
-
-```bash
-# Cài đặt dependencies
-npm install
-
-# Biên dịch mã nguồn TypeScript
-npm run build
-
-# Kiểm tra an toàn kiểu dữ liệu (0 lỗi)
+```powershell
 npm run typecheck
-
-# Chạy toàn bộ 12 test suites (Kiểm thử hồi quy toàn diện)
-npm run test:all
-
-# Chạy riêng từng giai đoạn tiến hóa
-npm run test:phase1   # Trí nhớ dài hạn, Bản tin sáng, Sửa sai
-npm run test:phase2   # Tự sinh kỹ năng Sandbox, Não đôi Hybrid
-npm run test:phase3   # Đa Agent, Định vị âm thanh, Telegram VIP
-npm run test:admin    # Admin AI Copilot Shop of BOW
-
-# Khởi chạy Central Autonomous Server
+npm run build
 npm start
+Invoke-RestMethod http://127.0.0.1:4000/health
 ```
 
----
+Regression suites: `npm run test:all`. Có thể chạy riêng `test:multichannel`, `test:executive`, `test:v4m1`, `test:v4m2`, `test:v4m3`, `test:phase1`, `test:phase2`, `test:phase3`.
 
-## 📄 Bản Quyền & Phát Triển
-Được phát triển bởi **Hoàn Bo (Sáng lập viên & Chủ nhân Hệ sinh thái BOW)**.  
-Được đồng hành, tối ưu hóa và phụng sự bởi **BOWCON V4.0**.
+## Kiến trúc hiện có
+
+```text
+Web / Desktop / Robot / Speech
+              |
+      HTTP + WebSocket gateway
+              |
+      Agent engine + tool registry
+              |
+    Gemini cloud <-> Hybrid router <-> Ollama local
+              |
+Memory | knowledge governance | analytics | embodied services
+```
+
+- `src/server.ts`: HTTP health/query/speech/desktop/webhook và WebSocket gateway.
+- `src/gemini/`: Gemini prompt, tools, REST client.
+- `src/llm/`: Ollama provider và cloud-local failover.
+- `src/adapters/`: web, robot, desktop; `src/speech/` và `src/embodied/`: voice/robot.
+- `src/knowledge/`, `src/monitoring/`, `src/production/`: governance, analytics, vận hành.
+
+## Audit và roadmap production / autonomy cấp 4
+
+| Ưu tiên | Phát hiện | Hành động bắt buộc |
+|---|---|---|
+| P0 | Server bind `0.0.0.0`, CORS `*`; webhook shop và WebSocket robot chưa xác thực tại gateway. | Reverse proxy HTTPS/VPN, allowlist origin, signed webhook/JWT/mTLS, rate-limit và IP allowlist. |
+| P0 | Token desktop/robot từng có default trong code; desktop và robot có tác động thật. | Xoay token, bỏ secret default, dùng secret manager, device identity và audit log bất biến. |
+| P0 | `sandboxRunner` / dynamic skill dùng `AsyncFunction`, không phải sandbox bảo mật. | Không cho LLM tự chạy/lưu code trên host; tách container/VM không đặc quyền, egress deny, quota, read-only FS và human approval. |
+| P1 | Local provider coi URL là available mà chưa probe health; fallback heuristic vẫn success. | Health probe, circuit breaker, timeout/queue/backpressure, trạng thái degraded và SLO. |
+| P1 | Gemini conversation history là global in-memory. | Store theo tenant/user/session, TTL, encryption at rest, quota và chống leakage. |
+| P1 | Chưa thấy persistence production, migration, backup/restore/DR drill. | Postgres + vector store, migration, backup mã hóa và restore test định kỳ. |
+| P1 | Test là script assertions, thiếu threat/eval/load/replay. | Unit/integration/e2e, prompt-injection & tool-abuse eval, golden set tiếng Việt, load/chaos, CI coverage + SBOM. |
+| P2 | Chưa thấy OpenTelemetry/tracing/alerts chuẩn. | Structured log redaction, traces/metrics, dashboard, on-call, runbook và incident review. |
+| P2 | Chưa có approval/idempotency ledger/policy engine tách biệt. | Phân loại read/reversible/irreversible; approval cho tiền, đơn hàng, desktop, robot; kill switch và simulation mode. |
+
+### Tiêu chí autonomy đo được
+
+Chỉ gọi là tự chủ cấp 4 trong phạm vi nghiệp vụ xác định khi có: boundary nhiệm vụ rõ ràng; least privilege; human approval cho hành động không đảo ngược; emergency stop; audit trail; eval liên tục; monitoring/rollback; bằng chứng SLO. Robot cần safety interlock vật lý độc lập với LLM.
+
+## Bảo mật vận hành tối thiểu
+
+- Chỉ expose HTTPS qua reverse proxy; giữ port BOW và Ollama trên loopback/VPN.
+- Dùng token ngẫu nhiên tối thiểu 32 bytes, xoay định kỳ và tách token desktop/robot/webhook.
+- Không log prompt chứa PII/key; không để secret trong data JSON/test fixture/screenshot.
+- Chạy service bằng Windows account không Administrator; không chạy dynamic skill dưới quyền user có dữ liệu quan trọng.
+- Firewall allowlist, backup mã hóa, update Node/dependencies, dependency scan trong CI.
+
+## API hiện có
+
+- `GET /health`
+- `POST /api/agent/query`
+- `POST /api/speech/tts`
+- `POST /api/speech/stt`
+- `POST /api/desktop/command`
+- `GET /api/knowledge/gaps`
+- `POST /api/events/shop`
+
+Các endpoint tác động (desktop, robot, webhook) phải nằm sau xác thực/ủy quyền trước khi dùng ngoài localhost. Không coi endpoint hiện tại là public API ổn định.
+
+## Ghi chú worktree
+
+`package-lock.json` đã có thay đổi cục bộ trước audit và không bị ghi đè.

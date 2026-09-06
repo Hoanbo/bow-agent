@@ -24,6 +24,8 @@ function assert(condition: boolean, testName: string, detail?: string) {
 }
 
 async function runPhase2Suite() {
+  globalSkillManager.setDynamicCodeEnabled(true);
+
   console.log('\n========================================================================');
   console.log('🚀 RUNNING BOW CON V4.0 (PHASE 2: SELF-TOOL SYNTHESIS & HYBRID BRAIN) SUITE');
   console.log('========================================================================\n');

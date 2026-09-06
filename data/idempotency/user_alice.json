@@ -1,0 +1,68 @@
+[
+  {
+    "key": "shared_tool_key_1",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788701397465,
+    "expiresAt": 1788787797465,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788701589889_w7o6",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788701589889,
+    "expiresAt": 1788787989889,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788701785508_adq9",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788701785509,
+    "expiresAt": 1788788185509,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788702594533_dsb9",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788702594534,
+    "expiresAt": 1788788994534,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788703688387_0ysy",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788703688388,
+    "expiresAt": 1788790088388,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788705106582_xwr7",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788705106583,
+    "expiresAt": 1788791506583,
+    "status": "COMPLETED"
+  }
+]

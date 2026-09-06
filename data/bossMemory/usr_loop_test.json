@@ -1,0 +1,29 @@
+{
+  "name": "Người dùng (usr_loop_test)",
+  "title": "Sếp",
+  "habits": {
+    "morningRoutine": "Thức dậy và làm việc lúc 8:00 sáng",
+    "preferredBeverage": "Cà phê đen ít đường lúc 8:00 sáng",
+    "workStartHour": 8,
+    "breakIntervalMinutes": 45,
+    "favoriteMusicGenre": "Nhạc không lời Lofi tập trung code"
+  },
+  "projects": [],
+  "healthNotes": [
+    "Cần đứng dậy vươn vai sau 45 phút ngồi code liên tục để bảo vệ cột sống và mắt.",
+    "Nhắc nhở uống đủ 2 lít nước mỗi ngày."
+  ],
+  "relationships": [
+    {
+      "name": "BOWCON",
+      "role": "AI Đồng hành & Trợ lý trung thành tuyệt đối",
+      "notes": "Trợ lý AI trung thành phụng sự Ngài"
+    }
+  ],
+  "customPreferences": {
+    "voiceSpeed": "1.0",
+    "tone": "Thân thương, kính trọng, trung thành, thông thái"
+  },
+  "lastInteractionTimestamp": 1788704834268,
+  "lastBreakReminderTimestamp": 1788704834268
+}

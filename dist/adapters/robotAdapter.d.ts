@@ -40,6 +40,7 @@ export declare class RobotChannelAdapter {
     private online;
     private eventListeners;
     private currentSensors;
+    private sanitizeServoCommand;
     constructor();
     isOnline(): boolean;
     registerListener(listener: RobotEventListener): () => void;

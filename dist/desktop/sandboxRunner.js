@@ -1,19 +1,19 @@
 // src/desktop/sandboxRunner.ts
 // BOW CON V4.0 — AUTONOMOUS CODE SANDBOX & SELF-DEBUGGING RUNNER
+import vm from 'node:vm';
 import { globalSkillManager } from '../skills/dynamicSkillManager.js';
+import { globalIsolatedRunner } from '../skills/isolatedRunner.js';
 export class SandboxRunner {
     timeoutMs;
     constructor(timeoutMs = 5000) {
         this.timeoutMs = timeoutMs;
     }
     /**
-     * Kiểm tra cú pháp mã code JavaScript/TypeScript
+     * Kiểm tra cú pháp mã code JavaScript/TypeScript an toàn thông qua vm.Script
      */
     validateSyntax(code) {
         try {
-            // Dùng AsyncFunction constructor để parse syntax
-            const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
-            new AsyncFunction('args', 'context', code);
+            new vm.Script(`"use strict"; (function(args, context) { ${code} });`);
             return { valid: true };
         }
         catch (err) {
@@ -36,18 +36,22 @@ export class SandboxRunner {
         }
         const startTime = Date.now();
         try {
-            const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
-            const runner = new AsyncFunction('args', 'context', code);
-            const output = await Promise.race([
-                runner(testArgs, context),
-                new Promise((_, reject) => setTimeout(() => reject(new Error(`Thực thi quá thời gian cho phép (${this.timeoutMs}ms)`)), this.timeoutMs)),
-            ]);
+            const sandboxRes = await globalIsolatedRunner.executeInSandbox(code, { args: testArgs, context });
             const executionTimeMs = Date.now() - startTime;
+            if (!sandboxRes.success) {
+                return {
+                    success: false,
+                    syntaxValid: true,
+                    canSynthesize: false,
+                    error: `[RUNTIME ERROR]: ${sandboxRes.error}`,
+                    executionTimeMs,
+                };
+            }
             return {
                 success: true,
                 syntaxValid: true,
                 canSynthesize: true,
-                output,
+                output: sandboxRes.result,
                 executionTimeMs,
             };
         }

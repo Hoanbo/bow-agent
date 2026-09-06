@@ -26,7 +26,15 @@ export class DesktopChannelAdapter {
                     timestamp: new Date().toISOString(),
                 };
             }
-            const result = await toolRegistry.executeTool(toolName, req.parameters || {}, { channel: 'DESKTOP', authToken: req.authToken });
+            const result = await toolRegistry.executeTool(toolName, req.parameters || {}, {
+                channel: 'DESKTOP',
+                authToken: req.authToken,
+                role: 'desktop_agent',
+                userId: 'desktop_agent',
+                isOwner: false,
+                executionToken: req.executionToken || req.parameters?.executionToken,
+                idempotencyKey: req.idempotencyKey || req.parameters?.idempotencyKey,
+            });
             return {
                 success: result.success,
                 action: req.action,

@@ -1,0 +1,1436 @@
+[
+  {
+    "id": "appr_1788671677320_ef3069",
+    "ownerUserId": "owner_default",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "owner_default",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T05:14:37.320Z",
+    "expiresAt": "2026-09-06T05:19:37.320Z"
+  },
+  {
+    "id": "appr_1788671677333_e18059",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:14:37.333Z",
+    "expiresAt": "2026-09-06T05:16:37.333Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T05:14:37.336Z",
+    "executionToken": "tok_71ff861f66446b10c33577b12f9da907d17265555af941e2"
+  },
+  {
+    "id": "appr_1788671677462_d8e84a",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T05:14:37.462Z",
+    "expiresAt": "2026-09-06T05:19:37.462Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_6f5dfc9dddbb16a279c096199b88be69877ff4a8c59374c3"
+  },
+  {
+    "id": "appr_1788671677493_965e06",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T05:14:37.493Z",
+    "expiresAt": "2026-09-06T05:19:37.493Z"
+  },
+  {
+    "id": "appr_1788671715436_e3bf77",
+    "ownerUserId": "owner_default",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "owner_default",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T05:15:15.436Z",
+    "expiresAt": "2026-09-06T05:20:15.436Z"
+  },
+  {
+    "id": "appr_1788671715438_0b528e",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:15:15.438Z",
+    "expiresAt": "2026-09-06T05:17:15.438Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T05:15:15.441Z",
+    "executionToken": "tok_d6f84b439e12cdb3bd1b713c72fc74208f2bab43b418440d"
+  },
+  {
+    "id": "appr_1788671715561_3e4698",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T05:15:15.561Z",
+    "expiresAt": "2026-09-06T05:20:15.561Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_d54267ec236fcd76858f305c691439df319d3ddd31fd536d"
+  },
+  {
+    "id": "appr_1788671715576_cb3a47",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T05:15:15.576Z",
+    "expiresAt": "2026-09-06T05:20:15.576Z"
+  },
+  {
+    "id": "appr_1788671750405_4a2db2",
+    "ownerUserId": "owner_default",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "owner_default",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T05:15:50.405Z",
+    "expiresAt": "2026-09-06T05:20:50.405Z"
+  },
+  {
+    "id": "appr_1788671750406_f79c58",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:15:50.406Z",
+    "expiresAt": "2026-09-06T05:17:50.406Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T05:15:50.410Z",
+    "executionToken": "tok_464a8eabc6b20543eed4869299deb85891326867a80c0246"
+  },
+  {
+    "id": "appr_1788671750514_a108fe",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T05:15:50.514Z",
+    "expiresAt": "2026-09-06T05:20:50.514Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_1382c082a731b9367d159798f66a13dc1d7cbf24fad3cc1e"
+  },
+  {
+    "id": "appr_1788671750528_8a5943",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T05:15:50.528Z",
+    "expiresAt": "2026-09-06T05:20:50.528Z"
+  },
+  {
+    "id": "appr_1788671824664_dcd149",
+    "ownerUserId": "owner_default",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "owner_default",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T05:17:04.664Z",
+    "expiresAt": "2026-09-06T05:22:04.664Z"
+  },
+  {
+    "id": "appr_1788671824665_e6e0c2",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:17:04.665Z",
+    "expiresAt": "2026-09-06T05:19:04.665Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T05:17:04.668Z",
+    "executionToken": "tok_a3e6ed73296b5542eedf490d92a77339a9d66bb2919160e3"
+  },
+  {
+    "id": "appr_1788671824754_913617",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T05:17:04.755Z",
+    "expiresAt": "2026-09-06T05:22:04.755Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_79fbc10789c40db5e74b6aac56855d41039ee4fc2935407a"
+  },
+  {
+    "id": "appr_1788671824768_468ddb",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T05:17:04.768Z",
+    "expiresAt": "2026-09-06T05:22:04.768Z"
+  },
+  {
+    "id": "appr_1788671838793_54716d",
+    "ownerUserId": "owner_default",
+    "actionName": "desktop_launch_app",
+    "targetDomain": "desktop",
+    "argumentsHash": "dd21d9568968457107f514880f2a4abcc906e3c4a193293cbf8fc30348330e14",
+    "argumentsPreview": {
+      "appName": "notepad"
+    },
+    "requestedBy": "owner_default",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:17:18.793Z",
+    "expiresAt": "2026-09-06T05:22:18.793Z",
+    "approver": "owner_implicit_direct",
+    "consumedAt": "2026-09-06T05:17:18.797Z",
+    "executionToken": "tok_f323209907bc42aa2753eea2fadd46bf5541e01db7735e6f"
+  },
+  {
+    "id": "appr_1788671838799_dcb2b2",
+    "ownerUserId": "owner_default",
+    "actionName": "desktop_send_keys",
+    "targetDomain": "desktop",
+    "argumentsHash": "d30876b7ff309ab507a0ec3cdc0ad88a0b4e46816c3f1ea88b589caccb8c05bb",
+    "argumentsPreview": {
+      "text": "Hello from BOW Central Brain",
+      "keyCombo": "enter"
+    },
+    "requestedBy": "owner_default",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:17:18.799Z",
+    "expiresAt": "2026-09-06T05:22:18.799Z",
+    "approver": "owner_implicit_direct",
+    "consumedAt": "2026-09-06T05:17:18.802Z",
+    "executionToken": "tok_567b2b8a2cdd89e67558000e17a3c080f67abaeb0aae1b54"
+  },
+  {
+    "id": "appr_1788671838804_a3664e",
+    "ownerUserId": "owner_default",
+    "actionName": "desktop_mouse_action",
+    "targetDomain": "desktop",
+    "argumentsHash": "8bd1e8082944cae17de6f6b1ae11988844c68dd919b2959dd1747e5ee850f3e4",
+    "argumentsPreview": {
+      "action": "click",
+      "x": 500,
+      "y": 300
+    },
+    "requestedBy": "owner_default",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T05:17:18.804Z",
+    "expiresAt": "2026-09-06T05:22:18.804Z",
+    "approver": "owner_implicit_direct",
+    "consumedAt": "2026-09-06T05:17:18.806Z",
+    "executionToken": "tok_a109babfd570c7bd4c1f0d1d79afd79c0e1806d5a3470de8"
+  },
+  {
+    "id": "appr_1788691016711_fd0145",
+    "ownerUserId": "owner_default",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "owner_default",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T10:36:56.712Z",
+    "expiresAt": "2026-09-06T10:41:56.712Z"
+  },
+  {
+    "id": "appr_1788691016713_80db3b",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T10:36:56.714Z",
+    "expiresAt": "2026-09-06T10:38:56.714Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T10:36:56.716Z",
+    "executionToken": "tok_5b0d928f6951b627ffc5d1203572a06a3aa003ea35e33440"
+  },
+  {
+    "id": "appr_1788691016811_362a06",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T10:36:56.811Z",
+    "expiresAt": "2026-09-06T10:41:56.811Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_62e42fd551e8d8920e6bbe6ce9a4ae9691bbec0942896e59"
+  },
+  {
+    "id": "appr_1788691016839_f76fbc",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T10:36:56.839Z",
+    "expiresAt": "2026-09-06T10:41:56.839Z"
+  },
+  {
+    "id": "appr_1788691076320_c4bfd7",
+    "ownerUserId": "owner_default",
+    "actionName": "desktop_launch_app",
+    "targetDomain": "desktop",
+    "argumentsHash": "dd21d9568968457107f514880f2a4abcc906e3c4a193293cbf8fc30348330e14",
+    "argumentsPreview": {
+      "appName": "notepad"
+    },
+    "requestedBy": "owner_default",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T10:37:56.320Z",
+    "expiresAt": "2026-09-06T10:42:56.320Z",
+    "approver": "owner_implicit_direct",
+    "consumedAt": "2026-09-06T10:37:56.323Z",
+    "executionToken": "tok_02dc76b287377f32a57ea6e5e0623e25a28ad493ae9a1a1b"
+  },
+  {
+    "id": "appr_1788691076326_7753fc",
+    "ownerUserId": "owner_default",
+    "actionName": "desktop_send_keys",
+    "targetDomain": "desktop",
+    "argumentsHash": "d30876b7ff309ab507a0ec3cdc0ad88a0b4e46816c3f1ea88b589caccb8c05bb",
+    "argumentsPreview": {
+      "text": "Hello from BOW Central Brain",
+      "keyCombo": "enter"
+    },
+    "requestedBy": "owner_default",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T10:37:56.326Z",
+    "expiresAt": "2026-09-06T10:42:56.326Z",
+    "approver": "owner_implicit_direct",
+    "consumedAt": "2026-09-06T10:37:56.328Z",
+    "executionToken": "tok_dd411a9bbd676d544afdb6e4bbaf406e3523d61ec73b0784"
+  },
+  {
+    "id": "appr_1788691076330_fca090",
+    "ownerUserId": "owner_default",
+    "actionName": "desktop_mouse_action",
+    "targetDomain": "desktop",
+    "argumentsHash": "8bd1e8082944cae17de6f6b1ae11988844c68dd919b2959dd1747e5ee850f3e4",
+    "argumentsPreview": {
+      "action": "click",
+      "x": 500,
+      "y": 300
+    },
+    "requestedBy": "owner_default",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T10:37:56.330Z",
+    "expiresAt": "2026-09-06T10:42:56.330Z",
+    "approver": "owner_implicit_direct",
+    "consumedAt": "2026-09-06T10:37:56.333Z",
+    "executionToken": "tok_f4c022fb7e090ba3ef3c8e86c28c62f2a376cda0d0f275d9"
+  },
+  {
+    "id": "appr_1788692684642_44e43b",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:04:44.642Z",
+    "expiresAt": "2026-09-06T11:09:44.642Z"
+  },
+  {
+    "id": "appr_1788692684645_e460b9",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T11:04:44.645Z",
+    "expiresAt": "2026-09-06T11:06:44.645Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T11:04:44.648Z",
+    "executionToken": "tok_44d487f35ffafdff9002eef84f883b358c68f4ba16aec56e"
+  },
+  {
+    "id": "appr_1788692684772_aadb41",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T11:04:44.772Z",
+    "expiresAt": "2026-09-06T11:09:44.772Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_b7c4a5304f9c13ea7fc2bee864bf5356f8fcddd35e57a14b"
+  },
+  {
+    "id": "appr_1788692684787_6f487d",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T11:04:44.787Z",
+    "expiresAt": "2026-09-06T11:09:44.787Z"
+  },
+  {
+    "id": "appr_1788692720722_02b1c9",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:05:20.722Z",
+    "expiresAt": "2026-09-06T11:10:20.722Z"
+  },
+  {
+    "id": "appr_1788692720724_bbeee2",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T11:05:20.724Z",
+    "expiresAt": "2026-09-06T11:07:20.724Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T11:05:20.727Z",
+    "executionToken": "tok_8deaa95fc37ef7193a2791b225102994b008df841455b218"
+  },
+  {
+    "id": "appr_1788692720835_2737a9",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T11:05:20.835Z",
+    "expiresAt": "2026-09-06T11:10:20.835Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_acc395975b9369d68fb0ca7f1462047449026ce4f065bad9"
+  },
+  {
+    "id": "appr_1788692720866_a501fe",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T11:05:20.866Z",
+    "expiresAt": "2026-09-06T11:10:20.866Z"
+  },
+  {
+    "id": "appr_1788692764483_84497c",
+    "ownerUserId": "desktop_agent",
+    "actionName": "desktop_send_keys",
+    "targetDomain": "desktop",
+    "argumentsHash": "d30876b7ff309ab507a0ec3cdc0ad88a0b4e46816c3f1ea88b589caccb8c05bb",
+    "argumentsPreview": {
+      "text": "Hello from BOW Central Brain",
+      "keyCombo": "enter"
+    },
+    "requestedBy": "desktop_agent",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:06:04.483Z",
+    "expiresAt": "2026-09-06T11:11:04.483Z"
+  },
+  {
+    "id": "appr_1788692764486_88b25c",
+    "ownerUserId": "desktop_agent",
+    "actionName": "desktop_mouse_action",
+    "targetDomain": "desktop",
+    "argumentsHash": "8bd1e8082944cae17de6f6b1ae11988844c68dd919b2959dd1747e5ee850f3e4",
+    "argumentsPreview": {
+      "action": "click",
+      "x": 500,
+      "y": 300
+    },
+    "requestedBy": "desktop_agent",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:06:04.486Z",
+    "expiresAt": "2026-09-06T11:11:04.486Z"
+  },
+  {
+    "id": "appr_1788692966887_1de21b",
+    "ownerUserId": "desktop_agent",
+    "actionName": "desktop_send_keys",
+    "targetDomain": "desktop",
+    "argumentsHash": "d30876b7ff309ab507a0ec3cdc0ad88a0b4e46816c3f1ea88b589caccb8c05bb",
+    "argumentsPreview": {
+      "text": "Hello from BOW Central Brain",
+      "keyCombo": "enter"
+    },
+    "requestedBy": "desktop_agent",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:09:26.887Z",
+    "expiresAt": "2026-09-06T11:14:26.887Z"
+  },
+  {
+    "id": "appr_1788692966889_784c86",
+    "ownerUserId": "desktop_agent",
+    "actionName": "desktop_mouse_action",
+    "targetDomain": "desktop",
+    "argumentsHash": "8bd1e8082944cae17de6f6b1ae11988844c68dd919b2959dd1747e5ee850f3e4",
+    "argumentsPreview": {
+      "action": "click",
+      "x": 500,
+      "y": 300
+    },
+    "requestedBy": "desktop_agent",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:09:26.889Z",
+    "expiresAt": "2026-09-06T11:14:26.889Z"
+  },
+  {
+    "id": "appr_1788693291319_31856d",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:14:51.319Z",
+    "expiresAt": "2026-09-06T11:19:51.319Z"
+  },
+  {
+    "id": "appr_1788693291322_da7a1d",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T11:14:51.322Z",
+    "expiresAt": "2026-09-06T11:16:51.322Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T11:14:51.325Z",
+    "executionToken": "tok_f71391c94c366dd90190502885b4c3ed0effe5847e456459"
+  },
+  {
+    "id": "appr_1788693291441_825b59",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T11:14:51.441Z",
+    "expiresAt": "2026-09-06T11:19:51.441Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_d0112d2282d3bcc2c97387f9d37fe65458d3a799d784c777"
+  },
+  {
+    "id": "appr_1788693291467_1b85ca",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T11:14:51.468Z",
+    "expiresAt": "2026-09-06T11:19:51.468Z"
+  },
+  {
+    "id": "appr_1788695009263_dcd362",
+    "ownerUserId": "boss_user",
+    "actionName": "test_safe_reader",
+    "targetDomain": "shop",
+    "argumentsHash": "bc6dcad2fe66a3ab589105715d7bd756779c941a973a9ecc7bdef702404bee2c",
+    "argumentsPreview": {
+      "query": "sensor_telemetry_1"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:43:29.263Z",
+    "expiresAt": "2026-09-06T11:48:29.263Z"
+  },
+  {
+    "id": "appr_1788695053791_a3e3e3",
+    "ownerUserId": "boss_user",
+    "actionName": "test_safe_reader",
+    "targetDomain": "shop",
+    "argumentsHash": "bc6dcad2fe66a3ab589105715d7bd756779c941a973a9ecc7bdef702404bee2c",
+    "argumentsPreview": {
+      "query": "sensor_telemetry_1"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:44:13.791Z",
+    "expiresAt": "2026-09-06T11:49:13.791Z"
+  },
+  {
+    "id": "appr_1788695053801_cfc7bc",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:44:13.801Z",
+    "expiresAt": "2026-09-06T11:49:13.801Z"
+  },
+  {
+    "id": "appr_1788695053803_32d337",
+    "ownerUserId": "boss_user",
+    "actionName": "test_safe_reader",
+    "targetDomain": "shop",
+    "argumentsHash": "91ea3ce59ebc944ae2f82a6db195cab2008e752035fee0cfc59a97ac57029ee4",
+    "argumentsPreview": {
+      "query": "system_temp"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:44:13.803Z",
+    "expiresAt": "2026-09-06T11:49:13.803Z"
+  },
+  {
+    "id": "appr_1788695067738_2b5f04",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:44:27.738Z",
+    "expiresAt": "2026-09-06T11:49:27.738Z"
+  },
+  {
+    "id": "appr_1788695092455_31436a",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:44:52.455Z",
+    "expiresAt": "2026-09-06T11:49:52.455Z"
+  },
+  {
+    "id": "appr_1788695105727_bfb158",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:45:05.727Z",
+    "expiresAt": "2026-09-06T11:50:05.727Z"
+  },
+  {
+    "id": "appr_1788695223513_597a31",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:47:03.513Z",
+    "expiresAt": "2026-09-06T11:52:03.513Z"
+  },
+  {
+    "id": "appr_1788695223515_14ace3",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T11:47:03.515Z",
+    "expiresAt": "2026-09-06T11:49:03.515Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T11:47:03.518Z",
+    "executionToken": "tok_c4f608cf0700e5c40b5b28b2678a9618cf8037038cd6dc00"
+  },
+  {
+    "id": "appr_1788695223628_71130d",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T11:47:03.628Z",
+    "expiresAt": "2026-09-06T11:52:03.628Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_4c0efc43848ab235bd78bf6bad622c83ce0da4e9f455d8dd"
+  },
+  {
+    "id": "appr_1788695223642_941dcd",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T11:47:03.642Z",
+    "expiresAt": "2026-09-06T11:52:03.642Z"
+  },
+  {
+    "id": "appr_1788695494036_b926b8",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:51:34.036Z",
+    "expiresAt": "2026-09-06T11:56:34.036Z"
+  },
+  {
+    "id": "appr_1788695870901_29ae6a",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:57:50.901Z",
+    "expiresAt": "2026-09-06T12:02:50.901Z"
+  },
+  {
+    "id": "appr_1788695908845_fca497",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:58:28.845Z",
+    "expiresAt": "2026-09-06T12:03:28.845Z"
+  },
+  {
+    "id": "appr_1788695927088_c6fd39",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T11:58:47.088Z",
+    "expiresAt": "2026-09-06T12:03:47.088Z"
+  },
+  {
+    "id": "appr_1788696013914_7fc96d",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:00:13.914Z",
+    "expiresAt": "2026-09-06T12:05:13.914Z"
+  },
+  {
+    "id": "appr_1788696013916_8378bf",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T12:00:13.916Z",
+    "expiresAt": "2026-09-06T12:02:13.916Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T12:00:13.920Z",
+    "executionToken": "tok_d19e9eddf6966071bde15036d27a0518b8e56664f279aa23"
+  },
+  {
+    "id": "appr_1788696014054_0d8f0e",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T12:00:14.054Z",
+    "expiresAt": "2026-09-06T12:05:14.054Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_f31beec9880650aa3d6b57986aadd2ae93300cf76ddb75c3"
+  },
+  {
+    "id": "appr_1788696014068_5c8383",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T12:00:14.068Z",
+    "expiresAt": "2026-09-06T12:05:14.068Z"
+  },
+  {
+    "id": "appr_1788696533786_d3e22e",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:08:53.786Z",
+    "expiresAt": "2026-09-06T12:13:53.786Z"
+  },
+  {
+    "id": "appr_1788696542534_89bd56",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:09:02.534Z",
+    "expiresAt": "2026-09-06T12:14:02.534Z"
+  },
+  {
+    "id": "appr_1788696577173_063ff3",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:09:37.173Z",
+    "expiresAt": "2026-09-06T12:14:37.173Z"
+  },
+  {
+    "id": "appr_1788696577175_645833",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T12:09:37.175Z",
+    "expiresAt": "2026-09-06T12:11:37.175Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T12:09:37.178Z",
+    "executionToken": "tok_6db8d5f03b66892a054af0adbbcf87f38e39038adf47dfc1"
+  },
+  {
+    "id": "appr_1788696577318_d3256b",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T12:09:37.318Z",
+    "expiresAt": "2026-09-06T12:14:37.318Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_ecb75e63e22e2728ba0f42ef869e870eae62861c8c8bc133"
+  },
+  {
+    "id": "appr_1788696577349_a462ab",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T12:09:37.349Z",
+    "expiresAt": "2026-09-06T12:14:37.349Z"
+  },
+  {
+    "id": "appr_1788697635653_fd490d",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:27:15.653Z",
+    "expiresAt": "2026-09-06T12:32:15.653Z"
+  },
+  {
+    "id": "appr_1788697642839_d8ac64",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:27:22.839Z",
+    "expiresAt": "2026-09-06T12:32:22.839Z"
+  },
+  {
+    "id": "appr_1788697672267_d3481f",
+    "ownerUserId": "anonymous",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T12:27:52.267Z",
+    "expiresAt": "2026-09-06T12:32:52.267Z"
+  },
+  {
+    "id": "appr_1788697672269_ecd8aa",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T12:27:52.269Z",
+    "expiresAt": "2026-09-06T12:29:52.269Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-06T12:27:52.273Z",
+    "executionToken": "tok_948a52731171171fd7324dede1397edde9d0ccf20a6806c4"
+  },
+  {
+    "id": "appr_1788697672381_3f668a",
+    "ownerUserId": "support_agent",
+    "actionName": "refund_customer",
+    "targetDomain": "shop",
+    "argumentsHash": "4eace85ed4276fba68a716956f2393673386375afe1dbf625b41b5e16b39ea79",
+    "argumentsPreview": {
+      "orderId": "ORD-777",
+      "amount": 350000
+    },
+    "requestedBy": "support_agent",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T12:27:52.381Z",
+    "expiresAt": "2026-09-06T12:32:52.381Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_f205d924b31ba750246ca7737c9dffeae5fc0ec9d8fbdffe"
+  },
+  {
+    "id": "appr_1788697672411_1a5d6f",
+    "ownerUserId": "admin",
+    "actionName": "purge_cache",
+    "targetDomain": "system",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "admin",
+    "status": "REVOKED",
+    "createdAt": "2026-09-06T12:27:52.411Z",
+    "expiresAt": "2026-09-06T12:32:52.411Z"
+  },
+  {
+    "id": "appr_1788701152507_6f218f",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:25:52.507Z",
+    "expiresAt": "2026-09-06T13:30:52.507Z"
+  },
+  {
+    "id": "appr_1788701374133_8aa281",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:29:34.133Z",
+    "expiresAt": "2026-09-06T13:34:34.133Z"
+  },
+  {
+    "id": "appr_1788701397459_879aa8",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:29:57.459Z",
+    "expiresAt": "2026-09-06T13:34:57.459Z"
+  },
+  {
+    "id": "appr_1788701449629_7c6c75",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:30:49.629Z",
+    "expiresAt": "2026-09-06T13:35:49.629Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-06T13:30:49.644Z",
+    "executionToken": "tok_7649fce43a3ad1ea429b5659fcf88f4c6a0dddfa3c4d8823"
+  },
+  {
+    "id": "appr_1788701589847_026aeb",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:33:09.847Z",
+    "expiresAt": "2026-09-06T13:38:09.847Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-06T13:33:09.866Z",
+    "executionToken": "tok_2b0395b9743bb3e97af675d8b77b5b35c2b4bc34659694bb"
+  },
+  {
+    "id": "appr_1788701589872_eea085",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:33:09.872Z",
+    "expiresAt": "2026-09-06T13:38:09.872Z",
+    "approver": "boss_user",
+    "executionToken": "tok_8265fe173d5ba3cda94d0f654d9ee617c0cfe05199d9a43c"
+  },
+  {
+    "id": "appr_1788701665105_98811d",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:34:25.105Z",
+    "expiresAt": "2026-09-06T13:39:25.105Z"
+  },
+  {
+    "id": "appr_1788701785469_b6341c",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:36:25.469Z",
+    "expiresAt": "2026-09-06T13:41:25.469Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-06T13:36:25.487Z",
+    "executionToken": "tok_a865adbfd4dd5aa2d429f8d32b67ce07cba7a6c47fa5d65c"
+  },
+  {
+    "id": "appr_1788701785494_534533",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:36:25.494Z",
+    "expiresAt": "2026-09-06T13:41:25.494Z",
+    "approver": "boss_user",
+    "executionToken": "tok_5573bd7c1a7ce26ac0e36617c2dbc16df4f2dbae1eabd74c"
+  },
+  {
+    "id": "appr_1788702594493_eb8e61",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T13:49:54.493Z",
+    "expiresAt": "2026-09-06T13:54:54.493Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-06T13:49:54.514Z",
+    "executionToken": "tok_3f6ad7a0ec94f2691dfaf0759813f6d842f75af7f298fcdc"
+  },
+  {
+    "id": "appr_1788702594520_92ce6e",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T13:49:54.520Z",
+    "expiresAt": "2026-09-06T13:54:54.520Z",
+    "approver": "boss_user",
+    "executionToken": "tok_f8d33722a8d1a82339c2e030de3df35444639b0eac9c61b3"
+  },
+  {
+    "id": "appr_1788702797516_c2c453",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:53:17.516Z",
+    "expiresAt": "2026-09-06T13:58:17.516Z"
+  },
+  {
+    "id": "appr_1788702978681_79cc6a",
+    "ownerUserId": "boss_user",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T13:56:18.681Z",
+    "expiresAt": "2026-09-06T14:01:18.681Z"
+  },
+  {
+    "id": "appr_1788703688349_7b4ac5",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T14:08:08.349Z",
+    "expiresAt": "2026-09-06T14:13:08.349Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-06T14:08:08.367Z",
+    "executionToken": "tok_f6286596d85e7a6cf7116a6c92bd6002e487782c8060b96a"
+  },
+  {
+    "id": "appr_1788703688374_d6ffd8",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T14:08:08.374Z",
+    "expiresAt": "2026-09-06T14:13:08.374Z",
+    "approver": "boss_user",
+    "executionToken": "tok_6651e51212729c3cec49c7a62b6c643403b68572a3a2193a"
+  },
+  {
+    "id": "appr_1788703739972_8ce432",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T14:08:59.972Z",
+    "expiresAt": "2026-09-06T14:13:59.972Z"
+  },
+  {
+    "id": "appr_1788703793655_4c8061",
+    "ownerUserId": "boss_user",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "anonymous",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T14:09:53.655Z",
+    "expiresAt": "2026-09-06T14:14:53.655Z"
+  },
+  {
+    "id": "appr_1788705069059_373d02",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T14:31:09.059Z",
+    "expiresAt": "2026-09-06T14:36:09.059Z"
+  },
+  {
+    "id": "appr_1788705106522_04dabb",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-06T14:31:46.522Z",
+    "expiresAt": "2026-09-06T14:36:46.522Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-06T14:31:46.558Z",
+    "executionToken": "tok_440400a18f2c38c4f0ddd608eea216c7b9b21c5319930c47"
+  },
+  {
+    "id": "appr_1788705106566_ed7eed",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-06T14:31:46.566Z",
+    "expiresAt": "2026-09-06T14:36:46.566Z",
+    "approver": "boss_user",
+    "executionToken": "tok_18bdf12583bc8ae64843767c931d65134bb27ade55f3ab79"
+  }
+]

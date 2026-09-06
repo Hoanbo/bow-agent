@@ -1,3 +1,4 @@
+import { DurableJsonStore } from '../core/persistence/durableJsonStore.js';
 export interface BossRule {
     id: string;
     pattern: string;
@@ -8,21 +9,26 @@ export interface BossRule {
     enabled: boolean;
 }
 export declare class BossFeedbackLearner {
-    private rules;
-    private filePath;
-    constructor(customFilePath?: string);
-    private getDefaultRules;
-    private loadRules;
-    saveRules(rulesToSave?: BossRule[]): void;
-    getRules(): BossRule[];
+    readonly baseDir: string;
+    readonly legacyFilePath: string;
+    private singleFileOverride?;
+    private stores;
+    constructor(customBaseDirOrFilePath?: string, customLegacyFilePathOrAllowedDir?: string);
+    /**
+     * Resolve or initialize the isolated DurableJsonStore for the specified user.
+     */
+    getStore(userId?: string): DurableJsonStore<BossRule[]>;
+    getDefaultRules(): BossRule[];
+    saveRules(userIdOrRules: string | BossRule[], maybeRules?: BossRule[]): void;
+    getRules(userId?: string): BossRule[];
     /**
      * Thêm hoặc cập nhật một quy tắc do Sếp dạy
      */
-    addRule(rule: Omit<BossRule, 'id' | 'createdAt' | 'updatedAt' | 'enabled'>): BossRule;
+    addRule(userIdOrRule: string | Omit<BossRule, 'id' | 'createdAt' | 'updatedAt' | 'enabled'>, maybeRule?: Omit<BossRule, 'id' | 'createdAt' | 'updatedAt' | 'enabled'>): BossRule;
     /**
      * Phân tích câu nói của Sếp xem có chứa tín hiệu "Sửa sai / Dạy dỗ" không
      */
-    detectCorrectionPattern(userText: string): {
+    detectCorrectionPattern(userText: string, userId?: string): {
         isCorrection: boolean;
         learnedRule?: BossRule;
         replyMessage?: string;
@@ -30,6 +36,6 @@ export declare class BossFeedbackLearner {
     /**
      * Tạo văn bản Prompt nạp vào System Prompt
      */
-    getPromptInjections(): string;
+    getPromptInjections(userId?: string): string;
 }
 export declare const globalBossFeedback: BossFeedbackLearner;
