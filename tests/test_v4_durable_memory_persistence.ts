@@ -1,6 +1,9 @@
 // tests/test_v4_durable_memory_persistence.ts
 // BOW CON V4.0 — MILESTONE 1.3.2: ATOMIC DURABLE MEMORY PERSISTENCE & SCHEMA VALIDATION TEST SUITE
 
+// EN: This suite verifies schema validation, atomic persistence, and quarantine of corrupt durable data.
+// VI: Suite này xác minh schema, lưu trữ nguyên tử và cách ly dữ liệu bền vững bị hỏng.
+
 import fs from 'node:fs';
 import path from 'node:path';
 import {

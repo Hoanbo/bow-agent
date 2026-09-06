@@ -907,5 +907,32 @@
     "createdAt": "2026-09-06T14:54:32.814Z",
     "updatedAt": "2026-09-06T14:54:32.814Z",
     "enabled": true
+  },
+  {
+    "id": "rule_1788708629175",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-06T15:30:29.175Z",
+    "updatedAt": "2026-09-06T15:30:29.175Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788709235100",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-06T15:40:35.100Z",
+    "updatedAt": "2026-09-06T15:40:35.100Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788711405195",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-06T16:16:45.195Z",
+    "updatedAt": "2026-09-06T16:16:45.195Z",
+    "enabled": true
   }
 ]

@@ -1,6 +1,14 @@
 // src/embodied/bossMemoryHub.ts
 // BOW CON V4.0 — EPISODIC BOSS MEMORY & MULTI-USER PARTITIONED LIFE COMPANION ENGINE
 
+// EN:
+// BossMemoryHub is the durable user-profile boundary. It resolves a separate store for
+// each authenticated user and only learns verified information at the AgentLoop commit boundary.
+//
+// VI:
+// BossMemoryHub là ranh giới hồ sơ người dùng bền vững. Nó phân giải một store riêng cho
+// từng người dùng đã xác thực và chỉ học thông tin đã được xác minh tại ranh giới commit của AgentLoop.
+
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -49,7 +57,8 @@ export class BossMemoryHub {
 
   constructor(customBaseDirOrFilePath?: string, customLegacyFilePathOrAllowedDir?: string) {
     if (customBaseDirOrFilePath && customBaseDirOrFilePath.endsWith('.json')) {
-      // Backward compatibility with single-file tests (customFilePath, allowedBaseDir)
+      // EN: Keep the test-only single-file seam while production uses user partitions.
+      // VI: Giữ điểm mở rộng file đơn chỉ dành cho test, còn production dùng phân vùng người dùng.
       this.baseDir = path.dirname(customBaseDirOrFilePath);
       this.singleFileOverride = customBaseDirOrFilePath;
       this.legacyFilePath =
@@ -83,7 +92,8 @@ export class BossMemoryHub {
       return this.stores.get(cacheKey)!;
     }
 
-    // Deterministic, idempotent legacy migration: ONLY for primary configured owner
+    // EN: A legacy file may migrate once, only into the primary owner's isolated partition.
+    // VI: File cũ chỉ có thể được chuyển đúng một lần vào phân vùng cô lập của chủ sở hữu chính.
     if (
       !this.singleFileOverride &&
       partition.userId === DEFAULT_PRIMARY_USER_ID &&

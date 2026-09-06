@@ -6,6 +6,9 @@
 // Validates state transitions, read-only memory, PDP governance, verification discrepancy detection,
 // failure boundaries, durable learning conditions, secret scrubbing, and idempotency.
 
+// EN: This suite verifies lifecycle ordering, governance gates, and that failed work cannot commit state.
+// VI: Suite này xác minh thứ tự lifecycle, các cổng governance và việc công việc lỗi không thể commit trạng thái.
+
 import {
   AgentLoop,
   globalAgentLoop,

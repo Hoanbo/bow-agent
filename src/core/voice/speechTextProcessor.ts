@@ -7,6 +7,14 @@
 // - INV-6: Technical pronunciation normalization.
 // - INV-7: Numbers, symbols, currency, and durations speech normalization.
 
+// EN:
+// This pipeline produces a speech-only derivative. The original agent response remains
+// byte-for-byte unchanged, while spoken text is normalized for clarity and cadence.
+//
+// VI:
+// Pipeline này tạo một bản dẫn xuất chỉ dành cho giọng nói. Phản hồi gốc của agent vẫn
+// không thay đổi từng byte, còn văn bản đọc được chuẩn hóa để rõ ràng và tự nhiên hơn.
+
 import { normalizeNumbersAndSymbols } from './speechNumberNormalizer.js';
 import { normalizePronunciation } from './pronunciationNormalizer.js';
 import { segmentSpeech, SpeechSegment } from './speechSegmenter.js';
@@ -42,7 +50,8 @@ export function processTextForSpeech(text: string, options: SpeechProcessingOpti
   const isVietnamese = language.toLowerCase().startsWith('vi');
   let result = text;
 
-  // 1. Remove XML/HTML tags
+  // EN: Remove presentation markup from the speech derivative only.
+  // VI: Chỉ loại bỏ markup trình bày khỏi bản dẫn xuất dùng để đọc.
   result = result.replace(/<[^>]+>/g, ' ');
 
   // 2. Convert fenced code blocks ```lang\ncode\n``` to concise spoken announcement

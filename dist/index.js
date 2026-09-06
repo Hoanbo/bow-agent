@@ -136,3 +136,21 @@ export * from './core/context/referenceResolver.js';
 export * from './core/context/contextRanker.js';
 export * from './core/context/contextCompactor.js';
 export * from './core/context/contextManager.js';
+// 22. BOWCON V4.0 — Milestone 1.3.8: Intent Understanding & Semantic Action Planning
+export * from './core/intent/entityTypes.js';
+export * from './core/intent/clarification.js';
+export * from './core/intent/intentTypes.js';
+export * from './core/intent/entityExtractor.js';
+export * from './core/intent/referenceResolver.js';
+export * from './core/intent/actionClassifier.js';
+export * from './core/intent/semanticValidator.js';
+export * from './core/intent/intentParser.js';
+export * from './core/intent/intentService.js';
+// 23. BOWCON V4.0 — Milestone 1.3.9: Decision & Context-Aware Planning
+export * from './core/planning/index.js';
+// 24. BOWCON V4.0 — Milestone 1.3.10: Decision Reasoning & Action Selection
+export * from './core/decision/index.js';
+// 25. BOWCON V4.0 — Milestone 1.3.11: Action Orchestration & Governed Execution Bridge
+export * from './core/orchestration/index.js';
+// 26. BOWCON V4.0 — Milestone 1.3.12: Governed Tool Execution Runtime & Safe Capability Registry
+export * from './core/execution/index.js';

@@ -1,6 +1,13 @@
 // src/security/requestGuard.ts
 // BOWCON V4.0 — REQUEST PERIMETER GUARD, RATE LIMITER & CORRELATION ENGINE
 // Compliant with NIST AI RMF & ISO/IEC 42001
+// EN:
+// RequestGuard protects the HTTP perimeter before a request reaches agent logic. It applies
+// rate limiting, origin validation, body-size limits, correlation IDs, and constant-time token comparison.
+//
+// VI:
+// RequestGuard bảo vệ ranh giới HTTP trước khi request đi vào logic agent. Nó áp dụng giới hạn tần suất,
+// xác thực origin, giới hạn kích thước body, correlation ID và so sánh token theo thời gian hằng.
 import crypto from 'node:crypto';
 export class RequestGuard {
     rateLimitWindowMs;

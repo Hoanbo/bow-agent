@@ -5,6 +5,15 @@ import { ConversationTurn, MemoryScope } from './memory.js';
 import type { AgentMessage } from './types.js';
 import { VoiceService } from './voice/voiceService.js';
 import type { VoiceConfig, VoiceResult } from './voice/voiceConfig.js';
+import { IntentService } from './intent/intentService.js';
+import type { SemanticIntent } from './intent/intentTypes.js';
+import { PlanningService } from './planning/planningService.js';
+import type { ContextAwarePlan } from './planning/planningTypes.js';
+import { DecisionService } from './decision/decisionService.js';
+import type { DecisionResult } from './decision/decisionTypes.js';
+import { ActionOrchestrator } from './orchestration/actionOrchestrator.js';
+import type { OrchestrationResult } from './orchestration/orchestrationTypes.js';
+import { ExecutionService } from './execution/executionService.js';
 export type AgentLoopState = 'RECEIVED' | 'INTENT_RESOLVED' | 'MEMORY_LOADED' | 'PLAN_CREATED' | 'POLICY_EVALUATED' | 'EXECUTING' | 'VERIFYING' | 'UPDATING' | 'COMPLETED' | 'INTENT_FAILED' | 'MEMORY_FAILED' | 'PLAN_FAILED' | 'POLICY_DENIED' | 'APPROVAL_REQUIRED' | 'EXECUTION_FAILED' | 'VERIFICATION_FAILED' | 'UPDATE_FAILED';
 export type VerificationStatus = 'VERIFICATION_SUCCESS' | 'VERIFICATION_FAILURE' | 'PARTIAL_SUCCESS' | 'UNKNOWN';
 export type VerificationStrategy = 'RETURN_VALUE_CHECK' | 'STATE_INSPECTION' | 'WINDOW_CONFIRMATION' | 'TELEMETRY_ACK' | 'SCHEMA_VALIDATION' | 'NONE';
@@ -104,6 +113,10 @@ export interface AgentLoopResult {
     actor: AgentActorIdentity;
     state: AgentLoopState;
     intent?: LoopIntent;
+    semanticIntent?: SemanticIntent;
+    contextAwarePlan?: ContextAwarePlan;
+    decisionResult?: DecisionResult;
+    orchestrationResult?: OrchestrationResult;
     memoryContext?: AgentMemoryContext;
     plan?: AgentPlan;
     policyEvaluations: AgentPolicyEvaluation[];
@@ -118,9 +131,16 @@ export interface AgentLoopResult {
 export declare class AgentLoop {
     private voiceService;
     private contextManager;
-    constructor(voiceService?: VoiceService, contextManager?: ContextManager);
+    private intentService;
+    private planningService;
+    private decisionService;
+    private actionOrchestrator;
+    private executionService;
+    constructor(voiceService?: VoiceService, contextManager?: ContextManager, intentService?: IntentService, planningService?: PlanningService, decisionService?: DecisionService, actionOrchestrator?: ActionOrchestrator, executionService?: ExecutionService);
     getVoiceService(): VoiceService;
     getContextManager(): ContextManager;
+    getActionOrchestrator(): ActionOrchestrator;
+    getExecutionService(): ExecutionService;
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
      */

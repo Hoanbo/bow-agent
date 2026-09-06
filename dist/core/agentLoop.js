@@ -37,6 +37,13 @@ import { memoryStore } from './memory.js';
 import { fastPathRouter } from './fastPathRouter.js';
 import { scanSecurity, redactPii } from './security.js';
 import { globalVoiceService } from './voice/voiceService.js';
+import { IntentService } from './intent/intentService.js';
+import { PlanningService } from './planning/planningService.js';
+import { createDecisionContext } from './planning/decisionContext.js';
+import { DecisionService } from './decision/decisionService.js';
+import { ActionOrchestrator } from './orchestration/actionOrchestrator.js';
+import { ExecutionService } from './execution/executionService.js';
+import { CapabilityRegistry } from './execution/capabilityRegistry.js';
 import { globalContextManager } from './context/contextManager.js';
 // ---------------------------------------------------------------------------
 // 3. AUTHORITATIVE CANONICAL AGENT LOOP CLASS
@@ -44,15 +51,31 @@ import { globalContextManager } from './context/contextManager.js';
 export class AgentLoop {
     voiceService;
     contextManager;
-    constructor(voiceService, contextManager) {
+    intentService;
+    planningService;
+    decisionService;
+    actionOrchestrator;
+    executionService;
+    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService) {
         this.voiceService = voiceService || globalVoiceService;
         this.contextManager = contextManager || globalContextManager;
+        this.intentService = intentService || new IntentService();
+        this.planningService = planningService || new PlanningService();
+        this.decisionService = decisionService || new DecisionService();
+        this.actionOrchestrator = actionOrchestrator || new ActionOrchestrator();
+        this.executionService = executionService || new ExecutionService(new CapabilityRegistry());
     }
     getVoiceService() {
         return this.voiceService;
     }
     getContextManager() {
         return this.contextManager;
+    }
+    getActionOrchestrator() {
+        return this.actionOrchestrator;
+    }
+    getExecutionService() {
+        return this.executionService;
     }
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
@@ -68,13 +91,18 @@ export class AgentLoop {
         };
         let currentState = 'RECEIVED';
         let intent;
+        let semanticIntent;
+        let contextAwarePlan;
+        let decisionResult;
+        let orchestrationResult;
         let memoryContext;
         let plan;
         const policyEvaluations = [];
         const executionResults = [];
         const verificationResults = [];
         let updateResult;
-        // Security pre-scan on inbound text
+        // EN: Scan untrusted input before lifecycle processing; detected secrets stay out of downstream logs.
+        // VI: Quét dữ liệu đầu vào không tin cậy trước lifecycle; bí mật bị phát hiện không đi vào log phía sau.
         const secScan = scanSecurity(req.userText || '');
         if (!secScan.isSafe) {
             return {
@@ -136,7 +164,8 @@ export class AgentLoop {
                 totalDurationMs: Date.now() - startTime,
             };
         }
-        // Ingest turn into Conversation Context Manager (Stage 1b / Pre-Stage 2)
+        // EN: Context ingestion is optional enrichment. Its failure must not block the core 7-stage lifecycle.
+        // VI: Nạp context là làm giàu tùy chọn. Lỗi của nó không được chặn lifecycle lõi gồm 7 giai đoạn.
         try {
             await this.contextManager.ingestUserTurn(actor.userId, sessionId, sanitizedText);
         }
@@ -158,6 +187,56 @@ export class AgentLoop {
                 startTime, intent, policyEvaluations, executionResults, verificationResults,
             });
         }
+        // EN:
+        // Interpret the accepted request only after its scoped ConversationContext and WorkingMemory are available.
+        // SemanticIntent is a data-only candidate; it cannot call ToolRegistry or PolicyDecisionPoint.
+        //
+        // VI:
+        // Chỉ diễn giải request đã chấp nhận sau khi ConversationContext và WorkingMemory theo scope đã sẵn sàng.
+        // SemanticIntent là candidate chỉ dữ liệu; nó không thể gọi ToolRegistry hoặc PolicyDecisionPoint.
+        semanticIntent = this.intentService.interpret({
+            userId: actor.userId,
+            sessionId,
+            userText: sanitizedText,
+            context: memoryContext.contextSnapshot ? { recentTurns: memoryContext.contextSnapshot.recentTurns } : undefined,
+            workingMemory: memoryContext.sessionTurns,
+        });
+        // Preserve the established general-conversation path for an unsupported deterministic rule.
+        // Missing data, malformed input, and unresolved references still fail closed before runtime planning.
+        if (semanticIntent.requiresClarification && semanticIntent.clarification.some(item => item.reason !== 'UNSUPPORTED_INTENT')) {
+            const clarificationText = 'Xin vui lòng làm rõ thông tin còn thiếu hoặc tham chiếu trong yêu cầu.';
+            return {
+                requestId, correlationId, sessionId, actor, state: 'COMPLETED', intent, semanticIntent, memoryContext,
+                policyEvaluations, executionResults, verificationResults,
+                response: { id: `msg_semantic_clarify_${Date.now()}`, sender: 'agent', content: clarificationText, timestamp: new Date().toISOString() },
+                totalDurationMs: Date.now() - startTime,
+            };
+        }
+        // EN: The planning layer creates an inert, context-aware proposal before the existing Stage 3 runtime plan.
+        // VI: Lớp planning tạo proposal theo context nhưng không hoạt động trước runtime plan Stage 3 hiện hữu.
+        contextAwarePlan = this.planningService.plan({
+            userId: actor.userId,
+            sessionId,
+            userText: sanitizedText,
+            context: memoryContext.contextSnapshot ? { recentTurns: memoryContext.contextSnapshot.recentTurns } : undefined,
+            workingMemory: memoryContext.sessionTurns,
+        }, semanticIntent);
+        // EN: Decision reasoning selects only an inert planner candidate; existing PDP and ToolRegistry boundaries remain unchanged.
+        // VI: Decision reasoning chỉ chọn candidate không hoạt động từ planner; ranh giới PDP và ToolRegistry hiện hữu không đổi.
+        const decisionContext = createDecisionContext({
+            userId: actor.userId,
+            sessionId,
+            userText: sanitizedText,
+            context: memoryContext.contextSnapshot ? { recentTurns: memoryContext.contextSnapshot.recentTurns } : undefined,
+            workingMemory: memoryContext.sessionTurns,
+        }, semanticIntent);
+        decisionResult = this.decisionService.decide({
+            context: decisionContext,
+            plan: contextAwarePlan,
+        });
+        // EN: Action orchestration bridges DecisionResult to governed execution without executing tools.
+        // VI: Điều phối hành động cầu nối DecisionResult sang thực thi có quản trị mà không trực tiếp thực thi tool.
+        orchestrationResult = this.actionOrchestrator.orchestrate(decisionResult, decisionContext);
         // =========================================================================
         // STAGE 3: BOUNDED PLANNING (SEPARATE FROM EXECUTION)
         // =========================================================================
@@ -392,7 +471,8 @@ export class AgentLoop {
         catch {
             // Failure isolation (INV-14)
         }
-        // Voice output layer (post-response boundary)
+        // EN: Voice is a post-response boundary: TTS may fail, but the verified text result is preserved.
+        // VI: Voice là ranh giới sau phản hồi: TTS có thể lỗi, nhưng kết quả văn bản đã xác minh vẫn được giữ.
         const voiceResult = await this.synthesizeVoiceIfNeeded(responseText, req, correlationId, requestId);
         return {
             requestId,
@@ -401,6 +481,10 @@ export class AgentLoop {
             actor,
             state: currentState,
             intent,
+            semanticIntent,
+            contextAwarePlan,
+            decisionResult,
+            orchestrationResult,
             memoryContext,
             plan,
             policyEvaluations,
@@ -712,7 +796,8 @@ export class AgentLoop {
     async applyUpdate(params) {
         const updateTimestamp = new Date().toISOString();
         const scope = { sessionId: params.sessionId, userId: params.actor.userId };
-        // 1. Commit user turn into session working memory (The ONLY working-memory write boundary)
+        // EN: This is the sole working-memory write boundary, reached only after verification.
+        // VI: Đây là ranh giới ghi working memory duy nhất, chỉ đạt được sau bước xác minh.
         memoryStore.appendTurn(scope, {
             id: `turn_u_${Date.now()}`,
             sender: 'user',
@@ -721,8 +806,8 @@ export class AgentLoop {
         });
         let learnedRuleRecorded = false;
         let memoryCandidateRecorded = false;
-        // 2. Durable learning: ONLY if execution was verified successful!
-        // Never learn from failed executions!
+        // EN: Durable learning is permitted only after verified success; failed execution must never become memory.
+        // VI: Chỉ được học bền vững sau thành công đã xác minh; thực thi thất bại không bao giờ trở thành bộ nhớ.
         if (params.verifiedSuccess && (params.actor.isOwner || params.actor.role === 'owner')) {
             // Check if user taught an explicit rule
             if (params.intent?.intentType === 'TEACH_RULE' && params.intent.parameters?.instruction) {

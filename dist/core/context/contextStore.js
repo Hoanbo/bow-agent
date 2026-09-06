@@ -7,6 +7,13 @@
 // - INV-11: All methods return defensive copies (Text & Snapshot Immutability).
 // - INV-15: Rejects unsafe user/session IDs (path traversal, null-bytes, reserved names).
 import { ContextSecurityError, } from './conversationContext.js';
+// EN:
+// The store scopes every conversation to ${userId}::${sessionId}. It returns defensive
+// copies, so callers cannot mutate the stored conversation through a snapshot.
+//
+// VI:
+// Store giới hạn mọi cuộc hội thoại theo ${userId}::${sessionId}. Nó trả về các bản sao phòng thủ,
+// vì vậy caller không thể sửa cuộc hội thoại đã lưu thông qua snapshot.
 const WINDOWS_RESERVED_NAMES = /^(CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(\..*)?$/i;
 export class ContextStore {
     partitions = new Map();
@@ -22,7 +29,8 @@ export class ContextStore {
         }
         const u = userId.trim();
         const s = sessionId.trim();
-        // Security validation against traversal and injection
+        // EN: Validate identity before using it as a partition key; fail closed on injection input.
+        // VI: Xác thực danh tính trước khi dùng làm khóa phân vùng; từ chối an toàn dữ liệu đầu vào chèn mã.
         if (u.includes('\0') || s.includes('\0')) {
             throw new ContextSecurityError('Null-byte injection detected in context partition identity');
         }

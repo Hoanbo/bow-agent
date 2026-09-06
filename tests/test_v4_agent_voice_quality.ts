@@ -4,6 +4,9 @@
 // 31-SECTION COMPREHENSIVE AUTOMATED VERIFICATION SUITE
 // ============================================================================
 
+// EN: This suite verifies speech transformations without mutating the user-visible text response.
+// VI: Suite này xác minh các biến đổi giọng nói mà không thay đổi phản hồi văn bản người dùng nhìn thấy.
+
 import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';

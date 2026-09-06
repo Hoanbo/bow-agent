@@ -1,6 +1,9 @@
 // tests/test_v4_architecture_contract.ts
 // BOWCON V4.0 — MILESTONE 1.1: ARCHITECTURE CONTRACT & BASELINE INVARIANT TESTS
 
+// EN: This suite locks the architectural contract so later changes cannot silently weaken system boundaries.
+// VI: Suite này khóa hợp đồng kiến trúc để các thay đổi sau không thể âm thầm làm yếu ranh giới hệ thống.
+
 import fs from 'node:fs';
 import path from 'node:path';
 

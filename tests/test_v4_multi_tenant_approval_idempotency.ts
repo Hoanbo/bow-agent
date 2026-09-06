@@ -14,6 +14,9 @@
 // 8. Static audit: Zero unsafe direct writes or global mutable user state.
 // 9. End-to-end PDP and ToolRegistry governance boundaries.
 
+// EN: This suite verifies that approval tokens and idempotency keys cannot be replayed or cross tenant boundaries.
+// VI: Suite này xác minh token approval và khóa idempotency không thể phát lại hoặc vượt qua ranh giới tenant.
+
 import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';

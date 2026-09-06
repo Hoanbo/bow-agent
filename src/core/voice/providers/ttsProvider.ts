@@ -1,6 +1,11 @@
 // src/core/voice/providers/ttsProvider.ts
 // BOWCON V4.0 — TTS PROVIDER ABSTRACTION INTERFACE (MILESTONE 1.3.5)
 
+// EN: TTSProvider is the stable provider boundary. VoiceService depends on this contract,
+// not on a vendor SDK, so providers can be replaced without changing AgentLoop behavior.
+// VI: TTSProvider là ranh giới provider ổn định. VoiceService phụ thuộc vào contract này,
+// không phụ thuộc SDK của nhà cung cấp, nên provider có thể được thay thế mà không đổi AgentLoop.
+
 import type { VoiceConfig, VoiceSynthesisRequest, VoiceSynthesisResponse, AudioOutputFormat } from '../voiceConfig.js';
 import type { TTSCapabilities } from '../voiceCapabilities.js';
 

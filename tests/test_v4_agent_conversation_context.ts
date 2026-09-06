@@ -4,6 +4,9 @@
 // 36-SECTION COMPREHENSIVE AUTOMATED VERIFICATION SUITE
 // ============================================================================
 
+// EN: These assertions verify deterministic context enrichment, user/session isolation, and safe fallback.
+// VI: Các assertion này xác minh làm giàu context xác định, cô lập user/session và fallback an toàn.
+
 import assert from 'node:assert';
 import {
   ContextManager,

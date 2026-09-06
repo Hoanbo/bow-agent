@@ -2,6 +2,15 @@
 // BOWCON V4.0 — ATOMIC IDEMPOTENCY KEY STORE WITH MULTI-TENANT DURABLE PERSISTENCE
 // Compliant with ISO/IEC 42001 & NIST AI RMF
 // Guarantees zero duplicate side effects across all tool executions with identity-scoped physical storage.
+// EN:
+// Idempotency (safe retry behavior) reserves a key before an action starts. A matching
+// concurrent request observes IN_PROGRESS; a completed request receives its cached result.
+// The key is partitioned by ownerUserId, so identical keys cannot cross user boundaries.
+//
+// VI:
+// Idempotency (tính bất biến khi lặp lại) đặt trước một khóa trước khi hành động bắt đầu.
+// Request đồng thời có cùng khóa sẽ thấy IN_PROGRESS; request hoàn tất nhận lại kết quả đã lưu.
+// Khóa được phân vùng theo ownerUserId, vì vậy các khóa giống nhau không thể vượt qua ranh giới người dùng.
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -20,7 +29,8 @@ export class IdempotencyStore {
     constructor(defaultTtlMs = 24 * 60 * 60 * 1000, customBaseDirOrFilePath, customLegacyFilePathOrAllowedDir) {
         this.defaultTtlMs = defaultTtlMs;
         if (customBaseDirOrFilePath && customBaseDirOrFilePath.endsWith('.json')) {
-            // Backward compatibility with single-file tests (customFilePath, allowedBaseDir)
+            // EN: Preserve the legacy single-file test seam without weakening production partitioning.
+            // VI: Giữ điểm mở rộng kiểm thử file đơn cũ mà không làm suy yếu phân vùng production.
             this.baseDir = path.dirname(customBaseDirOrFilePath);
             this.singleFileOverride = customBaseDirOrFilePath;
             this.legacyFilePath =
@@ -51,7 +61,8 @@ export class IdempotencyStore {
         if (this.stores.has(cacheKey)) {
             return this.stores.get(cacheKey);
         }
-        // Deterministic, idempotent legacy migration: ONLY for primary configured owner
+        // EN: Migrate legacy data once and only to the configured primary owner's partition.
+        // VI: Chuyển dữ liệu cũ đúng một lần và chỉ vào phân vùng của chủ sở hữu chính đã cấu hình.
         if (!this.singleFileOverride &&
             partition.userId === DEFAULT_PRIMARY_USER_ID &&
             !fs.existsSync(partition.filePath)) {
@@ -168,7 +179,8 @@ export class IdempotencyStore {
                 };
                 return entries;
             }
-            // Key does not exist or has expired -> Atomically reserve
+            // EN: Reserve before execution so a retry cannot create a second side effect.
+            // VI: Đặt trước trước khi thực thi để request thử lại không thể tạo tác động phụ thứ hai.
             const payloadHash = payload !== undefined
                 ? crypto.createHash('sha256').update(JSON.stringify(payload)).digest('hex')
                 : '';

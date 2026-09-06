@@ -3,6 +3,9 @@
 //
 // Authoritative 22-Section Verification Suite
 
+// EN: This suite verifies provider abstraction, capability handling, and voice failure isolation from AgentLoop.
+// VI: Suite này xác minh trừu tượng provider, xử lý capability và cô lập lỗi voice khỏi AgentLoop.
+
 import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';

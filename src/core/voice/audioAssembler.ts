@@ -7,6 +7,14 @@
 // - Synthesizes accurate PCM silence frames for planned pauses.
 // - Fails closed on truncated, empty, or corrupted audio payloads.
 
+// EN:
+// AudioAssembler joins validated sentence-level audio in chronological order and inserts
+// planned silence. Invalid or truncated payloads fail closed instead of producing misleading audio.
+//
+// VI:
+// AudioAssembler ghép audio cấp câu đã xác thực theo thứ tự thời gian và chèn khoảng lặng đã lập kế hoạch.
+// Payload không hợp lệ hoặc bị cắt cụt sẽ bị từ chối an toàn thay vì tạo audio sai lệch.
+
 import type { AudioOutputFormat } from './voiceConfig.js';
 import { VoiceSynthesisError } from './voiceErrors.js';
 

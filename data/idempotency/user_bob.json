@@ -75,5 +75,38 @@
     "recordedAt": 1788706501515,
     "expiresAt": 1788792901515,
     "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788708685635_0i4h",
+    "ownerUserId": "user_bob",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 2
+    },
+    "recordedAt": 1788708685643,
+    "expiresAt": 1788795085643,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788709274220_15w9",
+    "ownerUserId": "user_bob",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 2
+    },
+    "recordedAt": 1788709274230,
+    "expiresAt": 1788795674230,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788711437310_2gq9",
+    "ownerUserId": "user_bob",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 2
+    },
+    "recordedAt": 1788711437320,
+    "expiresAt": 1788797837320,
+    "status": "COMPLETED"
   }
 ]

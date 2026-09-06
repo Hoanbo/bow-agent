@@ -8,6 +8,9 @@
 // - Cross-session, cross-user, concurrent, and failure isolation
 // - Gemini context isolation & AgentLoop UPDATE-stage mutation boundary
 
+// EN: This suite proves working memory is isolated by the userId + sessionId composite scope.
+// VI: Suite này chứng minh working memory được cô lập theo phạm vi kết hợp userId + sessionId.
+
 import fs from 'node:fs';
 import path from 'node:path';
 import {

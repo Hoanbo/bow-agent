@@ -1,6 +1,9 @@
 // tests/test_v4_multi_user_durable_memory.ts
 // BOW CON V4.0 — MILESTONE 1.3.3: MULTI-USER DURABLE MEMORY PARTITIONING TEST SUITE
 
+// EN: This suite verifies durable memory ownership separately for every authenticated user.
+// VI: Suite này xác minh quyền sở hữu durable memory riêng cho từng người dùng đã xác thực.
+
 import fs from 'node:fs';
 import path from 'node:path';
 import {
