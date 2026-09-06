@@ -122,3 +122,4 @@ export * from './core/planning/index.js';
 export * from './core/decision/index.js';
 export * from './core/orchestration/index.js';
 export * from './core/execution/index.js';
+export * from './core/lifecycle/index.js';

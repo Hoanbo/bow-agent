@@ -106,14 +106,22 @@
 | **87** | `ExecutionValidator` | `src/core/execution/executionValidator.ts` | **REAL** | Tool Execution | Request + schema | Validation result + errors | Prototype pollution, null-byte, path traversal, device names | `test_v4_agent_tool_execution` (09–14, 30) | Multi-tier security inspection | Milestone 1.3.12 |
 | **88** | `ExecutionRecordFactory` | `src/core/execution/executionRecord.ts` | **REAL** | Tool Execution | Execution event parameters | Frozen `ExecutionRecord` | Immutable audit snapshot, sanitized error strings | `test_v4_agent_tool_execution` (43) | Defensive object freezing | Milestone 1.3.12 |
 | **89** | `MockToolProvider` | `src/core/execution/mockToolProvider.ts` | **MOCK** | Tool Execution | Mock arguments | Deterministic mock results | Zero dynamic code, zero network calls, zero hardware | `test_v4_agent_tool_execution` (20, 26, 39, 42) | Simulated capabilities for testing | Milestone 1.3.12 |
+| **90** | `LifecycleService` | `src/core/lifecycle/lifecycleService.ts` | **REAL** | Lifecycle Management | State transitions, checkpoints | Frozen `AgentLifecycleState` | Multi-tenant session map, monotonic risk/gov preservation | `test_v4_agent_lifecycle` (01–51) | Central lifecycle manager | Milestone 1.3.13 |
+| **91** | `LifecycleStates` | `src/core/lifecycle/lifecycleStates.ts` | **REAL** | Lifecycle Management | Lifecycle state strings | Stage mapping & state categorization | Set-based classification, terminal state flags | `test_v4_agent_lifecycle` (06–20) | Authoritative state sets | Milestone 1.3.13 |
+| **92** | `LifecycleTransitions` | `src/core/lifecycle/lifecycleTransitions.ts` | **REAL** | Lifecycle Management | Current state + target state | Valid/invalid result | Immutable transition matrix, terminal state protection | `test_v4_agent_lifecycle` (21–23) | Deterministic matrix lookup | Milestone 1.3.13 |
+| **93** | `LifecycleValidator` | `src/core/lifecycle/lifecycleValidator.ts` | **REAL** | Lifecycle Management | User/session, metadata, risks | Security validation outcome | Prototype pollution, null-byte, traversal, secret checks | `test_v4_agent_lifecycle` (36–42) | Multi-tier defensive scanner | Milestone 1.3.13 |
+| **94** | `LifecycleFingerprint` | `src/core/lifecycle/lifecycleFingerprint.ts` | **REAL** | Lifecycle Management | State / transition tokens | Deterministic FNV-1a 32-bit hex | Non-random hashing, zero random numbers or timestamps | `test_v4_agent_lifecycle` (34, 35) | Pure hashing function | Milestone 1.3.13 |
+| **95** | `LifecycleFailure` | `src/core/lifecycle/lifecycleFailure.ts` | **REAL** | Lifecycle Management | Failure parameters | Frozen `FailureMetadata` | Secret scrubbing, deterministic failure fingerprinting | `test_v4_agent_lifecycle` (29, 30) | Failure isolation model | Milestone 1.3.13 |
+| **96** | `LifecycleRecovery` | `src/core/lifecycle/lifecycleRecovery.ts` | **REAL** | Lifecycle Management | Recovery boundaries | Frozen `RecoveryMetadata` | Data-only policy descriptor; zero retries/timeouts | `test_v4_agent_lifecycle` (31, 32) | Data-only recovery policy | Milestone 1.3.13 |
+| **97** | `LifecycleCheckpoint` | `src/core/lifecycle/lifecycleCheckpoint.ts` | **REAL** | Lifecycle Management | State snapshot parameters | Frozen `LifecycleCheckpoint` | Scope validation, metadata scrubbing, zero memory mutation | `test_v4_agent_lifecycle` (33, 34) | Pure snapshot generation | Milestone 1.3.13 |
 
 ---
 
 ## 2. REALITY LEVEL DISTRIBUTION SUMMARY
 
-- **REAL Components (Operational with genuine system/protocol execution):** **71 / 93 (76.34%)**
-- **PARTIAL Components (Real architecture, but mock/in-memory/unisolated aspects):** **15 / 93 (16.13%)**
-- **MOCK Components (Synthetic, simulated, or missing external interfaces):** **7 / 93 (7.53%)**
+- **REAL Components (Operational with genuine system/protocol execution):** **79 / 101 (78.22%)**
+- **PARTIAL Components (Real architecture, but mock/in-memory/unisolated aspects):** **15 / 101 (14.85%)**
+- **MOCK Components (Synthetic, simulated, or missing external interfaces):** **7 / 101 (6.93%)**
 
 > [!IMPORTANT]
 > A component graded as `PARTIAL` or `MOCK` **cannot** be claimed as complete in any customer or operational certification. Every future milestone must systematically elevate components to `REAL` with verifiable automated tests.

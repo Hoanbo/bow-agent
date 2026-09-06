@@ -462,5 +462,18 @@
     "recordedAt": 1788711405268,
     "expiresAt": 1788797805268,
     "status": "COMPLETED"
+  },
+  {
+    "key": "idem_key_1788712385926",
+    "ownerUserId": "boss_user",
+    "payloadHash": "9bebd470fd7fe93d4c033e7902cc56faf0745b4ebe05d1e68270223a7083a444",
+    "result": {
+      "success": true,
+      "data": "Read query: test_corr",
+      "timestamp": 1788712385930
+    },
+    "recordedAt": 1788712385930,
+    "expiresAt": 1788798785930,
+    "status": "COMPLETED"
   }
 ]

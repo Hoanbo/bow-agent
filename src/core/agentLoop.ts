@@ -51,6 +51,7 @@ import { ActionOrchestrator } from './orchestration/actionOrchestrator.js';
 import type { OrchestrationResult } from './orchestration/orchestrationTypes.js';
 import { ExecutionService } from './execution/executionService.js';
 import { CapabilityRegistry } from './execution/capabilityRegistry.js';
+import { LifecycleService } from './lifecycle/lifecycleService.js';
 
 // ---------------------------------------------------------------------------
 // 1. STRONGLY TYPED LIFECYCLE STATES
@@ -238,8 +239,18 @@ export class AgentLoop {
   private decisionService: DecisionService;
   private actionOrchestrator: ActionOrchestrator;
   private executionService: ExecutionService;
+  private lifecycleService: LifecycleService;
 
-  constructor(voiceService?: VoiceService, contextManager?: ContextManager, intentService?: IntentService, planningService?: PlanningService, decisionService?: DecisionService, actionOrchestrator?: ActionOrchestrator, executionService?: ExecutionService) {
+  constructor(
+    voiceService?: VoiceService,
+    contextManager?: ContextManager,
+    intentService?: IntentService,
+    planningService?: PlanningService,
+    decisionService?: DecisionService,
+    actionOrchestrator?: ActionOrchestrator,
+    executionService?: ExecutionService,
+    lifecycleService?: LifecycleService,
+  ) {
     this.voiceService = voiceService || globalVoiceService;
     this.contextManager = contextManager || globalContextManager;
     this.intentService = intentService || new IntentService();
@@ -247,6 +258,7 @@ export class AgentLoop {
     this.decisionService = decisionService || new DecisionService();
     this.actionOrchestrator = actionOrchestrator || new ActionOrchestrator();
     this.executionService = executionService || new ExecutionService(new CapabilityRegistry());
+    this.lifecycleService = lifecycleService || new LifecycleService();
   }
 
   public getVoiceService(): VoiceService {
@@ -263,6 +275,10 @@ export class AgentLoop {
 
   public getExecutionService(): ExecutionService {
     return this.executionService;
+  }
+
+  public getLifecycleService(): LifecycleService {
+    return this.lifecycleService;
   }
 
   /**

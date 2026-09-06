@@ -108,5 +108,16 @@
     "recordedAt": 1788711437320,
     "expiresAt": 1788797837320,
     "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788712408966_663q",
+    "ownerUserId": "user_bob",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 2
+    },
+    "recordedAt": 1788712408973,
+    "expiresAt": 1788798808973,
+    "status": "COMPLETED"
   }
 ]

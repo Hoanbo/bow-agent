@@ -154,3 +154,5 @@ export * from './core/decision/index.js';
 export * from './core/orchestration/index.js';
 // 26. BOWCON V4.0 — Milestone 1.3.12: Governed Tool Execution Runtime & Safe Capability Registry
 export * from './core/execution/index.js';
+// 27. BOWCON V4.0 — Milestone 1.3.13: Agent State & Lifecycle Management Foundation
+export * from './core/lifecycle/index.js';

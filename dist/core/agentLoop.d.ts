@@ -14,6 +14,7 @@ import type { DecisionResult } from './decision/decisionTypes.js';
 import { ActionOrchestrator } from './orchestration/actionOrchestrator.js';
 import type { OrchestrationResult } from './orchestration/orchestrationTypes.js';
 import { ExecutionService } from './execution/executionService.js';
+import { LifecycleService } from './lifecycle/lifecycleService.js';
 export type AgentLoopState = 'RECEIVED' | 'INTENT_RESOLVED' | 'MEMORY_LOADED' | 'PLAN_CREATED' | 'POLICY_EVALUATED' | 'EXECUTING' | 'VERIFYING' | 'UPDATING' | 'COMPLETED' | 'INTENT_FAILED' | 'MEMORY_FAILED' | 'PLAN_FAILED' | 'POLICY_DENIED' | 'APPROVAL_REQUIRED' | 'EXECUTION_FAILED' | 'VERIFICATION_FAILED' | 'UPDATE_FAILED';
 export type VerificationStatus = 'VERIFICATION_SUCCESS' | 'VERIFICATION_FAILURE' | 'PARTIAL_SUCCESS' | 'UNKNOWN';
 export type VerificationStrategy = 'RETURN_VALUE_CHECK' | 'STATE_INSPECTION' | 'WINDOW_CONFIRMATION' | 'TELEMETRY_ACK' | 'SCHEMA_VALIDATION' | 'NONE';
@@ -136,11 +137,13 @@ export declare class AgentLoop {
     private decisionService;
     private actionOrchestrator;
     private executionService;
-    constructor(voiceService?: VoiceService, contextManager?: ContextManager, intentService?: IntentService, planningService?: PlanningService, decisionService?: DecisionService, actionOrchestrator?: ActionOrchestrator, executionService?: ExecutionService);
+    private lifecycleService;
+    constructor(voiceService?: VoiceService, contextManager?: ContextManager, intentService?: IntentService, planningService?: PlanningService, decisionService?: DecisionService, actionOrchestrator?: ActionOrchestrator, executionService?: ExecutionService, lifecycleService?: LifecycleService);
     getVoiceService(): VoiceService;
     getContextManager(): ContextManager;
     getActionOrchestrator(): ActionOrchestrator;
     getExecutionService(): ExecutionService;
+    getLifecycleService(): LifecycleService;
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
      */

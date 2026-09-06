@@ -44,6 +44,7 @@ import { DecisionService } from './decision/decisionService.js';
 import { ActionOrchestrator } from './orchestration/actionOrchestrator.js';
 import { ExecutionService } from './execution/executionService.js';
 import { CapabilityRegistry } from './execution/capabilityRegistry.js';
+import { LifecycleService } from './lifecycle/lifecycleService.js';
 import { globalContextManager } from './context/contextManager.js';
 // ---------------------------------------------------------------------------
 // 3. AUTHORITATIVE CANONICAL AGENT LOOP CLASS
@@ -56,7 +57,8 @@ export class AgentLoop {
     decisionService;
     actionOrchestrator;
     executionService;
-    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService) {
+    lifecycleService;
+    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService, lifecycleService) {
         this.voiceService = voiceService || globalVoiceService;
         this.contextManager = contextManager || globalContextManager;
         this.intentService = intentService || new IntentService();
@@ -64,6 +66,7 @@ export class AgentLoop {
         this.decisionService = decisionService || new DecisionService();
         this.actionOrchestrator = actionOrchestrator || new ActionOrchestrator();
         this.executionService = executionService || new ExecutionService(new CapabilityRegistry());
+        this.lifecycleService = lifecycleService || new LifecycleService();
     }
     getVoiceService() {
         return this.voiceService;
@@ -76,6 +79,9 @@ export class AgentLoop {
     }
     getExecutionService() {
         return this.executionService;
+    }
+    getLifecycleService() {
+        return this.lifecycleService;
     }
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
