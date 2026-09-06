@@ -34,8 +34,19 @@ export declare class MemoryStore {
     private sessions;
     private maxTurnsPerSession;
     /**
-     * Resolve composite key for session storage:
+     * EN:
+     * Resolve the composite partition key for session storage.
      * Format: `${userId}::${sessionId}`
+     * This guarantees that two different users with the same sessionId
+     * are never stored in the same memory partition.
+     *
+     * VI:
+     * Tạo khóa phân vùng tổng hợp để truy xuất session memory.
+     * Định dạng: `${userId}::${sessionId}`
+     * Điều này đảm bảo hai người dùng khác nhau có cùng sessionId
+     * sẽ KHÔNG bao giờ được lưu chung vào một phân vùng bộ nhớ.
+     *
+     * Isolation (Tính cô lập): Đây là ranh giới bảo mật cốt lõi của working memory.
      */
     buildScopeKey(scope: MemoryScope | string, userId?: string): string;
     getSessionMemory(scope: MemoryScope): SessionMemoryState;

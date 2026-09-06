@@ -1,13 +1,32 @@
 // src/core/policyDecisionPoint.ts
 // BOWCON V4.0 — CENTRAL POLICY DECISION POINT (PDP), APPROVAL LEDGER & AUDIT TRAIL
 //
-// Compliant with ISO/IEC 42001, ISO/IEC 23894, and NIST AI RMF:
-// 1. Single Policy Decision Point before every tool / side-effect execution (Default Deny).
-// 2. Action Classification: OBSERVE, RECOMMEND, REVERSIBLE, HIGH_IMPACT, FORBIDDEN.
-// 3. One-Time Execution Token for High Impact Actions with Human Approval.
-// 4. Idempotency Key Validation (Zero Duplicate Side-Effects).
-// 5. Append-Only Cryptographic Audit Ledger.
-// 6. Global & Per-Domain Kill Switches (emergency stop).
+// EN:
+// The PolicyDecisionPoint (PDP) is the mandatory gate for every tool execution.
+// It operates on the principle of Default Deny: if an action is not explicitly
+// allowed, it is rejected. No action can bypass the PDP.
+//
+// VI:
+// PolicyDecisionPoint (PDP — Điểm quyết định chính sách) là cổng kiểm tra bắt buộc
+// trước mọi lần thực thi công cụ (tool execution).
+// Hoạt động theo nguyên tắc Default Deny (Ẳn định từ chối):
+// Nếu một hành động không được cấp phép tường minh, nó sẽ bị từ chối.
+// Không có hành động nào có thể vượt qua PDP.
+//
+// Compliance (Tuân thủ): ISO/IEC 42001, ISO/IEC 23894, NIST AI RMF
+//
+// Action Classifications (Phân loại hành động):
+// 1. OBSERVE    — Đọc, không có tác dụng phụ (ví dụ: lấy báo cáo)
+// 2. RECOMMEND  — Suy luận, không thay đổi trạng thái
+// 3. REVERSIBLE — Tác động nhẹ, có thể đảo ngược
+// 4. HIGH_IMPACT — Tác động lớn, cần phê duyệt của con người (human approval)
+// 5. FORBIDDEN  — Luôn bị từ chối, không có ngoại lệ
+//
+// One-Time Execution Token (Đơn thờ thực thi một lần):
+// Hành động HIGH_IMPACT yêu cầu token một lần, bị hủy sau khi dùng.
+//
+// Kill Switch (Công tắt khẩn cấp):
+// PDP có công tắt khẩn cấp toàn cục và theo từng lĩnh vực.
 import { globalApprovalService, ApprovalService, } from './approvalService.js';
 import { globalIdempotencyStore, IdempotencyStore, } from './idempotencyStore.js';
 import { globalAuditLedger, AuditLedger, } from './auditLedger.js';

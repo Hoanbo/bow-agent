@@ -1,15 +1,43 @@
 // src/core/context/conversationContext.ts
 // BOWCON V4.0 — CONVERSATION CONTEXT DATA MODELS & SCHEMAS (MILESTONE 1.3.7)
 //
-// Invariants:
-// - INV-1 & INV-2: Scoped strictly to ${userId}::${sessionId}.
-// - INV-4: Every memory item is classified as EPHEMERAL, SESSION, USER, or DURABLE.
-// - INV-6: Deterministic limits for turns, characters, and context items.
-// - INV-11: Context snapshots are immutable copies.
-// - INV-15: Prototype pollution protection on all configuration inputs.
+// EN:
+// Defines the core data types for the Conversation Context subsystem.
+// A ConversationContextSnapshot is an immutable, point-in-time view of what
+// the agent knows about the current conversation: recent turns, topics,
+// detected memories, unresolved tasks, and resolved references.
+//
+// VI:
+// Định nghĩa các kiểu dữ liệu cốt lõi cho hệ thống Conversation Context (Ngữ cảnh hội thoại).
+// ConversationContextSnapshot là một chụp ảnh (snapshot) bất biến của những gì agent
+// biết về cuộc hội thoại hiện tại: các lượt gần đây, chủ đề, những gì có thể được phát hiện
+// trong bộ nhớ, nhiệm vụ chưa giải quyết, và các tham chiếu đã được xác định.
+//
+// Invariants (Bất biến):
+// - INV-1 & INV-2: Phạm vi chỉ trong ${userId}::${sessionId}.
+// - INV-4: Mọi mục bộ nhớ được phân loại là EPHEMERAL, SESSION, USER, hoặc DURABLE.
+// - INV-6: Giới hạn xác định cho số lượt, ký tự và mục ngữ cảnh.
+// - INV-11: Context snapshots là bản sao bất biến — không thể thay đổi sau khi tạo.
+// - INV-15: Bảo vệ chống prototype pollution trên tất cả đầu vào cấu hình.
 
+// EN: Classification tier for context items — how long should this information be remembered?
+// EPHEMERAL: Only relevant for this exact exchange (e.g. "hello", "thanks")
+// SESSION: Relevant for the current session (e.g. items in a cart, current task)
+// USER: Relevant across sessions for this user (e.g. user preferences)
+// DURABLE: Explicitly stored long-term memory (e.g. "always call me Boss")
+//
+// VI: Cấp phân loại cho các mục ngữ cảnh — thông tin này cần được nhớ bao lâu?
+// EPHEMERAL: Chỉ liên quan đến đoạn hội thoại này (ví dụ: "xin chào", "cảm ơn")
+// SESSION: Liên quan trong phiên làm việc hiện tại (ví dụ: mặt hàng trong giỏ, nhiệm vụ đang thực hiện)
+// USER: Liên quan qua các phiên cho người dùng này (ví dụ: sở thích của người dùng)
+// DURABLE: Bộ nhớ dài hạn được lưu có chủ ý (ví dụ: "hãy gọi tôi là Boss")
 export type ContextClassification = 'EPHEMERAL' | 'SESSION' | 'USER' | 'DURABLE';
 
+// EN: Importance tier for ranking — which memories take priority when space is limited?
+// CRITICAL > HIGH > MEDIUM > NORMAL > LOW > TRIVIAL
+//
+// VI: Cấp quan trọng để xếp hạng — ký ức nào ưu tiên khi không gian bị giới hạn?
+// CRITICAL > HIGH > MEDIUM > NORMAL > LOW > TRIVIAL
 export type ContextImportance = 'TRIVIAL' | 'LOW' | 'NORMAL' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
 
 import type { ConversationTurn } from '../memory.js';

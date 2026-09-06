@@ -1,12 +1,24 @@
 // src/core/context/conversationContext.ts
 // BOWCON V4.0 — CONVERSATION CONTEXT DATA MODELS & SCHEMAS (MILESTONE 1.3.7)
 //
-// Invariants:
-// - INV-1 & INV-2: Scoped strictly to ${userId}::${sessionId}.
-// - INV-4: Every memory item is classified as EPHEMERAL, SESSION, USER, or DURABLE.
-// - INV-6: Deterministic limits for turns, characters, and context items.
-// - INV-11: Context snapshots are immutable copies.
-// - INV-15: Prototype pollution protection on all configuration inputs.
+// EN:
+// Defines the core data types for the Conversation Context subsystem.
+// A ConversationContextSnapshot is an immutable, point-in-time view of what
+// the agent knows about the current conversation: recent turns, topics,
+// detected memories, unresolved tasks, and resolved references.
+//
+// VI:
+// Định nghĩa các kiểu dữ liệu cốt lõi cho hệ thống Conversation Context (Ngữ cảnh hội thoại).
+// ConversationContextSnapshot là một chụp ảnh (snapshot) bất biến của những gì agent
+// biết về cuộc hội thoại hiện tại: các lượt gần đây, chủ đề, những gì có thể được phát hiện
+// trong bộ nhớ, nhiệm vụ chưa giải quyết, và các tham chiếu đã được xác định.
+//
+// Invariants (Bất biến):
+// - INV-1 & INV-2: Phạm vi chỉ trong ${userId}::${sessionId}.
+// - INV-4: Mọi mục bộ nhớ được phân loại là EPHEMERAL, SESSION, USER, hoặc DURABLE.
+// - INV-6: Giới hạn xác định cho số lượt, ký tự và mục ngữ cảnh.
+// - INV-11: Context snapshots là bản sao bất biến — không thể thay đổi sau khi tạo.
+// - INV-15: Bảo vệ chống prototype pollution trên tất cả đầu vào cấu hình.
 export const DEFAULT_CONTEXT_CONFIG = {
     maxTurns: 20,
     maxCharacters: 8000,

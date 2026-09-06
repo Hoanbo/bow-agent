@@ -1,6 +1,18 @@
 // src/core/memory.ts
-// BOW AGENT V3.3 — SHORT-TERM SESSION & LONG-TERM CONTEXT MEMORY
 // BOWCON V4.0 — MILESTONE 1.3.1: SESSION MEMORY ISOLATION & SCOPED WORKING MEMORY
+//
+// EN:
+// Working Memory (Bộ nhớ làm việc) stores short-term conversational state for a single
+// user session. Each session is strictly isolated by a composite key: ${userId}::${sessionId}.
+// No session can read another session's memory.
+//
+// VI:
+// Working Memory (bộ nhớ làm việc ngắn hạn) lưu trạng thái hội thoại trong phiên làm việc
+// của một người dùng cụ thể. Mỗi phiên (session) được cô lập hoàn toàn bằng khóa tổng hợp
+// ${userId}::${sessionId}. Không có session nào có thể đọc bộ nhớ của session khác.
+//
+// Invariant (Bất biến): Zero global mutable conversation state.
+// Tức là: Không có trạng thái hội thoại nào được lưu ở biến toàn cục có thể bị thay đổi.
 
 import type { AgentMessage, ProductItemResult, PlanItemResult, CategoryItemResult, OrderItemResult } from './types.js';
 
@@ -39,13 +51,31 @@ export interface SessionMemoryState {
   updatedAt: number;
 }
 
+// EN:
+// MemoryStore is the in-process, scoped storage for all active session working memory.
+// It is keyed by ${userId}::${sessionId} and enforces a per-session turn limit.
+//
+// VI:
+// MemoryStore là kho lưu trữ trong bộ nhớ (in-memory) cho tất cả phiên làm việc đang hoạt động.
+// Khóa lưu trữ là ${userId}::${sessionId}. Mỗi session có giới hạn số lượt hội thoại (turns).
 export class MemoryStore {
   private sessions = new Map<string, SessionMemoryState>();
   private maxTurnsPerSession = 20;
 
   /**
-   * Resolve composite key for session storage:
+   * EN:
+   * Resolve the composite partition key for session storage.
    * Format: `${userId}::${sessionId}`
+   * This guarantees that two different users with the same sessionId
+   * are never stored in the same memory partition.
+   *
+   * VI:
+   * Tạo khóa phân vùng tổng hợp để truy xuất session memory.
+   * Định dạng: `${userId}::${sessionId}`
+   * Điều này đảm bảo hai người dùng khác nhau có cùng sessionId
+   * sẽ KHÔNG bao giờ được lưu chung vào một phân vùng bộ nhớ.
+   *
+   * Isolation (Tính cô lập): Đây là ranh giới bảo mật cốt lõi của working memory.
    */
   public buildScopeKey(scope: MemoryScope | string, userId?: string): string {
     if (typeof scope === 'object' && scope !== null) {

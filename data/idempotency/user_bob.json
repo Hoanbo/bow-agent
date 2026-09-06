@@ -64,5 +64,16 @@
     "recordedAt": 1788705106589,
     "expiresAt": 1788791506589,
     "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788706501508_rufm",
+    "ownerUserId": "user_bob",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 2
+    },
+    "recordedAt": 1788706501515,
+    "expiresAt": 1788792901515,
+    "status": "COMPLETED"
   }
 ]

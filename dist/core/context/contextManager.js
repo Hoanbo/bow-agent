@@ -1,11 +1,33 @@
 // src/core/context/contextManager.ts
 // BOWCON V4.0 — CENTRAL CONTEXT MANAGER ORCHESTRATION (MILESTONE 1.3.7)
 //
-// Invariants:
-// - INV-1 & INV-2: Strict user & session partition isolation.
-// - INV-11: Text and snapshot immutability (defensive copies).
-// - INV-14: Failure isolation: Graceful fallback to minimal snapshot without crashing agent.
-// - INV-12: Governance compatible: Context is informational and does not bypass PDP/approvals.
+// EN:
+// ContextManager is the orchestration façade for the entire Conversation Context subsystem.
+// It is the single entry point that AgentLoop uses to interact with context.
+// It coordinates 7 sub-components: ContextStore, ContextClassifier, TopicTracker,
+// ReferenceResolver, ContextRanker, ContextCompactor, and snapshot building.
+//
+// KEY DESIGN PRINCIPLES:
+// - Zero LLM calls: all classification, tracking, and resolution is deterministic and local.
+// - Failure isolation: any exception in context processing must not crash the AgentLoop.
+// - No global state: every partition is keyed by ${userId}::${sessionId}.
+//
+// VI:
+// ContextManager là mặt ngoài điều phối cho toàn bộ hệ thống con Conversation Context.
+// Nó là điểm vào duy nhất mà AgentLoop sử dụng để tương tác với ngữ cảnh.
+// Nó phối hợp 7 hệ thống con: ContextStore, ContextClassifier, TopicTracker,
+// ReferenceResolver, ContextRanker, ContextCompactor và xây dựng snapshot.
+//
+// NGUYÊN TẮC THIẾT KẾ CHÍNH:
+// - Không gọi LLM: tất cả phân loại, theo dõi và giải quyết đều xác định và cục bộ.
+// - Cô lập lỗi: bất kỳ ngoại lệ nào trong xử lý ngữ cảnh không được làm crash AgentLoop.
+// - Không có trạng thái toàn cục: mỗi phân vùng được khóa bằng ${userId}::${sessionId}.
+//
+// Invariants (Bất biến):
+// - INV-1 & INV-2: Cô lập người dùng & phiên nghiêm ngặt.
+// - INV-11: Toàn vẹn văn bản và bất biến snapshot (bản sao phòng thủ).
+// - INV-14: Cô lập lỗi: Dự phòng nhẹ sang snapshot tối thiểu mà không làm crash agent.
+// - INV-12: Tương thích quản trị: Ngữ cảnh là thông tin và không bỏ qua PDP/phê duyệt.
 import { DEFAULT_CONTEXT_CONFIG, validateContextConfig, } from './conversationContext.js';
 import { globalContextStore } from './contextStore.js';
 import { extractContextItems } from './contextClassifier.js';

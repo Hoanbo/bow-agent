@@ -54,5 +54,19 @@
     "status": "PENDING",
     "createdAt": "2026-09-06T14:31:27.192Z",
     "expiresAt": "2026-09-06T14:36:27.192Z"
+  },
+  {
+    "id": "appr_1788706492276_782145",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T14:54:52.276Z",
+    "expiresAt": "2026-09-06T14:59:52.276Z"
   }
 ]

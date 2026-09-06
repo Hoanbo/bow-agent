@@ -1,16 +1,44 @@
 // src/core/approvalService.ts
 // BOWCON V4.0 — LEVEL 4.0 APPROVAL LIFECYCLE SERVICE WITH MULTI-TENANT DURABLE STORAGE
-// Compliant with ISO/IEC 42001 & NIST AI RMF
 //
-// Enforces:
+// EN:
+// The ApprovalService manages the lifecycle of human approval tokens for HIGH_IMPACT actions.
+// A token is issued when a HIGH_IMPACT action is requested. A human must explicitly approve it.
+// After approval, the executing user presents the token. The service verifies ownership
+// (the consumer must be the same user who requested the token) and atomically transitions
+// it to CONSUMED — making it permanently unusable. This prevents replay attacks.
+//
+// VI:
+// ApprovalService quản lý vòng đời của token phê duyệt con người cho các hành động HIGH_IMPACT.
+// Token được cấp khi một hành động HIGH_IMPACT được yêu cầu. Con người phải phê duyệt nó tường minh.
+// Sau khi phê duyệt, người dùng thực thi trình bày token. Dịch vụ xác minh quyền sở hữu
+// (người tiêu thụ phải là cùng một người dùng đã yêu cầu token) và nguyên tử chuyển
+// nó sang CONSUMED — làm cho nó vĩnh viễn không thể sử dụng. Điều này ngăn chặn tấn công phát lại.
+//
+// Token Status Machine (Máy trạng thái token):
+// PENDING → APPROVED → CONSUMED  (success path / đường đi thành công)
+// PENDING → REJECTED              (human rejected / con người từ chối)
+// PENDING/APPROVED → EXPIRED      (TTL exceeded / vượt quá TTL)
+// PENDING/APPROVED → REVOKED      (admin revoked / quản trị viên thu hồi)
+//
+// Compliant with (Tuân thủ): ISO/IEC 42001 & NIST AI RMF
+// Enforces (Thực thi):
 // 1. Physical & logical multi-user partitioning via UserPartitionResolver.
-// 2. One-Time Execution Tokens (anti-replay guarantee, status -> CONSUMED).
+//    Phân vùng đa người dùng vật lý & logic qua UserPartitionResolver.
+// 2. One-Time Execution Tokens — anti-replay guarantee.
+//    Token thực thi một lần — đảm bảo chống phát lại.
 // 3. Cryptographic arguments hash (SHA-256) binding token to exact parameters.
-// 4. Token ownership enforcement: authenticated userId must match token owner.
-// 5. Strict TTL expiration and status state machine (PENDING -> APPROVED/REJECTED -> CONSUMED/EXPIRED/REVOKED).
-// 6. Token revocation capability.
-// 7. Atomic crash-safe persistence via DurableJsonStore<ApprovalRecord[]>.
+//    Hash đối số mật mã (SHA-256) ràng buộc token với các tham số chính xác.
+// 4. Token ownership enforcement — authenticated userId must match token owner.
+//    Thực thi quyền sở hữu token — userId xác thực phải khớp chủ sở hữu token.
+// 5. Strict TTL expiration and status state machine.
+//    TTL hết hạn nghiêm ngặt và máy trạng thái.
+// 6. Token revocation capability — Khả năng thu hồi token.
+// 7. Atomic crash-safe persistence via DurableJsonStore.
+//    Lưu trữ nguyên tử an toàn khi crash qua DurableJsonStore.
 // 8. Fail-closed on missing identity, traversal, or malformed schema.
+//    Fail-closed khi thiếu danh tính, duyệt đường dẫn hoặc schema sai.
+
 
 import crypto from 'node:crypto';
 import fs from 'node:fs';

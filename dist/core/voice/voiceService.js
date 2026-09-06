@@ -1,16 +1,36 @@
 // src/core/voice/voiceService.ts
 // BOWCON V4.0 — CENTRAL VOICE SERVICE RUNTIME (MILESTONE 1.3.6)
 //
-// Invariants:
-// 1. AgentLoop communicates exclusively through VoiceService (Provider-independent).
-// 2. Stateless provider boundary: Zero module-level mutable speech state.
-// 3. User & Session isolation: Contextual scoping without global state leakage.
-// 4. Text integrity (INV-1 / INV-7): Original text is never mutated; separate speechText generated.
-// 5. Provider failure isolation (INV-8): TTS failure does not crash agent reasoning.
-// 6. Secret isolation (INV-9 / INV-15): Credentials and API keys scrubbed automatically.
-// 7. Conversational prosody & sentence segmentation (INV-2, INV-3, INV-4, INV-5).
-// 8. Provider capability negotiation & fallback (INV-9, INV-13).
-// 9. Sentence-level synthesis & audio assembly (INV-10, INV-11).
+// EN:
+// VoiceService is the provider-independent TTS orchestrator for the BOWCON agent.
+// It abstracts the AgentLoop from any specific TTS implementation.
+// The AgentLoop never knows which TTS provider (OpenAI, ElevenLabs, Mock) is active.
+// Voice synthesis failures are completely isolated: they never crash the AgentLoop
+// or change the text content of the agent's response.
+//
+// Before synthesis, text goes through a quality pipeline:
+// SpeechTextProcessor → SpeechSegmenter → VoiceProsodyPlanner → Provider → AudioAssembler
+//
+// VI:
+// VoiceService là bộ điều phối TTS độc lập với provider cho agent BOWCON.
+// Nó trừu tượng hóa AgentLoop khỏi bất kỳ triển khai TTS cụ thể nào.
+// AgentLoop không bao giờ biết provider TTS (OpenAI, ElevenLabs, Mock) nào đang hoạt động.
+// Lỗi tổng hợp giọng nói được cô lập hoàn toàn: chúng không bao giờ làm crash AgentLoop
+// hoặc thay đổi nội dung văn bản của phản hồi agent.
+//
+// Trước khi tổng hợp, văn bản đi qua quy trình chất lượng:
+// SpeechTextProcessor → SpeechSegmenter → VoiceProsodyPlanner → Provider → AudioAssembler
+//
+// Invariants (Bất biến):
+// 1. AgentLoop giao tiếp độc quyền qua VoiceService (Độc lập với Provider).
+// 2. Biên giới provider không trạng thái: Không có trạng thái giọng nói có thể thay đổi ở cấp module.
+// 3. Cô lập user & session: Phạm vi ngữ cảnh mà không có rò rỉ trạng thái toàn cục.
+// 4. Toàn vẹn văn bản (INV-1/INV-7): Văn bản gốc không bao giờ bị thay đổi.
+// 5. Cô lập lỗi provider (INV-8): Lỗi TTS không làm crash suy luận agent.
+// 6. Cô lập bí mật (INV-9/INV-15): Thông tin xác thực và API key được xóa tự động.
+// 7. Ngữ điệu hội thoại & phân đoạn câu (INV-2, INV-3, INV-4, INV-5).
+// 8. Đàm phán năng lực provider & dự phòng (INV-9, INV-13).
+// 9. Tổng hợp cấp câu & lắp ráp âm thanh (INV-10, INV-11).
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';

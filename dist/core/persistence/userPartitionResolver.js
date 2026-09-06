@@ -1,5 +1,23 @@
 // src/core/persistence/userPartitionResolver.ts
-// BOW CON V4.0 — MILESTONE 1.3.3: AUTHORITATIVE USER PARTITION RESOLVER
+// BOWCON V4.0 — MILESTONE 1.3.3: AUTHORITATIVE USER PARTITION RESOLVER
+//
+// EN:
+// UserPartitionResolver maps an authenticated userId to a safe, isolated filesystem path.
+// It is the security boundary that prevents any user from accessing another user's data.
+// This function enforces 6 mandatory invariants on every call.
+//
+// VI:
+// UserPartitionResolver ánh xạ userId đã xác thực sang đường dẫn filesystem an toàn, cô lập.
+// Đây là ranh giới bảo mật ngăn bất kỳ người dùng nào truy cập dữ liệu của người dùng khác.
+// Hàm này thực thi 6 bất biến bắt buộc mỗi lần gọi.
+//
+// Security defenses (Các phòng thủ bảo mật):
+// - Path traversal: `../` sequences are rejected (Từ chối chuỗi `../`)
+// - Null bytes: `\0` in userId causes immediate rejection (Byte null bị từ chối ngay)
+// - Anonymous: anonymous users cannot own durable partitions (Người dùng ẩn danh không được sở hữu phân vùng)
+// - Windows reserved names: CON, NUL, COM1, LPT1 etc. rejected (Tên thiết bị Windows dành riêng bị từ chối)
+// - Path confinement: resolved path verified to stay within baseDir (Đường dẫn đã giải quyết được xác minh)
+// - Deterministic: same userId always resolves to the same path (Cùng userId luôn ra cùng đường dẫn)
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { DurablePersistenceSecurityError } from './durableJsonStore.js';

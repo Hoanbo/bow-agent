@@ -1,13 +1,33 @@
 // src/core/agentLoop.ts
 // BOWCON V4.0 — AUTHORITATIVE CANONICAL AGENT LOOP (MILESTONE 1.2)
 //
-// Lifecycle: INTENT -> MEMORY -> PLAN -> PDP -> EXECUTE -> VERIFY -> UPDATE
-// Invariants:
-// 1. No privileged action may bypass PolicyDecisionPoint (PDP).
-// 2. No execution result may bypass verification.
-// 3. No successful execution may update durable state without passing through UPDATE.
-// 4. Memory retrieval is READ-ONLY and scoped by sessionId / userId (Zero global mutable state).
-// 5. Execution occurs exclusively through ToolRegistry.
+// EN:
+// The AgentLoop is the central 7-stage lifecycle that every user request passes through.
+// Every stage has exactly one responsibility and its output gates the next stage.
+// No stage can be skipped, reordered, or bypassed.
+//
+// VI:
+// AgentLoop là chu trình (lifecycle) 7 giai đoạn trung tâm mà mọi yêu cầu của người dùng
+// đều phải đi qua. Mỗi giai đoạn chỉ có một trách nhiệm duy nhất và kết quả của nó
+// kiểm soát việc tiếp tục sang giai đoạn tiếp theo.
+// Không có giai đoạn nào có thể bị bỏ qua, sắp xếp lại, hoặc vượt qua.
+//
+// Lifecycle (Chu trình sống):
+// INTENT → MEMORY → PLAN → PDP → EXECUTE → VERIFY → UPDATE
+// Stage 1: Intent Resolution    — Hiểu ý định người dùng
+// Stage 2: Memory Retrieval     — Đọc bộ nhớ phiên (read-only)
+// Stage 3: Bounded Planning     — Tạo kế hoạch hành động có giới hạn
+// Stage 4: PDP Governance       — Kiểm tra chính sách (không thể bỏ qua)
+// Stage 5: Tool Execution       — Thực thi công cụ qua ToolRegistry
+// Stage 6: Verification         — Xác minh kết quả sau thực thi
+// Stage 7: State Update         — Cập nhật bộ nhớ và voice
+//
+// Invariants (Bất biến):
+// 1. Không có hành động nào có đặc quyền có thể vượt qua PolicyDecisionPoint (PDP).
+// 2. Không có kết quả thực thi nào có thể bỏ qua bước xác minh.
+// 3. Không có kết quả thành công nào có thể cập nhật trạng thái bến vững mà không qua UPDATE.
+// 4. Việc đọc bộ nhớ là READ-ONLY và được phân phạm vi theo sessionId / userId.
+// 5. Thực thi chỉ xảy ra thông qua ToolRegistry.
 import crypto from 'node:crypto';
 import { globalPDP } from './policyDecisionPoint.js';
 import { toolRegistry } from '../tools/registry.js';

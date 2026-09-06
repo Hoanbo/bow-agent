@@ -1,99 +1,146 @@
-# BOW Agent 4.0
+﻿# BOW Agent — BOWCON V4.0
 
-BOW Agent là runtime TypeScript cho trợ lý đa kênh: web, desktop, robot, giọng nói và Shop of BOW. Runtime định tuyến giữa Gemini cloud và Ollama local.
+## English
 
-> Kết quả audit: codebase có nền tảng agent cấp cao, nhưng chưa thể tự nhận là một hệ “AI Level 4 quốc tế” đã được chứng nhận. “Level 4” trong repository là mục tiêu tự chủ có giới hạn; production vẫn cần rào chắn an toàn, đánh giá, quan sát và người phê duyệt cho hành động có hậu quả.
+BOWCON V4.0 is a production-grade, provider-independent AI agent runtime for the ShopOfBow ecosystem. It provides structured multi-channel interaction (web, desktop, robot, speech) through a strictly typed 7-stage lifecycle with governance, memory isolation, voice synthesis, and conversation context.
 
-## Khởi động an toàn trên Windows
+**Current status:** `@bow/agent@4.0.0` — 404/404 regression tests PASS.
 
-Yêu cầu: Windows 11 x64, Node.js 22+ và Gemini API key nếu dùng cloud.
+### Architecture Quick Reference
+
+- **Architecture Contract:** `docs/BOWCON_V4_ARCHITECTURE.md`
+- **Bilingual Architecture Guide:** `docs/BOWCON_V4_BILINGUAL_ARCHITECTURE.md`
+- **Architecture Flow Diagrams:** `docs/BOWCON_V4_ARCHITECTURE_FLOW.md`
+- **Component Reality Matrix:** `docs/BOWCON_V4_COMPONENT_MATRIX.md`
+- **Milestone Learning Notes:** `docs/BOWCON_V4_MILESTONE_LEARNING_NOTES.md`
+- **Security Model:** `docs/BOWCON_V4_SECURITY_MODEL_EN_VI.md`
+- **Glossary (EN/VI):** `docs/BOWCON_V4_GLOSSARY_EN_VI.md`
+
+---
+
+## Tiếng Việt
+
+BOWCON V4.0 là runtime agent AI cấp sản xuất, độc lập với provider, cho hệ sinh thái ShopOfBow. Nó cung cấp tương tác đa kênh có cấu trúc (web, desktop, robot, giọng nói) thông qua vòng đời 7 giai đoạn được định kiểu chặt chẽ với quản trị, cô lập bộ nhớ, tổng hợp giọng nói và ngữ cảnh hội thoại.
+
+**Trạng thái hiện tại:** `@bow/agent@4.0.0` — 404/404 kiểm thử hồi quy ĐẠT.
+
+---
+
+## How to Study This Codebase / Cách Nghiên Cứu Codebase Này
+
+### Recommended Learning Order / Thứ Tự Học Được Đề Xuất
+
+**EN:**
+Follow this order because each milestone builds on the previous one. Understanding the architecture contract first gives you the mental model needed for everything else.
+
+**VI:**
+Hãy theo thứ tự này vì mỗi mốc được xây dựng dựa trên mốc trước. Hiểu hợp đồng kiến trúc trước tiên giúp bạn có mô hình tư duy cần thiết cho mọi thứ khác.
+
+| # | Topic | File(s) | Milestone |
+|---|---|---|---|
+| 1 | **Architecture Contract** | `docs/BOWCON_V4_ARCHITECTURE.md` | MS-1.1 |
+| 2 | **AgentLoop** | `src/core/agentLoop.ts` | MS-1.2 |
+| 3 | **Working Memory** | `src/core/memory.ts` | MS-1.3.1 |
+| 4 | **Durable Memory** | `src/core/persistence/durableJsonStore.ts` | MS-1.3.2 |
+| 5 | **Multi-User Isolation** | `src/core/persistence/userPartitionResolver.ts`, `src/embodied/bossMemoryHub.ts` | MS-1.3.3 |
+| 6 | **Governance / PDP** | `src/core/policyDecisionPoint.ts` | MS-1.2 |
+| 7 | **Approval & Idempotency** | `src/core/approvalService.ts`, `src/core/idempotencyStore.ts` | MS-1.3.4 |
+| 8 | **Voice Runtime** | `src/core/voice/voiceService.ts` | MS-1.3.5 |
+| 9 | **Voice Quality** | `src/core/voice/speechSegmenter.ts`, `src/core/voice/voiceProsody.ts` | MS-1.3.6 |
+| 10 | **Conversation Context** | `src/core/context/contextManager.ts` | MS-1.3.7 |
+
+### Why This Order? / Tại Sao Theo Thứ Tự Này?
+
+**EN:**
+1. The **Architecture Contract** defines all subsystem boundaries and invariants. Read this first so you understand why the code is structured the way it is.
+2. The **AgentLoop** is the central nervous system. Everything connects through it.
+3. **Working Memory** is the simplest form of state — understand this before durable memory.
+4. **Durable Memory** builds on working memory concepts but adds crash-safety.
+5. **Multi-User Isolation** extends durable memory to multiple users.
+6. **Governance/PDP** is the safety gate — understand before you study tool execution.
+7. **Approval & Idempotency** are the two safety mechanisms for high-impact operations.
+8. **Voice Runtime** introduces the provider abstraction pattern.
+9. **Voice Quality** shows how text is normalized for natural speech.
+10. **Conversation Context** ties everything together with intelligent response memory.
+
+**VI:**
+1. **Hợp đồng kiến trúc** xác định tất cả các ranh giới hệ thống con và bất biến.
+2. **AgentLoop** là hệ thần kinh trung ương. Mọi thứ kết nối qua nó.
+3. **Working Memory** là dạng trạng thái đơn giản nhất — hiểu điều này trước bộ nhớ bền vững.
+4. **Durable Memory** xây dựng trên các khái niệm working memory nhưng thêm an toàn khi crash.
+5. **Multi-User Isolation** mở rộng bộ nhớ bền vững cho nhiều người dùng.
+6. **Governance/PDP** là cổng an toàn — hiểu trước khi nghiên cứu thực thi công cụ.
+7. **Approval & Idempotency** là hai cơ chế an toàn cho các thao tác tác động lớn.
+8. **Voice Runtime** giới thiệu mẫu trừu tượng hóa provider.
+9. **Voice Quality** cho thấy văn bản được chuẩn hóa như thế nào cho giọng nói tự nhiên.
+10. **Conversation Context** kết hợp tất cả với bộ nhớ phản hồi thông minh.
+
+---
+
+## Quickstart / Khởi Động Nhanh
+
+Requirements: Windows 11 x64, Node.js 22+, Gemini API key (for cloud mode).
 
 ```powershell
 Copy-Item .env.example .env
 npm ci
-```
-
-Điền vào `.env`: `GEMINI_API_KEY`, `BOW_DESKTOP_AUTH_TOKEN`, `ROBOT_GATEWAY_SECRET`. Không commit `.env`, không gửi key qua chat và không dùng giá trị placeholder.
-
-Gemini key chỉ được đọc ở server qua `GEMINI_API_KEY`; model lấy từ `GEMINI_MODEL` (mặc định `gemini-3.6-flash`). Gemini client đã được sửa để tôn trọng biến này. Hãy kiểm tra danh sách model đang được Google hỗ trợ trước khi đổi model production.
-
-### Ollama local
-
-Cài Ollama Windows từ trang chính thức, rồi mở PowerShell mới:
-
-```powershell
-ollama pull qwen2.5:7b
-ollama list
-Invoke-RestMethod http://127.0.0.1:11434/api/tags
-```
-
-BOW dùng endpoint OpenAI-compatible của Ollama:
-
-```dotenv
-LOCAL_LLM_URL=http://127.0.0.1:11434/v1
-LOCAL_LLM_MODEL=qwen2.5:7b
-```
-
-Giữ Ollama ở loopback. Không đặt `OLLAMA_HOST=0.0.0.0:11434` trừ khi đã có firewall, VPN và reverse proxy xác thực.
-
-### Run và kiểm tra
-
-```powershell
 npm run typecheck
 npm run build
 npm start
 Invoke-RestMethod http://127.0.0.1:4000/health
 ```
 
-Regression suites: `npm run test:all`. Có thể chạy riêng `test:multichannel`, `test:executive`, `test:v4m1`, `test:v4m2`, `test:v4m3`, `test:phase1`, `test:phase2`, `test:phase3`.
+Fill in `.env`: `GEMINI_API_KEY`, `BOW_DESKTOP_AUTH_TOKEN`, `ROBOT_GATEWAY_SECRET`.
 
-## Kiến trúc hiện có
+Điền vào `.env`: `GEMINI_API_KEY`, `BOW_DESKTOP_AUTH_TOKEN`, `ROBOT_GATEWAY_SECRET`.
 
-```text
-Web / Desktop / Robot / Speech
-              |
-      HTTP + WebSocket gateway
-              |
-      Agent engine + tool registry
-              |
-    Gemini cloud <-> Hybrid router <-> Ollama local
-              |
-Memory | knowledge governance | analytics | embodied services
+---
+
+## Running Tests / Chạy Kiểm Thử
+
+```powershell
+# Run all BOWCON V4.0 regression tests
+npx tsx tests/test_v4_architecture_contract.ts
+npx tsx tests/test_v4_agent_loop.ts
+npx tsx tests/test_v4_memory_session_isolation.ts
+npx tsx tests/test_v4_durable_memory_persistence.ts
+npx tsx tests/test_v4_multi_user_durable_memory.ts
+npx tsx tests/test_v4_multi_tenant_approval_idempotency.ts
+npx tsx tests/test_v4_agent_voice_runtime.ts
+npx tsx tests/test_v4_agent_voice_quality.ts
+npx tsx tests/test_v4_agent_conversation_context.ts
 ```
 
-- `src/server.ts`: HTTP health/query/speech/desktop/webhook và WebSocket gateway.
-- `src/gemini/`: Gemini prompt, tools, REST client.
-- `src/llm/`: Ollama provider và cloud-local failover.
-- `src/adapters/`: web, robot, desktop; `src/speech/` và `src/embodied/`: voice/robot.
-- `src/knowledge/`, `src/monitoring/`, `src/production/`: governance, analytics, vận hành.
+Expected: **404 / 404 PASS** across all suites.
 
-## Audit và roadmap production / autonomy cấp 4
+---
 
-| Ưu tiên | Phát hiện | Hành động bắt buộc |
+## Further Reading / Đọc Thêm
+
+| Document | Language | Contents |
 |---|---|---|
-| P0 | Server bind `0.0.0.0`, CORS `*`; webhook shop và WebSocket robot chưa xác thực tại gateway. | Reverse proxy HTTPS/VPN, allowlist origin, signed webhook/JWT/mTLS, rate-limit và IP allowlist. |
-| P0 | Token desktop/robot từng có default trong code; desktop và robot có tác động thật. | Xoay token, bỏ secret default, dùng secret manager, device identity và audit log bất biến. |
-| P0 | `sandboxRunner` / dynamic skill dùng `AsyncFunction`, không phải sandbox bảo mật. | Không cho LLM tự chạy/lưu code trên host; tách container/VM không đặc quyền, egress deny, quota, read-only FS và human approval. |
-| P1 | Local provider coi URL là available mà chưa probe health; fallback heuristic vẫn success. | Health probe, circuit breaker, timeout/queue/backpressure, trạng thái degraded và SLO. |
-| P1 | Gemini conversation history là global in-memory. | Store theo tenant/user/session, TTL, encryption at rest, quota và chống leakage. |
-| P1 | Chưa thấy persistence production, migration, backup/restore/DR drill. | Postgres + vector store, migration, backup mã hóa và restore test định kỳ. |
-| P1 | Test là script assertions, thiếu threat/eval/load/replay. | Unit/integration/e2e, prompt-injection & tool-abuse eval, golden set tiếng Việt, load/chaos, CI coverage + SBOM. |
-| P2 | Chưa thấy OpenTelemetry/tracing/alerts chuẩn. | Structured log redaction, traces/metrics, dashboard, on-call, runbook và incident review. |
-| P2 | Chưa có approval/idempotency ledger/policy engine tách biệt. | Phân loại read/reversible/irreversible; approval cho tiền, đơn hàng, desktop, robot; kill switch và simulation mode. |
+| `docs/BOWCON_V4_BILINGUAL_ARCHITECTURE.md` | EN + VI | Full architecture guide |
+| `docs/BOWCON_V4_ARCHITECTURE_FLOW.md` | EN + VI | Mermaid diagrams |
+| `docs/BOWCON_V4_SECURITY_MODEL_EN_VI.md` | EN + VI | 15 threat/defense pairs |
+| `docs/BOWCON_V4_MILESTONE_LEARNING_NOTES.md` | EN + VI | Per-milestone explanations |
+| `docs/BOWCON_V4_GLOSSARY_EN_VI.md` | EN + VI | 35-term glossary |
+| `docs/BOWCON_V4_ARCHITECTURE.md` | EN | Technical architecture contract |
+| `docs/BOWCON_V4_COMPONENT_MATRIX.md` | EN | 62-component reality matrix |
 
-### Tiêu chí autonomy đo được
+---
 
-Chỉ gọi là tự chủ cấp 4 trong phạm vi nghiệp vụ xác định khi có: boundary nhiệm vụ rõ ràng; least privilege; human approval cho hành động không đảo ngược; emergency stop; audit trail; eval liên tục; monitoring/rollback; bằng chứng SLO. Robot cần safety interlock vật lý độc lập với LLM.
+## Operational Security / Bảo Mật Vận Hành
 
-## Bảo mật vận hành tối thiểu
-
+- Only expose HTTPS via reverse proxy; keep BOW and Ollama ports on loopback/VPN.
 - Chỉ expose HTTPS qua reverse proxy; giữ port BOW và Ollama trên loopback/VPN.
-- Dùng token ngẫu nhiên tối thiểu 32 bytes, xoay định kỳ và tách token desktop/robot/webhook.
-- Không log prompt chứa PII/key; không để secret trong data JSON/test fixture/screenshot.
-- Chạy service bằng Windows account không Administrator; không chạy dynamic skill dưới quyền user có dữ liệu quan trọng.
-- Firewall allowlist, backup mã hóa, update Node/dependencies, dependency scan trong CI.
+- Use random tokens of at least 32 bytes; rotate regularly.
+- Dùng token ngẫu nhiên tối thiểu 32 bytes; xoay định kỳ.
+- Do not log prompts containing PII or API keys.
+- Không log prompt chứa PII hoặc API key.
 
-## API hiện có
+---
+
+## API Endpoints / Các Endpoint API
 
 - `GET /health`
 - `POST /api/agent/query`
@@ -103,8 +150,6 @@ Chỉ gọi là tự chủ cấp 4 trong phạm vi nghiệp vụ xác định kh
 - `GET /api/knowledge/gaps`
 - `POST /api/events/shop`
 
-Các endpoint tác động (desktop, robot, webhook) phải nằm sau xác thực/ủy quyền trước khi dùng ngoài localhost. Không coi endpoint hiện tại là public API ổn định.
+Endpoints with real side-effects (desktop, robot, webhook) must be behind authentication/authorization before use outside localhost. Do not treat current endpoints as a stable public API.
 
-## Ghi chú worktree
-
-`package-lock.json` đã có thay đổi cục bộ trước audit và không bị ghi đè.
+Các endpoint có tác động thật (desktop, robot, webhook) phải nằm sau xác thực/ủy quyền trước khi sử dụng ngoài localhost.

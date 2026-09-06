@@ -1,5 +1,24 @@
 // src/core/persistence/durableJsonStore.ts
-// BOW CON V4.0 — MILESTONE 1.3.2: ATOMIC DURABLE JSON PERSISTENCE ENGINE
+// BOWCON V4.0 — MILESTONE 1.3.2: ATOMIC DURABLE JSON PERSISTENCE ENGINE
+//
+// EN:
+// DurableJsonStore is a crash-safe, atomic JSON persistence layer.
+// It writes to a temporary file first, then renames atomically to the target path.
+// This ensures that a crash or power failure during a write cannot corrupt the stored data.
+// All writes are validated against a schema before touching the filesystem.
+// Corrupted files are quarantined (not deleted) for forensic inspection.
+//
+// VI:
+// DurableJsonStore là lớp lưu trữ JSON an toàn với ghi nguyên tử (atomic write).
+// Nó ghi vào file tạm trước, sau đó đổi tên nguyên tử sang đường dẫn mục tiêu.
+// Điều này đảm bảo rằng một lần crash hoặc mất điện trong khi ghi
+// không thể làm hỏng dữ liệu đang lưu trữ.
+// Tất cả các lần ghi đều được xác thực theo schema trước khi chạm vào filesystem.
+// Các file bị hỏng được cách ly (quarantine) thay vì xóa, để phục vụ kiểm tra pháp y.
+//
+// Persistence (Tính lưu trữ bền vững): Khả năng lưu trữ tồn tại qua các lần khởi động lại.
+// Atomic write (Ghi nguyên tử): Ghi là toàn bộ hoặc không gì cả — không có trạng thái nửa vời.
+// Quarantine (Cách ly): Lưu giữ file lọi cho điều tra mà không xóa.
 import fs from 'node:fs';
 import path from 'node:path';
 export class DurablePersistenceError extends Error {
