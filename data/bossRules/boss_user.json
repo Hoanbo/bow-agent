@@ -943,5 +943,68 @@
     "createdAt": "2026-09-06T16:33:05.880Z",
     "updatedAt": "2026-09-06T16:33:05.880Z",
     "enabled": true
+  },
+  {
+    "id": "rule_1788714312926",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-06T17:05:12.926Z",
+    "updatedAt": "2026-09-06T17:05:12.926Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788715170389",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-06T17:19:30.389Z",
+    "updatedAt": "2026-09-06T17:19:30.389Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788782090175",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-07T11:54:50.175Z",
+    "updatedAt": "2026-09-07T11:54:50.175Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788783281192",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-07T12:14:41.192Z",
+    "updatedAt": "2026-09-07T12:14:41.192Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788786316371",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-07T13:05:16.371Z",
+    "updatedAt": "2026-09-07T13:05:16.371Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788787863486",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-07T13:31:03.486Z",
+    "updatedAt": "2026-09-07T13:31:03.486Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1788789381807",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-07T13:56:21.807Z",
+    "updatedAt": "2026-09-07T13:56:21.807Z",
+    "enabled": true
   }
 ]

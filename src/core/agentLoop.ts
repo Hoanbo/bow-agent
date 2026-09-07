@@ -52,6 +52,20 @@ import type { OrchestrationResult } from './orchestration/orchestrationTypes.js'
 import { ExecutionService } from './execution/executionService.js';
 import { CapabilityRegistry } from './execution/capabilityRegistry.js';
 import { LifecycleService } from './lifecycle/lifecycleService.js';
+import { VerificationService } from './verification/verificationService.js';
+import type { VerificationResult as GovernedVerificationResult } from './verification/verificationTypes.js';
+import { CommitService } from './commit/commitService.js';
+import type { CommitResult as DurableCommitResult } from './commit/commitTypes.js';
+import { RecoveryService } from './recovery/recoveryService.js';
+import type { RecoveryResult } from './recovery/recoveryTypes.js';
+import { CoordinationService } from './coordination/coordinationService.js';
+import type { ContinuityContext } from './coordination/coordinationTypes.js';
+import { SynchronizationService } from './synchronization/syncService.js';
+import type { SynchronizationState } from './synchronization/syncTypes.js';
+import { TransportService } from './transport/transportService.js';
+import type { TransportSessionSnapshot } from './transport/transportSession.js';
+import { RemoteGateway } from './remote/remoteGateway.js';
+import type { RemoteSessionSnapshot } from './remote/remoteSession.js';
 
 // ---------------------------------------------------------------------------
 // 1. STRONGLY TYPED LIFECYCLE STATES
@@ -220,6 +234,13 @@ export interface AgentLoopResult {
   policyEvaluations: AgentPolicyEvaluation[];
   executionResults: AgentExecutionResult[];
   verificationResults: AgentVerificationResult[];
+  governedVerificationResult?: GovernedVerificationResult;
+  durableCommitResult?: DurableCommitResult;
+  recoveryResult?: RecoveryResult;
+  coordinationContext?: ContinuityContext;
+  synchronizationContext?: SynchronizationState;
+  transportContext?: TransportSessionSnapshot;
+  remoteContext?: RemoteSessionSnapshot;
   updateResult?: AgentUpdateResult;
   response: AgentMessage;
   totalDurationMs: number;
@@ -240,6 +261,13 @@ export class AgentLoop {
   private actionOrchestrator: ActionOrchestrator;
   private executionService: ExecutionService;
   private lifecycleService: LifecycleService;
+  private verificationService: VerificationService;
+  private commitService: CommitService;
+  private recoveryService: RecoveryService;
+  private coordinationService: CoordinationService;
+  private synchronizationService: SynchronizationService;
+  private transportService: TransportService;
+  private remoteGateway: RemoteGateway;
 
   constructor(
     voiceService?: VoiceService,
@@ -250,6 +278,13 @@ export class AgentLoop {
     actionOrchestrator?: ActionOrchestrator,
     executionService?: ExecutionService,
     lifecycleService?: LifecycleService,
+    verificationService?: VerificationService,
+    commitService?: CommitService,
+    recoveryService?: RecoveryService,
+    coordinationService?: CoordinationService,
+    synchronizationService?: SynchronizationService,
+    transportService?: TransportService,
+    remoteGateway?: RemoteGateway,
   ) {
     this.voiceService = voiceService || globalVoiceService;
     this.contextManager = contextManager || globalContextManager;
@@ -259,6 +294,13 @@ export class AgentLoop {
     this.actionOrchestrator = actionOrchestrator || new ActionOrchestrator();
     this.executionService = executionService || new ExecutionService(new CapabilityRegistry());
     this.lifecycleService = lifecycleService || new LifecycleService();
+    this.verificationService = verificationService || new VerificationService();
+    this.commitService = commitService || new CommitService();
+    this.recoveryService = recoveryService || new RecoveryService();
+    this.coordinationService = coordinationService || new CoordinationService();
+    this.synchronizationService = synchronizationService || new SynchronizationService();
+    this.transportService = transportService || new TransportService();
+    this.remoteGateway = remoteGateway || new RemoteGateway();
   }
 
   public getVoiceService(): VoiceService {
@@ -279,6 +321,34 @@ export class AgentLoop {
 
   public getLifecycleService(): LifecycleService {
     return this.lifecycleService;
+  }
+
+  public getVerificationService(): VerificationService {
+    return this.verificationService;
+  }
+
+  public getCommitService(): CommitService {
+    return this.commitService;
+  }
+
+  public getRecoveryService(): RecoveryService {
+    return this.recoveryService;
+  }
+
+  public getCoordinationService(): CoordinationService {
+    return this.coordinationService;
+  }
+
+  public getSynchronizationService(): SynchronizationService {
+    return this.synchronizationService;
+  }
+
+  public getTransportService(): TransportService {
+    return this.transportService;
+  }
+
+  public getRemoteGateway(): RemoteGateway {
+    return this.remoteGateway;
   }
 
   /**
@@ -642,6 +712,7 @@ export class AgentLoop {
     // =========================================================================
     currentState = 'VERIFYING';
     let overallVerificationSuccess = true;
+    let governedVerificationResult: GovernedVerificationResult | undefined;
 
     for (const step of plan.steps) {
       const execRes = executionResults.find(e => e.stepId === step.stepId);
@@ -663,6 +734,25 @@ export class AgentLoop {
       if (verifyRes.status === 'VERIFICATION_FAILURE') {
         overallVerificationSuccess = false;
       }
+
+      // MS-1.3.14: Authoritative Postcondition Verification Engine
+      try {
+        governedVerificationResult = this.verificationService.verify({
+          requestId,
+          userId: actor.userId,
+          sessionId,
+          toolName: step.toolName,
+          executionResult: {
+            success: execRes.status === 'SUCCESS',
+            output: execRes.rawOutput,
+            executionDurationMs: execRes.executionDurationMs,
+          },
+          riskLevel: plan.estimatedRisk === 'HIGH' ? 'HIGH' : plan.estimatedRisk === 'MEDIUM' ? 'MEDIUM' : 'LOW',
+          correlationId,
+        });
+      } catch {
+        // Safe isolation
+      }
     }
 
     if (!overallVerificationSuccess) {
@@ -673,6 +763,36 @@ export class AgentLoop {
     // STAGE 7: STATE & MEMORY UPDATE
     // =========================================================================
     currentState = overallVerificationSuccess ? 'UPDATING' : 'VERIFICATION_FAILED';
+
+    // MS-1.3.15: Authoritative Durable Commit Engine
+    let durableCommitResult: DurableCommitResult | undefined;
+    if (overallVerificationSuccess) {
+      try {
+        durableCommitResult = this.commitService.commit({
+          requestId,
+          userId: actor.userId,
+          sessionId,
+          verificationResult: governedVerificationResult || {
+            verificationId: `ver_auto_${requestId}`,
+            status: 'VERIFIED',
+            taskSucceeded: true,
+            riskLevel: plan.estimatedRisk === 'HIGH' ? 'HIGH' : plan.estimatedRisk === 'MEDIUM' ? 'MEDIUM' : 'LOW',
+          },
+          operations: [
+            {
+              operationId: `op_turn_${requestId}`,
+              type: 'SESSION_TURN_APPEND',
+              targetDomain: 'working_memory',
+              payload: { text: sanitizedText },
+              applied: true,
+            },
+          ],
+          correlationId,
+        });
+      } catch {
+        // Safe isolation
+      }
+    }
 
     updateResult = await this.applyUpdate({
       sessionId,
@@ -724,6 +844,10 @@ export class AgentLoop {
       policyEvaluations,
       executionResults,
       verificationResults,
+      governedVerificationResult,
+      durableCommitResult,
+      transportContext: this.transportService.getSession(sessionId),
+      remoteContext: this.remoteGateway.getSession(sessionId),
       updateResult,
       response: {
         id: `msg_out_${Date.now()}`,

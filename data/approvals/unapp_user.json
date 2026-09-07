@@ -124,5 +124,103 @@
     "status": "PENDING",
     "createdAt": "2026-09-06T16:33:09.216Z",
     "expiresAt": "2026-09-06T16:38:09.216Z"
+  },
+  {
+    "id": "appr_1788714316430_c56d1d",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T17:05:16.430Z",
+    "expiresAt": "2026-09-06T17:10:16.430Z"
+  },
+  {
+    "id": "appr_1788715173805_0a5c4f",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-06T17:19:33.805Z",
+    "expiresAt": "2026-09-06T17:24:33.805Z"
+  },
+  {
+    "id": "appr_1788782093641_0b5286",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-07T11:54:53.641Z",
+    "expiresAt": "2026-09-07T11:59:53.641Z"
+  },
+  {
+    "id": "appr_1788783291729_09b6b0",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-07T12:14:51.729Z",
+    "expiresAt": "2026-09-07T12:19:51.729Z"
+  },
+  {
+    "id": "appr_1788786328158_17e39e",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-07T13:05:28.158Z",
+    "expiresAt": "2026-09-07T13:10:28.158Z"
+  },
+  {
+    "id": "appr_1788787800864_687ba7",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-07T13:30:00.864Z",
+    "expiresAt": "2026-09-07T13:35:00.864Z"
+  },
+  {
+    "id": "appr_1788789314316_cd3c44",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-07T13:55:14.316Z",
+    "expiresAt": "2026-09-07T14:00:14.316Z"
   }
 ]

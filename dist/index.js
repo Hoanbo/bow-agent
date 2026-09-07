@@ -156,3 +156,17 @@ export * from './core/orchestration/index.js';
 export * from './core/execution/index.js';
 // 27. BOWCON V4.0 — Milestone 1.3.13: Agent State & Lifecycle Management Foundation
 export * from './core/lifecycle/index.js';
+// 28. BOWCON V4.0 — Milestone 1.3.14: Execution Verification & Postcondition Engine
+export * from './core/verification/index.js';
+// 29. BOWCON V4.0 — Milestone 1.3.15: Durable Commit & State Consistency Engine
+export * from './core/commit/index.js';
+// 30. BOWCON V4.0 — Milestone 1.3.16: Brain Recovery & Crash Consistency Engine
+export * from './core/recovery/index.js';
+// 31. BOWCON V4.0 — Milestone 1.3.17: Brain Coordination & Continuity Foundation
+export * from './core/coordination/index.js';
+// 32. BOWCON V4.0 — Milestone 1.3.18: Brain Event & State Synchronization Foundation
+export * from './core/synchronization/index.js';
+// 33. BOWCON V4.0 — Milestone 1.3.19: Brain Message Transport & Remote Connectivity Foundation
+export * from './core/transport/index.js';
+// 34. BOWCON V4.0 — Milestone 1.3.20: Secure Remote Gateway & Protocol Foundation
+export * from './core/remote/index.js';
