@@ -52,6 +52,9 @@ import { CoordinationService } from './coordination/coordinationService.js';
 import { SynchronizationService } from './synchronization/syncService.js';
 import { TransportService } from './transport/transportService.js';
 import { RemoteGateway } from './remote/remoteGateway.js';
+import { NetworkRuntime } from './network/networkRuntime.js';
+import { ConnectionRuntime } from './connection/connectionRuntime.js';
+import { PairingRuntime } from './pairing/pairingRuntime.js';
 import { globalContextManager } from './context/contextManager.js';
 // ---------------------------------------------------------------------------
 // 3. AUTHORITATIVE CANONICAL AGENT LOOP CLASS
@@ -72,7 +75,10 @@ export class AgentLoop {
     synchronizationService;
     transportService;
     remoteGateway;
-    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService, lifecycleService, verificationService, commitService, recoveryService, coordinationService, synchronizationService, transportService, remoteGateway) {
+    networkRuntime;
+    connectionRuntime;
+    pairingRuntime;
+    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService, lifecycleService, verificationService, commitService, recoveryService, coordinationService, synchronizationService, transportService, remoteGateway, networkRuntime, connectionRuntime, pairingRuntime) {
         this.voiceService = voiceService || globalVoiceService;
         this.contextManager = contextManager || globalContextManager;
         this.intentService = intentService || new IntentService();
@@ -88,6 +94,9 @@ export class AgentLoop {
         this.synchronizationService = synchronizationService || new SynchronizationService();
         this.transportService = transportService || new TransportService();
         this.remoteGateway = remoteGateway || new RemoteGateway();
+        this.networkRuntime = networkRuntime || new NetworkRuntime();
+        this.connectionRuntime = connectionRuntime || new ConnectionRuntime();
+        this.pairingRuntime = pairingRuntime || new PairingRuntime();
     }
     getVoiceService() {
         return this.voiceService;
@@ -124,6 +133,15 @@ export class AgentLoop {
     }
     getRemoteGateway() {
         return this.remoteGateway;
+    }
+    getNetworkRuntime() {
+        return this.networkRuntime;
+    }
+    getConnectionRuntime() {
+        return this.connectionRuntime;
+    }
+    getPairingRuntime() {
+        return this.pairingRuntime;
     }
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
@@ -592,6 +610,8 @@ export class AgentLoop {
             durableCommitResult,
             transportContext: this.transportService.getSession(sessionId),
             remoteContext: this.remoteGateway.getSession(sessionId),
+            networkContext: this.networkRuntime.getRegistry().getConnection(sessionId),
+            connectionContext: this.connectionRuntime.getRegistry().getConnection(sessionId),
             updateResult,
             response: {
                 id: `msg_out_${Date.now()}`,

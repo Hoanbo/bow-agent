@@ -211,3 +211,12 @@ export * from './core/transport/index.js';
 
 // 34. BOWCON V4.0 — Milestone 1.3.20: Secure Remote Gateway & Protocol Foundation
 export * from './core/remote/index.js';
+
+// 35. BOWCON V4.0 — Milestone 1.3.21: Real Network Adapter & Connection Runtime Foundation
+export * from './core/network/index.js';
+
+// 36. BOWCON V4.0 — Milestone 1.3.22: Real Bidirectional Secure Connection & Session Runtime
+export * from './core/connection/index.js';
+
+// 37. BOWCON V4.0 — Milestone 1.3.23: Device Pairing & Trust Runtime Foundation
+export * from './core/pairing/index.js';

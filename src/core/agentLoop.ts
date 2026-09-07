@@ -66,6 +66,12 @@ import { TransportService } from './transport/transportService.js';
 import type { TransportSessionSnapshot } from './transport/transportSession.js';
 import { RemoteGateway } from './remote/remoteGateway.js';
 import type { RemoteSessionSnapshot } from './remote/remoteSession.js';
+import { NetworkRuntime } from './network/networkRuntime.js';
+import type { NetworkConnectionSnapshot } from './network/networkConnection.js';
+import { ConnectionRuntime } from './connection/connectionRuntime.js';
+import type { ConnectionSessionSnapshot } from './connection/connectionSession.js';
+import { PairingRuntime } from './pairing/pairingRuntime.js';
+import type { PairingRecord } from './pairing/pairingTypes.js';
 
 // ---------------------------------------------------------------------------
 // 1. STRONGLY TYPED LIFECYCLE STATES
@@ -241,6 +247,9 @@ export interface AgentLoopResult {
   synchronizationContext?: SynchronizationState;
   transportContext?: TransportSessionSnapshot;
   remoteContext?: RemoteSessionSnapshot;
+  networkContext?: NetworkConnectionSnapshot;
+  connectionContext?: ConnectionSessionSnapshot;
+  pairingContext?: PairingRecord;
   updateResult?: AgentUpdateResult;
   response: AgentMessage;
   totalDurationMs: number;
@@ -268,6 +277,9 @@ export class AgentLoop {
   private synchronizationService: SynchronizationService;
   private transportService: TransportService;
   private remoteGateway: RemoteGateway;
+  private networkRuntime: NetworkRuntime;
+  private connectionRuntime: ConnectionRuntime;
+  private pairingRuntime: PairingRuntime;
 
   constructor(
     voiceService?: VoiceService,
@@ -285,6 +297,9 @@ export class AgentLoop {
     synchronizationService?: SynchronizationService,
     transportService?: TransportService,
     remoteGateway?: RemoteGateway,
+    networkRuntime?: NetworkRuntime,
+    connectionRuntime?: ConnectionRuntime,
+    pairingRuntime?: PairingRuntime
   ) {
     this.voiceService = voiceService || globalVoiceService;
     this.contextManager = contextManager || globalContextManager;
@@ -301,6 +316,9 @@ export class AgentLoop {
     this.synchronizationService = synchronizationService || new SynchronizationService();
     this.transportService = transportService || new TransportService();
     this.remoteGateway = remoteGateway || new RemoteGateway();
+    this.networkRuntime = networkRuntime || new NetworkRuntime();
+    this.connectionRuntime = connectionRuntime || new ConnectionRuntime();
+    this.pairingRuntime = pairingRuntime || new PairingRuntime();
   }
 
   public getVoiceService(): VoiceService {
@@ -350,6 +368,19 @@ export class AgentLoop {
   public getRemoteGateway(): RemoteGateway {
     return this.remoteGateway;
   }
+
+  public getNetworkRuntime(): NetworkRuntime {
+    return this.networkRuntime;
+  }
+
+  public getConnectionRuntime(): ConnectionRuntime {
+    return this.connectionRuntime;
+  }
+
+  public getPairingRuntime(): PairingRuntime {
+    return this.pairingRuntime;
+  }
+
 
   /**
    * Execute the authoritative 7-stage Agent Execution Loop
@@ -848,6 +879,8 @@ export class AgentLoop {
       durableCommitResult,
       transportContext: this.transportService.getSession(sessionId),
       remoteContext: this.remoteGateway.getSession(sessionId),
+      networkContext: this.networkRuntime.getRegistry().getConnection(sessionId),
+      connectionContext: this.connectionRuntime.getRegistry().getConnection(sessionId),
       updateResult,
       response: {
         id: `msg_out_${Date.now()}`,

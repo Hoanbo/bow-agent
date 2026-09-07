@@ -29,6 +29,12 @@ import { TransportService } from './transport/transportService.js';
 import type { TransportSessionSnapshot } from './transport/transportSession.js';
 import { RemoteGateway } from './remote/remoteGateway.js';
 import type { RemoteSessionSnapshot } from './remote/remoteSession.js';
+import { NetworkRuntime } from './network/networkRuntime.js';
+import type { NetworkConnectionSnapshot } from './network/networkConnection.js';
+import { ConnectionRuntime } from './connection/connectionRuntime.js';
+import type { ConnectionSessionSnapshot } from './connection/connectionSession.js';
+import { PairingRuntime } from './pairing/pairingRuntime.js';
+import type { PairingRecord } from './pairing/pairingTypes.js';
 export type AgentLoopState = 'RECEIVED' | 'INTENT_RESOLVED' | 'MEMORY_LOADED' | 'PLAN_CREATED' | 'POLICY_EVALUATED' | 'EXECUTING' | 'VERIFYING' | 'UPDATING' | 'COMPLETED' | 'INTENT_FAILED' | 'MEMORY_FAILED' | 'PLAN_FAILED' | 'POLICY_DENIED' | 'APPROVAL_REQUIRED' | 'EXECUTION_FAILED' | 'VERIFICATION_FAILED' | 'UPDATE_FAILED';
 export type VerificationStatus = 'VERIFICATION_SUCCESS' | 'VERIFICATION_FAILURE' | 'PARTIAL_SUCCESS' | 'UNKNOWN';
 export type VerificationStrategy = 'RETURN_VALUE_CHECK' | 'STATE_INSPECTION' | 'WINDOW_CONFIRMATION' | 'TELEMETRY_ACK' | 'SCHEMA_VALIDATION' | 'NONE';
@@ -144,6 +150,9 @@ export interface AgentLoopResult {
     synchronizationContext?: SynchronizationState;
     transportContext?: TransportSessionSnapshot;
     remoteContext?: RemoteSessionSnapshot;
+    networkContext?: NetworkConnectionSnapshot;
+    connectionContext?: ConnectionSessionSnapshot;
+    pairingContext?: PairingRecord;
     updateResult?: AgentUpdateResult;
     response: AgentMessage;
     totalDurationMs: number;
@@ -166,7 +175,10 @@ export declare class AgentLoop {
     private synchronizationService;
     private transportService;
     private remoteGateway;
-    constructor(voiceService?: VoiceService, contextManager?: ContextManager, intentService?: IntentService, planningService?: PlanningService, decisionService?: DecisionService, actionOrchestrator?: ActionOrchestrator, executionService?: ExecutionService, lifecycleService?: LifecycleService, verificationService?: VerificationService, commitService?: CommitService, recoveryService?: RecoveryService, coordinationService?: CoordinationService, synchronizationService?: SynchronizationService, transportService?: TransportService, remoteGateway?: RemoteGateway);
+    private networkRuntime;
+    private connectionRuntime;
+    private pairingRuntime;
+    constructor(voiceService?: VoiceService, contextManager?: ContextManager, intentService?: IntentService, planningService?: PlanningService, decisionService?: DecisionService, actionOrchestrator?: ActionOrchestrator, executionService?: ExecutionService, lifecycleService?: LifecycleService, verificationService?: VerificationService, commitService?: CommitService, recoveryService?: RecoveryService, coordinationService?: CoordinationService, synchronizationService?: SynchronizationService, transportService?: TransportService, remoteGateway?: RemoteGateway, networkRuntime?: NetworkRuntime, connectionRuntime?: ConnectionRuntime, pairingRuntime?: PairingRuntime);
     getVoiceService(): VoiceService;
     getContextManager(): ContextManager;
     getActionOrchestrator(): ActionOrchestrator;
@@ -179,6 +191,9 @@ export declare class AgentLoop {
     getSynchronizationService(): SynchronizationService;
     getTransportService(): TransportService;
     getRemoteGateway(): RemoteGateway;
+    getNetworkRuntime(): NetworkRuntime;
+    getConnectionRuntime(): ConnectionRuntime;
+    getPairingRuntime(): PairingRuntime;
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
      */

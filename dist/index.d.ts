@@ -131,3 +131,6 @@ export * from './core/coordination/index.js';
 export * from './core/synchronization/index.js';
 export * from './core/transport/index.js';
 export * from './core/remote/index.js';
+export * from './core/network/index.js';
+export * from './core/connection/index.js';
+export * from './core/pairing/index.js';
