@@ -28,6 +28,12 @@ export class BrainService {
     get state() {
         return this._runtime.state;
     }
+    get isReady() {
+        return this._runtime.state === 'READY';
+    }
+    get isStopped() {
+        return this._runtime.state === 'STOPPED';
+    }
     get brainRuntime() {
         return this._runtime.brainRuntime;
     }

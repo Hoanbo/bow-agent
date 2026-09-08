@@ -12,5 +12,103 @@
     "recordedAt": 1788884466016,
     "expiresAt": 1788970866016,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtswfibn_a42a2b45c1e9_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788885822084
+    },
+    "recordedAt": 1788885822084,
+    "expiresAt": 1788972222084,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtswige9_fe8ab1c331ed_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788885959554
+    },
+    "recordedAt": 1788885959554,
+    "expiresAt": 1788972359554,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtsx7xw4_566479cd6f99_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788887148629
+    },
+    "recordedAt": 1788887148629,
+    "expiresAt": 1788973548629,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtsx943s_27173a6e9d54_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788887203337
+    },
+    "recordedAt": 1788887203337,
+    "expiresAt": 1788973603337,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtsxcz2l_607778515d35_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788887383438
+    },
+    "recordedAt": 1788887383438,
+    "expiresAt": 1788973783438,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtsy3fh2_f3930c17bc96_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788888617751
+    },
+    "recordedAt": 1788888617751,
+    "expiresAt": 1788975017751,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtsyfyn8_d793b8610597_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788889202469
+    },
+    "recordedAt": 1788889202469,
+    "expiresAt": 1788975602469,
+    "status": "COMPLETED"
   }
 ]

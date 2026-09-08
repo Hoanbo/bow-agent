@@ -1,187 +1,153 @@
 // src/core/brain/brainModelProvider.ts
-// BOWCON V4.0 — MS-1.3.30: BRAIN MODEL PROVIDER ABSTRACTION
+// BOWCON V4.0 — MS-1.3.30 & MS-1.3.32: BRAIN MODEL PROVIDER & COGNITIVE ADAPTER
 //
 // The BrainModelProvider is the cognitive interface between the Brain
-// and LLM backends. It is NOT an execution authority.
+// and LLM / local rule backends. It is NOT an execution authority.
 //
 // INVARIANTS:
 // LLM_PROPOSE != EXECUTE  — Provider outputs are proposals only
 // LLM != SECURITY_AUTHORITY — Provider cannot override policy
 // LLM != COMMIT_AUTHORITY   — Provider cannot commit results
 // PROVIDER != TOOL_REGISTRY — Provider cannot directly invoke tools
-//
-// The Brain uses provider output to populate its internal plan,
-// then submits that plan through the deterministic governance pipeline.
-import { BrainError } from './brainFailure.js';
-import { BRAIN_LLM_TIMEOUT_MS, } from './brainTypes.js';
+// FAILURE != BRAIN_DEATH
+import { CognitivePipeline, } from '../cognitive/cognitivePipeline.js';
+import { DeterministicFallbackProvider, } from '../cognitive/deterministicFallbackProvider.js';
+import { OllamaProvider, } from '../cognitive/ollamaProvider.js';
+/**
+ * Adapter converting structured CognitiveResult into BrainModelOutput.
+ */
+function cognitiveResultToBrainOutput(result, originalInput) {
+    const candidate = result.toolCandidates[0];
+    const toolName = candidate?.toolName ?? 'brain_echo';
+    const toolArgs = candidate?.toolArgs ?? { input: originalInput };
+    return {
+        understanding: result.interpretation,
+        reasoning: result.reasoningSummary,
+        proposedToolName: toolName,
+        proposedToolArgs: toolArgs,
+        planSummary: result.plan.summary,
+        confidence: result.confidence.score,
+        requiresConfirmation: result.requiresApproval,
+    };
+}
 // ---------------------------------------------------------------------------
-// Deterministic Fallback Provider
+// Deterministic Brain Model Provider (MS-1.3.30 & MS-1.3.32)
 // ---------------------------------------------------------------------------
-// Used when no LLM is available or for OBSERVE/RECOMMEND class tasks.
-// Produces structured plans without an LLM call.
 export class DeterministicBrainModelProvider {
     providerName = 'deterministic';
+    fallback = new DeterministicFallbackProvider();
     async understand(input, context) {
-        // Parse intent from user text using simple keyword matching
-        const lower = input.toLowerCase().trim();
-        let toolName = 'brain_echo';
-        let toolArgs = { input };
-        if (lower.includes('create') && (lower.includes('file') || lower.includes('txt'))) {
-            toolName = 'brain_fs_write';
-            const match = input.match(/["']([^"']+\.(txt|md|json|log))["']/i);
-            toolArgs = {
-                path: match?.[1] ?? 'bowcon-output.txt',
-                content: `BOWCON Brain created this file at ${new Date().toISOString()}\nInput: ${input}`,
-            };
-        }
-        else if (lower.includes('read') && lower.includes('file')) {
-            toolName = 'brain_fs_read';
-            const match = input.match(/["']([^"']+\.(txt|md|json|log))["']/i);
-            toolArgs = { path: match?.[1] ?? 'bowcon-output.txt' };
-        }
-        else if (lower.includes('update') || lower.includes('append') || lower.includes('modify')) {
-            toolName = 'brain_fs_append';
-            const match = input.match(/["']([^"']+\.(txt|md|json|log))["']/i);
-            const contentMatch = input.match(/(?:with|content|text)[:\s]+["']?([^"'\n]{3,})["']?/i);
-            toolArgs = {
-                path: match?.[1] ?? 'bowcon-output.txt',
-                content: contentMatch?.[1] ?? `Appended by BOWCON at ${new Date().toISOString()}`,
-            };
-        }
-        else if (lower.includes('list') && lower.includes('file')) {
-            toolName = 'brain_fs_list';
-            toolArgs = { directory: 'data/brain' };
-        }
-        else if (lower.includes('delete') && lower.includes('file')) {
-            toolName = 'brain_fs_delete';
-            const match = input.match(/["']([^"']+\.(txt|md|json|log))["']/i);
-            toolArgs = { path: match?.[1] ?? 'bowcon-output.txt' };
-        }
-        return {
-            understanding: `Deterministic parse of: "${input}"`,
-            reasoning: `Mapped to tool "${toolName}" based on keyword analysis.`,
-            proposedToolName: toolName,
-            proposedToolArgs: toolArgs,
-            planSummary: `Execute ${toolName} with args: ${JSON.stringify(toolArgs)}`,
-            confidence: 0.75,
-            requiresConfirmation: false,
-        };
+        const res = await this.fallback.process({
+            systemContext: 'BOWCON Brain Deterministic Engine',
+            userContext: input,
+            memoryContext: typeof context?.memory === 'string' ? context.memory : 'None',
+            taskContext: 'Understand user input deterministically',
+            capabilitiesContext: 'brain_fs_write, brain_fs_read, brain_fs_append, brain_fs_list, brain_fs_delete, brain_echo',
+            policyConstraints: 'PDP verification required',
+        });
+        return cognitiveResultToBrainOutput(res, input);
     }
     async reason(plan, observations, _context) {
-        const allMet = observations.every(o => o.toLowerCase().includes('met') || o.toLowerCase().includes('pass') || o.toLowerCase().includes('ok') || o.toLowerCase().includes('exists'));
+        const allMet = observations.every(o => o.toLowerCase().includes('met') ||
+            o.toLowerCase().includes('pass') ||
+            o.toLowerCase().includes('ok') ||
+            o.toLowerCase().includes('exists'));
         return allMet
             ? `All ${observations.length} observation(s) satisfied. Plan "${plan}" may proceed to commit.`
             : `One or more observations unmet. Recovery may be required.`;
     }
     async summarize(taskSummary) {
-        return `Task ${taskSummary.taskId ?? 'unknown'} completed with status: ${taskSummary.success ? 'SUCCESS' : 'FAILURE'}.`;
+        return this.fallback.summarize(taskSummary);
     }
-    async isAvailable() { return true; }
+    async isAvailable() {
+        return true;
+    }
 }
 // ---------------------------------------------------------------------------
-// Ollama Local Model Provider (optional; degrades to deterministic if unavailable)
+// Ollama Local Model Provider (MS-1.3.30 & MS-1.3.32)
 // ---------------------------------------------------------------------------
 export class OllamaModelProvider {
     providerName = 'ollama-local';
-    endpoint;
-    model;
-    _available = undefined;
-    constructor(endpoint = 'http://localhost:11434', model = 'qwen2.5:14b') {
-        this.endpoint = endpoint;
-        this.model = model;
+    ollama;
+    fallback = new DeterministicBrainModelProvider();
+    constructor(endpoint, model) {
+        this.ollama = new OllamaProvider({
+            baseUrl: endpoint,
+            model,
+        });
     }
     async isAvailable() {
-        if (this._available !== undefined)
-            return this._available;
-        try {
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 2000);
-            const res = await fetch(`${this.endpoint}/api/tags`, { signal: controller.signal });
-            clearTimeout(id);
-            this._available = res.ok;
-            return this._available;
-        }
-        catch {
-            this._available = false;
-            return false;
-        }
+        const health = await this.ollama.healthCheck();
+        return health.isAvailable;
     }
-    async callOllama(prompt) {
-        const controller = new AbortController();
-        const id = setTimeout(() => controller.abort(), BRAIN_LLM_TIMEOUT_MS);
+    async understand(input, context) {
         try {
-            const res = await fetch(`${this.endpoint}/api/generate`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ model: this.model, prompt, stream: false }),
-                signal: controller.signal,
+            const res = await this.ollama.process({
+                systemContext: 'You are BOWCON Brain. Propose structured JSON plan.',
+                userContext: input,
+                memoryContext: typeof context?.memory === 'string' ? context.memory : 'None',
+                taskContext: 'Analyze request and propose tool candidate',
+                capabilitiesContext: 'brain_fs_write, brain_fs_read, brain_fs_append, brain_fs_list, brain_fs_delete, brain_echo',
+                policyConstraints: 'PDP authorization mandatory',
             });
-            clearTimeout(id);
-            if (!res.ok)
-                throw new Error(`Ollama returned ${res.status}`);
-            const json = await res.json();
-            return json.response ?? '';
-        }
-        catch (e) {
-            clearTimeout(id);
-            if (e.name === 'AbortError') {
-                throw new BrainError('BRAIN_MODEL_TIMEOUT', `Ollama call timed out after ${BRAIN_LLM_TIMEOUT_MS}ms`);
-            }
-            throw new BrainError('BRAIN_MODEL_UNAVAILABLE', e.message ?? 'Ollama call failed');
-        }
-    }
-    async understand(input, _context) {
-        const prompt = `You are BOWCON Brain. Analyze this user request and respond in JSON:
-User: "${input}"
-Respond ONLY with this JSON structure:
-{
-  "understanding": "<what user wants>",
-  "reasoning": "<how to achieve it>",
-  "proposedToolName": "<one of: brain_fs_write|brain_fs_read|brain_fs_append|brain_fs_list|brain_fs_delete|brain_echo>",
-  "proposedToolArgs": { "<key>": "<value>" },
-  "planSummary": "<brief plan>",
-  "confidence": 0.9,
-  "requiresConfirmation": false
-}`;
-        try {
-            const raw = await this.callOllama(prompt);
-            const jsonMatch = raw.match(/\{[\s\S]*\}/);
-            if (jsonMatch) {
-                const parsed = JSON.parse(jsonMatch[0]);
-                return parsed;
-            }
-        }
-        catch { /* fall through to deterministic */ }
-        // Fallback to deterministic
-        return new DeterministicBrainModelProvider().understand(input);
-    }
-    async reason(plan, observations, _context) {
-        try {
-            const prompt = `Given plan "${plan}" and these observations: ${observations.join('; ')} — should we commit or recover? Answer briefly.`;
-            return await this.callOllama(prompt);
+            return cognitiveResultToBrainOutput(res, input);
         }
         catch {
-            return new DeterministicBrainModelProvider().reason(plan, observations);
+            // Degrade gracefully to deterministic fallback
+            return this.fallback.understand(input, context);
         }
+    }
+    async reason(plan, observations, context) {
+        return this.fallback.reason(plan, observations, context);
     }
     async summarize(taskSummary) {
         try {
-            const prompt = `Summarize this task result in one sentence: ${JSON.stringify(taskSummary)}`;
-            return await this.callOllama(prompt);
+            return await this.ollama.summarize(taskSummary);
         }
         catch {
-            return new DeterministicBrainModelProvider().summarize(taskSummary);
+            return this.fallback.summarize(taskSummary);
         }
     }
 }
 // ---------------------------------------------------------------------------
-// Provider factory
+// Real Cognitive Brain Model Provider (MS-1.3.32 Pipeline Bridge)
+// ---------------------------------------------------------------------------
+export class CognitiveBrainModelProvider {
+    providerName = 'cognitive-pipeline';
+    pipeline;
+    fallback = new DeterministicBrainModelProvider();
+    constructor(preferred = 'auto') {
+        this.pipeline = new CognitivePipeline({
+            providerPreference: preferred === 'deterministic' ? 'deterministic-fallback' : preferred === 'ollama' ? 'ollama' : 'auto',
+        });
+    }
+    async understand(input, context) {
+        const sessionId = typeof context?.sessionId === 'string' ? context.sessionId : undefined;
+        const res = await this.pipeline.execute({
+            input,
+            sessionId,
+            memoryContext: typeof context?.memory === 'string' ? context.memory : undefined,
+            taskContext: typeof context?.task === 'string' ? context.task : undefined,
+        });
+        return cognitiveResultToBrainOutput(res, input);
+    }
+    async reason(plan, observations, context) {
+        return this.fallback.reason(plan, observations, context);
+    }
+    async summarize(taskSummary) {
+        return this.fallback.summarize(taskSummary);
+    }
+    async isAvailable() {
+        return true;
+    }
+}
+// ---------------------------------------------------------------------------
+// Provider Factory
 // ---------------------------------------------------------------------------
 export function createBrainModelProvider(preferred = 'auto') {
     if (preferred === 'deterministic')
         return new DeterministicBrainModelProvider();
     if (preferred === 'ollama')
         return new OllamaModelProvider();
-    // 'auto': try Ollama, fall back to deterministic
-    return new OllamaModelProvider();
+    return new CognitiveBrainModelProvider('auto');
 }

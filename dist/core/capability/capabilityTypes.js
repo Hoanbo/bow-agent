@@ -1,0 +1,14 @@
+// src/core/capability/capabilityTypes.ts
+// BOWCON V4.0 — MS-1.3.34: REAL BOWCON CAPABILITY & ENVIRONMENT INTERACTION RUNTIME
+//
+// Canonical type contracts, interfaces, and environment snapshots.
+//
+// INVARIANTS:
+// CAPABILITY != AUTHORIZATION
+// DISCOVERY != EXECUTION
+// OBSERVATION != MUTATION
+// LLM_PROPOSE != EXECUTE
+// CONFIDENCE != AUTHORIZATION
+// VERIFICATION != COMMIT
+// FAILURE != BRAIN_DEATH
+export {};

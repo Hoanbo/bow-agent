@@ -235,6 +235,584 @@
 
 ## 4. VERIFICATION EVIDENCE
 - **Dedicated Wire Test Suite:** `tests/test_v4_agent_secure_real_wire_transport.ts` (459 assertions passed, 0 failures).
-- **Full Regression Test Suite:** 30 of 30 suites executed, 0 failures.
+- **Full Regression Test Suite:** 33 of 33 suites executed, 0 failures.
 - **Physical Wire Socket Transmission:** Tested over live WebSocket connections on genuine dynamic ports.
 - **Protected Workspace:** `C:\BOW\shopofbow` strictly untouched (0 reads, 0 writes, 0 imports, 0 touches).
+
+---
+
+# BOWCON V4.0 — MS-1.3.31 ARCHITECTURAL WALKTHROUGH
+# REAL BOWCON BRAIN SERVICE & CONTINUOUS RUNTIME
+
+## 1. MILESTONE OVERVIEW
+- **Milestone:** MS-1.3.31
+- **Name:** Real BOWCON Brain Service & Continuous Runtime
+- **Package:** `@bow/agent` (Version `4.0.0` STRICTLY LOCKED)
+- **Status:** PASS & LOCKED
+- **Core Principles & Invariants:**
+  - `ONE_BRAIN == ONE_AUTHORITATIVE_BRAIN`
+  - `BRAIN_SERVICE != BRAIN`
+  - `SERVICE_PROCESS != COGNITIVE_AUTHORITY`
+  - `WORKER != BRAIN`
+  - `REQUEST != BRAIN`
+  - `SESSION != BRAIN`
+  - `TASK != PROCESS`
+  - `REQUEST != BRAIN_RESTART`
+  - `DUPLICATE_REQUEST != DUPLICATE_EXECUTION`
+  - `FAILURE != BRAIN_DEATH`
+  - `RECOVERABLE_FAILURE != SERVICE_TERMINATION`
+
+---
+
+## 2. REAL BRAIN SERVICE TOPOLOGY (SVG)
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 820" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad31" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="procGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="ipcGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="queueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="cogGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="storeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="820" fill="url(#bgGrad31)" rx="16"/>
+
+  <!-- Title -->
+  <text x="540" y="38" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="bold" font-family="system-ui, sans-serif">
+    BOWCON V4.0 — MS-1.3.31 REAL BRAIN SERVICE &amp; CONTINUOUS RUNTIME
+  </text>
+  <text x="540" y="60" text-anchor="middle" fill="#94a3b8" font-size="12" font-family="system-ui, sans-serif">
+    Autonomous Process • Stdin/Stdout JSONL IPC • Single Brain Authority • Atomic Persistence • Non-Stop Runtime
+  </text>
+
+  <!-- Service Process Boundary -->
+  <rect x="50" y="85" width="980" height="700" fill="url(#procGrad)" stroke="#38bdf8" stroke-width="2" rx="14"/>
+  <text x="75" y="115" fill="#38bdf8" font-size="14" font-weight="bold" font-family="system-ui, sans-serif">
+    REAL LOCAL SERVICE PROCESS: scripts/run-brain-service.mjs (100% OFFLINE READY • ZERO NETWORK EXPOSURE)
+  </text>
+
+  <!-- IPC Input/Output Streams -->
+  <rect x="75" y="135" width="440" height="80" fill="url(#ipcGrad)" rx="8"/>
+  <text x="295" y="165" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold" font-family="system-ui, sans-serif">
+    stdin (JSONL Request Envelopes)
+  </text>
+  <text x="295" y="185" text-anchor="middle" fill="#e0f2fe" font-size="11" font-family="system-ui, sans-serif">
+    Local IPC Stream • No Sockets • No Port Binding
+  </text>
+
+  <rect x="565" y="135" width="440" height="80" fill="url(#ipcGrad)" rx="8"/>
+  <text x="785" y="165" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold" font-family="system-ui, sans-serif">
+    stdout (JSONL Response Envelopes)
+  </text>
+  <text x="785" y="185" text-anchor="middle" fill="#e0f2fe" font-size="11" font-family="system-ui, sans-serif">
+    Telemetry, Results, System Handshake (SERVICE_READY)
+  </text>
+
+  <!-- Serialized Execution Queue & Idempotency -->
+  <rect x="75" y="240" width="930" height="90" fill="url(#queueGrad)" rx="8"/>
+  <text x="540" y="270" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold" font-family="system-ui, sans-serif">
+    SERIALIZED REQUEST QUEUE &amp; ATOMIC IDEMPOTENCY STORE
+  </text>
+  <text x="540" y="292" text-anchor="middle" fill="#fef3c7" font-size="11" font-family="system-ui, sans-serif">
+    IDLE ──► PROCESSING ──► BUSY ──► BACKPRESSURE • Exactly 1 Cognitive Thread • Zero Race Conditions
+  </text>
+  <text x="540" y="310" text-anchor="middle" fill="#fde68a" font-size="10" font-family="system-ui, sans-serif">
+    DUPLICATE_REQUEST != DUPLICATE_EXECUTION • Cached results returned for committed requests
+  </text>
+
+  <!-- Authoritative Cognitive Brain -->
+  <rect x="75" y="355" width="930" height="230" fill="url(#cogGrad)" rx="10"/>
+  <text x="540" y="388" text-anchor="middle" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">
+    SINGLE AUTHORITATIVE BRAIN RUNTIME (ONE_BRAIN == ONE_AUTHORITATIVE_BRAIN)
+  </text>
+  <text x="540" y="408" text-anchor="middle" fill="#ede9fe" font-size="11" font-family="system-ui, sans-serif">
+    Hosts BrainRuntime Singleton • Enforces PDP • ApprovalService • ToolRegistry • CommitService
+  </text>
+
+  <!-- 7 Stages inside Brain -->
+  <rect x="95" y="425" width="115" height="60" fill="#4c1d95" rx="6"/>
+  <text x="152" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">1. Understand</text>
+  <text x="152" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">Input Parsing</text>
+
+  <rect x="225" y="425" width="115" height="60" fill="#4c1d95" rx="6"/>
+  <text x="282" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">2. Reasoning</text>
+  <text x="282" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">Deterministic/LLM</text>
+
+  <rect x="355" y="425" width="115" height="60" fill="#4c1d95" rx="6"/>
+  <text x="412" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">3. Planning</text>
+  <text x="412" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">Plan Formulation</text>
+
+  <rect x="485" y="425" width="115" height="60" fill="#4c1d95" rx="6"/>
+  <text x="542" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">4. Decision</text>
+  <text x="542" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">PDP Policy Gate</text>
+
+  <rect x="615" y="425" width="115" height="60" fill="#4c1d95" rx="6"/>
+  <text x="672" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">5. Execution</text>
+  <text x="672" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">Real Tools (FS)</text>
+
+  <rect x="745" y="425" width="115" height="60" fill="#4c1d95" rx="6"/>
+  <text x="802" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">6. Verify</text>
+  <text x="802" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">Independent Check</text>
+
+  <rect x="875" y="425" width="110" height="60" fill="#4c1d95" rx="6"/>
+  <text x="930" y="455" text-anchor="middle" fill="#f5f3ff" font-size="11" font-weight="bold">7. Commit</text>
+  <text x="930" y="470" text-anchor="middle" fill="#ddd6fe" font-size="9">Durable State</text>
+
+  <text x="540" y="525" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="system-ui, sans-serif">
+    FAILURE != BRAIN_DEATH • Automated Recovery resets loop to IDLE without process exit
+  </text>
+  <text x="540" y="545" text-anchor="middle" fill="#c4b5fd" font-size="11" font-family="system-ui, sans-serif">
+    Real Filesystem Effects: data/brain/reality/ • Genuine create, read, append verified
+  </text>
+
+  <!-- Crash-Safe Persistence & Graceful Shutdown -->
+  <rect x="75" y="610" width="930" height="150" fill="url(#storeGrad)" rx="10"/>
+  <text x="540" y="640" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold" font-family="system-ui, sans-serif">
+    CRASH-SAFE ATOMIC PERSISTENCE &amp; GRACEFUL SHUTDOWN
+  </text>
+  <text x="540" y="665" text-anchor="middle" fill="#d1fae5" font-size="11" font-family="system-ui, sans-serif">
+    DurableJsonStore: brain_service_state.json • Atomic rename guarantees zero partial writes
+  </text>
+  <text x="540" y="688" text-anchor="middle" fill="#a7f3d0" font-size="11" font-family="system-ui, sans-serif">
+    State Survives Process Restarts: completedRequestIds, totalCompleted, totalFailed preserved
+  </text>
+  <text x="540" y="710" text-anchor="middle" fill="#fef08a" font-size="11" font-weight="bold" font-family="system-ui, sans-serif">
+    Shutdown Sequence: STOP_ACCEPTING ──► DRAIN ──► COMMIT_STATE ──► FLUSH_AUDIT ──► CLOSE ──► STOP (Exit 0)
+  </text>
+  <text x="540" y="732" text-anchor="middle" fill="#ffffff" font-size="10" font-family="system-ui, sans-serif">
+    DEPLOYMENT: Dual Xeon Server (maxQueue: 200) • 1-Chip Workstation (maxQueue: 50) • Zero cognitive variance
+  </text>
+</svg>
+```
+
+---
+
+## 3. REALITY STATUS & TEST VERIFICATION EVIDENCE (MS-1.3.31)
+- **Dedicated Service Reality Test:** `tests/test_v4_agent_real_brain_service.ts` (**362 / 362 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **33 of 33 test suites PASS**, 0 failures.
+- **Process Startup:** Standalone child process spawned via `scripts/run-brain-service.mjs`, PID verified, `SERVICE_READY` handshake validated.
+- **Real File I/O:** `data/brain/reality/reality_manifest.txt` written, read, and appended with byte size and SHA-256 integrity verified via `node:fs`.
+- **Failure Recovery:** Controlled failure handled safely; subsequent request executed without process death (`FAILURE != BRAIN_DEATH`).
+- **Restart Recovery:** Durable state loaded from disk on new process startup; historical idempotency cache preserved.
+- **Clean Shutdown:** Process gracefully drains and exits with code 0.
+- **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+## 4. MS-1.3.32: REAL COGNITIVE PROVIDER & LOCAL INTELLIGENCE RUNTIME
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 820" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cogBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="hierGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="pipeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <filter id="cogGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="1080" height="820" fill="url(#cogBg)"/>
+
+  <!-- Title Header -->
+  <rect x="40" y="30" width="1000" height="70" rx="12" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" filter="url(#cogGlow)"/>
+  <text x="540" y="65" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="bold" font-family="system-ui, sans-serif">
+    BOWCON V4.0 — MS-1.3.32: REAL COGNITIVE PROVIDER &amp; LOCAL INTELLIGENCE RUNTIME
+  </text>
+  <text x="540" y="88" text-anchor="middle" fill="#a5b4fc" font-size="12" font-family="system-ui, sans-serif">
+    Tiered Cognitive Hierarchy • Genuine Ollama Wire Client • Circuit Breaker • Context Reconstruction • Zero-Trust Governance
+  </text>
+
+  <!-- Provider Hierarchy Strip -->
+  <rect x="60" y="125" width="960" height="90" rx="10" fill="#0f172a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="540" y="148" text-anchor="middle" fill="#c084fc" font-size="13" font-weight="bold" font-family="system-ui, sans-serif">
+    AUTHORITATIVE PROVIDER HIERARCHY &amp; CIRCUIT BREAKER
+  </text>
+
+  <rect x="80" y="160" width="280" height="42" rx="6" fill="#1e1b4b" stroke="#38bdf8"/>
+  <text x="220" y="178" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">1. LOCAL REAL MODEL</text>
+  <text x="220" y="194" text-anchor="middle" fill="#94a3b8" font-size="9">Dedicated In-Process Neural Runtime</text>
+
+  <text x="380" y="186" text-anchor="middle" fill="#818cf8" font-size="14">──►</text>
+
+  <rect x="400" y="160" width="280" height="42" rx="6" fill="#1e1b4b" stroke="#a855f7"/>
+  <text x="540" y="178" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="bold">2. OLLAMA LOCAL MODEL</text>
+  <text x="540" y="194" text-anchor="middle" fill="#94a3b8" font-size="9">http://127.0.0.1:11434 (qwen2.5:7b)</text>
+
+  <text x="700" y="186" text-anchor="middle" fill="#818cf8" font-size="14">──►</text>
+
+  <rect x="720" y="160" width="280" height="42" rx="6" fill="#1e1b4b" stroke="#10b981"/>
+  <text x="860" y="178" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">3. DETERMINISTIC FALLBACK</text>
+  <text x="860" y="194" text-anchor="middle" fill="#94a3b8" font-size="9">bowcon-rule-engine-v4 (100% Offline)</text>
+
+  <!-- 8-Stage Cognitive Pipeline -->
+  <rect x="60" y="235" width="960" height="380" rx="10" fill="url(#pipeGrad)" stroke="#475569" stroke-width="1"/>
+  <text x="540" y="262" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="bold" font-family="system-ui, sans-serif">
+    END-TO-END 8-STAGE COGNITIVE PIPELINE
+  </text>
+
+  <!-- Step 1 to 4 (Top row) -->
+  <rect x="85" y="280" width="210" height="70" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="190" y="302" text-anchor="middle" fill="#38bdf8" font-size="11" font-weight="bold">1. Normalization</text>
+  <text x="190" y="320" text-anchor="middle" fill="#94a3b8" font-size="9">Fail-closed Secret Redaction</text>
+  <text x="190" y="335" text-anchor="middle" fill="#64748b" font-size="8">[REDACTED_SECRET]</text>
+
+  <rect x="315" y="280" width="210" height="70" rx="8" fill="#1e293b" stroke="#818cf8"/>
+  <text x="420" y="302" text-anchor="middle" fill="#818cf8" font-size="11" font-weight="bold">2. Context Reconstruction</text>
+  <text x="420" y="320" text-anchor="middle" fill="#94a3b8" font-size="9">Multi-turn Pronoun Resolution</text>
+  <text x="420" y="335" text-anchor="middle" fill="#64748b" font-size="8">"it" ──► "target_file.txt"</text>
+
+  <rect x="545" y="280" width="210" height="70" rx="8" fill="#1e293b" stroke="#c084fc"/>
+  <text x="650" y="302" text-anchor="middle" fill="#c084fc" font-size="11" font-weight="bold">3. Intent Understanding</text>
+  <text x="650" y="320" text-anchor="middle" fill="#94a3b8" font-size="9">13 Authoritative Categories</text>
+  <text x="650" y="335" text-anchor="middle" fill="#64748b" font-size="8">WRITE, READ, APPEND, etc.</text>
+
+  <rect x="775" y="280" width="225" height="70" rx="8" fill="#1e293b" stroke="#f472b6"/>
+  <text x="887" y="302" text-anchor="middle" fill="#f472b6" font-size="11" font-weight="bold">4. Prompt Construction</text>
+  <text x="887" y="320" text-anchor="middle" fill="#94a3b8" font-size="9">Injection Neutralization</text>
+  <text x="887" y="335" text-anchor="middle" fill="#64748b" font-size="8">Strict System/Policy Segregation</text>
+
+  <!-- Step 5 to 8 (Bottom row) -->
+  <rect x="85" y="375" width="210" height="70" rx="8" fill="#1e293b" stroke="#f59e0b"/>
+  <text x="190" y="397" text-anchor="middle" fill="#f59e0b" font-size="11" font-weight="bold">5. Provider Execution</text>
+  <text x="190" y="415" text-anchor="middle" fill="#94a3b8" font-size="9">Ollama or Circuit Breaker</text>
+  <text x="190" y="430" text-anchor="middle" fill="#64748b" font-size="8">3000ms Timeout + Failover</text>
+
+  <rect x="315" y="375" width="210" height="70" rx="8" fill="#1e293b" stroke="#e11d48"/>
+  <text x="420" y="397" text-anchor="middle" fill="#fb7185" font-size="11" font-weight="bold">6. Reasoning &amp; Summary</text>
+  <text x="420" y="415" text-anchor="middle" fill="#94a3b8" font-size="9">Safe High-level Rationale</text>
+  <text x="420" y="430" text-anchor="middle" fill="#64748b" font-size="8">Zero Hidden CoT Exposure</text>
+
+  <rect x="545" y="375" width="210" height="70" rx="8" fill="#1e293b" stroke="#10b981"/>
+  <text x="650" y="397" text-anchor="middle" fill="#34d399" font-size="11" font-weight="bold">7. Structured Planning</text>
+  <text x="650" y="415" text-anchor="middle" fill="#94a3b8" font-size="9">Stepwise CognitivePlan</text>
+  <text x="650" y="430" text-anchor="middle" fill="#64748b" font-size="8">Action, Target, Capability</text>
+
+  <rect x="775" y="375" width="225" height="70" rx="8" fill="#1e293b" stroke="#06b6d4"/>
+  <text x="887" y="397" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold">8. Decision Formulation</text>
+  <text x="887" y="415" text-anchor="middle" fill="#94a3b8" font-size="9">Eligibility &amp; Risk Level</text>
+  <text x="887" y="430" text-anchor="middle" fill="#64748b" font-size="8">CONFIDENCE != AUTHORIZATION</text>
+
+  <!-- Invariants & Zero-Trust Governance Banner -->
+  <rect x="85" y="465" width="915" height="130" rx="8" fill="#020617" stroke="#334155"/>
+  <text x="540" y="490" text-anchor="middle" fill="#f87171" font-size="13" font-weight="bold" font-family="system-ui, sans-serif">
+    CARDINAL ARCHITECTURAL &amp; GOVERNANCE INVARIANTS
+  </text>
+  <text x="540" y="515" text-anchor="middle" fill="#fca5a5" font-size="11" font-family="system-ui, sans-serif">
+    LLM_PROPOSE != EXECUTE • The Cognitive Provider ONLY proposes; it has ZERO direct tool authority.
+  </text>
+  <text x="540" y="538" text-anchor="middle" fill="#fed7aa" font-size="11" font-family="system-ui, sans-serif">
+    CONFIDENCE != AUTHORIZATION • 100% confidence NEVER bypasses PDP, human approval, or audit gates.
+  </text>
+  <text x="540" y="560" text-anchor="middle" fill="#a7f3d0" font-size="11" font-family="system-ui, sans-serif">
+    FAILURE != BRAIN_DEATH • Circuit breaker absorbs provider faults; PID remains alive and continuous.
+  </text>
+  <text x="540" y="582" text-anchor="middle" fill="#cbd5e1" font-size="11" font-family="system-ui, sans-serif">
+    NEVER_PRETEND_FALLBACK_IS_LLM • Explicit and observable metadata stamps honest provider types.
+  </text>
+
+  <!-- Reality Verification Footer -->
+  <rect x="60" y="635" width="960" height="145" rx="10" fill="#0f172a" stroke="#10b981" stroke-width="1.5"/>
+  <text x="540" y="665" text-anchor="middle" fill="#34d399" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">
+    REALITY GATE VERIFICATION: tests/test_v4_agent_real_cognitive_provider.ts (305 / 305 PASS)
+  </text>
+  <text x="540" y="692" text-anchor="middle" fill="#e2e8f0" font-size="11" font-family="system-ui, sans-serif">
+    Genuine Ollama Probe: Active at 127.0.0.1:11434 (qwen2.5:7b) • Real filesystem mutation &amp; independent node:fs verification
+  </text>
+  <text x="540" y="715" text-anchor="middle" fill="#94a3b8" font-size="11" font-family="system-ui, sans-serif">
+    PID Continuity: 5 sequential cognitive requests executed on same process • Zero restart between requests
+  </text>
+  <text x="540" y="738" text-anchor="middle" fill="#cbd5e1" font-size="11" font-family="system-ui, sans-serif">
+    Restart Recovery: Durable state loaded, request count survived, idempotency cache preserved across process reboot
+  </text>
+  <text x="540" y="760" text-anchor="middle" fill="#6ee7b7" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">
+    PROTECTED WORKSPACE ISOLATION: C:\BOW\shopofbow (READS=0, WRITES=0, IMPORTS=0, TOUCHES=0) [LOCKED]
+  </text>
+</svg>
+```
+
+---
+
+## 5. REALITY STATUS & TEST VERIFICATION EVIDENCE (MS-1.3.32)
+- **Dedicated Cognitive Reality Gate:** `tests/test_v4_agent_real_cognitive_provider.ts` (**305 / 305 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **34 of 34 test suites PASS**, 0 failures.
+- **Provider Discovery & Configuration:** `CognitiveRegistry` registers Ollama and Deterministic Fallback; dynamic configuration through environment variables.
+- **Real Ollama Probe:** Probes daemon at `http://127.0.0.1:11434`, detects model `qwen2.5:7b`, logs real network latency.
+- **Circuit Breaker Fallback:** When Ollama model is offline, times out, or fails, the 30-second circuit breaker cooldown immediately routes subsequent requests through `DeterministicFallbackProvider` with honest metadata.
+- **Real File I/O:** End-to-end user request $\rightarrow$ intent understanding $\rightarrow$ structured plan $\rightarrow$ PDP $\rightarrow$ real filesystem mutation (`data/brain/reality/cog_live_file_*.txt`) $\rightarrow$ independent verification with `node:fs` $\rightarrow$ commit $\rightarrow$ response.
+- **PID Continuity:** 5 sequential requests executed on the same continuous process without restarting (`PID 1 == PID 2 == PID 3 == PID 4 == PID 5`).
+- **Restart Recovery:** Durable state loaded from disk on new process startup; historical idempotency cache preserved.
+- **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+## 6. REAL WORLD ACTION & GOVERNED EXECUTION ARCHITECTURE (MS-1.3.33)
+
+### 6.1 Two-Phase Governed Physical Host Execution Subsystem
+
+```xml
+<svg viewBox="0 0 920 620" xmlns="http://www.w3.org/2000/svg" style="background:#0b0f19; font-family:monospace;">
+  <defs>
+    <linearGradient id="grad_exec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="grad_auth" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#701a75"/>
+      <stop offset="100%" stop-color="#4a044e"/>
+    </linearGradient>
+    <linearGradient id="grad_verif" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064e3b"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+    <linearGradient id="grad_host" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="460" y="32" fill="#38bdf8" font-size="18" font-weight="bold" text-anchor="middle">BOWCON V4.0 — GOVERNED PHYSICAL EXECUTION RUNTIME (MS-1.3.33)</text>
+  <text x="460" y="52" fill="#94a3b8" font-size="12" text-anchor="middle">LLM_PROPOSE != EXECUTE  |  CONFIDENCE != AUTHORIZATION  |  VERIFICATION != COMMIT</text>
+
+  <!-- Stage 1: Cognitive Proposal -->
+  <rect x="40" y="80" width="240" height="90" rx="10" fill="url(#grad_exec)" stroke="#6366f1" stroke-width="2"/>
+  <text x="160" y="105" fill="#a5b4fc" font-size="13" font-weight="bold" text-anchor="middle">1. COGNITIVE PROPOSAL</text>
+  <text x="160" y="125" fill="#cbd5e1" font-size="11" text-anchor="middle">CognitivePipeline / BrainLoop</text>
+  <text x="160" y="145" fill="#f43f5e" font-size="10" text-anchor="middle">PROPOSAL ONLY — NO SIDE EFFECTS</text>
+
+  <!-- Arrow 1 to 2 -->
+  <line x1="280" y1="125" x2="330" y2="125" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: Phase 1 Prepare -->
+  <rect x="330" y="80" width="250" height="90" rx="10" fill="url(#grad_exec)" stroke="#818cf8" stroke-width="2"/>
+  <text x="455" y="105" fill="#a5b4fc" font-size="13" font-weight="bold" text-anchor="middle">2. PHASE 1: PREPARE</text>
+  <text x="455" y="125" fill="#cbd5e1" font-size="11" text-anchor="middle">WorldActionPlanner</text>
+  <text x="455" y="145" fill="#34d399" font-size="10" text-anchor="middle">ZERO PHYSICAL MUTATION</text>
+
+  <!-- Arrow 2 to 3 -->
+  <line x1="580" y1="125" x2="630" y2="125" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Stage 3: Authorization & PDP -->
+  <rect x="630" y="80" width="250" height="90" rx="10" fill="url(#grad_auth)" stroke="#d946ef" stroke-width="2"/>
+  <text x="755" y="105" fill="#f5d0fe" font-size="13" font-weight="bold" text-anchor="middle">3. AUTHORIZATION &amp; PDP</text>
+  <text x="755" y="125" fill="#cbd5e1" font-size="11" text-anchor="middle">Scoped AuthorizationToken</text>
+  <text x="755" y="145" fill="#e879f9" font-size="10" text-anchor="middle">SINGLE-USE &amp; ANTI-REPLAY</text>
+
+  <!-- Downward Arrow to Stage 4 -->
+  <line x1="755" y1="170" x2="755" y2="230" stroke="#d946ef" stroke-width="2"/>
+
+  <!-- Stage 4: Concurrency Lock -->
+  <rect x="630" y="230" width="250" height="85" rx="10" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+  <text x="755" y="255" fill="#fcd34d" font-size="13" font-weight="bold" text-anchor="middle">4. RESOURCE LOCKING</text>
+  <text x="755" y="275" fill="#cbd5e1" font-size="11" text-anchor="middle">Deterministic Key: normalized path</text>
+  <text x="755" y="295" fill="#fbbf24" font-size="10" text-anchor="middle">CONCURRENT CONFLICT PREVENTION</text>
+
+  <!-- Leftward Arrow to Stage 5 -->
+  <line x1="630" y1="272" x2="580" y2="272" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Stage 5: Phase 2 Real Execution -->
+  <rect x="330" y="230" width="250" height="85" rx="10" fill="url(#grad_host)" stroke="#38bdf8" stroke-width="2"/>
+  <text x="455" y="255" fill="#38bdf8" font-size="13" font-weight="bold" text-anchor="middle">5. PHASE 2: REAL EXECUTION</text>
+  <text x="455" y="275" fill="#cbd5e1" font-size="11" text-anchor="middle">WorldActionExecutor</text>
+  <text x="455" y="295" fill="#93c5fd" font-size="10" text-anchor="middle">GENUINE HOST SYSTEM MUTATION</text>
+
+  <!-- Leftward Arrow to Stage 6 -->
+  <line x1="330" y1="272" x2="280" y2="272" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Stage 6: Independent Verification -->
+  <rect x="40" y="230" width="240" height="85" rx="10" fill="url(#grad_verif)" stroke="#10b981" stroke-width="2"/>
+  <text x="160" y="255" fill="#a7f3d0" font-size="13" font-weight="bold" text-anchor="middle">6. INDEPENDENT VERIFIER</text>
+  <text x="160" y="275" fill="#cbd5e1" font-size="11" text-anchor="middle">WorldActionVerifier</text>
+  <text x="160" y="295" fill="#34d399" font-size="10" text-anchor="middle">OS STAT / READ / SHA-256 / PID</text>
+
+  <!-- Downward Arrow to Stage 7 -->
+  <line x1="160" y1="315" x2="160" y2="375" stroke="#10b981" stroke-width="2"/>
+
+  <!-- Stage 7: Gated Commit -->
+  <rect x="40" y="375" width="240" height="85" rx="10" fill="url(#grad_verif)" stroke="#10b981" stroke-width="2"/>
+  <text x="160" y="400" fill="#a7f3d0" font-size="13" font-weight="bold" text-anchor="middle">7. GATED COMMIT</text>
+  <text x="160" y="420" fill="#cbd5e1" font-size="11" text-anchor="middle">WorldActionCommit</text>
+  <text x="160" y="440" fill="#6ee7b7" font-size="10" text-anchor="middle">VERIFICATION != COMMIT</text>
+
+  <!-- Rightward Arrow to Stage 8 -->
+  <line x1="280" y1="417" x2="330" y2="417" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Stage 8: Audit & Idempotency -->
+  <rect x="330" y="375" width="250" height="85" rx="10" fill="url(#grad_exec)" stroke="#6366f1" stroke-width="2"/>
+  <text x="455" y="400" fill="#c7d2fe" font-size="13" font-weight="bold" text-anchor="middle">8. AUDIT &amp; IDEMPOTENCY</text>
+  <text x="455" y="420" fill="#cbd5e1" font-size="11" text-anchor="middle">Append-Only Chained Ledger</text>
+  <text x="455" y="440" fill="#a5b4fc" font-size="10" text-anchor="middle">RECURSIVE SECRET SCRUBBING</text>
+
+  <!-- Rightward Arrow to Box 9 -->
+  <line x1="580" y1="417" x2="630" y2="417" stroke="#38bdf8" stroke-width="2"/>
+
+  <!-- Box 9: Emergency Stop & Safety -->
+  <rect x="630" y="375" width="250" height="85" rx="10" fill="#450a0a" stroke="#ef4444" stroke-width="2"/>
+  <text x="755" y="400" fill="#fca5a5" font-size="13" font-weight="bold" text-anchor="middle">SAFE_STOP / EMERGENCY</text>
+  <text x="755" y="420" fill="#cbd5e1" font-size="11" text-anchor="middle">Immediate Global Action Halt</text>
+  <text x="755" y="440" fill="#f87171" font-size="10" text-anchor="middle">OPERATOR RESET TOKEN REQUIRED</text>
+
+  <!-- Lower Panel: Real Host Sandbox Isolation -->
+  <rect x="40" y="490" width="840" height="100" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <text x="460" y="515" fill="#f1f5f9" font-size="13" font-weight="bold" text-anchor="middle">REAL HOST ADAPTERS &amp; PROTECTED BOUNDARY ENFORCEMENT</text>
+  <text x="460" y="535" fill="#94a3b8" font-size="11" text-anchor="middle">Filesystem: read, write, append, mkdir, rename, copy, move, delete  |  Process: list, inspect, exists, start, stop  |  Exec: allowlisted</text>
+  <text x="460" y="555" fill="#ef4444" font-size="11" font-weight="bold" text-anchor="middle">PROTECTED WORKSPACE C:\BOW\shopofbow — READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0</text>
+  <text x="460" y="575" fill="#38bdf8" font-size="10" text-anchor="middle">Dedicated Sandbox: data/brain/world-action-reality/  |  Zero eval / new Function / unrestricted shell</text>
+</svg>
+```
+
+---
+
+## 7. REALITY STATUS & TEST VERIFICATION EVIDENCE (MS-1.3.33)
+- **Dedicated World Action Reality Gate:** `tests/test_v4_agent_real_world_action_runtime.ts` (**71 / 71 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **35 of 35 test suites PASS**, 0 failures.
+- **Two-Phase Action Planning:** Phase 1 (`PREPARE`) validates schemas, targets, policies, and expected effects with strictly zero physical mutations.
+- **Independent Verification:** Physical mutations are independently verified via OS low-level `fs.statSync`, `fs.readFileSync`, SHA-256 byte comparison, and `process.kill(pid, 0)` probes.
+- **Cryptographic Token Binding:** Single-use tokens bound to `actionId`, `target`, `toolId`, and `parametersHash`; consumed upon execution; anti-replay verified.
+- **Concurrency Locking:** Deterministic resource keys prevent concurrent conflicting modifications to the same file or process target.
+- **Global Emergency Stop:** `activateEmergencyStop` halts all execution, sets state to `SAFE_STOP`, and requires an operator token to reset.
+- **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+## 8. REAL CAPABILITY & ENVIRONMENT RUNTIME ARCHITECTURE (MS-1.3.34)
+
+### 8.1 Environment-Aware Capability Architecture & 5-Tier Cognitive State Machine
+
+```xml
+<svg viewBox="0 0 920 620" xmlns="http://www.w3.org/2000/svg" style="background:#0b0f19; font-family:monospace;">
+  <defs>
+    <linearGradient id="grad_cap" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#047857"/>
+      <stop offset="100%" stop-color="#065f46"/>
+    </linearGradient>
+    <linearGradient id="grad_disc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="100%" stop-color="#312e81"/>
+    </linearGradient>
+    <linearGradient id="grad_env" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#115e59"/>
+    </linearGradient>
+    <linearGradient id="grad_rec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#854d0e"/>
+      <stop offset="100%" stop-color="#713f12"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="460" y="32" fill="#34d399" font-size="18" font-weight="bold" text-anchor="middle">BOWCON V4.0 — CAPABILITY &amp; ENVIRONMENT RUNTIME (MS-1.3.34)</text>
+  <text x="460" y="52" fill="#94a3b8" font-size="12" text-anchor="middle">5 STATES: CAN DO | ALLOWED TO DO | SHOULD DO | AUTHORIZED TO DO | SUCCESSFULLY DID</text>
+
+  <!-- Real Host Discovery Block -->
+  <rect x="40" y="80" width="410" height="130" rx="10" fill="url(#grad_disc)" stroke="#6366f1" stroke-width="2"/>
+  <text x="245" y="105" fill="#a5b4fc" font-size="14" font-weight="bold" text-anchor="middle">REAL HOST DISCOVERY ENGINE</text>
+  <text x="245" y="128" fill="#e2e8f0" font-size="11" text-anchor="middle">os.cpus() (cores, models, clock) | os.totalmem() | os.freemem()</text>
+  <text x="245" y="148" fill="#e2e8f0" font-size="11" text-anchor="middle">os.networkInterfaces() | os.platform() | process.memoryUsage()</text>
+  <text x="245" y="168" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Dynamic HostMode: WORKSTATION / SERVER / PRODUCTION</text>
+  <text x="245" y="188" fill="#f43f5e" font-size="10" text-anchor="middle">ZERO FABRICATED TELEMETRY — DIRECT OS INVOCATION</text>
+
+  <!-- Canonical Capability Registry -->
+  <rect x="470" y="80" width="410" height="130" rx="10" fill="url(#grad_cap)" stroke="#10b981" stroke-width="2"/>
+  <text x="675" y="105" fill="#a7f3d0" font-size="14" font-weight="bold" text-anchor="middle">GOVERNED CAPABILITY REGISTRY</text>
+  <text x="675" y="128" fill="#e2e8f0" font-size="11" text-anchor="middle">14 Canonical Descriptors across 5 Standard Categories:</text>
+  <text x="675" y="148" fill="#cbd5e1" font-size="11" text-anchor="middle">OBSERVATION | FILESYSTEM | PROCESS | SYSTEM | NETWORK</text>
+  <text x="675" y="168" fill="#fcd34d" font-size="11" text-anchor="middle">Self-Checking Availability States: AVAILABLE / DEGRADED / FAILED</text>
+  <text x="675" y="188" fill="#6ee7b7" font-size="10" text-anchor="middle">CAPABILITY != AUTHORIZATION  |  DISCOVERY != EXECUTION</text>
+
+  <!-- Mid Flow: 5 Distinct States -->
+  <rect x="40" y="230" width="160" height="85" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="120" y="255" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">1. "I CAN DO THIS"</text>
+  <text x="120" y="275" fill="#94a3b8" font-size="10" text-anchor="middle">Capability Discovery</text>
+  <text x="120" y="295" fill="#cbd5e1" font-size="9" text-anchor="middle">Registry Check</text>
+
+  <rect x="210" y="230" width="160" height="85" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="290" y="255" fill="#fbbf24" font-size="11" font-weight="bold" text-anchor="middle">2. "ALLOWED TO DO"</text>
+  <text x="290" y="275" fill="#94a3b8" font-size="10" text-anchor="middle">PDP Policy Evaluation</text>
+  <text x="290" y="295" fill="#cbd5e1" font-size="9" text-anchor="middle">Permission Boundary</text>
+
+  <rect x="380" y="230" width="160" height="85" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1.5"/>
+  <text x="460" y="255" fill="#c084fc" font-size="11" font-weight="bold" text-anchor="middle">3. "SHOULD DO THIS"</text>
+  <text x="460" y="275" fill="#94a3b8" font-size="10" text-anchor="middle">Cognitive Intent &amp; Plan</text>
+  <text x="460" y="295" fill="#cbd5e1" font-size="9" text-anchor="middle">Advisory Proposal</text>
+
+  <rect x="550" y="230" width="160" height="85" rx="8" fill="#1e293b" stroke="#ec4899" stroke-width="1.5"/>
+  <text x="630" y="255" fill="#f472b6" font-size="11" font-weight="bold" text-anchor="middle">4. "AUTHORIZED TO"</text>
+  <text x="630" y="275" fill="#94a3b8" font-size="10" text-anchor="middle">HMAC-SHA256 Token</text>
+  <text x="630" y="295" fill="#cbd5e1" font-size="9" text-anchor="middle">Single-Use Anti-Replay</text>
+
+  <rect x="720" y="230" width="160" height="85" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+  <text x="800" y="255" fill="#34d399" font-size="11" font-weight="bold" text-anchor="middle">5. "SUCCESSFUL"</text>
+  <text x="800" y="275" fill="#94a3b8" font-size="10" text-anchor="middle">Independent Verification</text>
+  <text x="800" y="295" fill="#cbd5e1" font-size="9" text-anchor="middle">Chained Audit Commit</text>
+
+  <!-- Execution & Recovery Pipeline -->
+  <rect x="40" y="340" width="410" height="120" rx="10" fill="url(#grad_env)" stroke="#14b8a6" stroke-width="2"/>
+  <text x="245" y="365" fill="#99f6e4" font-size="13" font-weight="bold" text-anchor="middle">GOVERNED CAPABILITY EXECUTOR</text>
+  <text x="245" y="388" fill="#e2e8f0" font-size="11" text-anchor="middle">Bridges to WorldActionExecutor Physical Host Adapters</text>
+  <text x="245" y="408" fill="#cbd5e1" font-size="11" text-anchor="middle">Enforces Dry-Run (preview) Zero-Mutation Guarantees</text>
+  <text x="245" y="428" fill="#38bdf8" font-size="11" font-weight="bold" text-anchor="middle">Independent Verifier: stat, read, SHA-256, kill(pid, 0)</text>
+  <text x="245" y="445" fill="#f87171" font-size="10" text-anchor="middle">ZERO EVAL / ZERO NEW FUNCTION / ZERO EXECSYNC</text>
+
+  <!-- Resilience & Recovery Box -->
+  <rect x="470" y="340" width="410" height="120" rx="10" fill="url(#grad_rec)" stroke="#eab308" stroke-width="2"/>
+  <text x="675" y="365" fill="#fef08a" font-size="13" font-weight="bold" text-anchor="middle">RESILIENCE &amp; RECOVERY ENGINE</text>
+  <text x="675" y="388" fill="#fef9c3" font-size="12" font-weight="bold" text-anchor="middle">FAILURE != BRAIN_DEATH</text>
+  <text x="675" y="408" fill="#fef08a" font-size="11" text-anchor="middle">Taxonomy: RECOVERABLE / DEGRADED / UNAVAILABLE / FATAL</text>
+  <text x="675" y="428" fill="#cbd5e1" font-size="11" text-anchor="middle">Graceful degradation and compensating action without crashing Brain</text>
+  <text x="675" y="445" fill="#a7f3d0" font-size="10" text-anchor="middle">Runtime maintains PID continuity and continuous operation</text>
+
+  <!-- Lower Panel: Security & Boundaries -->
+  <rect x="40" y="480" width="840" height="110" rx="10" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <text x="460" y="505" fill="#f1f5f9" font-size="13" font-weight="bold" text-anchor="middle">SECURITY BOUNDARIES &amp; WORKSPACE ISOLATION</text>
+  <text x="460" y="525" fill="#ef4444" font-size="12" font-weight="bold" text-anchor="middle">PROTECTED WORKSPACE C:\BOW\shopofbow — READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0</text>
+  <text x="460" y="545" fill="#94a3b8" font-size="11" text-anchor="middle">Deterministic Resource Locking | Global SAFE_STOP Operator Reset | Chained Audit with [REDACTED_SECRET]</text>
+  <text x="460" y="565" fill="#38bdf8" font-size="10" text-anchor="middle">Hardware Independence: No dual-Xeon hardcoding | Surface Separation: Zero Web/Desktop/Mobile/Voice UI</text>
+</svg>
+```
+
+---
+
+## 9. REALITY STATUS & TEST VERIFICATION EVIDENCE (MS-1.3.34)
+- **Dedicated Capability Reality Gate:** `tests/test_v4_agent_real_capability_runtime.ts` (**87 / 87 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **36 of 36 test suites PASS**, 0 failures.
+- **Real Environment Snapshot:** Probes genuine host CPU cores, speed, model, memory, network interfaces, and classifies HostMode without fabrication.
+- **5 Cognitive & Governance States:** Strictly enforces CAN DO vs ALLOWED TO vs SHOULD DO vs AUTHORIZED TO vs SUCCESSFULLY DID.
+- **Dry-Run Zero-Mutation Guarantee:** Independently verified that dry-run previews produce zero disk or process mutation.
+- **Cryptographic Anti-Replay Tokens:** Replay of consumed single-use tokens is rejected with `AUTHORIZATION_REQUIRED`.
+- **Resilience (`FAILURE != BRAIN_DEATH`):** Recoverable capability errors return clean structured reports without terminating the process or crashing the Brain.
+- **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).

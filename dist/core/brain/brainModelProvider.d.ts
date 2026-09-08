@@ -13,6 +13,7 @@ export interface BrainModelProvider {
 }
 export declare class DeterministicBrainModelProvider implements BrainModelProvider {
     readonly providerName = "deterministic";
+    private readonly fallback;
     understand(input: string, context?: Record<string, unknown>): Promise<BrainModelOutput>;
     reason(plan: string, observations: string[], _context?: Record<string, unknown>): Promise<string>;
     summarize(taskSummary: Record<string, unknown>): Promise<string>;
@@ -20,14 +21,22 @@ export declare class DeterministicBrainModelProvider implements BrainModelProvid
 }
 export declare class OllamaModelProvider implements BrainModelProvider {
     readonly providerName = "ollama-local";
-    private readonly endpoint;
-    private readonly model;
-    private _available;
+    private readonly ollama;
+    private readonly fallback;
     constructor(endpoint?: string, model?: string);
     isAvailable(): Promise<boolean>;
-    private callOllama;
-    understand(input: string, _context?: Record<string, unknown>): Promise<BrainModelOutput>;
-    reason(plan: string, observations: string[], _context?: Record<string, unknown>): Promise<string>;
+    understand(input: string, context?: Record<string, unknown>): Promise<BrainModelOutput>;
+    reason(plan: string, observations: string[], context?: Record<string, unknown>): Promise<string>;
     summarize(taskSummary: Record<string, unknown>): Promise<string>;
+}
+export declare class CognitiveBrainModelProvider implements BrainModelProvider {
+    readonly providerName = "cognitive-pipeline";
+    private readonly pipeline;
+    private readonly fallback;
+    constructor(preferred?: 'deterministic' | 'ollama' | 'auto');
+    understand(input: string, context?: Record<string, unknown>): Promise<BrainModelOutput>;
+    reason(plan: string, observations: string[], context?: Record<string, unknown>): Promise<string>;
+    summarize(taskSummary: Record<string, unknown>): Promise<string>;
+    isAvailable(): Promise<boolean>;
 }
 export declare function createBrainModelProvider(preferred?: 'deterministic' | 'ollama' | 'auto'): BrainModelProvider;

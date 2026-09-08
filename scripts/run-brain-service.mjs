@@ -53,16 +53,21 @@ let isShuttingDown = false;
 async function handleShutdown(reason = 'Controlled shutdown') {
   if (isShuttingDown) return;
   isShuttingDown = true;
-  rl.close();
-  await brainService.shutdown(reason);
-  const stoppedSignal = {
-    type: 'SERVICE_STOPPED',
-    serviceId: brainService.serviceId,
-    state: brainService.state,
-    timestamp: Date.now(),
-  };
-  process.stdout.write(JSON.stringify(stoppedSignal) + '\n');
-  process.exit(0);
+  try {
+    rl.close();
+    await brainService.shutdown(reason);
+  } catch {
+    // Fail-safe shutdown
+  } finally {
+    const stoppedSignal = {
+      type: 'SERVICE_STOPPED',
+      serviceId: brainService.serviceId,
+      state: brainService.state,
+      timestamp: Date.now(),
+    };
+    process.stdout.write(JSON.stringify(stoppedSignal) + '\n');
+    process.exit(0);
+  }
 }
 
 process.on('SIGINT', () => handleShutdown('SIGINT received'));

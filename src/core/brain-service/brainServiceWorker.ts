@@ -88,12 +88,13 @@ export class BrainServiceWorker {
       };
 
       const durationMs = Date.now() - startTime;
+      this._callbacks.onTransition('READY');
       return buildSuccessResponse({
         requestId: request.requestId,
         sessionId: request.sessionId,
         result,
-        health: this._healthMonitor.computeHealth('READY', this._queue.status),
-        queueStatus: this._queue.status,
+        health: this._healthMonitor.computeHealth('READY', this._queue.statusAfterActive),
+        queueStatus: this._queue.statusAfterActive,
         durationMs,
         metadata: { idempotent: true },
       });

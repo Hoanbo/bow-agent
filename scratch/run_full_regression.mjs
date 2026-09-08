@@ -32,6 +32,12 @@ const suites = [
   'tests/test_v4_agent_zero_trust_admission.ts',
   'tests/test_v4_agent_secure_always_on_brain_relay.ts',
   'tests/test_v4_agent_secure_real_wire_transport.ts',
+  'tests/test_v4_production_secure_internet_edge.ts',
+  'tests/test_v4_agent_real_brain_runtime.ts',
+  'tests/test_v4_agent_real_brain_service.ts',
+  'tests/test_v4_agent_real_cognitive_provider.ts',
+  'tests/test_v4_agent_real_world_action_runtime.ts',
+  'tests/test_v4_agent_real_capability_runtime.ts',
 ];
 
 let grandTotalPassed = 0;
@@ -50,7 +56,7 @@ for (const suite of suites) {
       timeout: 120000,
     });
     // Extract passed count if present
-    const passMatches = output.match(/TOTAL ASSERTIONS PASSED:\s*(\d+)/i) || output.match(/PASS/g);
+    const passMatches = output.match(/(?:TOTAL ASSERTIONS PASSED|REALITY GATE COMPLETE):\s*(\d+)/i) || output.match(/PASS/g);
     let count = 1;
     if (passMatches && passMatches[1]) {
       count = parseInt(passMatches[1], 10);

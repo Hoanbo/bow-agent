@@ -11,6 +11,8 @@ export declare class BrainService {
     get brainId(): BrainId;
     get config(): ResolvedBrainServiceConfig;
     get state(): BrainServiceLifecycleState;
+    get isReady(): boolean;
+    get isStopped(): boolean;
     get brainRuntime(): BrainRuntime;
     /**
      * Start the Brain Service and load durable state.

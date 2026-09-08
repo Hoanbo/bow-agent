@@ -53,6 +53,14 @@ export class BrainService {
     return this._runtime.state;
   }
 
+  public get isReady(): boolean {
+    return this._runtime.state === 'READY';
+  }
+
+  public get isStopped(): boolean {
+    return this._runtime.state === 'STOPPED';
+  }
+
   public get brainRuntime(): BrainRuntime {
     return this._runtime.brainRuntime;
   }

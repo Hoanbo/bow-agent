@@ -142,3 +142,6 @@ export * from './core/wire/index.js';
 export * from './core/internet/index.js';
 export * from './core/brain/index.js';
 export * from './core/brain-service/index.js';
+export * from './core/cognitive/index.js';
+export * from './core/world-action/index.js';
+export * from './core/capability/index.js';

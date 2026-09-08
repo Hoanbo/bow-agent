@@ -192,3 +192,9 @@ export * from './core/internet/index.js';
 export * from './core/brain/index.js';
 // 45. BOWCON V4.0 — Milestone 1.3.31: Real BOWCON Brain Service & Continuous Runtime
 export * from './core/brain-service/index.js';
+// 46. BOWCON V4.0 — Milestone 1.3.32: Real BOWCON Cognitive Provider & Local Intelligence Runtime
+export * from './core/cognitive/index.js';
+// 47. BOWCON V4.0 — Milestone 1.3.33: Real BOWCON World Action & Governed Execution Runtime
+export * from './core/world-action/index.js';
+// 48. BOWCON V4.0 — Milestone 1.3.34: Real BOWCON Capability & Environment Interaction Runtime
+export * from './core/capability/index.js';
