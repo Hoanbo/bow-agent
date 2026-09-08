@@ -1,0 +1,13 @@
+{
+  "version": "4.0.0",
+  "serviceId": "bsvc_390bdb955bf67a7b",
+  "brainId": "brain_bowcon_ffea33dda4dc8947",
+  "hostMode": "workstation",
+  "totalRequestsReceived": 0,
+  "totalRequestsCompleted": 0,
+  "totalRequestsFailed": 0,
+  "completedRequestIds": [],
+  "lastCommittedAt": 1788885576995,
+  "createdAt": 1788885576995,
+  "lastShutdownAt": 1788885576999
+}

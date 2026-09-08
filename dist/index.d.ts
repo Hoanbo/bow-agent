@@ -139,3 +139,6 @@ export * from './core/deviceVault/index.js';
 export * from './core/admission/index.js';
 export * from './core/relay/index.js';
 export * from './core/wire/index.js';
+export * from './core/internet/index.js';
+export * from './core/brain/index.js';
+export * from './core/brain-service/index.js';

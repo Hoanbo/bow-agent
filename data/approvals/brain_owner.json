@@ -1,0 +1,72 @@
+[
+  {
+    "id": "appr_1788884324879_883553",
+    "ownerUserId": "brain_owner",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "3c4d1e9afb40b49b3f366bd59e4ff6b5dd3a4732d6d710dd37de8995b46899a9",
+    "argumentsPreview": {
+      "input": "Echo \"timeout check\""
+    },
+    "requestedBy": "brain_owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.879Z",
+    "expiresAt": "2026-09-08T16:23:44.879Z"
+  },
+  {
+    "id": "appr_1788884324883_f49b00",
+    "ownerUserId": "brain_owner",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "argumentsPreview": {
+      "input": "Echo \"alive\""
+    },
+    "requestedBy": "brain_owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.883Z",
+    "expiresAt": "2026-09-08T16:23:44.883Z"
+  },
+  {
+    "id": "appr_1788884324888_550bfd",
+    "ownerUserId": "brain_owner",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "argumentsPreview": {
+      "input": "Echo \"alive\""
+    },
+    "requestedBy": "brain_owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.888Z",
+    "expiresAt": "2026-09-08T16:23:44.888Z"
+  },
+  {
+    "id": "appr_1788884324892_cb4be2",
+    "ownerUserId": "brain_owner",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "argumentsPreview": {
+      "input": "Echo \"alive\""
+    },
+    "requestedBy": "brain_owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.892Z",
+    "expiresAt": "2026-09-08T16:23:44.892Z"
+  },
+  {
+    "id": "appr_1788884325145_568e82",
+    "ownerUserId": "brain_owner",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "95cb29dd029f373b46b71d94efb13d1688dd9d45ea762801e0f0fb4dcea02f7e",
+    "argumentsPreview": {
+      "input": "Echo \"cancellation test\""
+    },
+    "requestedBy": "brain_owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.145Z",
+    "expiresAt": "2026-09-08T16:23:45.145Z"
+  }
+]

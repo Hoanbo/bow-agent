@@ -1,0 +1,40 @@
+// src/core/brain-service/brainServiceConfig.ts
+// BOWCON V4.0 — MS-1.3.31: REAL BOWCON BRAIN SERVICE & CONTINUOUS RUNTIME
+//
+// Hardware-Independent Deployment Configuration.
+//
+// INVARIANT: Hardware determines available resources.
+// Hardware must NOT determine Brain identity or cognitive architecture.
+// The same Brain Service runs on Dual Xeon Server or 1-Chip Workstation.
+import path from 'node:path';
+export function resolveBrainServiceConfig(overrides = {}) {
+    const envHostMode = process.env.BRAIN_HOST_MODE;
+    const envServiceMode = process.env.BRAIN_SERVICE_MODE;
+    const envDataDir = process.env.BRAIN_DATA_DIR;
+    const hostMode = overrides.hostMode ?? envHostMode ?? 'workstation';
+    const serviceMode = overrides.serviceMode ?? envServiceMode ?? 'standalone';
+    const baseDataDir = overrides.dataDir ?? envDataDir ?? path.join('data', 'brain-service');
+    const resolvedDataDir = path.resolve(baseDataDir);
+    const stateFilePath = path.join(resolvedDataDir, 'brain_service_state.json');
+    const maxQueueSize = overrides.maxQueueSize ?? (hostMode === 'server' ? 200 : 50);
+    const requestTimeoutMs = overrides.requestTimeoutMs ?? 60000;
+    const drainTimeoutMs = overrides.drainTimeoutMs ?? 10000;
+    const enablePersistence = overrides.enablePersistence ?? true;
+    const brainSeed = overrides.brainSeed ?? 'bowcon_authoritative';
+    const defaultRealityDir = path.resolve(path.join('data', 'brain', 'reality'));
+    const allowedRealityBaseDir = overrides.allowedRealityBaseDir
+        ? path.resolve(overrides.allowedRealityBaseDir)
+        : defaultRealityDir;
+    return Object.freeze({
+        hostMode,
+        serviceMode,
+        dataDir: resolvedDataDir,
+        stateFilePath,
+        maxQueueSize,
+        requestTimeoutMs,
+        drainTimeoutMs,
+        enablePersistence,
+        brainSeed,
+        allowedRealityBaseDir,
+    });
+}

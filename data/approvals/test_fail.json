@@ -1,0 +1,86 @@
+[
+  {
+    "id": "appr_1788884277537_45acae",
+    "ownerUserId": "test_fail",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "argumentsPreview": {
+      "input": "perform_nonexistent_operation please"
+    },
+    "requestedBy": "test_fail",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:17:57.537Z",
+    "expiresAt": "2026-09-08T16:22:57.537Z"
+  },
+  {
+    "id": "appr_1788884277542_2698b2",
+    "ownerUserId": "test_fail",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "argumentsPreview": {
+      "input": "perform_nonexistent_operation please"
+    },
+    "requestedBy": "test_fail",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:17:57.542Z",
+    "expiresAt": "2026-09-08T16:22:57.542Z"
+  },
+  {
+    "id": "appr_1788884277546_056f89",
+    "ownerUserId": "test_fail",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "argumentsPreview": {
+      "input": "perform_nonexistent_operation please"
+    },
+    "requestedBy": "test_fail",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:17:57.546Z",
+    "expiresAt": "2026-09-08T16:22:57.546Z"
+  },
+  {
+    "id": "appr_1788884324829_173065",
+    "ownerUserId": "test_fail",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "argumentsPreview": {
+      "input": "perform_nonexistent_operation please"
+    },
+    "requestedBy": "test_fail",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.829Z",
+    "expiresAt": "2026-09-08T16:23:44.829Z"
+  },
+  {
+    "id": "appr_1788884324833_8ddebc",
+    "ownerUserId": "test_fail",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "argumentsPreview": {
+      "input": "perform_nonexistent_operation please"
+    },
+    "requestedBy": "test_fail",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.833Z",
+    "expiresAt": "2026-09-08T16:23:44.833Z"
+  },
+  {
+    "id": "appr_1788884324838_0428a2",
+    "ownerUserId": "test_fail",
+    "actionName": "brain_echo",
+    "targetDomain": "shop",
+    "argumentsHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "argumentsPreview": {
+      "input": "perform_nonexistent_operation please"
+    },
+    "requestedBy": "test_fail",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.838Z",
+    "expiresAt": "2026-09-08T16:23:44.838Z"
+  }
+]

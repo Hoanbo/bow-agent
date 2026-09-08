@@ -1,0 +1,16 @@
+[
+  {
+    "key": "brain_task_task_mtsvmfz3_45822e5fde6a_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1788884466016
+    },
+    "recordedAt": 1788884466016,
+    "expiresAt": 1788970866016,
+    "status": "COMPLETED"
+  }
+]

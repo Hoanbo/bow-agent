@@ -1,0 +1,92 @@
+[
+  {
+    "id": "appr_1788884277518_f68abe",
+    "ownerUserId": "test_verify",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "089c5493a932dd170d6deeb339800d4448ee9fcdd0cf0e8565c37ca21c1578fe",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:17:57.510Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt\""
+    },
+    "requestedBy": "test_verify",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:17:57.518Z",
+    "expiresAt": "2026-09-08T16:22:57.518Z"
+  },
+  {
+    "id": "appr_1788884277524_ddd14b",
+    "ownerUserId": "test_verify",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "d89cf26b7feb9740a22d34527abd07f0ad6e06dc7f4c93912beae7005b6db59a",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:17:57.523Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt\""
+    },
+    "requestedBy": "test_verify",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:17:57.524Z",
+    "expiresAt": "2026-09-08T16:22:57.524Z"
+  },
+  {
+    "id": "appr_1788884277529_f5be5a",
+    "ownerUserId": "test_verify",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "3a8b5c8754eb549de0c8f331e90cb3f7eec02851d5d31cb758fc375cd69e18c7",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:17:57.528Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt\""
+    },
+    "requestedBy": "test_verify",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:17:57.529Z",
+    "expiresAt": "2026-09-08T16:22:57.529Z"
+  },
+  {
+    "id": "appr_1788884324812_3ac74f",
+    "ownerUserId": "test_verify",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "b55b5372fb67f5812821e38a2d851b8353a32ae49e08c3e98509c8271264c2e9",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:18:44.807Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt\""
+    },
+    "requestedBy": "test_verify",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.812Z",
+    "expiresAt": "2026-09-08T16:23:44.812Z"
+  },
+  {
+    "id": "appr_1788884324818_4b0bee",
+    "ownerUserId": "test_verify",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "62a4af91911080c7549b71ac95f5c2eff237742a504c0e6f8d0d5fadcfc96dee",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:18:44.817Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt\""
+    },
+    "requestedBy": "test_verify",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.818Z",
+    "expiresAt": "2026-09-08T16:23:44.818Z"
+  },
+  {
+    "id": "appr_1788884324823_59a69e",
+    "ownerUserId": "test_verify",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "65d9ec71b138479e39205e61263077c25e856c031b8788ac45ccade46e024bb1",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:18:44.822Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt\""
+    },
+    "requestedBy": "test_verify",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:44.823Z",
+    "expiresAt": "2026-09-08T16:23:44.823Z"
+  }
+]

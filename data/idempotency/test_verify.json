@@ -1,0 +1,32 @@
+[
+  {
+    "key": "brain_task_task_mtsvkwfc_426d7e8eda41_iter_1",
+    "ownerUserId": "test_verify",
+    "payloadHash": "17e1dde38fdb7774666ee43cd27ad2cd634f734d2ded1659433a46b70e427a2c",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "bytesWritten": 159,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1788884394029,
+    "expiresAt": 1788970794029,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtsvmfyh_703032ec4835_iter_1",
+    "ownerUserId": "test_verify",
+    "payloadHash": "e5c9deafbe78a87d323f3c09ff59cfc1effa184578470da4cf01226d161932d2",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\verify-test.txt",
+      "bytesWritten": 159,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1788884465999,
+    "expiresAt": 1788970865999,
+    "status": "COMPLETED"
+  }
+]

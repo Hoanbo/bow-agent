@@ -83,6 +83,8 @@ import type { RelayRuntimeSnapshot } from './relay/relayTypes.js';
 import { RelayGatewayRuntime } from './wire/relayGatewayRuntime.js';
 import type { WireTransportSnapshot } from './wire/wireTypes.js';
 import { InMemoryWireServerAdapter } from './wire/adapters/inMemoryWireAdapter.js';
+import { InternetRuntime, type InternetRuntimeSnapshot } from './internet/internetRuntime.js';
+import { BrainRuntime, type BrainRuntimeSnapshot } from './brain/brainRuntime.js';
 
 // ---------------------------------------------------------------------------
 // 1. STRONGLY TYPED LIFECYCLE STATES
@@ -266,6 +268,8 @@ export interface AgentLoopResult {
   admissionContext?: ZeroTrustAdmissionSnapshot;
   relayContext?: RelayRuntimeSnapshot;
   wireContext?: WireTransportSnapshot;
+  internetContext?: InternetRuntimeSnapshot;
+  brainContext?: BrainRuntimeSnapshot;
   updateResult?: AgentUpdateResult;
   response: AgentMessage;
   totalDurationMs: number;
@@ -301,6 +305,8 @@ export class AgentLoop {
   private admissionRuntime: ZeroTrustAdmissionRuntime;
   private relayRuntime: SecureBrainRelayRuntime;
   private relayGatewayRuntime: RelayGatewayRuntime;
+  private internetRuntime: InternetRuntime;
+  private brainRuntime: BrainRuntime;
 
   constructor(
     voiceService?: VoiceService,
@@ -325,7 +331,9 @@ export class AgentLoop {
     deviceVaultRuntime?: DeviceVaultRuntime,
     admissionRuntime?: ZeroTrustAdmissionRuntime,
     relayRuntime?: SecureBrainRelayRuntime,
-    relayGatewayRuntime?: RelayGatewayRuntime
+    relayGatewayRuntime?: RelayGatewayRuntime,
+    internetRuntime?: InternetRuntime,
+    brainRuntime?: BrainRuntime
   ) {
     this.voiceService = voiceService || globalVoiceService;
     this.contextManager = contextManager || globalContextManager;
@@ -352,6 +360,8 @@ export class AgentLoop {
     this.relayGatewayRuntime =
       relayGatewayRuntime ||
       new RelayGatewayRuntime({ serverAdapter: new InMemoryWireServerAdapter() });
+    this.internetRuntime = internetRuntime || new InternetRuntime({ allowInsecureEndpoints: true, edgeConfig: { requireMtls: false, allowTls12: true } });
+    this.brainRuntime = brainRuntime || new BrainRuntime({ modelProvider: 'auto' });
   }
 
   public getVoiceService(): VoiceService {
@@ -450,6 +460,14 @@ export class AgentLoop {
     return this.relayGatewayRuntime;
   }
 
+  public getInternetRuntime(): InternetRuntime {
+    return this.internetRuntime;
+  }
+
+  public getBrainRuntime(): BrainRuntime {
+    return this.brainRuntime;
+  }
+
 
   /**
    * Execute the authoritative 7-stage Agent Execution Loop
@@ -499,6 +517,8 @@ export class AgentLoop {
         admissionContext: this.admissionRuntime.getSnapshot(),
         relayContext: this.relayRuntime.getSnapshot(),
         wireContext: this.relayGatewayRuntime.getSnapshot(),
+        internetContext: this.internetRuntime.getSnapshot(),
+        brainContext: this.brainRuntime.getSnapshot(),
         totalDurationMs: Date.now() - startTime,
         error: 'PROMPT_INJECTION_DETECTED',
       };
@@ -544,6 +564,8 @@ export class AgentLoop {
         admissionContext: this.admissionRuntime.getSnapshot(),
         relayContext: this.relayRuntime.getSnapshot(),
         wireContext: this.relayGatewayRuntime.getSnapshot(),
+        internetContext: this.internetRuntime.getSnapshot(),
+        brainContext: this.brainRuntime.getSnapshot(),
         voiceResult,
         totalDurationMs: Date.now() - startTime,
       };
@@ -597,6 +619,8 @@ export class AgentLoop {
         admissionContext: this.admissionRuntime.getSnapshot(),
         relayContext: this.relayRuntime.getSnapshot(),
         wireContext: this.relayGatewayRuntime.getSnapshot(),
+        internetContext: this.internetRuntime.getSnapshot(),
+        brainContext: this.brainRuntime.getSnapshot(),
         response: { id: `msg_semantic_clarify_${Date.now()}`, sender: 'agent', content: clarificationText, timestamp: new Date().toISOString() },
         totalDurationMs: Date.now() - startTime,
       };
@@ -967,6 +991,8 @@ export class AgentLoop {
       admissionContext: this.admissionRuntime.getSnapshot(),
       relayContext: this.relayRuntime.getSnapshot(),
       wireContext: this.relayGatewayRuntime.getSnapshot(),
+        internetContext: this.internetRuntime.getSnapshot(),
+        brainContext: this.brainRuntime.getSnapshot(),
       updateResult,
       response: {
         id: `msg_out_${Date.now()}`,
@@ -1434,6 +1460,8 @@ export class AgentLoop {
       admissionContext: this.admissionRuntime.getSnapshot(),
       relayContext: this.relayRuntime.getSnapshot(),
       wireContext: this.relayGatewayRuntime.getSnapshot(),
+        internetContext: this.internetRuntime.getSnapshot(),
+        brainContext: this.brainRuntime.getSnapshot(),
       error: params.error,
     };
   }

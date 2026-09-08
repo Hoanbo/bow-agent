@@ -1,0 +1,16 @@
+[
+  {
+    "key": "brain_task_task_mtsvmfyy_362cbd31b833_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1788884466011
+    },
+    "recordedAt": 1788884466011,
+    "expiresAt": 1788970866011,
+    "status": "COMPLETED"
+  }
+]

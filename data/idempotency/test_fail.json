@@ -1,0 +1,16 @@
+[
+  {
+    "key": "brain_task_task_mtsvmfyu_88ef19cd29f7_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1788884466007
+    },
+    "recordedAt": 1788884466007,
+    "expiresAt": 1788970866007,
+    "status": "COMPLETED"
+  }
+]

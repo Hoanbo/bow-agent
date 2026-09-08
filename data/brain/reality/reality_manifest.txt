@@ -1,0 +1,3 @@
+BOWCON Brain created this file at 2026-09-08T16:39:17.829Z
+Input: Create file 'reality/reality_manifest.txt' with content: MANIFEST_INITIAL_V4: created at 1788885557806
+content: APPENDED_LOG_ENTRY_1788885557901

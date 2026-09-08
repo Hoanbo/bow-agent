@@ -1,0 +1,2 @@
+BOWCON Brain created this file at 2026-09-08T16:36:54.626Z
+Input: Write reality test file at C:\Users\MSI_dualXeon\Desktop\BOW\bow-agent\data\brain\reality\reality_manifest.txt with content: MANIFEST_INITIAL_V4: created at 1788885414603

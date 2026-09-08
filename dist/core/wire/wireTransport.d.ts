@@ -14,6 +14,8 @@ export interface WireConnection {
     onClose(handler: (reason?: string) => void): void;
     close(reason?: string): Promise<void>;
     getMetrics(): WireConnectionMetrics;
+    /** Explicit state transition — used by gateway orchestration and tests. */
+    setState(newState: WireConnectionState, reason?: string): void;
 }
 /**
  * Client-side transport adapter contract for establishing outbound wire connections.

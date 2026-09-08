@@ -186,3 +186,9 @@ export * from './core/admission/index.js';
 export * from './core/relay/index.js';
 // 42. BOWCON V4.0 — Milestone 1.3.28: Secure Real Wire Transport & Relay Gateway Runtime
 export * from './core/wire/index.js';
+// 43. BOWCON V4.0 — Milestone 1.3.29: Production Secure Internet Edge & TLS Relay Runtime
+export * from './core/internet/index.js';
+// 44. BOWCON V4.0 — Milestone 1.3.30: Real BOWCON Brain Runtime Foundation
+export * from './core/brain/index.js';
+// 45. BOWCON V4.0 — Milestone 1.3.31: Real BOWCON Brain Service & Continuous Runtime
+export * from './core/brain-service/index.js';

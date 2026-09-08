@@ -1,0 +1,89 @@
+[
+  {
+    "id": "appr_1788884325115_c34355",
+    "ownerUserId": "reality_user",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "f50f5c8fcdf12df377b12616132f5a2158f4441b9215050020c8c621b3e6f5e3",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\bowcon-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:18:45.110Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\bowcon-test.txt\" with content \"Hello from BOWCON Brain\""
+    },
+    "requestedBy": "reality_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.115Z",
+    "expiresAt": "2026-09-08T16:23:45.115Z"
+  },
+  {
+    "id": "appr_1788884325119_b00a25",
+    "ownerUserId": "reality_user",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "0be7539e4b9a59ebfe8ff30e532f9aa2a061a84709920cca15e1e0af711990e7",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\bowcon-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:18:45.118Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\bowcon-test.txt\" with content \"Hello from BOWCON Brain\""
+    },
+    "requestedBy": "reality_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.119Z",
+    "expiresAt": "2026-09-08T16:23:45.119Z"
+  },
+  {
+    "id": "appr_1788884325124_78ab29",
+    "ownerUserId": "reality_user",
+    "actionName": "brain_fs_write",
+    "targetDomain": "shop",
+    "argumentsHash": "516eaad6449eeaf600d1be2902f58fa7b29e1a50ab2669468e95451272dc36bc",
+    "argumentsPreview": {
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\bowcon-test.txt",
+      "content": "BOWCON Brain created this file at 2026-09-08T16:18:45.123Z\nInput: Create a file called \"C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\bowcon-test.txt\" with content \"Hello from BOWCON Brain\""
+    },
+    "requestedBy": "reality_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.124Z",
+    "expiresAt": "2026-09-08T16:23:45.124Z"
+  },
+  {
+    "id": "appr_1788884325129_0bcbc8",
+    "ownerUserId": "reality_user",
+    "actionName": "brain_fs_read",
+    "targetDomain": "shop",
+    "argumentsHash": "2ecc6ab83efdb45c66f936cdb2448bac8fb6e5083620a29d6f4eb985a38a8898",
+    "argumentsPreview": {
+      "path": "this_file_absolutely_does_not_exist_xyz_12345.txt"
+    },
+    "requestedBy": "reality_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.129Z",
+    "expiresAt": "2026-09-08T16:23:45.129Z"
+  },
+  {
+    "id": "appr_1788884325134_6bdb77",
+    "ownerUserId": "reality_user",
+    "actionName": "brain_fs_read",
+    "targetDomain": "shop",
+    "argumentsHash": "2ecc6ab83efdb45c66f936cdb2448bac8fb6e5083620a29d6f4eb985a38a8898",
+    "argumentsPreview": {
+      "path": "this_file_absolutely_does_not_exist_xyz_12345.txt"
+    },
+    "requestedBy": "reality_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.134Z",
+    "expiresAt": "2026-09-08T16:23:45.134Z"
+  },
+  {
+    "id": "appr_1788884325139_8cadc5",
+    "ownerUserId": "reality_user",
+    "actionName": "brain_fs_read",
+    "targetDomain": "shop",
+    "argumentsHash": "2ecc6ab83efdb45c66f936cdb2448bac8fb6e5083620a29d6f4eb985a38a8898",
+    "argumentsPreview": {
+      "path": "this_file_absolutely_does_not_exist_xyz_12345.txt"
+    },
+    "requestedBy": "reality_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T16:18:45.139Z",
+    "expiresAt": "2026-09-08T16:23:45.139Z"
+  }
+]
