@@ -134,3 +134,8 @@ export * from './core/remote/index.js';
 export * from './core/network/index.js';
 export * from './core/connection/index.js';
 export * from './core/pairing/index.js';
+export * from './core/deviceIdentity/index.js';
+export * from './core/deviceVault/index.js';
+export * from './core/admission/index.js';
+export * from './core/relay/index.js';
+export * from './core/wire/index.js';

@@ -1,0 +1,10 @@
+export type AdmissionState = 'ADMISSION_RECEIVED' | 'TRANSPORT_VALIDATING' | 'PROTOCOL_VALIDATING' | 'SCOPE_VALIDATING' | 'IDENTITY_RESOLVING' | 'TRUST_RESOLVING' | 'CHALLENGE_REQUIRED' | 'PROOF_REQUIRED' | 'PROOF_VALIDATING' | 'REPLAY_VALIDATING' | 'REVOCATION_VALIDATING' | 'SESSION_VALIDATING' | 'CAPABILITY_FILTERING' | 'ADMITTED' | 'REJECTED' | 'TERMINATED';
+export declare const ALL_ADMISSION_STATES: readonly AdmissionState[];
+export declare function isValidAdmissionState(state: unknown): state is AdmissionState;
+export declare function isTerminalAdmissionState(state: AdmissionState): boolean;
+export declare function isValidatingAdmissionState(state: AdmissionState): boolean;
+export declare function isAdmittedState(state: AdmissionState): boolean;
+export declare function isRejectedState(state: AdmissionState): boolean;
+export declare const isAdmissionSuccessState: typeof isAdmittedState;
+export declare const isAdmissionFailureState: typeof isRejectedState;
+export declare function isPreAdmissionState(state: AdmissionState): boolean;

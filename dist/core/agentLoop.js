@@ -55,6 +55,12 @@ import { RemoteGateway } from './remote/remoteGateway.js';
 import { NetworkRuntime } from './network/networkRuntime.js';
 import { ConnectionRuntime } from './connection/connectionRuntime.js';
 import { PairingRuntime } from './pairing/pairingRuntime.js';
+import { PersistentDeviceIdentityRuntime } from './deviceIdentity/persistentDeviceRuntime.js';
+import { DeviceVaultRuntime } from './deviceVault/deviceVaultRuntime.js';
+import { ZeroTrustAdmissionRuntime } from './admission/admissionRuntime.js';
+import { SecureBrainRelayRuntime } from './relay/relayRuntime.js';
+import { RelayGatewayRuntime } from './wire/relayGatewayRuntime.js';
+import { InMemoryWireServerAdapter } from './wire/adapters/inMemoryWireAdapter.js';
 import { globalContextManager } from './context/contextManager.js';
 // ---------------------------------------------------------------------------
 // 3. AUTHORITATIVE CANONICAL AGENT LOOP CLASS
@@ -78,7 +84,12 @@ export class AgentLoop {
     networkRuntime;
     connectionRuntime;
     pairingRuntime;
-    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService, lifecycleService, verificationService, commitService, recoveryService, coordinationService, synchronizationService, transportService, remoteGateway, networkRuntime, connectionRuntime, pairingRuntime) {
+    persistentDeviceRuntime;
+    deviceVaultRuntime;
+    admissionRuntime;
+    relayRuntime;
+    relayGatewayRuntime;
+    constructor(voiceService, contextManager, intentService, planningService, decisionService, actionOrchestrator, executionService, lifecycleService, verificationService, commitService, recoveryService, coordinationService, synchronizationService, transportService, remoteGateway, networkRuntime, connectionRuntime, pairingRuntime, persistentDeviceRuntime, deviceVaultRuntime, admissionRuntime, relayRuntime, relayGatewayRuntime) {
         this.voiceService = voiceService || globalVoiceService;
         this.contextManager = contextManager || globalContextManager;
         this.intentService = intentService || new IntentService();
@@ -97,12 +108,28 @@ export class AgentLoop {
         this.networkRuntime = networkRuntime || new NetworkRuntime();
         this.connectionRuntime = connectionRuntime || new ConnectionRuntime();
         this.pairingRuntime = pairingRuntime || new PairingRuntime();
+        this.persistentDeviceRuntime = persistentDeviceRuntime || new PersistentDeviceIdentityRuntime();
+        this.deviceVaultRuntime = deviceVaultRuntime || new DeviceVaultRuntime();
+        this.admissionRuntime = admissionRuntime || new ZeroTrustAdmissionRuntime();
+        this.relayRuntime = relayRuntime || new SecureBrainRelayRuntime();
+        this.relayGatewayRuntime =
+            relayGatewayRuntime ||
+                new RelayGatewayRuntime({ serverAdapter: new InMemoryWireServerAdapter() });
     }
     getVoiceService() {
         return this.voiceService;
     }
     getContextManager() {
         return this.contextManager;
+    }
+    getIntentService() {
+        return this.intentService;
+    }
+    getPlanningService() {
+        return this.planningService;
+    }
+    getDecisionService() {
+        return this.decisionService;
     }
     getActionOrchestrator() {
         return this.actionOrchestrator;
@@ -142,6 +169,24 @@ export class AgentLoop {
     }
     getPairingRuntime() {
         return this.pairingRuntime;
+    }
+    getPersistentDeviceIdentityRuntime() {
+        return this.persistentDeviceRuntime;
+    }
+    getDeviceVaultRuntime() {
+        return this.deviceVaultRuntime;
+    }
+    getAdmissionRuntime() {
+        return this.admissionRuntime;
+    }
+    getRelayRuntime() {
+        return this.relayRuntime;
+    }
+    getRelayGatewayRuntime() {
+        return this.relayGatewayRuntime;
+    }
+    getWireTransportRuntime() {
+        return this.relayGatewayRuntime;
     }
     /**
      * Execute the authoritative 7-stage Agent Execution Loop
@@ -186,6 +231,9 @@ export class AgentLoop {
                     content: '⚠️ Yêu cầu bị từ chối do vi phạm chính sách an toàn thông tin.',
                     timestamp: new Date().toISOString(),
                 },
+                admissionContext: this.admissionRuntime.getSnapshot(),
+                relayContext: this.relayRuntime.getSnapshot(),
+                wireContext: this.relayGatewayRuntime.getSnapshot(),
                 totalDurationMs: Date.now() - startTime,
                 error: 'PROMPT_INJECTION_DETECTED',
             };
@@ -226,6 +274,9 @@ export class AgentLoop {
                     content: clarifyText,
                     timestamp: new Date().toISOString(),
                 },
+                admissionContext: this.admissionRuntime.getSnapshot(),
+                relayContext: this.relayRuntime.getSnapshot(),
+                wireContext: this.relayGatewayRuntime.getSnapshot(),
                 voiceResult,
                 totalDurationMs: Date.now() - startTime,
             };
@@ -274,6 +325,9 @@ export class AgentLoop {
             return {
                 requestId, correlationId, sessionId, actor, state: 'COMPLETED', intent, semanticIntent, memoryContext,
                 policyEvaluations, executionResults, verificationResults,
+                admissionContext: this.admissionRuntime.getSnapshot(),
+                relayContext: this.relayRuntime.getSnapshot(),
+                wireContext: this.relayGatewayRuntime.getSnapshot(),
                 response: { id: `msg_semantic_clarify_${Date.now()}`, sender: 'agent', content: clarificationText, timestamp: new Date().toISOString() },
                 totalDurationMs: Date.now() - startTime,
             };
@@ -612,6 +666,13 @@ export class AgentLoop {
             remoteContext: this.remoteGateway.getSession(sessionId),
             networkContext: this.networkRuntime.getRegistry().getConnection(sessionId),
             connectionContext: this.connectionRuntime.getRegistry().getConnection(sessionId),
+            persistentDeviceContext: (req.metadata?.deviceId
+                ? this.persistentDeviceRuntime.getRegistry().getDevice(req.metadata.deviceId)
+                : undefined) ?? this.persistentDeviceRuntime.getRegistry().getDevice(sessionId),
+            deviceVaultContext: this.deviceVaultRuntime.getSnapshot(),
+            admissionContext: this.admissionRuntime.getSnapshot(),
+            relayContext: this.relayRuntime.getSnapshot(),
+            wireContext: this.relayGatewayRuntime.getSnapshot(),
             updateResult,
             response: {
                 id: `msg_out_${Date.now()}`,
@@ -1004,6 +1065,9 @@ export class AgentLoop {
                 timestamp: new Date().toISOString(),
             },
             totalDurationMs: Date.now() - params.startTime,
+            admissionContext: this.admissionRuntime.getSnapshot(),
+            relayContext: this.relayRuntime.getSnapshot(),
+            wireContext: this.relayGatewayRuntime.getSnapshot(),
             error: params.error,
         };
     }

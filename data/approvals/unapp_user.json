@@ -292,5 +292,75 @@
     "status": "PENDING",
     "createdAt": "2026-09-07T16:53:24.970Z",
     "expiresAt": "2026-09-07T16:58:24.970Z"
+  },
+  {
+    "id": "appr_1788871909615_9db2ae",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T12:51:49.615Z",
+    "expiresAt": "2026-09-08T12:56:49.615Z"
+  },
+  {
+    "id": "appr_1788872988004_62ae9e",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T13:09:48.004Z",
+    "expiresAt": "2026-09-08T13:14:48.004Z"
+  },
+  {
+    "id": "appr_1788876595533_22967e",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T14:09:55.533Z",
+    "expiresAt": "2026-09-08T14:14:55.533Z"
+  },
+  {
+    "id": "appr_1788877943141_0f432d",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T14:32:23.141Z",
+    "expiresAt": "2026-09-08T14:37:23.141Z"
+  },
+  {
+    "id": "appr_1788879867210_717623",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-08T15:04:27.210Z",
+    "expiresAt": "2026-09-08T15:09:27.210Z"
   }
 ]

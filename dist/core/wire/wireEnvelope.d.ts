@@ -1,0 +1,24 @@
+import type { WireEnvelope, WireMessageCategory, WireRiskLevel, WireMessagePriority, WireSurfaceType } from './wireTypes.js';
+import type { ScopedRelayIdentity } from '../relay/relayTypes.js';
+export declare function assertNoForbiddenContent(payload: unknown, depth?: number): void;
+export declare function createWireEnvelope<T = unknown>(options: {
+    messageId: string;
+    sequence: number;
+    relayId: string;
+    brainId: string;
+    deviceId: string;
+    sessionId: string;
+    surfaceId: string;
+    surfaceType: WireSurfaceType;
+    scope: ScopedRelayIdentity;
+    messageCategory: WireMessageCategory;
+    priority?: WireMessagePriority;
+    riskLevel?: WireRiskLevel;
+    correlationId?: string;
+    timestamp?: number;
+    payload: T;
+    resumeToken?: string;
+    clientLastAckSeq?: number;
+    clientNextSeq?: number;
+}): WireEnvelope<T>;
+export declare function validateWireEnvelope(envelope: WireEnvelope): void;

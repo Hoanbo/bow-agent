@@ -72,6 +72,17 @@ import { ConnectionRuntime } from './connection/connectionRuntime.js';
 import type { ConnectionSessionSnapshot } from './connection/connectionSession.js';
 import { PairingRuntime } from './pairing/pairingRuntime.js';
 import type { PairingRecord } from './pairing/pairingTypes.js';
+import { PersistentDeviceIdentityRuntime } from './deviceIdentity/persistentDeviceRuntime.js';
+import type { PersistentDeviceTrustRecord } from './deviceIdentity/persistentDeviceTypes.js';
+import { DeviceVaultRuntime } from './deviceVault/deviceVaultRuntime.js';
+import type { DeviceVaultSnapshot } from './deviceVault/deviceVaultTypes.js';
+import { ZeroTrustAdmissionRuntime } from './admission/admissionRuntime.js';
+import type { ZeroTrustAdmissionSnapshot } from './admission/admissionTypes.js';
+import { SecureBrainRelayRuntime } from './relay/relayRuntime.js';
+import type { RelayRuntimeSnapshot } from './relay/relayTypes.js';
+import { RelayGatewayRuntime } from './wire/relayGatewayRuntime.js';
+import type { WireTransportSnapshot } from './wire/wireTypes.js';
+import { InMemoryWireServerAdapter } from './wire/adapters/inMemoryWireAdapter.js';
 
 // ---------------------------------------------------------------------------
 // 1. STRONGLY TYPED LIFECYCLE STATES
@@ -250,6 +261,11 @@ export interface AgentLoopResult {
   networkContext?: NetworkConnectionSnapshot;
   connectionContext?: ConnectionSessionSnapshot;
   pairingContext?: PairingRecord;
+  persistentDeviceContext?: PersistentDeviceTrustRecord;
+  deviceVaultContext?: DeviceVaultSnapshot;
+  admissionContext?: ZeroTrustAdmissionSnapshot;
+  relayContext?: RelayRuntimeSnapshot;
+  wireContext?: WireTransportSnapshot;
   updateResult?: AgentUpdateResult;
   response: AgentMessage;
   totalDurationMs: number;
@@ -280,6 +296,11 @@ export class AgentLoop {
   private networkRuntime: NetworkRuntime;
   private connectionRuntime: ConnectionRuntime;
   private pairingRuntime: PairingRuntime;
+  private persistentDeviceRuntime: PersistentDeviceIdentityRuntime;
+  private deviceVaultRuntime: DeviceVaultRuntime;
+  private admissionRuntime: ZeroTrustAdmissionRuntime;
+  private relayRuntime: SecureBrainRelayRuntime;
+  private relayGatewayRuntime: RelayGatewayRuntime;
 
   constructor(
     voiceService?: VoiceService,
@@ -299,7 +320,12 @@ export class AgentLoop {
     remoteGateway?: RemoteGateway,
     networkRuntime?: NetworkRuntime,
     connectionRuntime?: ConnectionRuntime,
-    pairingRuntime?: PairingRuntime
+    pairingRuntime?: PairingRuntime,
+    persistentDeviceRuntime?: PersistentDeviceIdentityRuntime,
+    deviceVaultRuntime?: DeviceVaultRuntime,
+    admissionRuntime?: ZeroTrustAdmissionRuntime,
+    relayRuntime?: SecureBrainRelayRuntime,
+    relayGatewayRuntime?: RelayGatewayRuntime
   ) {
     this.voiceService = voiceService || globalVoiceService;
     this.contextManager = contextManager || globalContextManager;
@@ -319,6 +345,13 @@ export class AgentLoop {
     this.networkRuntime = networkRuntime || new NetworkRuntime();
     this.connectionRuntime = connectionRuntime || new ConnectionRuntime();
     this.pairingRuntime = pairingRuntime || new PairingRuntime();
+    this.persistentDeviceRuntime = persistentDeviceRuntime || new PersistentDeviceIdentityRuntime();
+    this.deviceVaultRuntime = deviceVaultRuntime || new DeviceVaultRuntime();
+    this.admissionRuntime = admissionRuntime || new ZeroTrustAdmissionRuntime();
+    this.relayRuntime = relayRuntime || new SecureBrainRelayRuntime();
+    this.relayGatewayRuntime =
+      relayGatewayRuntime ||
+      new RelayGatewayRuntime({ serverAdapter: new InMemoryWireServerAdapter() });
   }
 
   public getVoiceService(): VoiceService {
@@ -327,6 +360,18 @@ export class AgentLoop {
 
   public getContextManager(): ContextManager {
     return this.contextManager;
+  }
+
+  public getIntentService(): IntentService {
+    return this.intentService;
+  }
+
+  public getPlanningService(): PlanningService {
+    return this.planningService;
+  }
+
+  public getDecisionService(): DecisionService {
+    return this.decisionService;
   }
 
   public getActionOrchestrator(): ActionOrchestrator {
@@ -381,6 +426,30 @@ export class AgentLoop {
     return this.pairingRuntime;
   }
 
+  public getPersistentDeviceIdentityRuntime(): PersistentDeviceIdentityRuntime {
+    return this.persistentDeviceRuntime;
+  }
+
+  public getDeviceVaultRuntime(): DeviceVaultRuntime {
+    return this.deviceVaultRuntime;
+  }
+
+  public getAdmissionRuntime(): ZeroTrustAdmissionRuntime {
+    return this.admissionRuntime;
+  }
+
+  public getRelayRuntime(): SecureBrainRelayRuntime {
+    return this.relayRuntime;
+  }
+
+  public getRelayGatewayRuntime(): RelayGatewayRuntime {
+    return this.relayGatewayRuntime;
+  }
+
+  public getWireTransportRuntime(): RelayGatewayRuntime {
+    return this.relayGatewayRuntime;
+  }
+
 
   /**
    * Execute the authoritative 7-stage Agent Execution Loop
@@ -427,6 +496,9 @@ export class AgentLoop {
           content: '⚠️ Yêu cầu bị từ chối do vi phạm chính sách an toàn thông tin.',
           timestamp: new Date().toISOString(),
         },
+        admissionContext: this.admissionRuntime.getSnapshot(),
+        relayContext: this.relayRuntime.getSnapshot(),
+        wireContext: this.relayGatewayRuntime.getSnapshot(),
         totalDurationMs: Date.now() - startTime,
         error: 'PROMPT_INJECTION_DETECTED',
       };
@@ -469,6 +541,9 @@ export class AgentLoop {
           content: clarifyText,
           timestamp: new Date().toISOString(),
         },
+        admissionContext: this.admissionRuntime.getSnapshot(),
+        relayContext: this.relayRuntime.getSnapshot(),
+        wireContext: this.relayGatewayRuntime.getSnapshot(),
         voiceResult,
         totalDurationMs: Date.now() - startTime,
       };
@@ -519,6 +594,9 @@ export class AgentLoop {
       return {
         requestId, correlationId, sessionId, actor, state: 'COMPLETED', intent, semanticIntent, memoryContext,
         policyEvaluations, executionResults, verificationResults,
+        admissionContext: this.admissionRuntime.getSnapshot(),
+        relayContext: this.relayRuntime.getSnapshot(),
+        wireContext: this.relayGatewayRuntime.getSnapshot(),
         response: { id: `msg_semantic_clarify_${Date.now()}`, sender: 'agent', content: clarificationText, timestamp: new Date().toISOString() },
         totalDurationMs: Date.now() - startTime,
       };
@@ -881,6 +959,14 @@ export class AgentLoop {
       remoteContext: this.remoteGateway.getSession(sessionId),
       networkContext: this.networkRuntime.getRegistry().getConnection(sessionId),
       connectionContext: this.connectionRuntime.getRegistry().getConnection(sessionId),
+      persistentDeviceContext:
+        (req.metadata?.deviceId
+          ? this.persistentDeviceRuntime.getRegistry().getDevice(req.metadata.deviceId)
+          : undefined) ?? this.persistentDeviceRuntime.getRegistry().getDevice(sessionId),
+      deviceVaultContext: this.deviceVaultRuntime.getSnapshot(),
+      admissionContext: this.admissionRuntime.getSnapshot(),
+      relayContext: this.relayRuntime.getSnapshot(),
+      wireContext: this.relayGatewayRuntime.getSnapshot(),
       updateResult,
       response: {
         id: `msg_out_${Date.now()}`,
@@ -1345,6 +1431,9 @@ export class AgentLoop {
         timestamp: new Date().toISOString(),
       },
       totalDurationMs: Date.now() - params.startTime,
+      admissionContext: this.admissionRuntime.getSnapshot(),
+      relayContext: this.relayRuntime.getSnapshot(),
+      wireContext: this.relayGatewayRuntime.getSnapshot(),
       error: params.error,
     };
   }

@@ -220,3 +220,18 @@ export * from './core/connection/index.js';
 
 // 37. BOWCON V4.0 — Milestone 1.3.23: Device Pairing & Trust Runtime Foundation
 export * from './core/pairing/index.js';
+
+// 38. BOWCON V4.0 — Milestone 1.3.24: Persistent Device Identity & Passwordless Recognition Runtime
+export * from './core/deviceIdentity/index.js';
+
+// 39. BOWCON V4.0 — Milestone 1.3.25: Secure Device Credential Vault & Durable Trust Persistence Runtime
+export * from './core/deviceVault/index.js';
+
+// 40. BOWCON V4.0 — Milestone 1.3.26: Zero-Trust Always-On Brain Connectivity & Secure Internet Admission Runtime
+export * from './core/admission/index.js';
+
+// 41. BOWCON V4.0 — Milestone 1.3.27: Secure Always-On Brain Relay & Remote Session Runtime
+export * from './core/relay/index.js';
+
+// 42. BOWCON V4.0 — Milestone 1.3.28: Secure Real Wire Transport & Relay Gateway Runtime
+export * from './core/wire/index.js';
