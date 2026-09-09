@@ -3956,5 +3956,19 @@
     "expiresAt": "2026-09-09T20:31:08.181Z",
     "approver": "boss_user",
     "executionToken": "tok_4b3e0afffd89e752b22e6ef422d10e2bc18699ec40f5e81a"
+  },
+  {
+    "id": "appr_1788985614671_f1233d",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:26:54.671Z",
+    "expiresAt": "2026-09-09T20:31:54.671Z"
   }
 ]

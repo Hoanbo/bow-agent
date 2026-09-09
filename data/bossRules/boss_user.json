@@ -1375,5 +1375,14 @@
     "createdAt": "2026-09-09T20:16:21.281Z",
     "updatedAt": "2026-09-09T20:16:21.281Z",
     "enabled": true
+  },
+  {
+    "id": "rule_1788985614644",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-09T20:26:54.644Z",
+    "updatedAt": "2026-09-09T20:26:54.644Z",
+    "enabled": true
   }
 ]
