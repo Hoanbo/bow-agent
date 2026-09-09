@@ -70,5 +70,59 @@
     "approver": "Boss-Hoan",
     "consumedAt": "2026-09-06T14:09:37.323Z",
     "executionToken": "tok_c63f2aeede32cf87812ffb3e4aecf5ca12cf9bf2aed5d865"
+  },
+  {
+    "id": "appr_1788985285040_87ddbf",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-09T20:21:25.040Z",
+    "expiresAt": "2026-09-09T20:26:25.040Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-09T20:21:25.052Z",
+    "executionToken": "tok_c295e4a8e30c4493ae61d9ef13105f90b7e2db22216bec47"
+  },
+  {
+    "id": "appr_1788985368715_eb38d0",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-09T20:22:48.716Z",
+    "expiresAt": "2026-09-09T20:27:48.716Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-09T20:22:48.728Z",
+    "executionToken": "tok_4d4397d8457947e7567d7575749a2f290d7e775f20bb1e70"
+  },
+  {
+    "id": "appr_1788985550986_3410c0",
+    "ownerUserId": "Agent-CoFounder",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "Agent-CoFounder",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-09T20:25:50.986Z",
+    "expiresAt": "2026-09-09T20:30:50.986Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-09T20:25:50.998Z",
+    "executionToken": "tok_010676e2d787a1b562bfa0cd5437af169628fc04027f4f45"
   }
 ]

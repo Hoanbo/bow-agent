@@ -12,7 +12,7 @@ let totalTests = 0;
 let passedTests = 0;
 let failedTests = 0;
 
-function assert(condition: boolean, testName: string, detail?: string) {
+function assert(condition: boolean | unknown, testName: string, detail?: string) {
   totalTests++;
   if (condition) {
     passedTests++;
@@ -64,7 +64,7 @@ async function runPhase2Suite() {
   };
   const failSynthesis = await globalSandboxRunner.testAndSynthesizeSkill(brokenDraft);
   assert(failSynthesis.success === false, 'Broken draft rejected by synthesis gate');
-  assert(failSynthesis.debugFeedback?.includes('Lỗi giả lập'), 'Debug feedback captures exact runtime error');
+  assert(failSynthesis.debugFeedback?.includes('Lỗi giả lập') === true, 'Debug feedback captures exact runtime error');
 
   // 2. Test successful synthesis (hardware power calculator for Boss)
   const powerCalcCode = `
@@ -98,7 +98,7 @@ async function runPhase2Suite() {
   const successSynthesis = await globalSandboxRunner.testAndSynthesizeSkill(validDraft);
   assert(successSynthesis.success === true, 'Skill synthesized successfully');
   assert(Boolean(successSynthesis.synthesizedSkill), 'DynamicSkill object created');
-  assert(successSynthesis.debugFeedback?.includes('thành công'), 'Positive debug feedback message');
+  assert(successSynthesis.debugFeedback?.includes('thành công') === true, 'Positive debug feedback message');
 
   // --------------------------------------------------------------------------
   // SECTION 3: LIVE HOT-REGISTRATION TO TOOL REGISTRY
@@ -107,7 +107,7 @@ async function runPhase2Suite() {
 
   const registeredTool = toolRegistry.getTool('skill_robot_power_calc');
   assert(Boolean(registeredTool), 'Synthesized skill immediately registered into global toolRegistry');
-  assert(registeredTool?.description.includes('[DYNAMIC SKILL]'), 'Tool description marked as dynamic');
+  assert(registeredTool?.description.includes('[DYNAMIC SKILL]') === true, 'Tool description marked as dynamic');
 
   // Execute the newly created tool directly via toolRegistry
   const toolExecResult: any = await registeredTool!.execute({ voltage: 12, current: 3, batteryMah: 6000 });
@@ -162,7 +162,7 @@ async function runPhase2Suite() {
 
   const routedResponse = await globalHybridRouter.routeMessage(
     'Kiểm tra tình hình shop hôm nay',
-    { role: 'owner', channel: 'ROBOT' },
+    { role: 'owner', channel: 'ROBOT', isAuthenticated: true },
     failingCloudCaller,
     deterministicCaller
   );

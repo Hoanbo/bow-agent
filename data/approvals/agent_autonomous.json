@@ -132,5 +132,83 @@
     "status": "PENDING",
     "createdAt": "2026-09-06T14:09:37.307Z",
     "expiresAt": "2026-09-06T14:14:37.307Z"
+  },
+  {
+    "id": "appr_1788985285032_2bf458",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "unregistered_dangerous_action",
+    "targetDomain": "shop",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:21:25.033Z",
+    "expiresAt": "2026-09-09T20:26:25.033Z"
+  },
+  {
+    "id": "appr_1788985285036_c93962",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "custom_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e260932e0a8e2d4a65d4de09f774b5862ac9a184add945fe2b9f18c9c4946f11",
+    "argumentsPreview": {
+      "target": "database"
+    },
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:21:25.036Z",
+    "expiresAt": "2026-09-09T20:26:25.036Z"
+  },
+  {
+    "id": "appr_1788985368703_23ca4a",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "unregistered_dangerous_action",
+    "targetDomain": "shop",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:22:48.704Z",
+    "expiresAt": "2026-09-09T20:27:48.704Z"
+  },
+  {
+    "id": "appr_1788985368709_e50726",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "custom_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e260932e0a8e2d4a65d4de09f774b5862ac9a184add945fe2b9f18c9c4946f11",
+    "argumentsPreview": {
+      "target": "database"
+    },
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:22:48.709Z",
+    "expiresAt": "2026-09-09T20:27:48.709Z"
+  },
+  {
+    "id": "appr_1788985550974_a3acc6",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "unregistered_dangerous_action",
+    "targetDomain": "shop",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:25:50.975Z",
+    "expiresAt": "2026-09-09T20:30:50.975Z"
+  },
+  {
+    "id": "appr_1788985550980_3bc757",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "custom_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e260932e0a8e2d4a65d4de09f774b5862ac9a184add945fe2b9f18c9c4946f11",
+    "argumentsPreview": {
+      "target": "database"
+    },
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-09T20:25:50.980Z",
+    "expiresAt": "2026-09-09T20:30:50.980Z"
   }
 ]

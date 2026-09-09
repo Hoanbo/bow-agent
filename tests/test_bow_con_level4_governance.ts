@@ -18,7 +18,7 @@ let passedTests = 0;
 let totalTests = 0;
 let failedTests = 0;
 
-function assert(condition: boolean, description: string) {
+function assert(condition: boolean | unknown, description: string) {
   totalTests++;
   if (condition) {
     passedTests++;
@@ -259,7 +259,7 @@ async function runLevel4GovernanceSuite() {
   // Test Thermal Interlock (> 60°C)
   robotSafety.recordFirmwareHeartbeat({ batteryLevel: 90, batteryTempC: 65 }); // 65°C exceeds MAX_SAFE_TEMP_C (60°C)
   const thermalCheck = robotSafety.validateAndClampMotion(0, 0);
-  assert(!thermalCheck.allowed && thermalCheck.reason?.includes('safety interlock'), 'Thermal interlock triggers actuator cut when temp exceeds 60°C');
+  assert(!thermalCheck.allowed && thermalCheck.reason?.includes('safety interlock') === true, 'Thermal interlock triggers actuator cut when temp exceeds 60°C');
 
   // Test Heartbeat Recovery & Cooldown
   robotSafety.recordFirmwareHeartbeat({ batteryLevel: 90, batteryTempC: 35 }); // Cool down
@@ -268,7 +268,7 @@ async function runLevel4GovernanceSuite() {
   // Test Emergency Stop (E-Stop)
   robotSafety.triggerEmergencyStop('Obstacle collision detected');
   const estopMove = robotSafety.validateAndClampMotion(0, 0);
-  assert(!estopMove.allowed && estopMove.reason?.includes('E-Stop'), 'Emergency Stop strictly halts all servo actuation');
+  assert(!estopMove.allowed && estopMove.reason?.includes('E-Stop') === true, 'Emergency Stop strictly halts all servo actuation');
 
   robotSafety.resetEmergencyStop();
   assert(robotSafety.validateAndClampMotion(0, 0).allowed, 'Actuation re-enabled following authorized E-Stop reset');

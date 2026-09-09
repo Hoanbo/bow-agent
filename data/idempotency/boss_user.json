@@ -1099,5 +1099,38 @@
     "recordedAt": 1788984981354,
     "expiresAt": 1789071381354,
     "status": "COMPLETED"
+  },
+  {
+    "key": "idem_checkout_test_1788985285057",
+    "ownerUserId": "boss_user",
+    "payloadHash": "",
+    "result": {
+      "orderId": "ORD-12345"
+    },
+    "recordedAt": 1788985285059,
+    "expiresAt": 1789071685059,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "idem_checkout_test_1788985368735",
+    "ownerUserId": "boss_user",
+    "payloadHash": "",
+    "result": {
+      "orderId": "ORD-12345"
+    },
+    "recordedAt": 1788985368738,
+    "expiresAt": 1789071768738,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "idem_checkout_test_1788985551004",
+    "ownerUserId": "boss_user",
+    "payloadHash": "",
+    "result": {
+      "orderId": "ORD-12345"
+    },
+    "recordedAt": 1788985551009,
+    "expiresAt": 1789071951009,
+    "status": "COMPLETED"
   }
 ]

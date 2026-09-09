@@ -647,5 +647,16 @@
     "recordedAt": 1788984935165,
     "expiresAt": 1789071335165,
     "status": "COMPLETED"
+  },
+  {
+    "key": "shared_tool_key_1788985568202_icnu",
+    "ownerUserId": "user_alice",
+    "payloadHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "result": {
+      "runCount": 1
+    },
+    "recordedAt": 1788985568203,
+    "expiresAt": 1789071968203,
+    "status": "COMPLETED"
   }
 ]
