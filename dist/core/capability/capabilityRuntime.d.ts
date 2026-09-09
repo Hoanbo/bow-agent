@@ -19,6 +19,7 @@ export declare class CapabilityRuntime {
     private _verifiedCount;
     private _recoveredCount;
     activateEmergencyStop(reason: string): void;
+    triggerEmergencyStop(reason: string): void;
     resetEmergencyStop(operatorToken: string): void;
     isEmergencyStopActive(): boolean;
     private makeResourceKey;

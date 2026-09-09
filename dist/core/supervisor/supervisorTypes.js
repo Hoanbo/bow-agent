@@ -1,0 +1,15 @@
+// src/core/supervisor/supervisorTypes.ts
+// BOWCON V4.0 — MS-1.3.35: REAL BOWCON SUPERVISORY AUTONOMOUS RECOVERY & HUMAN GOVERNANCE RUNTIME
+//
+// Canonical type definitions, interfaces, and contracts for supervisory autonomy.
+//
+// INVARIANTS:
+// LLM_PROPOSE != EXECUTE
+// CONFIDENCE != AUTHORIZATION
+// DETECTION != DIAGNOSIS
+// DIAGNOSIS != AUTHORIZATION
+// AUTHORIZATION != SUCCESS
+// VERIFICATION != COMMIT
+// FAILURE != BRAIN_DEATH
+// USER_STOP > AUTONOMOUS_EXECUTION
+export {};

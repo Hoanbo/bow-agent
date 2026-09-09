@@ -1,0 +1,37 @@
+import type { EpistemicProvenance, WorldModelEpistemicItem, BowconSelfModel } from './worldModelTypes.js';
+type EpistemicItem<T = unknown> = WorldModelEpistemicItem<T>;
+export declare class BowconSelfModelEngine {
+    private readonly _whatIKnow;
+    private readonly _whatIObserved;
+    private readonly _whatIInferred;
+    private readonly _whatIRemember;
+    private readonly _whatIExpect;
+    private readonly _whatIAssume;
+    private readonly _whatIDoNotKnow;
+    private readonly _whatICannotMeasure;
+    private readonly _whatICannotExecute;
+    private readonly _whatIAmNotAuthorizedToExecute;
+    private readonly _whatIHaveVerified;
+    private readonly _whatIHaveNotVerified;
+    recordObservation<T>(key: string, value: T, source?: string): EpistemicItem<T>;
+    recordTelemetry<T>(key: string, value: T, source?: string): EpistemicItem<T>;
+    recordOwnerStated<T>(key: string, value: T): EpistemicItem<T>;
+    recordOwnerConfirmed<T>(key: string, value: T): EpistemicItem<T>;
+    recordInference<T>(key: string, value: T, premises: string[], confidence?: number): EpistemicItem<T>;
+    recordAssumption<T>(key: string, value: T, rationale: string): EpistemicItem<T>;
+    recordExpectation<T>(key: string, value: T, context?: string): EpistemicItem<T>;
+    recordMemory<T>(key: string, value: T, memoryId: string): EpistemicItem<T>;
+    recordUnknown(key: string, description: string): EpistemicItem<string>;
+    recordUnmeasurable(metricName: string, reason: string): EpistemicItem<string>;
+    recordUnexecutable(capabilityId: string, reason: string): EpistemicItem<string>;
+    recordUnauthorized(capabilityId: string, requiredPermission: string): EpistemicItem<string>;
+    recordVerifiedExecution<T>(key: string, value: T, verificationHash: string): EpistemicItem<T>;
+    recordUnverifiedOutput<T>(key: string, value: T, actionId: string): EpistemicItem<T>;
+    attemptPromoteFact(key: string, targetProvenance: EpistemicProvenance): void;
+    isFact(key: string): boolean;
+    getProvenance(key: string): EpistemicProvenance | undefined;
+    getSelfModel(): BowconSelfModel;
+    reset(): void;
+}
+export declare const globalBowconSelfModelEngine: BowconSelfModelEngine;
+export {};

@@ -1,0 +1,11 @@
+import type { GoalStatus, TaskStatus } from './executiveTypes.js';
+export declare const TERMINAL_GOAL_STATES: ReadonlySet<GoalStatus>;
+export declare const ACTIVE_GOAL_STATES: ReadonlySet<GoalStatus>;
+export declare const TERMINAL_TASK_STATES: ReadonlySet<TaskStatus>;
+export declare function isGoalTerminal(status: GoalStatus): boolean;
+export declare function isGoalActive(status: GoalStatus): boolean;
+export declare function isGoalPaused(status: GoalStatus): boolean;
+export declare function isGoalStopped(status: GoalStatus): boolean;
+export declare function isTaskTerminal(status: TaskStatus): boolean;
+export declare function isTaskExecutable(status: TaskStatus): boolean;
+export declare function isTaskBlocked(status: TaskStatus): boolean;

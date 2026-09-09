@@ -254,3 +254,34 @@ export * from './core/world-action/index.js';
 // 48. BOWCON V4.0 — Milestone 1.3.34: Real BOWCON Capability & Environment Interaction Runtime
 export * from './core/capability/index.js';
 
+// 49. BOWCON V4.0 — Milestone 1.3.35: Real BOWCON Supervisory Autonomous Recovery & Human Governance Runtime
+export * from './core/supervisor/index.js';
+
+// 50. BOWCON V4.0 — Milestone 1.3.36: Real BOWCON Continuous Agent Operating Loop & Controlled Autonomy Runtime
+export * from './core/agent-loop/index.js';
+
+// 51. BOWCON V4.0 — Milestone 1.3.37: Real BOWCON Executive Task & Long-Horizon Goal Orchestration Runtime
+export * from './core/executive/index.js';
+
+// 52. BOWCON V4.0 — Milestone 1.3.38: Master Human Authority & Unified Executive Governance Runtime
+export * from './core/authority/index.js';
+
+// 53. BOWCON V4.0 — Milestone 1.3.39: Master Owner Cognitive Partnership & Persistent Personal Intelligence Runtime
+export * from './core/partnership/index.js';
+
+// 54. BOWCON V4.0 — Milestone 1.3.40: Master Owner Personal Operating System & Proactive Cognitive Agency Runtime
+export * from './core/personal-os/index.js';
+
+// 55. BOWCON V4.0 — Milestone 1.3.41: Master Architecture Identity, Host Abstraction & Capability-Aware Core
+export * from './core/architecture/index.js';
+export * from './core/host/index.js';
+
+// 56. BOWCON V4.0 — Milestone 1.3.42: Master Owner World Model, Self-Awareness & Capability-Grounded Reasoning Runtime
+export * from './core/world-model/index.js';
+
+// 57. BOWCON V4.0 — Milestone 1.3.43: Master Owner Cognitive Resilience, Adaptive Host Orchestration & Self-Reflective Episodic Synthesis
+export * from './core/resilience/index.js';
+
+// 58. BOWCON V4.0 — Milestone 1.3.45: Master Owner Delegation Governance, Multi-Agent Federation & Authority Lease Architecture
+export * from './core/delegation/index.js';
+

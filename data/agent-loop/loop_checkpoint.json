@@ -1,0 +1,95 @@
+{
+  "checkpointId": "chk_1788985058098_7000a93c",
+  "timestamp": 1788985058098,
+  "state": "EVALUATING",
+  "objective": {
+    "objectiveId": "obj_1788985058060_8754d242",
+    "title": "Verify System Health",
+    "description": "Ensure host system telemetry is within nominal operating range.",
+    "targetResource": "system",
+    "priority": "HIGH",
+    "status": "PENDING",
+    "createdTimestamp": 1788985058060,
+    "updatedTimestamp": 1788985058060,
+    "metadata": {
+      "scope": "full"
+    }
+  },
+  "session": "session_agent_loop",
+  "iteration": 6,
+  "lastObservation": {
+    "observationId": "obs_1788985058096_83751a6c",
+    "timestamp": 1788985058096,
+    "host": {
+      "platform": "win32",
+      "cores": 28,
+      "freeMemMb": 51739,
+      "totalMemMb": 65415
+    },
+    "process": {
+      "pid": 9028,
+      "memoryRssMb": 75,
+      "uptimeSeconds": 1
+    },
+    "capabilities": {
+      "total": 14,
+      "available": 14,
+      "degraded": 0,
+      "unavailable": 0
+    },
+    "cognitive": {
+      "providerType": "deterministic-fallback",
+      "isAvailable": true,
+      "isFallbackActive": true
+    },
+    "worldAction": {
+      "pendingCount": 0,
+      "isEmergencyStop": false
+    },
+    "supervisor": {
+      "state": "HEALTHY",
+      "isSafeStopActive": false,
+      "activeAnomaliesCount": 0
+    },
+    "activeObjectiveId": "obj_1788985058060_8754d242"
+  },
+  "lastDecision": {
+    "decisionId": "dec_1788985058098_ae2aa5f9",
+    "objectiveId": "obj_1788985058060_8754d242",
+    "actionRequired": true,
+    "rationale": "Conducting routine governed observation for objective \"Verify System Health\".",
+    "proposedCapability": "cap_obs_system",
+    "parameters": {
+      "scope": "full"
+    },
+    "confidence": 0.85,
+    "targetResource": "system"
+  },
+  "lastPlan": {
+    "planId": "lplan_1788985058098_5c8f96a5",
+    "objectiveId": "obj_1788985058060_8754d242",
+    "decisionId": "dec_1788985058098_ae2aa5f9",
+    "steps": [
+      {
+        "stepIndex": 1,
+        "description": "Execute capability cap_obs_system for objective Verify System Health",
+        "capabilityId": "cap_obs_system",
+        "target": "system",
+        "parameters": {
+          "scope": "full"
+        },
+        "isReversible": false
+      }
+    ],
+    "recoveryClass": "AUTO_SAFE",
+    "requiresHumanGate": false,
+    "riskLevel": "OBSERVE",
+    "timeoutMs": 15000,
+    "maxAttempts": 3,
+    "createdTimestamp": 1788985058098
+  },
+  "authorizationState": "NOT_REQUIRED",
+  "verificationState": "PASSED",
+  "recoveryAttempts": 0,
+  "checkpointHash": "21248af230d03d6c118eb0a83d8579fb19c8398de2814864e9e426103a4cb940"
+}

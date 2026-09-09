@@ -1,4 +1,4 @@
-﻿# BOWCON V4.0 — BILINGUAL ARCHITECTURE GUIDE
+# BOWCON V4.0 — BILINGUAL ARCHITECTURE GUIDE
 # Hướng Dẫn Kiến Trúc Song Ngữ
 
 **Package:** `@bow/agent@4.0.0`
@@ -10,10 +10,10 @@
 ## 1. System Overview / Tổng Quan Hệ Thống
 
 **EN:**
-BOWCON V4.0 is a production-grade, provider-independent AI agent runtime for the ShopOfBow ecosystem. It provides structured multi-channel interaction (web, desktop, robot, speech) through a strictly typed 7-stage lifecycle. Every stage is gated, verified, and logged. The agent cannot modify its own governance rules or bypass its own Policy Decision Point.
+BOWCON V4.0 is a personal AI cognitive and autonomous operating runtime for the single Master Owner within the broader BOW personal ecosystem. It provides structured multi-channel interaction (web, desktop, robot, speech) through a strictly typed 7-stage lifecycle. Every stage is gated, verified, and logged. The agent cannot modify its own governance rules or bypass its own Policy Decision Point. ShopOfBow is an independent project within BOW, not the architectural parent of BOWCON.
 
 **VI:**
-BOWCON V4.0 là runtime agent AI cấp sản xuất, độc lập với provider, cho hệ sinh thái ShopOfBow. Nó cung cấp tương tác đa kênh có cấu trúc (web, desktop, robot, giọng nói) thông qua một vòng đời 7 giai đoạn được định kiểu chặt chẽ. Mỗi giai đoạn được kiểm soát, xác minh và ghi lại. Agent không thể sửa đổi các quy tắc quản trị của chính nó hoặc bỏ qua Điểm Quyết Định Chính Sách của chính nó.
+BOWCON V4.0 là runtime điều hành nhận thức và tự chủ AI cá nhân cho một Master Owner duy nhất bên trong hệ sinh thái cá nhân BOW. Nó cung cấp tương tác đa kênh có cấu trúc (web, desktop, robot, giọng nói) thông qua một vòng đời 7 giai đoạn được định kiểu chặt chẽ. Mỗi giai đoạn được kiểm soát, xác minh và ghi lại. Agent không thể sửa đổi các quy tắc quản trị của chính nó hoặc bỏ qua Điểm Quyết Định Chính Sách của chính nó. ShopOfBow là một dự án độc lập trong BOW, không phải cha đẻ kiến trúc của BOWCON.
 
 ---
 

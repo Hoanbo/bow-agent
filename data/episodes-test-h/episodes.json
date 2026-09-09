@@ -1,0 +1,488 @@
+[
+  {
+    "episodeId": "ep_1788978732195_f39ee1",
+    "createdAt": 1788978732195,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "4011f97e76867bfaa2778df217e288f6",
+    "isComplete": true,
+    "completedAt": 1788978732198
+  },
+  {
+    "episodeId": "ep_1788978786836_77d733",
+    "createdAt": 1788978786836,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "d9592098b13eca1ba14f324139461ad9",
+    "isComplete": true,
+    "completedAt": 1788978786839
+  },
+  {
+    "episodeId": "ep_1788978843749_963127",
+    "createdAt": 1788978843749,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "781f299cf1aad03471329f024806df34",
+    "isComplete": true,
+    "completedAt": 1788978843752
+  },
+  {
+    "episodeId": "ep_1788979021902_4ba30e",
+    "createdAt": 1788979021903,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "056281007d1965d9897f2ca30f30ed93",
+    "isComplete": true,
+    "completedAt": 1788979021905
+  },
+  {
+    "episodeId": "ep_1788982085525_9d8e91",
+    "createdAt": 1788982085525,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "8d31db7bae21850a35fea2cc4ebc0fa4",
+    "isComplete": true,
+    "completedAt": 1788982085527
+  },
+  {
+    "episodeId": "ep_1788982103511_1ccf1b",
+    "createdAt": 1788982103511,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "deaff63b17daf4999e7ee657f6aef833",
+    "isComplete": true,
+    "completedAt": 1788982103514
+  },
+  {
+    "episodeId": "ep_1788982253870_91c7f3",
+    "createdAt": 1788982253870,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "d86ecd56c1dfe8d27f23ab5676c048c9",
+    "isComplete": true,
+    "completedAt": 1788982253872
+  },
+  {
+    "episodeId": "ep_1788982461266_2f22fe",
+    "createdAt": 1788982461266,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "fc9baf8dfc9184d1d6c99111c63bfe27",
+    "isComplete": true,
+    "completedAt": 1788982461269
+  },
+  {
+    "episodeId": "ep_1788982472363_ea8eed",
+    "createdAt": 1788982472363,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "680a3497e1a0e86a8f0bce0afa9770c1",
+    "isComplete": true,
+    "completedAt": 1788982472365
+  },
+  {
+    "episodeId": "ep_1788982707822_d67886",
+    "createdAt": 1788982707822,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "7cef87eb69b9dc24e533ff04b4c392a1",
+    "isComplete": true,
+    "completedAt": 1788982707825
+  },
+  {
+    "episodeId": "ep_1788982981110_5e9c0f",
+    "createdAt": 1788982981110,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "ea84f2e1b0b4f448942b5182e88d4582",
+    "isComplete": true,
+    "completedAt": 1788982981112
+  },
+  {
+    "episodeId": "ep_1788983186824_e71fbb",
+    "createdAt": 1788983186824,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "6165ef85f6b536af055190169436bcef",
+    "isComplete": true,
+    "completedAt": 1788983186827
+  },
+  {
+    "episodeId": "ep_1788983191306_0e874c",
+    "createdAt": 1788983191306,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "d379b3ce3677b5ef36a004dace33dd73",
+    "isComplete": true,
+    "completedAt": 1788983191308
+  },
+  {
+    "episodeId": "ep_1788983706787_706e36",
+    "createdAt": 1788983706787,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "8bd196424f1a4b914965289579cfad71",
+    "isComplete": true,
+    "completedAt": 1788983706789
+  },
+  {
+    "episodeId": "ep_1788983909068_785975",
+    "createdAt": 1788983909068,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "f87403309f418aab46990b3a5ede8eab",
+    "isComplete": true,
+    "completedAt": 1788983909071
+  },
+  {
+    "episodeId": "ep_1788984651711_64196d",
+    "createdAt": 1788984651711,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "10f76064dec0bc8c720cbb7a832e16b3",
+    "isComplete": true,
+    "completedAt": 1788984651713
+  },
+  {
+    "episodeId": "ep_1788984879193_1a7c8a",
+    "createdAt": 1788984879193,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "76962a6b98b51ec85e0b864ca8467236",
+    "isComplete": true,
+    "completedAt": 1788984879196
+  },
+  {
+    "episodeId": "ep_1788985076159_f8ce54",
+    "createdAt": 1788985076159,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "88724d78f99ae82a22647867eb8cd23c",
+    "isComplete": true,
+    "completedAt": 1788985076162
+  }
+]

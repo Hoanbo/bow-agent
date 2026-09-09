@@ -22,3 +22,4 @@ export declare class WorldActionExecutor {
     static getGovernedProcessCount(): number;
     static clearAllGovernedProcesses(): void;
 }
+export declare const globalWorldActionExecutor: typeof WorldActionExecutor;

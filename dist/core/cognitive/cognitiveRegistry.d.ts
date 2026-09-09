@@ -31,5 +31,7 @@ export declare class CognitiveRegistry {
      * Health check all registered providers
      */
     checkAllHealth(): Promise<Record<string, CognitiveHealthStatus>>;
+    getActiveProvider(): CognitiveProvider;
     shutdownAll(): Promise<void>;
 }
+export declare const globalCognitiveRegistry: CognitiveRegistry;

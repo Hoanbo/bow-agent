@@ -38,9 +38,21 @@ const suites = [
   'tests/test_v4_agent_real_cognitive_provider.ts',
   'tests/test_v4_agent_real_world_action_runtime.ts',
   'tests/test_v4_agent_real_capability_runtime.ts',
+  'tests/test_v4_agent_supervisory_autonomous_recovery.ts',
+  'tests/test_v4_agent_continuous_operating_loop.ts',
+  'tests/test_v4_agent_executive_task_orchestration.ts',
+  'tests/test_v4_agent_real_executive_orchestrator.ts',
+  'tests/test_v4_agent_master_human_authority.ts',
+  'tests/test_v4_agent_master_owner_cognitive_partnership.ts',
+  'tests/test_v4_agent_proactive_personal_operating_system.ts',
+  'tests/test_v4_agent_master_architecture_identity.ts',
+  'tests/test_v4_agent_world_model_capability_reasoning.ts',
+  'tests/test_v4_agent_cognitive_resilience_episodic_synthesis.ts',
+  'tests/test_v4_agent_durable_resilience_cross_episode_continuity.ts',
+  'tests/test_v4_agent_delegation_federation_governance.ts',
 ];
 
-let grandTotalPassed = 0;
+let reportedAssertionTotal = 0;
 let grandTotalFailed = 0;
 const results = [];
 
@@ -56,16 +68,14 @@ for (const suite of suites) {
       timeout: 120000,
     });
     // Extract passed count if present
-    const passMatches = output.match(/(?:TOTAL ASSERTIONS PASSED|REALITY GATE COMPLETE):\s*(\d+)/i) || output.match(/PASS/g);
-    let count = 1;
-    if (passMatches && passMatches[1]) {
-      count = parseInt(passMatches[1], 10);
-    } else if (passMatches) {
-      count = passMatches.length;
+    const passMatches = output.match(/(?:TOTAL ASSERTIONS PASSED|REALITY GATE COMPLETE|EXECUTIVE REALITY GATE COMPLETE|REALITY GATE SUCCESS:\s*All\s+|REALITY GATE PASSED:\s*|REALITY GATE PASS:\s*)(\d+)/i);
+    let count;
+    if (passMatches && passMatches[1] && Number.isFinite(Number.parseInt(passMatches[1], 10))) {
+      count = Number.parseInt(passMatches[1], 10);
     }
-    grandTotalPassed += count;
+    if (typeof count === 'number') reportedAssertionTotal += count;
     results.push({ suite, status: 'PASS', count });
-    console.log(`PASS (${count} assertions)`);
+    console.log(typeof count === 'number' ? `PASS (${count} reported assertions)` : 'PASS');
   } catch (err) {
     grandTotalFailed++;
     results.push({ suite, status: 'FAIL', error: err.message });
@@ -75,12 +85,12 @@ for (const suite of suites) {
 
 console.log('\n============================================================');
 console.log(`REGRESSION SUMMARY: ${suites.length} suites executed`);
-console.log(`Total Passed Assertions: ${grandTotalPassed}`);
+console.log(`Reported Assertions (only suites with a parseable total): ${reportedAssertionTotal}`);
 console.log(`Total Failed Suites: ${grandTotalFailed}`);
 console.log('============================================================');
 
 for (const r of results) {
-  console.log(`  ${r.status}: ${r.suite} (${r.count || 0})`);
+  console.log(`  ${r.status}: ${r.suite}${typeof r.count === 'number' ? ` (${r.count} reported assertions)` : ''}`);
 }
 
 if (grandTotalFailed > 0) {

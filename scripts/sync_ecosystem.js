@@ -18,8 +18,8 @@ const sourcePkg = fs.existsSync(path.join(currentDir, 'package.json'))
 
 const targets = [];
 for (const root of candidateRoots) {
+  // CRITICAL INVARIANT: Never target C:\BOW\shopofbow (READS=0, WRITES=0, IMPORTS=0, TOUCHES=0)
   targets.push(
-    path.join(root, 'shopofbow', 'node_modules', '@bow', 'agent', 'dist'),
     path.join(root, 'bow-test', 'node_modules', '@bow', 'agent', 'dist'),
     path.join(root, 'bow-mobile', 'node_modules', '@bow', 'agent', 'dist')
   );

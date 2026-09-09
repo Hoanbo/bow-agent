@@ -1,0 +1,578 @@
+[
+  {
+    "episodeId": "ep_1788978843840_a126e8",
+    "createdAt": 1788978843840,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788978843843_06e4bd",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788978843840_c44c46"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "34c5157c73a2ad2d047e4c9f0535a252",
+    "isComplete": true,
+    "completedAt": 1788978843844
+  },
+  {
+    "episodeId": "ep_1788979022003_1d4f70",
+    "createdAt": 1788979022003,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788979022004_efd3ce",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788979022003_aa4fe4"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "d68a91d036154fa2d81acb22703d2ead",
+    "isComplete": true,
+    "completedAt": 1788979022006
+  },
+  {
+    "episodeId": "ep_1788982085625_725174",
+    "createdAt": 1788982085625,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982085627_a43648",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982085625_c36a2d"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "8329eeaa1e772e43f22ca2606385a10c",
+    "isComplete": true,
+    "completedAt": 1788982085628
+  },
+  {
+    "episodeId": "ep_1788982103606_ba102e",
+    "createdAt": 1788982103606,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982103607_7cbe45",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982103605_c4bafe"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "8be7e147d6590df94d1fd70358aa0ab6",
+    "isComplete": true,
+    "completedAt": 1788982103608
+  },
+  {
+    "episodeId": "ep_1788982253966_50daac",
+    "createdAt": 1788982253966,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982253968_f3734c",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982253966_56e6bc"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "d0a2bdf10936de2865a9988981c91204",
+    "isComplete": true,
+    "completedAt": 1788982253969
+  },
+  {
+    "episodeId": "ep_1788982461365_ced0ab",
+    "createdAt": 1788982461365,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982461367_246435",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982461365_c85dc0"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "7e47b4209dbdf6c79b7208d8c9883c35",
+    "isComplete": true,
+    "completedAt": 1788982461368
+  },
+  {
+    "episodeId": "ep_1788982472457_ec8c3c",
+    "createdAt": 1788982472457,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982472458_6e6beb",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982472457_cabc5e"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "986bf79d7ae5fb678e13cf555ef6e903",
+    "isComplete": true,
+    "completedAt": 1788982472459
+  },
+  {
+    "episodeId": "ep_1788982707928_61f501",
+    "createdAt": 1788982707928,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982707930_6a665e",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982707928_cc30ed"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "77c39693d51f009bb88535f4b9c91194",
+    "isComplete": true,
+    "completedAt": 1788982707931
+  },
+  {
+    "episodeId": "ep_1788982981202_27c884",
+    "createdAt": 1788982981202,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788982981204_af088a",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788982981202_3313cb"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "085b9a183a7a2839d2c2a37f81c227ae",
+    "isComplete": true,
+    "completedAt": 1788982981205
+  },
+  {
+    "episodeId": "ep_1788983186913_2c1c55",
+    "createdAt": 1788983186914,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788983186915_1f357d",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788983186913_6972fe"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "d56be41538917f368b67268ec0b0b5b9",
+    "isComplete": true,
+    "completedAt": 1788983186916
+  },
+  {
+    "episodeId": "ep_1788983191399_919582",
+    "createdAt": 1788983191399,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788983191401_763658",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788983191399_bc64b4"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "6e5a38dd7bbb1c14338fa322e86e24c5",
+    "isComplete": true,
+    "completedAt": 1788983191402
+  },
+  {
+    "episodeId": "ep_1788983706881_bb1a16",
+    "createdAt": 1788983706881,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788983706884_e32780",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788983706881_a19889"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "0c6ae17b5360f4657b3851b615e1517f",
+    "isComplete": true,
+    "completedAt": 1788983706885
+  },
+  {
+    "episodeId": "ep_1788983909160_3f5f45",
+    "createdAt": 1788983909160,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788983909162_48336e",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788983909160_a0756f"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "59c5ef10a21d4a3ea85cc3c5de0cbc18",
+    "isComplete": true,
+    "completedAt": 1788983909163
+  },
+  {
+    "episodeId": "ep_1788984651820_e74525",
+    "createdAt": 1788984651820,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788984651822_db6c89",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788984651820_3fdc21"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "2c3cbeb51c68a20d3ee04c685a14b304",
+    "isComplete": true,
+    "completedAt": 1788984651823
+  },
+  {
+    "episodeId": "ep_1788984879288_8fc9d4",
+    "createdAt": 1788984879288,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788984879290_bb20c0",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788984879287_a7bfb1"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "b879407e11e67c15490cfe2d4e438cf0",
+    "isComplete": true,
+    "completedAt": 1788984879291
+  },
+  {
+    "episodeId": "ep_1788985076261_81a1f7",
+    "createdAt": 1788985076261,
+    "ownerId": "master_operator",
+    "projectId": "resilience_e2e",
+    "goalId": "goal_test_z",
+    "triggeringContext": "End-to-end lifecycle test",
+    "relatedObjective": "Verify full detect-recover-verify-learn cycle",
+    "events": [],
+    "observations": [],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Cognitive cycle successfully recovered",
+    "lessons": [
+      {
+        "lessonId": "les_1788985076263_460b05",
+        "lesson": "High memory pressure interrupts cognitive cycles; monitor RAM proactively.",
+        "confidence": 0.85,
+        "isSpeculative": false,
+        "derivedFrom": [
+          "fail_1788985076261_c2d823"
+        ],
+        "appliesTo": [
+          "cognitive_cycle_planning"
+        ]
+      }
+    ],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [],
+    "overallConfidence": 0.92,
+    "phase": "COMPLETED",
+    "integrityHash": "0b9c921ac1a1013db81eae2c1c331000",
+    "isComplete": true,
+    "completedAt": 1788985076264
+  }
+]

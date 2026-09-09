@@ -542,3 +542,4 @@ export class WorldActionExecutor {
         activeGovernedProcesses.clear();
     }
 }
+export const globalWorldActionExecutor = WorldActionExecutor;

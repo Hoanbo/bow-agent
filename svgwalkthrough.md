@@ -816,3 +816,717 @@
 - **Cryptographic Anti-Replay Tokens:** Replay of consumed single-use tokens is rejected with `AUTHORIZATION_REQUIRED`.
 - **Resilience (`FAILURE != BRAIN_DEATH`):** Recoverable capability errors return clean structured reports without terminating the process or crashing the Brain.
 - **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+## 10. REAL BOWCON SUPERVISORY AUTONOMOUS RECOVERY RUNTIME ARCHITECTURE (MS-1.3.35)
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad_sup_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#020617"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="grad_obs" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="grad_diag" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="grad_gate" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9333ea"/>
+      <stop offset="100%" stop-color="#7e22ce"/>
+    </linearGradient>
+    <linearGradient id="grad_verif" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#16a34a"/>
+      <stop offset="100%" stop-color="#15803d"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="920" height="620" rx="16" fill="url(#grad_sup_bg)" stroke="#334155" stroke-width="2"/>
+
+  <!-- Header Section -->
+  <text x="460" y="40" fill="#38bdf8" font-size="18" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">
+    BOWCON V4.0 — SUPERVISORY AUTONOMOUS RECOVERY &amp; HUMAN GOVERNANCE RUNTIME
+  </text>
+  <text x="460" y="65" fill="#94a3b8" font-size="12" text-anchor="middle" font-family="system-ui, sans-serif">
+    Milestone MS-1.3.35 • Continuous Observation • Deterministic Anomaly Detection • Human Gated Recovery
+  </text>
+
+  <!-- Invariants Banner -->
+  <rect x="30" y="80" width="860" height="40" rx="8" fill="#1e1b4b" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="460" y="105" fill="#c7d2fe" font-size="11" font-weight="bold" text-anchor="middle" font-family="system-ui, sans-serif">
+    USER_STOP &gt; AUTONOMOUS_EXECUTION • DETECTION != DIAGNOSIS • CONFIDENCE != AUTHORIZATION • VERIFICATION != COMMIT
+  </text>
+
+  <!-- Observation & Detection Box -->
+  <rect x="40" y="140" width="260" height="220" rx="12" fill="url(#grad_obs)" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="170" y="170" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">1. OBSERVATION &amp; DETECT</text>
+  <text x="170" y="195" fill="#bae6fd" font-size="11" text-anchor="middle">Multi-Domain Observation</text>
+  <text x="170" y="215" fill="#e0f2fe" font-size="10" text-anchor="middle">• Process: PID, Memory, Uptime</text>
+  <text x="170" y="235" fill="#e0f2fe" font-size="10" text-anchor="middle">• Host: CPU Cores, Free RAM</text>
+  <text x="170" y="255" fill="#e0f2fe" font-size="10" text-anchor="middle">• Capability: Degraded/Available</text>
+  <text x="170" y="275" fill="#e0f2fe" font-size="10" text-anchor="middle">• Cognitive: Ollama Availability</text>
+  <text x="170" y="305" fill="#fef08a" font-size="10" font-weight="bold" text-anchor="middle">Deterministic Thresholds</text>
+  <text x="170" y="325" fill="#ffffff" font-size="9" text-anchor="middle">NO FAKE TELEMETRY</text>
+
+  <!-- Diagnosis & Planning Box -->
+  <rect x="330" y="140" width="260" height="220" rx="12" fill="url(#grad_diag)" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="460" y="170" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">2. DIAGNOSE &amp; PLAN</text>
+  <text x="460" y="195" fill="#fef3c7" font-size="11" text-anchor="middle">Causal Evidence Analysis</text>
+  <text x="460" y="215" fill="#fde68a" font-size="10" text-anchor="middle">• Honest: DIAGNOSIS_INCONCLUSIVE</text>
+  <text x="460" y="235" fill="#fde68a" font-size="10" text-anchor="middle">• Mutation-Free Recovery Planning</text>
+  <text x="460" y="255" fill="#fde68a" font-size="10" text-anchor="middle">• 4 Recovery Classes:</text>
+  <text x="460" y="275" fill="#ffffff" font-size="9" text-anchor="middle">AUTO_SAFE | AUTO_REVERSIBLE</text>
+  <text x="460" y="290" fill="#ffffff" font-size="9" text-anchor="middle">HUMAN_REQUIRED | CRITICAL_BLOCKED</text>
+  <text x="460" y="320" fill="#fef08a" font-size="10" font-weight="bold" text-anchor="middle">Bounded Retries (maxAttempts=3)</text>
+  <text x="460" y="340" fill="#ffffff" font-size="9" text-anchor="middle">Escalates after exhaustion</text>
+
+  <!-- Human Gate & Governance Box -->
+  <rect x="620" y="140" width="260" height="220" rx="12" fill="url(#grad_gate)" stroke="#c084fc" stroke-width="1.5"/>
+  <text x="750" y="170" fill="#ffffff" font-size="14" font-weight="bold" text-anchor="middle">3. HUMAN GATE</text>
+  <text x="750" y="195" fill="#f3e8ff" font-size="11" text-anchor="middle">Cryptographic Authorization</text>
+  <text x="750" y="215" fill="#e9d5ff" font-size="10" text-anchor="middle">• WAITING_FOR_HUMAN: 0 Mutation</text>
+  <text x="750" y="235" fill="#e9d5ff" font-size="10" text-anchor="middle">• Single-Use AuthorizationToken</text>
+  <text x="750" y="255" fill="#e9d5ff" font-size="10" text-anchor="middle">• Strict Anti-Replay Guard</text>
+  <text x="750" y="275" fill="#e9d5ff" font-size="10" text-anchor="middle">• Expired Token Rejection</text>
+  <text x="750" y="305" fill="#fef08a" font-size="10" font-weight="bold" text-anchor="middle">SAFE_STOP (Emergency Halt)</text>
+  <text x="750" y="325" fill="#ffffff" font-size="9" text-anchor="middle">Cancels all pending gates instantly</text>
+
+  <!-- Bottom Panel: Execution, Verification & Audit -->
+  <rect x="40" y="390" width="840" height="190" rx="12" fill="url(#grad_verif)" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="460" y="420" fill="#ffffff" font-size="15" font-weight="bold" text-anchor="middle">4. GOVERNED EXECUTION, INDEPENDENT VERIFICATION &amp; AUDIT</text>
+  <text x="460" y="445" fill="#dcfce7" font-size="11" text-anchor="middle">
+    Execution through CapabilityRuntime &amp; WorldActionRuntime • Dry-Run Zero-Mutation Guarantee
+  </text>
+  <text x="460" y="470" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">
+    INDEPENDENT VERIFICATION: Low-level OS stat, PID probe kill(pid, 0), SHA-256 byte comparison
+  </text>
+  <text x="460" y="495" fill="#fef9c3" font-size="11" text-anchor="middle">
+    Append-Only Chained Audit Ledger: 64-character SHA-256 previousHash • Recursive [REDACTED_SECRET] Scrubbing
+  </text>
+  <text x="460" y="525" fill="#fee2e2" font-size="11" font-weight="bold" text-anchor="middle">
+    PROTECTED WORKSPACE C:\BOW\shopofbow — READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+  </text>
+  <text x="460" y="555" fill="#ffffff" font-size="10" text-anchor="middle">
+    Reality Gate (test_v4_agent_supervisory_autonomous_recovery.ts): 40 Categories (A..AN) • 169/169 Assertions PASSED
+  </text>
+</svg>
+```
+
+---
+
+## 11. REALITY STATUS & TEST VERIFICATION EVIDENCE (MS-1.3.35)
+- **Dedicated Supervisory Reality Gate:** `tests/test_v4_agent_supervisory_autonomous_recovery.ts` (**169 / 169 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **37 of 37 test suites PASS**, 0 failures.
+- **Authoritative 16-State Lifecycle:** State transitions verified under normal, failure, escalation, and SAFE_STOP operational scenarios.
+- **USER_STOP Priority Law:** Verified that `safeStop()` unconditionally halts recovery planning, execution, and retries.
+- **Zero-Mutation Dry Runs:** Independently verified that dry-run previews commit zero filesystem or capability state changes.
+- **Append-Only Chained Audit:** All events recorded with 64-char SHA-256 hashes and recursive `[REDACTED_SECRET]` scrubbing.
+- **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+# BOWCON V4.0 — MS-1.3.36 ARCHITECTURAL WALKTHROUGH
+# REAL BOWCON CONTINUOUS AGENT OPERATING LOOP & CONTROLLED AUTONOMY RUNTIME
+
+## 1. MILESTONE OVERVIEW
+- **Milestone:** MS-1.3.36
+- **Name:** Real BOWCON Continuous Agent Operating Loop & Controlled Autonomy Runtime
+- **Package:** `@bow/agent` (Version `4.0.0` STRICTLY LOCKED)
+- **Status:** PASS & LOCKED
+- **Core Principles & Invariants:**
+  - `OBSERVE != ASSUME`
+  - `REASON != DECIDE`
+  - `LLM_PROPOSE != EXECUTE`
+  - `PLAN != AUTHORIZATION`
+  - `CONFIDENCE != AUTHORIZATION`
+  - `INTENT != AUTHORIZATION`
+  - `PREVIEW != EXECUTION`
+  - `AUTHORIZATION != TOOL_EXECUTION`
+  - `TOOL_EXECUTION != VERIFICATION`
+  - `VERIFICATION != COMMIT`
+  - `PREVIOUS_APPROVAL != CURRENT_APPROVAL`
+  - `USER_STOP > AUTONOMOUS_EXECUTION`
+
+---
+
+## 2. CONTINUOUS AGENT OPERATING LOOP ARCHITECTURE (SVG DIAGRAM)
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="loop_bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="grad_observe" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#0369a1"/>
+    </linearGradient>
+    <linearGradient id="grad_reason" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#6d28d9"/>
+    </linearGradient>
+    <linearGradient id="grad_plan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+    <linearGradient id="grad_govern" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dc2626"/>
+      <stop offset="100%" stop-color="#b91c1c"/>
+    </linearGradient>
+    <linearGradient id="grad_exec" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="grad_verify" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="620" fill="url(#loop_bg)" rx="16"/>
+
+  <!-- Title Banner -->
+  <text x="480" y="38" fill="#38bdf8" font-size="20" font-weight="bold" font-family="system-ui, sans-serif" text-anchor="middle">
+    BOWCON V4.0 — MS-1.3.36 CONTINUOUS OPERATING LOOP RUNTIME
+  </text>
+  <text x="480" y="60" fill="#94a3b8" font-size="12" font-family="system-ui, sans-serif" text-anchor="middle">
+    Closed-Loop Autonomy • Mutation-Free Planning • Governance Gates • USER_STOP Supremacy
+  </text>
+
+  <!-- Operator Control Overlay (Supreme USER_STOP) -->
+  <rect x="50" y="80" width="860" height="50" rx="10" fill="#450a0a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="70" y="112" fill="#fecaca" font-size="14" font-weight="bold" font-family="system-ui, sans-serif">
+    OPERATOR CONTROL PLANE:
+  </text>
+  <text x="310" y="112" fill="#ffffff" font-size="12" font-family="system-ui, sans-serif">
+    USER_STOP &gt; AUTONOMOUS_EXECUTION  |  PAUSE / RESUME  |  COOPERATIVE ABORT SIGNAL
+  </text>
+
+  <!-- Stage 1: OBSERVE -->
+  <rect x="50" y="150" width="260" height="100" rx="10" fill="url(#grad_observe)" stroke="#38bdf8" stroke-width="1.5"/>
+  <text x="70" y="180" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">1. REAL OBSERVATION</text>
+  <text x="70" y="202" fill="#e0f2fe" font-size="11" font-family="system-ui, sans-serif">Host CPU Cores, Free/Total RAM</text>
+  <text x="70" y="222" fill="#bae6fd" font-size="11" font-family="system-ui, sans-serif">Process RSS, Uptime, Safe Stop state</text>
+  <text x="70" y="240" fill="#fef08a" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">OBSERVE != ASSUME</text>
+
+  <!-- Stage 2: REASON -->
+  <rect x="350" y="150" width="260" height="100" rx="10" fill="url(#grad_reason)" stroke="#c084fc" stroke-width="1.5"/>
+  <text x="370" y="180" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">2. COGNITIVE REASONING</text>
+  <text x="370" y="202" fill="#f3e8ff" font-size="11" font-family="system-ui, sans-serif">Cognitive Pipeline / Rule Engine</text>
+  <text x="370" y="222" fill="#e9d5ff" font-size="11" font-family="system-ui, sans-serif">Evaluates Objectives vs Reality</text>
+  <text x="370" y="240" fill="#fef08a" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">CONFIDENCE != AUTHORIZATION</text>
+
+  <!-- Stage 3: PLAN -->
+  <rect x="650" y="150" width="260" height="100" rx="10" fill="url(#grad_plan)" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="670" y="180" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">3. MUTATION-FREE PLAN</text>
+  <text x="670" y="202" fill="#ecfdf5" font-size="11" font-family="system-ui, sans-serif">1-Based Executable Step Array</text>
+  <text x="670" y="222" fill="#a7f3d0" font-size="11" font-family="system-ui, sans-serif">Bounded Retries (&lt;= 3), Timeouts</text>
+  <text x="670" y="240" fill="#fef08a" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">PLAN != AUTHORIZATION</text>
+
+  <!-- Stage 4: GOVERN -->
+  <rect x="650" y="280" width="260" height="100" rx="10" fill="url(#grad_govern)" stroke="#f87171" stroke-width="1.5"/>
+  <text x="670" y="310" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">4. GOVERNANCE GATE</text>
+  <text x="670" y="332" fill="#fee2e2" font-size="11" font-family="system-ui, sans-serif">Rejects Shells, eval, rm -rf</text>
+  <text x="670" y="352" fill="#fecaca" font-size="11" font-family="system-ui, sans-serif">Protected Workspace shopofbow Block</text>
+  <text x="670" y="370" fill="#fef08a" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">LLM_PROPOSE != EXECUTE</text>
+
+  <!-- Stage 5: EXECUTE -->
+  <rect x="350" y="280" width="260" height="100" rx="10" fill="url(#grad_exec)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="370" y="310" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">5. GOVERNED EXECUTION</text>
+  <text x="370" y="332" fill="#fffbeb" font-size="11" font-family="system-ui, sans-serif">Dry-Run Preview Execution</text>
+  <text x="370" y="352" fill="#fde68a" font-size="11" font-family="system-ui, sans-serif">Single-Use Token Validation</text>
+  <text x="370" y="370" fill="#fef08a" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">AUTH != TOOL_EXECUTION</text>
+
+  <!-- Stage 6: VERIFY & COMMIT -->
+  <rect x="50" y="280" width="260" height="100" rx="10" fill="url(#grad_verify)" stroke="#2dd4bf" stroke-width="1.5"/>
+  <text x="70" y="310" fill="#ffffff" font-size="15" font-weight="bold" font-family="system-ui, sans-serif">6. INDEPENDENT VERIFY</text>
+  <text x="70" y="332" fill="#ccfbf1" font-size="11" font-family="system-ui, sans-serif">Actual Physical Host Check</text>
+  <text x="70" y="352" fill="#99f6e4" font-size="11" font-family="system-ui, sans-serif">Telemetry &amp; Post-Condition Check</text>
+  <text x="70" y="370" fill="#fef08a" font-size="10" font-weight="bold" font-family="system-ui, sans-serif">VERIFICATION != COMMIT</text>
+
+  <!-- Bottom Panel: Persistence, Recovery, Audit -->
+  <rect x="50" y="410" width="860" height="180" rx="12" fill="#0f172a" stroke="#334155" stroke-width="1.5"/>
+  <text x="480" y="440" fill="#38bdf8" font-size="15" font-weight="bold" font-family="system-ui, sans-serif" text-anchor="middle">
+    RESILIENCE, CONCURRENCY, PERSISTENCE &amp; TAMPER-EVIDENT AUDIT
+  </text>
+  <text x="480" y="468" fill="#cbd5e1" font-size="12" font-family="system-ui, sans-serif" text-anchor="middle">
+    Crash Recovery: Atomic SHA-256 Hashed Checkpointing • Stale Checkpoint Age Thresholding
+  </text>
+  <text x="480" y="492" fill="#cbd5e1" font-size="12" font-family="system-ui, sans-serif" text-anchor="middle">
+    Scheduler: Reentrant Resource Locking • TTL Duplicate Action Idempotency • Multi-Session Isolation
+  </text>
+  <text x="480" y="516" fill="#cbd5e1" font-size="12" font-family="system-ui, sans-serif" text-anchor="middle">
+    Audit Ledger: Cryptographic SHA-256 previousHash Chain • Fail-Closed [REDACTED_SECRET] Scrubbing
+  </text>
+  <text x="480" y="545" fill="#fca5a5" font-size="12" font-weight="bold" font-family="system-ui, sans-serif" text-anchor="middle">
+    PROTECTED WORKSPACE C:\BOW\shopofbow — READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+  </text>
+  <text x="480" y="575" fill="#86efac" font-size="12" font-family="system-ui, sans-serif" text-anchor="middle">
+    Reality Gate (test_v4_agent_continuous_operating_loop.ts): 39 Categories (A..AM) • 213/213 Assertions PASSED
+  </text>
+</svg>
+```
+
+---
+
+## 3. REALITY STATUS & TEST VERIFICATION EVIDENCE (MS-1.3.36)
+
+## 4. EXECUTIVE RUNTIME & LONG-HORIZON FLOW (MS-1.3.37)
+
+```text
+Authorized objective → ExecutiveRuntime → interpretation → task DAG → ready-task scheduler
+  → governance → human authorization when required → Capability/WorldAction runtime
+  → independent verification → task ledger → goal progress → next governed task
+
+USER_STOP / PAUSE / CANCEL have precedence over scheduling, retries, recovery, and queued work.
+Checkpoint restore verifies SHA-256, schema, session/goal ownership, staleness, and DAG validity before rehydration.
+```
+- **Dedicated Continuous Loop Reality Gate:** `tests/test_v4_agent_continuous_operating_loop.ts` (**213 / 213 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **38 of 38 test suites PASS**, 0 failures.
+- **Closed-Loop 8-Stage Architecture:** Observe, State Reconstruct, Reason, Plan, Govern, Authorize, Execute, Verify.
+- **Protected Workspace:** `C:\BOW\shopofbow` remains strictly untouched (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+## 5. MASTER HUMAN AUTHORITY UNIFICATION & EXECUTIVE GOVERNANCE CLOSURE (MS-1.3.38)
+
+```text
+========================================================================================
+             BOWCON V4.0 — MS-1.3.38: MASTER HUMAN AUTHORITY UNIFICATION
+========================================================================================
+
+           [ Master Human Authority ] (MASTER_OPERATOR_ID = 'master_operator')
+                         │
+        ┌────────────────┴────────────────┐
+        ▼                                 ▼
+   [ USER_STOP ]                    [ HumanGate ] (globalSupervisorHumanGate)
+  (Instant Preemption)                    │
+        │                        ┌────────┴────────┐
+        │                        ▼                 ▼
+        │               [ Token Minting ]    [ Subordinated Delegator ]
+        │             (12 Context Attrs)    (ExecutiveAuthorizationDelegator)
+        │             (HMAC-SHA256 Sig)     (0 Independent Token Engines)
+        │                        │                 │
+        │                        └────────┬────────┘
+        ▼                                 ▼
+[ ExecutiveRuntime ] ◄────────────────────┤ (Single-Use Consumed Token)
+        │                                 │
+        ▼                                 ▼
+[ Goal DAG Scheduler ]             [ Capability / WorldAction Runtime ]
+        │                                 │
+        └────────────────┬────────────────┘
+                         ▼
+             [ Independent Verification ] (VERIFICATION != COMMIT)
+                         │
+                         ▼
+             [ Tamper-Evident SHA-256 Audit ] (Secret Redacted)
+
+  INVARIANTS LOCKED:
+  • USER_STOP > HUMAN_AUTHORIZATION > GOVERNANCE > EXECUTIVE_RUNTIME > AUTONOMOUS_EXECUTION
+  • CONFIDENCE != AUTHORIZATION | LLM_PROPOSE != EXECUTE | EXECUTION != VERIFICATION
+  • PROTECTED WORKSPACE C:\BOW\shopofbow: READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+========================================================================================
+```
+
+- **Dedicated Master Authority Reality Gate:** `tests/test_v4_agent_master_human_authority.ts` (**162 / 162 assertions PASS**, 0 failures).
+- **Dedicated Real Executive Reality Gate:** `tests/test_v4_agent_real_executive_orchestrator.ts` (**369 / 369 assertions PASS**, 0 failures).
+- **Executive Task Orchestration Reality Gate:** `tests/test_v4_agent_executive_task_orchestration.ts` (**35 / 35 assertions PASS**, 0 failures).
+- **Full Regression Suite:** **45 of 45 test suites PASS**, 0 failures.
+- **Unified Master Control Root:** Centralized `MasterHumanAuthority` with authorized aliases (`'master_operator'`, `'user_primary'`, `'operator'`, `'boss_user'`).
+- **Cryptographic 12-Attribute Binding:** Tokens bind operator, session, device, goal, task, capability, parameters, parameter hash, target, risk level, issuedAt, expiresAt.
+- **Single-Use Enforced:** Automatic token consumption prevents replay attacks; revocation registry tracks revoked tokens.
+- **Absolute USER_STOP Supremacy:** Instant suspension of planning, scheduling, execution, and recovery; resets strictly require Master Operator identity.
+- **Protected Workspace Absolute Invariant:** `C:\BOW\shopofbow` strictly isolated (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+# BOWCON V4.0 — MS-1.3.39 ARCHITECTURAL WALKTHROUGH
+# MASTER OWNER COGNITIVE PARTNERSHIP & PERSISTENT PERSONAL INTELLIGENCE RUNTIME
+
+## 1. MILESTONE OVERVIEW
+- **Milestone:** MS-1.3.39
+- **Name:** Master Owner Cognitive Partnership & Persistent Personal Intelligence Runtime
+- **Package:** `@bow/agent` (Version `4.0.0` STRICTLY LOCKED)
+- **Status:** **VERIFIED & LOCKED** (42 / 42 regression suites PASS, 151 / 151 dedicated reality gate assertions PASS)
+
+## 2. ARCHITECTURAL MODEL
+
+```text
+========================================================================================
+       BOWCON V4.0 — MS-1.3.39: MASTER OWNER COGNITIVE PARTNERSHIP RUNTIME
+========================================================================================
+
+                                  MASTER OWNER
+                                       │
+                                       ▼
+                             MASTER HUMAN AUTHORITY
+                                       │
+                      ┌────────────────┴────────────────┐
+                      ▼                                 ▼
+               BOWCON COGNITION                     USER_STOP
+                      │                        (Universal Dominance)
+                      ├── OBSERVE
+                      ├── REMEMBER
+                      ├── UNDERSTAND
+                      ├── ANALYZE
+                      ├── CHALLENGE ◄── (14 Dimensions Evaluated)
+                      ├── RECOMMEND
+                      └── PLAN
+                              │
+                              ▼
+                      EXECUTIVE RUNTIME
+                              │
+                              ▼
+                     CONTINUOUS AGENT LOOP
+                              │
+                              ▼
+                      SUPERVISOR RUNTIME
+                              │
+                              ▼
+                       GOVERNANCE GATE
+                              │
+                              ▼
+                        AUTHORIZATION (Canonical HumanGate / WorldActionAuth)
+                              │
+                              ▼
+                      CAPABILITY RUNTIME
+                              │
+                              ▼
+                          REAL WORLD
+                              │
+                              ▼
+                      INDEPENDENT VERIFY
+                              │
+                              ▼
+                            LEARN (OutcomeLearningEngine)
+                              │
+                              └───────────────► BOWCON COGNITION
+                                              (Updates Memory & World Model)
+
+   INVARIANTS LOCKED:
+   • MASTER_OWNER_AUTHORITY > BOWCON_REASONING > BOWCON_AUTONOMY
+   • CHALLENGE != AUTHORITY | RECOMMENDATION != EXECUTION
+   • LEARNING != AUTHORIZATION | OWNER OVERRIDE != BOWCON FAILURE
+   • BOWCON_OPINION != AUTHORITY | BOWCON_CONFIDENCE != AUTHORITY
+   • INFERENCE != CONFIRMED MEMORY | PROVENANCE OVERWRITE REJECTION
+   • PROTECTED WORKSPACE C:\BOW\shopofbow: READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+========================================================================================
+```
+
+## 3. KEY HIGHLIGHTS & VERIFICATION EVIDENCE
+- **Dedicated Cognitive Partnership Reality Gate:** `tests/test_v4_agent_master_owner_cognitive_partnership.ts` (**151 / 151 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **42 of 42 test suites PASS**, 0 failures.
+- **14-Dimension Cognitive Challenge:** Evaluates factual correctness, consistency, assumptions, contradictions, feasibility, security, risk, resources, history, side effects, opportunity cost, reversibility, dependencies, and evidence quality.
+- **Epistemic Classification:** Rigidly separates `FACT`, `OBSERVATION`, `INFERENCE`, `ASSUMPTION`, `HYPOTHESIS`, `RECOMMENDATION`, `UNCERTAINTY`, and `OWNER_DECISION`.
+- **Memory Provenance Hierarchy:** Strict `OWNER_EXPLICIT > EXECUTION_VERIFIED > SYSTEM_OBSERVED > DERIVED > INFERRED > IMPORTED`. Lower provenance cannot overwrite higher provenance.
+- **Contradiction Detection & Surfacing:** Actively catches telemetry vs memory, observation vs assumption, outcome vs expectation, and statement vs fact without silent suppression.
+- **Durable Knowledge Graph & Operating Model:** Reconstructs compact current world model surviving restarts with SHA-256 disk tamper-detection.
+- **Owner Override Semantics:** Master Owner overrides recommendations, never immutable safety blocks (`C:\BOW\shopofbow`, system directories); records immutable audit entries.
+- **Protected Workspace Isolation:** `C:\BOW\shopofbow` strictly isolated (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+- **Subordination Preserved:** Single canonical HumanGate, single WorldActionAuthorization, single Master Human Authority. Zero duplicate token engines.
+
+---
+
+# BOWCON V4.0 — MS-1.3.40 ARCHITECTURAL WALKTHROUGH
+# MASTER OWNER PERSONAL OPERATING SYSTEM & PROACTIVE COGNITIVE AGENCY RUNTIME
+
+## 1. MILESTONE OVERVIEW
+- **Milestone:** MS-1.3.40
+- **Name:** Master Owner Personal Operating System & Proactive Cognitive Agency Runtime
+- **Package:** `@bow/agent` (Version `4.0.0` STRICTLY LOCKED)
+- **Status:** **VERIFIED & LOCKED** (43 / 43 regression suites PASS, 102 / 102 dedicated reality gate assertions PASS)
+
+## 2. ARCHITECTURAL MODEL
+
+```text
+========================================================================================
+     BOWCON V4.0 — MS-1.3.40: MASTER OWNER PERSONAL OPERATING SYSTEM RUNTIME
+========================================================================================
+
+                                  MASTER OWNER
+                                       │
+                                       ▼
+                             MASTER HUMAN AUTHORITY
+                                       │
+                      ┌────────────────┴────────────────┐
+                      ▼                                 ▼
+         PROACTIVE COGNITIVE AGENCY                 USER_STOP
+                      │                        (Universal Dominance)
+                      ├─ 1. OBSERVE (Real Host Telemetry)
+                      ├─ 2. RECONSTRUCT PERSONAL STATE (PersonalOperatingModel)
+                      ├─ 3. RECALL RELEVANT MEMORY (9-Vector Recall)
+                      ├─ 4. UNDERSTAND OWNER INTENT (Conversation State)
+                      ├─ 5. ANALYZE (PersonalPatternEngine)
+                      ├─ 6. CHALLENGE 2.0 (14-Vector Challenge)
+                      ├─ 7. GENERATE RECOMMENDATIONS (Class A..D)
+                      ├─ 8. UPDATE EXECUTIVE PLAN (GoalIntelligenceEngine)
+                      ├─ 9. GOVERN (Pre-execution Policy Gate)
+                      ├─ 10. REQUEST AUTHORIZATION (HumanGate for Class C/D)
+                      ├─ 11. EXECUTE AUTHORIZED ACTION (CapabilityRuntime)
+                      ├─ 12. VERIFY (Independent Outcome Verifier)
+                      ├─ 13. EVALUATE (Expected vs Actual Outcome)
+                      ├─ 14. LEARN (OutcomeLearningEngine)
+                      ├─ 15. UPDATE MEMORY (PersonalMemoryStore)
+                      ├─ 16. UPDATE PERSONAL OPERATING MODEL (OperatingModelManager)
+                      │
+                      └────────────────────────────► (Repeat Bounded Loop)
+
+   INVARIANTS LOCKED:
+   • MASTER_OWNER_AUTHORITY > BOWCON_INTELLIGENCE > BOWCON_AUTONOMY
+   • ACTION CLASSES: Class A (Auto-Safe) | Class B (Reversible Internal) | Class C (Owner Choice) | Class D (Token)
+   • CHALLENGE != AUTHORITY | RECOMMENDATION != EXECUTION | LEARNING != AUTHORIZATION
+   • BRIEFING TRUTH: KNOWN | LIKELY | UNKNOWN | CONTRADICTED | REQUIRES_CONFIRMATION
+   • ZERO SIMULATED TELEMETRY: Real Host Metrics Only (or UNKNOWN)
+   • PROTECTED WORKSPACE C:\BOW\shopofbow: READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+========================================================================================
+```
+
+## 3. KEY HIGHLIGHTS & VERIFICATION EVIDENCE
+- **Dedicated Personal OS Reality Gate:** `tests/test_v4_agent_proactive_personal_operating_system.ts` (**102 / 102 assertions PASS**, 0 failures).
+- **Full Regression Test Suite:** **43 of 43 test suites PASS**, 0 failures.
+- **Proactive Action Classification:** Action Classes A, B, C, D strictly enforced; Class C/D require Owner decision or single-use cryptographic token.
+- **Executive Owner Briefing Engine:** Accurately answers 10 core operational questions with epistemic truth tracking (`KNOWN`, `LIKELY`, `UNKNOWN`, `CONTRADICTED`, `REQUIRES_OWNER_CONFIRMATION`).
+- **Decision History Intelligence:** Answers "Why did we choose this?", "What did BOWCON recommend?", "What did the Owner decide?", "What happened afterward?".
+- **Evidence-Backed Pattern Detection:** Discovers repeated bottlenecks, failures, and reversals requiring threshold observations; no speculation.
+- **Cognitive Challenge 2.0:** Evaluates 14 dimensions; generates counterarguments, alternative plans, and confidence bounds.
+- **Real Host Telemetry:** Samples live CPU, RAM, and process memory from Node/OS APIs; marks unmeasurable metrics as `UNKNOWN`.
+- **Structured Conversation State:** Tracks topic, active project/goal/task, open questions, unresolved problems, and Owner intent.
+- **Continuous 16-Stage Cognitive Loop:** Bounded, governed proactive cycle with instant `USER_STOP` preemption.
+- **Protected Workspace Isolation:** `C:\BOW\shopofbow` strictly isolated (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+# BOWCON V4.0 — MS-1.3.41 ARCHITECTURAL WALKTHROUGH
+# MASTER ARCHITECTURE IDENTITY, HOST ABSTRACTION & CAPABILITY-AWARE CORE
+
+## 1. CANONICAL ECOSYSTEM TOPOLOGY
+
+```text
+========================================================================================
+     BOWCON V4.0 — MS-1.3.41: MASTER ARCHITECTURE IDENTITY & HOST ABSTRACTION
+========================================================================================
+
+                                  MASTER OWNER
+                                       │
+                                       ▼
+                                   BOW ECOSYSTEM
+                                       │
+                        ┌──────────────┴──────────────┐
+                        ▼                             ▼
+                  BOWCON RUNTIME                   PROJECTS
+                        │                             │
+          ┌─────────────┴─────────────┐         ├── ShopOfBow (Independent Project)
+          │                           │         ├── Future Projects
+          ▼                           ▼         └── Future Devices / Applications
+    HOST ABSTRACTION          PERSONAL COGNITION
+          │                           │
+    ├── Operating System        ├── Personal Memory
+    ├── Architecture            ├── Knowledge Graph
+    ├── Kernel / Runtime        ├── Decision Support
+    ├── CPU / Memory / Storage  ├── Executive Runtime
+    ├── Network / Processes     ├── Continuous Loop
+    └── Discovered Capabilities ├── Supervisor Runtime
+                │               └── Governance
+                ▼
+        CAPABILITY-AWARE
+       PLANNING & REASONING
+                │
+                ├── PLAN_POSSIBLE
+                ├── PLAN_CONDITIONALLY_POSSIBLE
+                ├── PLAN_BLOCKED
+                └── PLAN_UNKNOWN
+
+   INVARIANTS LOCKED:
+   • MASTER_OWNER > BOW > BOWCON > PROJECTS
+   • BOWCON != BOW | BOWCON != MASTER_OWNER | BOWCON != SHOPofBOW
+   • ShopOfBow is an independent project, NOT the architectural parent of BOWCON.
+   • BOWCON Core initializes with ZERO dependency on ShopOfBow.
+   • HOST_EXISTS != CAPABILITY_EXISTS | CAPABILITY_EXISTS != AUTHORIZED
+   • NO HARDCODED OS: Windows 11 is an optional host, not a universal requirement.
+   • ZERO FABRICATED METRICS: Unmeasurable values evaluate to UNKNOWN.
+   • PROTECTED WORKSPACE C:\BOW\shopofbow: READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+========================================================================================
+```
+
+## 2. KEY HIGHLIGHTS & VERIFICATION EVIDENCE (MS-1.3.41)
+- **Dedicated Architecture Reality Gate:** `tests/test_v4_agent_master_architecture_identity.ts` (Categories A..AB PASS).
+- **Canonical Architecture Hierarchy:** `MASTER_OWNER > BOW > BOWCON > PROJECTS` verified; strict rank checks enforced.
+- **ShopOfBow Decoupling:** Core initializes and operates with 0 ShopOfBow imports or dependencies; ShopOfBow classified as project, not parent.
+- **Dynamic Host Discovery:** Dynamic OS, architecture, CPU, memory, storage, and process queries without hardcoding Windows 11.
+- **Capability Discovery Bridge:** Distinguishes available, restricted, degraded, and unavailable capabilities; evaluates plans into `PLAN_POSSIBLE`, `PLAN_CONDITIONALLY_POSSIBLE`, or `PLAN_BLOCKED`.
+- **Zero Duplicate Runtimes:** Direct reuse of `CapabilityRuntime`, `ExecutiveRuntime`, `ContinuousAgentLoop`, `SupervisorRuntime`, and `WorldActionAuthorization`.
+- **Protected Workspace Isolation:** `C:\BOW\shopofbow` strictly isolated (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+# BOWCON V4.0 — MS-1.3.42: MASTER OWNER WORLD MODEL & CAPABILITY-GROUNDED REASONING RUNTIME
+
+## 1. WORLD MODEL & EPISTEMIC REASONING TOPOLOGY
+
+```text
+========================================================================================
+             BOWCON V4.0 — MS-1.3.42 WORLD MODEL & CAPABILITY-GROUNDED RUNTIME
+========================================================================================
+
+                                    MASTER OWNER
+                                         │
+                                         ▼
+                                   BOW ECOSYSTEM
+                                         │
+                                         ▼
+                                   BOWCON RUNTIME
+                                         │
+           ┌─────────────────────────────┼─────────────────────────────┐
+           ▼                             ▼                             ▼
+    12-FACET SELF-MODEL        DURABLE WORLD MODEL          CAPABILITY GROUNDING
+           │                             │                             │
+    ├── whatIKnow (Facts)         ├── Personal Context          ├── HOST EXISTS
+    ├── whatIObserved             ├── Projects (ShopOfBow)      ├── CAPABILITY DISCOVERED
+    ├── whatIInferred             ├── Active Objectives         ├── CAPABILITY AVAILABLE
+    ├── whatIRemember             ├── Constraints & Resources   ├── GOVERNED PERMITTED
+    ├── whatIExpect               ├── Discovered Capabilities   ├── AUTHORIZED (TOKEN)
+    ├── whatIAssume               ├── Host Environment (Real)  ├── EXECUTED
+    ├── whatIDoNotKnow            ├── Work in Progress          └── VERIFIED OUTCOME
+    ├── whatICannotMeasure        ├── Blockers & Risks                 │
+    ├── whatICannotExecute        ├── Non-Destructive Conflicts        ▼
+    ├── whatIAmNotAuthorized      └── Recent Verified Outcomes    FEASIBILITY CLASSIFIER
+    ├── whatIHaveVerified                │                             │
+    └── whatIHaveNotVerified             ▼                             ├── PLAN_POSSIBLE
+           │                    INFORMATION GAP ENGINE                 ├── PLAN_CONDITIONALLY_POSSIBLE
+           ▼                             │                             ├── PLAN_BLOCKED
+    EPISTEMIC PROVENANCE          ├── UNKNOWN != FALSE                 └── PLAN_UNKNOWN
+    • DIRECT_OBSERVATION          └── NOT_AVAILABLE != NOT_AUTHORIZED
+    • HOST_TELEMETRY                     │
+    • VERIFIED_EXECUTION                 ▼
+    • VERIFIED_OUTCOME          SELF-CORRECTION ENGINE
+    • OWNER_CONFIRMED           • Precedence: Host Telemetry > Execution > Owner > Memory > Inference
+    • INFERENCE (Non-Fact)      • Immutable Historical Record: Never rewrites mistakes
+    • ASSUMPTION (Non-Fact)
+    • UNKNOWN / CONTRADICTED
+
+    INVARIANTS LOCKED:
+    • MASTER_OWNER_AUTHORITY > BOW > BOWCON > PROJECTS
+    • OWNER_DECISION > BOWCON_RECOMMENDATION | USER_STOP > EVERYTHING_AUTONOMOUS
+    • CHALLENGE != AUTHORITY | RECOMMENDATION != EXECUTION
+    • PREDICTION != FACT | INFERENCE != FACT | MEMORY != TRUTH
+    • FORBIDDEN PROMOTION: INFERENCE / ASSUMPTION / MEMORY cannot be promoted to FACT without evidence.
+    • C:\BOW\shopofbow: READS = 0 | WRITES = 0 | IMPORTS = 0 | TOUCHES = 0
+========================================================================================
+```
+
+## 2. KEY HIGHLIGHTS & VERIFICATION EVIDENCE (MS-1.3.42)
+- **Dedicated Reality Gate:** `tests/test_v4_agent_world_model_capability_reasoning.ts` (36 Categories A..AJ PASS, 81 assertions).
+- **12-Facet Self-Awareness Engine:** Rigorously separates verified facts from inferences, assumptions, expectations, unmeasured metrics, and unauthorized capabilities.
+- **Epistemic Provenance Hierarchy:** Strict runtime invariants prevent elevation of provisional beliefs to factual truth.
+- **Durable Master Owner World Model:** Reconstructable after restart with cryptographic SHA-256 snapshot integrity.
+- **Temporal Staleness Detection:** Actively detects outdated observations and triggers re-discovery.
+- **7-Stage Capability Chain:** Discovered -> Available -> Governed -> Authorized -> Executed -> Verified.
+- **4-Tier Plan Feasibility:** Evaluates plans into `PLAN_POSSIBLE`, `PLAN_CONDITIONALLY_POSSIBLE`, `PLAN_BLOCKED`, or `PLAN_UNKNOWN` with transparent causal reasoning.
+- **Information Gap Engine:** Distinguishes `UNKNOWN != FALSE` and `NOT_AVAILABLE != NOT_AUTHORIZED`.
+- **Non-Destructive Contradiction Engine:** Unresolved conflicts retain both competing claims in state `CONTRADICTED`.
+- **Provenance-Backed Self-Correction:** Honors the evidence precedence hierarchy without erasing past error history.
+- **Protected Workspace Isolation:** `C:\BOW\shopofbow` strictly isolated (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+
+---
+
+# BOWCON V4.0 — MS-1.3.44 ARCHITECTURAL WALKTHROUGH
+# MASTER OWNER DURABLE RESILIENCE, CROSS-EPISODE LEARNING & LONG-HORIZON CONTINUITY
+
+## 1. ARCHITECTURAL TOPOLOGY & SUBSYSTEM MATRIX
+
+```text
+========================================================================================
+             BOWCON V4.0 — MS-1.3.44 ARCHITECTURAL TOPOLOGY
+========================================================================================
+
+                 MASTER_OWNER_AUTHORITY (Supreme Authority)
+                            │
+                            ▼
+                          BOW
+                            │
+                            ▼
+                          BOWCON
+                            │
+   ┌────────────────────────┼────────────────────────┐
+   ▼                        ▼                        ▼
+DURABLE RESILIENCE    CROSS-EPISODE           LONG-HORIZON GOAL
+STATE STORE           PATTERN MINING          CONTINUITY ENGINE
+(Restart-Safe,        (Threshold >= 2 eps,   (Session & Restart
+ Fail-Closed SHA-256)  Epistemic Tagging)     Persistent Goals)
+   │                        │                        │
+   │  ┌─────────────────────┘                        │
+   ▼  ▼                                              ▼
+RECOVERY LESSON FEDERATION            OWNER SEMANTIC SUPREMACY
+   │                                  (Only Master Owner Can
+   ▼                                   Abandon / Reprioritize)
+WORLD MODEL ADVISORY LAYER
+(LEARNED_ADVISORY != WORLD_FACT; Never Executes Directly)
+
+========================================================================================
+```
+
+## 2. KEY HIGHLIGHTS & VERIFICATION EVIDENCE (MS-1.3.44)
+- **Dedicated Reality Gate:** `tests/test_v4_agent_durable_resilience_cross_episode_continuity.ts` (101 assertions across Categories A..AI, 0 failures).
+- **Full Regression Suite:** 47 / 47 suites passing cleanly with exit code 0.
+- **Durable Resilience State Store:** Restart-safe persistence for recovery proposals, failure classifications, and health state with deterministic SHA-256 integrity hash.
+- **Cross-Episode Pattern Mining:** Detects recurring failure, interruption, and stall patterns across episodes. Requires $\ge 2$ observations; distinguishes `OBSERVED_PATTERN` from `INFERENCE` and `OWNER_CONFIRMED_PATTERN`.
+- **Recovery Lesson Federation:** Bridge into World Model advisory layer. Advisory records NEVER overwrite authoritative facts and cannot authorize execution.
+- **Long-Horizon Goal Continuity:** Tracks active, stalled, blocked, and interrupted goals across restarts. Inactivity $\neq$ abandonment; only Master Owner decides terminal intent.
+- **Audit Ledger Integrity Reconciled:** Cryptographic chain restored (lines 1..705); 2,975 orphaned historical collisions quarantined cleanly to `data/audit_ledger_corrupted_quarantine.jsonl`.
+- **TS5033 File-Lock Eradicated:** Clean build verified (`tsc -b && node scripts/sync_ecosystem.js`).
+- **Protected Workspace Invariant:** `C:\BOW\shopofbow` strictly preserved (`READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0`).
+- **Permanent Development Rule:** `NO REPORT BEFORE FINAL TERMINAL RECHECK.`
+
+---
+
+# BOWCON V4.0 — MS-1.3.45 ARCHITECTURAL WALKTHROUGH
+# MASTER OWNER DELEGATION GOVERNANCE, MULTI-AGENT FEDERATION & AUTHORITY LEASE ARCHITECTURE
+
+## 1. ARCHITECTURAL TOPOLOGY & DELEGATION HIERARCHY
+
+```text
+========================================================================================
+             BOWCON V4.0 — MS-1.3.45 DELEGATION GOVERNANCE TOPOLOGY
+========================================================================================
+
+                 MASTER_OWNER_AUTHORITY (Root of All Authority)
+                            │
+                            ▼
+                          BOW
+                            │
+                            ▼
+                          BOWCON
+                            │
+   ┌────────────────────────┼────────────────────────┐
+   ▼                        ▼                        ▼
+AGENT IDENTITY       DELEGATION RUNTIME       FEDERATED DEVICE
+MANAGEMENT           (Scope Validator,        REGISTRY
+(AGENT != OWNER,      Replay Protection,      (DEVICE != OWNER,
+ Session Isolated)    Audit Integration)       Device Trust != Auth)
+                            │
+            ┌───────────────┴───────────────┐
+            ▼                               ▼
+     CAPABILITY LEASES              CHILD DELEGATIONS
+     (Time-Bounded, Scoped,         (CHILD <= PARENT,
+      REVOCATION > AGENT)            Depth Bounded, Fail-Closed)
+
+========================================================================================
+```
+
+## 2. KEY HIGHLIGHTS & VERIFICATION EVIDENCE (MS-1.3.45)
+- **Dedicated Reality Gate:** `tests/test_v4_agent_delegation_federation_governance.ts` (69 assertions across Categories A..AH, 0 failures).
+- **Full Regression Suite:** 48 / 48 suites passing cleanly with exit code 0.
+- **Strict Scope Containment:** `DELEGATED_AUTHORITY <= OWNER_GRANTED_SCOPE` and `CHILD <= PARENT` enforced at runtime.
+- **Immediate Revocation:** `REVOCATION > AGENT_INTENT` cascades to all child delegations and active capability leases in-memory without process restart.
+- **USER_STOP Supremacy:** Halts all delegation requests, activations, sub-delegations, and lease issuances immediately.
+- **Protected Workspace Invariant:** Direct, delegated, and child-delegated attempts to access `C:\BOW\shopofbow` throw `SECURITY_VIOLATION`.
+- **Durable Persistence:** SHA-256 integrity hash verification; corrupted state fails closed; expired delegations never revive.
+- **Permanent Development Rule:** `NO REPORT BEFORE FINAL TERMINAL RECHECK.`

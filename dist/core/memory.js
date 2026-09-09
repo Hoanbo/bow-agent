@@ -44,7 +44,7 @@ export class MemoryStore {
             const s = (scope.sessionId || '').trim();
             return `${u}::${s}`;
         }
-        const s = (scope || '').trim();
+        const s = (typeof scope === 'string' ? scope : '').trim();
         if (userId && userId.trim()) {
             return `${userId.trim()}::${s}`;
         }

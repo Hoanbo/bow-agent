@@ -8,9 +8,15 @@ export interface AuthorizationToken {
     readonly tokenId: string;
     readonly actionId: string;
     readonly userId: string;
+    readonly operatorId: string;
+    readonly sessionId?: string;
+    readonly goalId?: string;
+    readonly taskId?: string;
     readonly deviceId: string;
     readonly toolId: string;
+    readonly capability: string;
     readonly target: string;
+    readonly parameters?: Record<string, any>;
     readonly parametersHash: string;
     readonly riskLevel: ActionRiskLevel;
     readonly issuedAt: number;

@@ -59,6 +59,10 @@ export class CapabilityRuntime {
     globalCapabilityAudit.record('SAFE_STOP_TRIGGERED', 'SYSTEM_GLOBAL', { reason });
   }
 
+  public triggerEmergencyStop(reason: string): void {
+    this.activateEmergencyStop(reason);
+  }
+
   public resetEmergencyStop(operatorToken: string): void {
     if (!operatorToken || typeof operatorToken !== 'string') {
       throw new CapabilityError('AUTHORIZATION_REQUIRED', 'Valid operator token required to reset emergency stop.');
@@ -148,8 +152,10 @@ export class CapabilityRuntime {
         actionType: descriptor.capabilityId,
         target: request.target || '',
         parameters: request.parameters || {},
-        userId: request.userId || 'user_primary',
-        deviceId: request.deviceId || 'dev_host_master',
+        userId: request.userId || request.authorizationToken.userId || 'user_primary',
+        deviceId: request.deviceId || request.authorizationToken.deviceId || 'dev_host_master',
+        sessionId: request.sessionId || request.authorizationToken.sessionId,
+        riskLevel: (request.authorizationToken.riskLevel as any) || (descriptor.riskLevel as any),
       });
 
       const tokenValidation = globalWorldActionAuth.validateToken(request.authorizationToken, dummyAction);

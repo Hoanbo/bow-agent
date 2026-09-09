@@ -8,9 +8,16 @@ export class AuditLedger {
     auditLog = [];
     lastHash = '0000000000000000000000000000000000000000000000000000000000000000';
     filePath;
+    _corruptionStatus = { hasCorruption: false, errors: [] };
     constructor(filePath) {
         this.filePath = filePath;
         this.loadAndVerifyFromDisk();
+    }
+    getCorruptionStatus() {
+        return {
+            hasCorruption: this._corruptionStatus.hasCorruption,
+            errors: [...this._corruptionStatus.errors],
+        };
     }
     loadAndVerifyFromDisk() {
         if (!this.filePath || !fs.existsSync(this.filePath))
@@ -22,13 +29,19 @@ export class AuditLedger {
             for (const line of lines) {
                 const event = JSON.parse(line);
                 if (event.previousHash !== currentHash) {
-                    console.error(`[AUDIT_CORRUPTION] Invalid previousHash chain at event ${event.eventId}`);
+                    const errMsg = `Invalid previousHash chain at event ${event.eventId} (expected ${currentHash}, got ${event.previousHash})`;
+                    this._corruptionStatus.hasCorruption = true;
+                    this._corruptionStatus.errors.push(errMsg);
+                    console.error(`[AUDIT_CORRUPTION_ERROR] ${errMsg}`);
                     break;
                 }
                 const rawForHash = `${event.previousHash}|${event.eventId}|${event.timestamp}|${event.toolName}|${event.policyDecision}`;
                 const expectedSig = crypto.createHash('sha256').update(rawForHash).digest('hex');
                 if (event.signature !== expectedSig) {
-                    console.error(`[AUDIT_CORRUPTION] Signature mismatch at event ${event.eventId}`);
+                    const errMsg = `Signature mismatch at event ${event.eventId}`;
+                    this._corruptionStatus.hasCorruption = true;
+                    this._corruptionStatus.errors.push(errMsg);
+                    console.error(`[AUDIT_CORRUPTION_ERROR] ${errMsg}`);
                     break;
                 }
                 currentHash = event.signature;
@@ -37,7 +50,9 @@ export class AuditLedger {
             this.lastHash = currentHash;
         }
         catch (err) {
-            console.warn(`[AuditLedger] Error reading audit file:`, err);
+            this._corruptionStatus.hasCorruption = true;
+            this._corruptionStatus.errors.push(`Error reading audit file: ${err.message}`);
+            console.warn(`[AUDIT_WARNING] Error reading audit file:`, err);
         }
     }
     /**

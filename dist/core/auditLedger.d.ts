@@ -22,7 +22,12 @@ export declare class AuditLedger {
     private auditLog;
     private lastHash;
     private filePath?;
+    private _corruptionStatus;
     constructor(filePath?: string);
+    getCorruptionStatus(): {
+        hasCorruption: boolean;
+        errors: string[];
+    };
     private loadAndVerifyFromDisk;
     /**
      * Append an immutable audit event to the cryptographically linked chain

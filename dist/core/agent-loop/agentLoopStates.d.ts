@@ -1,0 +1,10 @@
+import type { AgentLoopState } from './agentLoopTypes.js';
+export declare function isLoopTerminalState(state: AgentLoopState): boolean;
+export declare function isLoopExecutionState(state: AgentLoopState): boolean;
+export declare function isLoopWaitingForHuman(state: AgentLoopState): boolean;
+export declare function isLoopStopped(state: AgentLoopState): boolean;
+export declare function isLoopPaused(state: AgentLoopState): boolean;
+export declare function isLoopRecovering(state: AgentLoopState): boolean;
+export declare function isLoopOperationalState(state: AgentLoopState): boolean;
+export declare const isLoopExecution: typeof isLoopExecutionState;
+export declare const isLoopWaiting: typeof isLoopWaitingForHuman;

@@ -1,13 +1,21 @@
-﻿# BOW Agent — BOWCON V4.0
+# BOW Agent — BOWCON V4.0
 
 ## English
 
-BOWCON V4.0 is a production-grade, provider-independent AI agent runtime for the ShopOfBow ecosystem. It provides structured multi-channel interaction (web, desktop, robot, speech) through a strictly typed 7-stage lifecycle with governance, memory isolation, voice synthesis, and conversation context.
+BOWCON V4.0 is a personal AI cognitive and autonomous operating runtime created to serve its single Master Owner.
+BOWCON belongs to the broader BOW personal ecosystem.
+ShopOfBow is one independent project within BOW and is not the architectural parent of BOWCON.
+BOWCON is designed around runtime host observation and capability discovery rather than assuming a specific operating system.
 
-**Current status:** `@bow/agent@4.0.0` — 404/404 regression tests PASS.
+**Current status:** `@bow/agent@4.0.0` — MS-1.3.43 (Master Owner Cognitive Resilience, Adaptive Host Orchestration & Self-Reflective Episodic Synthesis) — All 46 regression test suites PASS, 128 reality gate assertions PASS, 0 failures.
 
 ### Architecture Quick Reference
 
+- **Master Owner World Model & Capability Reasoning (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_WORLD_MODEL_REASONING_MODEL_EN_VI.md`
+- **Master Architecture Identity Model (EN/VI):** `docs/BOWCON_V4_MASTER_ARCHITECTURE_IDENTITY_EN_VI.md`
+- **Master Owner Personal Operating System Model (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_PERSONAL_OPERATING_SYSTEM_MODEL_EN_VI.md`
+- **Master Owner Cognitive Partnership Model (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_COGNITIVE_PARTNERSHIP_MODEL_EN_VI.md`
+- **Master Human Authority Model (EN/VI):** `docs/BOWCON_V4_MASTER_HUMAN_AUTHORITY_EXECUTIVE_GOVERNANCE_MODEL_EN_VI.md`
 - **Architecture Contract:** `docs/BOWCON_V4_ARCHITECTURE.md`
 - **Bilingual Architecture Guide:** `docs/BOWCON_V4_BILINGUAL_ARCHITECTURE.md`
 - **Architecture Flow Diagrams:** `docs/BOWCON_V4_ARCHITECTURE_FLOW.md`
@@ -20,9 +28,12 @@ BOWCON V4.0 is a production-grade, provider-independent AI agent runtime for the
 
 ## Tiếng Việt
 
-BOWCON V4.0 là runtime agent AI cấp sản xuất, độc lập với provider, cho hệ sinh thái ShopOfBow. Nó cung cấp tương tác đa kênh có cấu trúc (web, desktop, robot, giọng nói) thông qua vòng đời 7 giai đoạn được định kiểu chặt chẽ với quản trị, cô lập bộ nhớ, tổng hợp giọng nói và ngữ cảnh hội thoại.
+BOWCON V4.0 là runtime điều hành nhận thức và tự chủ AI cá nhân được xây dựng để phục vụ một Master Owner duy nhất.
+BOWCON thuộc về hệ sinh thái cá nhân rộng hơn là BOW.
+ShopOfBow là một dự án độc lập bên trong BOW và không phải là cha đẻ kiến trúc của BOWCON.
+BOWCON được thiết kế dựa trên quan sát host tại runtime và khám phá năng lực thay vì giả định một hệ điều hành cụ thể.
 
-**Trạng thái hiện tại:** `@bow/agent@4.0.0` — 404/404 kiểm thử hồi quy ĐẠT.
+**Trạng thái hiện tại:** `@bow/agent@4.0.0` — MS-1.3.43 (Khả năng phục hồi nhận thức Master Owner, Điều phối Host thích ứng & Tổng hợp ký ức giai đoạn tự phản chiếu) — Tất cả 46 bộ kiểm thử hồi quy ĐẠT, 128 khẳng định cổng thực tế ĐẠT, 0 thất bại.
 
 ---
 
@@ -79,7 +90,7 @@ Hãy theo thứ tự này vì mỗi mốc được xây dựng dựa trên mốc
 
 ## Quickstart / Khởi Động Nhanh
 
-Requirements: Windows 11 x64, Node.js 22+, Gemini API key (for cloud mode).
+Requirements: Node.js 22+, supported JavaScript runtime environment, configured cognitive provider for cloud mode, host capabilities required by selected operations (Windows-specific optional capabilities documented separately).
 
 ```powershell
 Copy-Item .env.example .env
@@ -117,15 +128,28 @@ Expected: **404 / 404 PASS** across all suites.
 
 ## Further Reading / Đọc Thêm
 
+- **MS-1.3.45 (Current)** establishes Master Owner delegation governance, agent identity separation (`AGENT != MASTER_OWNER`), federated device registry, capability leases, scope containment (`DELEGATED_AUTHORITY <= OWNER_GRANTED_SCOPE`), immediate revocation (`REVOCATION > AGENT_INTENT`), and replay protection. See `docs/BOWCON_V4_MASTER_OWNER_DELEGATION_FEDERATION_GOVERNANCE_EN_VI.md`.
+- **MS-1.3.44** established Master Owner durable cognitive resilience, cross-episode learning with minimum observation threshold, world-model learning federation (advisory only), and long-horizon goal continuity across restarts with Master Owner intent supremacy. See `docs/BOWCON_V4_MASTER_OWNER_DURABLE_RESILIENCE_CONTINUITY_EN_VI.md`.
+- **MS-1.3.43** established Master Owner cognitive resilience, adaptive host orchestration, self-reflective cognitive engine, and episodic memory synthesis. See `docs/BOWCON_V4_MASTER_OWNER_COGNITIVE_RESILIENCE_EPISODIC_SYNTHESIS_EN_VI.md`.
+- **MS-1.3.38** unifies the runtime under a single **Master Human Authority** (`MasterHumanAuthority`), subordinating executive orchestration, continuous operating loop, and recovery under canonical `HumanGate` with 12-attribute cryptographic token bindings, fail-closed DAG safety, and absolute `USER_STOP` supremacy. See `docs/BOWCON_V4_MASTER_HUMAN_AUTHORITY_EXECUTIVE_GOVERNANCE_MODEL_EN_VI.md`.
+- **MS-1.3.37** added real executive task orchestration: durable session-scoped goals, dependency DAG scheduling, governed execution, human-supremacy controls, and SHA-256-verified checkpoint recovery. See `docs/BOWCON_V4_EXECUTIVE_TASK_LONG_HORIZON_GOAL_ORCHESTRATION_MODEL_EN_VI.md`.
+
 | Document | Language | Contents |
 |---|---|---|
+| `docs/BOWCON_V4_MASTER_OWNER_DELEGATION_FEDERATION_GOVERNANCE_EN_VI.md` | EN + VI | Master Owner Delegation Governance & Authority Lease Architecture (MS-1.3.45) |
+| `docs/BOWCON_V4_MASTER_OWNER_DURABLE_RESILIENCE_CONTINUITY_EN_VI.md` | EN + VI | Master Owner Durable Resilience, Cross-Episode Learning & Goal Continuity (MS-1.3.44) |
+| `docs/BOWCON_V4_MASTER_OWNER_COGNITIVE_RESILIENCE_EPISODIC_SYNTHESIS_EN_VI.md` | EN + VI | Master Owner Cognitive Resilience & Episodic Synthesis (MS-1.3.43) |
+| `docs/BOWCON_V4_MASTER_HUMAN_AUTHORITY_EXECUTIVE_GOVERNANCE_MODEL_EN_VI.md` | EN + VI | Master Human Authority & Executive Governance Model |
+| `docs/BOWCON_V4_EXECUTIVE_TASK_LONG_HORIZON_GOAL_ORCHESTRATION_MODEL_EN_VI.md` | EN + VI | Executive Task & Goal Orchestration Model |
+| `docs/BOWCON_V4_CONTINUOUS_OPERATING_LOOP_CONTROLLED_AUTONOMY_MODEL_EN_VI.md` | EN + VI | Continuous Operating Loop & Autonomy Model |
+| `docs/BOWCON_V4_SUPERVISORY_AUTONOMOUS_RECOVERY_HUMAN_GOVERNANCE_MODEL_EN_VI.md` | EN + VI | Supervisory Autonomous Recovery & Human Gate Model |
 | `docs/BOWCON_V4_BILINGUAL_ARCHITECTURE.md` | EN + VI | Full architecture guide |
 | `docs/BOWCON_V4_ARCHITECTURE_FLOW.md` | EN + VI | Mermaid diagrams |
 | `docs/BOWCON_V4_SECURITY_MODEL_EN_VI.md` | EN + VI | 15 threat/defense pairs |
 | `docs/BOWCON_V4_MILESTONE_LEARNING_NOTES.md` | EN + VI | Per-milestone explanations |
 | `docs/BOWCON_V4_GLOSSARY_EN_VI.md` | EN + VI | 35-term glossary |
 | `docs/BOWCON_V4_ARCHITECTURE.md` | EN | Technical architecture contract |
-| `docs/BOWCON_V4_COMPONENT_MATRIX.md` | EN | 62-component reality matrix |
+| `docs/BOWCON_V4_COMPONENT_MATRIX.md` | EN | Comprehensive component reality matrix |
 
 ---
 

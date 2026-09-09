@@ -115,9 +115,17 @@ export class CognitiveRegistry {
         }
         return results;
     }
+    getActiveProvider() {
+        const ollama = this.providers.get('ollama');
+        if (ollama && ollama.isAvailable && !this.isProviderDegraded('ollama')) {
+            return ollama;
+        }
+        return this.fallbackProvider;
+    }
     async shutdownAll() {
         for (const provider of this.providers.values()) {
             await provider.shutdown();
         }
     }
 }
+export const globalCognitiveRegistry = new CognitiveRegistry();

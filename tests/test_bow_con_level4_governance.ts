@@ -59,7 +59,7 @@ async function runLevel4GovernanceSuite() {
   console.log('\n🛡️ SECTION 2: Central Policy Decision Point (PDP) & Default Deny');
   const testAuditPath = path.resolve(process.cwd(), 'data', 'test_audit.jsonl');
   if (fs.existsSync(testAuditPath)) {
-    try { fs.unlinkSync(testAuditPath); } catch {}
+    try { fs.unlinkSync(testAuditPath); } catch { }
   }
   const pdp = new PolicyDecisionPoint(testAuditPath);
 
