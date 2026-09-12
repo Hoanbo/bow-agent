@@ -59,7 +59,18 @@ const suites = [
   'tests/test_v4_agent_governed_production_deployment.ts',
   'tests/test_v4_agent_governed_post_deployment_observability.ts',
   'tests/test_v4_agent_governed_self_diagnosis_decision_support.ts',
+  'tests/test_v4_agent_governed_incident_remediation.ts',
+  'tests/test_v4_agent_governed_incident_resilience.ts',
+  'tests/test_v4_agent_governed_cross_incident_intelligence.ts',
+  'tests/test_v4_agent_governed_operational_policy_evolution.ts',
+  'tests/test_v4_agent_governed_runtime_policy_enforcement.ts',
+  'tests/test_v4_agent_governed_policy_canary.ts',
+  'tests/test_v4_agent_governed_policy_canary_resilience.ts',
+  'tests/test_v4_agent_governed_policy_observability.ts',
+  'tests/test_v4_agent_governed_policy_evidence_investigation.ts',
+  'tests/test_v4_agent_governed_policy_decision.ts',
 ];
+
 
 let reportedAssertionTotal = 0;
 let grandTotalFailed = 0;

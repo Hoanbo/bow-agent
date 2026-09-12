@@ -286,10 +286,15 @@ export * from './core/resilience/index.js';
 export * from './core/delegation/index.js';
 
 // Explicit re-exports to resolve TS2308 ambiguity
-export type { TaskId, TaskDependency } from './core/orchestration/index.js';
+export type { TaskId, TaskDependency, EvidenceIntegrityStatus } from './core/orchestration/index.js';
 export type { FailureCategory } from './core/lifecycle/index.js';
 export type { IncidentSeverity } from './monitoring/analyticsTypes.js';
 export type { IncidentSeverity as DiagnosisIncidentSeverity, FailureCategory as DiagnosisFailureCategory } from './core/diagnosis/index.js';
+export type { EvidenceIntegrityStatus as PolicyEvidenceIntegrityStatus } from './core/policyEvidence/index.js';
+export type { RemediationLifecycleState } from './core/remediation/index.js';
+export type { RemediationLifecycleState as PolicyRemediationLifecycleState } from './core/policyDecision/index.js';
+
+
 
 // 59. BOWCON V4.0 — Milestone 1.3.47: Governed Autonomous Project Sandbox & Controlled Worktree Isolation
 export * from './core/sandbox/index.js';
@@ -321,3 +326,38 @@ export * from './core/observability/index.js';
 // 66. BOWCON V4.0 — Mốc 1.3.54: Tự Chẩn đoán Có quản trị, Phân loại Sự cố & Tổng hợp Hỗ trợ Quyết định Giám sát viên
 export * from './core/diagnosis/index.js';
 
+// 67. BOWCON V4.0 — Milestone 1.3.55: Governed Incident Remediation, Authorized Recovery Execution & Closed-Loop Post-Mitigation Verification Pipeline
+// 67. BOWCON V4.0 — Mốc 1.3.55: Đường ống Khắc phục Sự cố Có quản trị, Thực thi Phục hồi Được ủy quyền & Xác minh Sau Giảm thiểu Vòng lặp Kín
+export * from './core/remediation/index.js';
+
+// 68. BOWCON V4.0 — Milestone 1.3.56: Governed Post-Remediation Resilience, Recovery Outcome Analysis & Incident Lifecycle Closure Pipeline
+// 68. BOWCON V4.0 — Mốc 1.3.56: Đường ống Khả năng Phục hồi Sau Khắc phục, Phân tích Kết quả Phục hồi & Đóng Vòng đời Sự cố Có quản trị
+export * from './core/incidentResilience/index.js';
+
+// 69. BOWCON V4.0 — Milestone 1.3.57: Governed Cross-Incident Intelligence, Historical Pattern Correlation & Operational Resilience Memory
+// 69. BOWCON V4.0 — Mốc 1.3.57: Tình báo Liên Sự cố Có quản trị, Tương quan Mẫu Lịch sử & Bộ nhớ Phục hồi Vận hành
+export * from './core/crossIncident/index.js';
+
+// 70. BOWCON V4.0 — Milestone 1.3.58: Governed Operational Policy Evolution, Guardrail Calibration & Counterfactual Resilience Verification Pipeline
+// 70. BOWCON V4.0 — Mốc 1.3.58: Đường ống Tiến hóa Chính sách Vận hành Có quản trị, Hiệu chuẩn Biên giới Bảo vệ & Xác minh Khả năng Phục hồi Phản thực tế
+export * from './core/policyEvolution/index.js';
+
+// 71. BOWCON V4.0 — Milestone 1.3.59: Governed Runtime Policy Enforcement Point (PEP), Dynamic PDP Synchronization & Live Guardrail Execution Pipeline
+// 71. BOWCON V4.0 — Mốc 1.3.59: Điểm Thực thi Chính sách Thời gian chạy Có quản trị (PEP), Đồng bộ hóa PDP Động & Đường ống Thực thi Rào chắn Trực tiếp
+export * from './core/policyEnforcement/index.js';
+
+// 72. BOWCON V4.0 — Milestone 1.3.60: Governed Real-Time Policy Canary Verification & Multi-Ring Rollout Pipeline
+// 72. BOWCON V4.0 — Mốc 1.3.60: Đường ống Kiểm chứng Canary Chính sách Thời gian thực & Triển khai Đa vòng Có quản trị
+export * from './core/policyCanary/index.js';
+
+// 73. BOWCON V4.0 — Milestone 1.3.62: Governed Policy Operational Observability, Governance Evidence & Runtime Integrity Audit Layer
+// 73. BOWCON V4.0 — Mốc 1.3.62: Lớp Quan sát Vận hành Chính sách Có quản trị, Bằng chứng Quản trị & Kiểm toán Toàn vẹn Thời gian chạy
+export * from './core/policyObservability/index.js';
+
+// 74. BOWCON V4.0 — Milestone 1.3.63: Governed Policy Evidence Query, Audit Correlation & Integrity Verification Layer
+// 74. BOWCON V4.0 — Mốc 1.3.63: Lớp Truy vấn Bằng chứng Chính sách Có quản trị, Tương quan Kiểm toán & Xác minh Toàn vẹn
+export * from './core/policyEvidence/index.js';
+
+// 75. BOWCON V4.0 — Milestone 1.3.64: Governed Policy Decision & Controlled Remediation Layer
+// 75. BOWCON V4.0 — Mốc 1.3.64: Lớp Quyết định Chính sách Có quản trị & Khắc phục Có kiểm soát
+export * from './core/policyDecision/index.js';

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "appr_1789233891146_b85a89",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-12T17:24:51.146Z",
+    "expiresAt": "2026-09-12T17:29:51.146Z"
+  },
+  {
+    "id": "appr_1789235065685_43f34a",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-12T17:44:25.685Z",
+    "expiresAt": "2026-09-12T17:49:25.685Z"
+  },
+  {
+    "id": "appr_1789236128563_a2a3eb",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-12T18:02:08.563Z",
+    "expiresAt": "2026-09-12T18:07:08.563Z"
+  },
+  {
+    "id": "appr_1789238717771_01ebd1",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-12T18:45:17.771Z",
+    "expiresAt": "2026-09-12T18:50:17.771Z"
+  },
+  {
+    "id": "appr_1789240975379_6c607f",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-12T19:22:55.379Z",
+    "expiresAt": "2026-09-12T19:27:55.379Z"
+  }
+]

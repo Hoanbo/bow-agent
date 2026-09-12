@@ -7,6 +7,7 @@ import crypto from 'node:crypto';
 import { globalPDP, ActionClassification } from '../core/policyDecisionPoint.js';
 import { globalIdempotencyStore } from '../core/idempotencyStore.js';
 import { globalAuditLedger } from '../core/auditLedger.js';
+import { GovernedPolicyEnforcementPoint, globalGovernedPEP } from '../core/policyEnforcement/index.js';
 
 export interface ToolDefinition {
   name: string;
@@ -28,6 +29,8 @@ export interface ToolExecutionContext {
   idempotencyKey?: string;
   executionToken?: string;
   authToken?: string;
+  requestedApprovalTimeoutMs?: number;
+  retryAttempt?: number;
   actor?: {
     userId?: string;
     role?: string;
@@ -39,6 +42,15 @@ export interface ToolExecutionContext {
 
 export class ToolRegistry {
   private tools = new Map<string, ToolDefinition>();
+  private pep: GovernedPolicyEnforcementPoint;
+
+  constructor(pep?: GovernedPolicyEnforcementPoint) {
+    this.pep = pep ?? globalGovernedPEP;
+  }
+
+  public getPEP(): GovernedPolicyEnforcementPoint {
+    return this.pep;
+  }
 
   public register(tool: ToolDefinition): void {
     this.tools.set(tool.name, tool);
@@ -58,34 +70,26 @@ export class ToolRegistry {
 
   /**
    * Execute tool with authoritative Level 4 governance boundary:
-   * 1. Schema parameter validation
-   * 2. Context / Actor resolution (with default safe owner context)
-   * 3. Atomic Idempotency Check (cached replay or conflict detection)
-   * 4. Central PDP Policy & Approval Evaluation
-   * 5. Tool Execution
-   * 6. Idempotency Recording
-   * 7. Cryptographic Audit Ledger Recording (Fail-closed)
+   * 1. Auth/Context Resolution
+   * 2. Atomic Idempotency Check
+   * 3. Governed Policy Enforcement Point (PEP) Verification
+   * 4. Approval Verification
+   * 5. Execution
+   * 6. Idempotency Store Commit
+   * 7. Append-Only Audit Ledger
    */
-  public async executeTool(name: string, args: any = {}, context?: ToolExecutionContext): Promise<any> {
-    const tool = this.tools.get(name);
+  public async executeTool(name: string, args?: Record<string, any>, context?: ToolExecutionContext): Promise<any> {
+    // 1. Tool existence check
+    const tool = this.getTool(name);
     if (!tool) {
-      throw new Error(`Tool "${name}" is not registered in ToolRegistry.`);
+      throw new Error(`TOOL_NOT_FOUND: Tool "${name}" is not registered in the tool registry.`);
     }
 
-    // 1. Basic schema validation for required fields
-    if (tool.parameters?.required) {
-      for (const req of tool.parameters.required) {
-        if (args === undefined || args[req] === undefined) {
-          throw new Error(`Missing required parameter "${req}" for tool "${name}".`);
-        }
-      }
-    }
-
-    // 2. Resolve Actor context, correlation ID, and tokens
-    const actorRole = context?.role || context?.actor?.role || 'anonymous';
+    // 2. Resolve Actor and Context
     const actorUserId = context?.userId || context?.actor?.userId;
-    const actorChannel = context?.channel || context?.actor?.channel || 'UNKNOWN';
-    const isOwner = context?.isOwner === true || context?.actor?.isOwner === true || actorRole === 'owner';
+    const actorRole = context?.role || context?.actor?.role || 'user';
+    const actorChannel = context?.channel || context?.actor?.channel || 'direct';
+    const isOwner = context?.isOwner ?? context?.actor?.isOwner ?? (actorRole === 'owner');
 
     const actor = {
       userId: actorUserId || 'anonymous',
@@ -99,7 +103,7 @@ export class ToolRegistry {
     const executionToken = context?.executionToken || args?.executionToken;
     const domain = this.resolveDomain(name);
     const argsHash = crypto.createHash('sha256').update(JSON.stringify(args || {})).digest('hex');
-    const classification = globalPDP.getActionClassification(name);
+    const classification = this.pep.getActiveActionClassification(name, actorUserId);
 
     // 3. Atomic Idempotency Pre-Check
     if (idempotencyKey) {
@@ -124,13 +128,17 @@ export class ToolRegistry {
       }
     }
 
-    // 4. Central PDP Policy & Approval Verification
-    const decision = globalPDP.evaluate({
+    // 4. Governed Policy Enforcement Point (PEP) Verification
+    // Precedence: HARD-CODED SAFETY FLOOR > ACTIVE AUTHORIZED POLICY > DEFAULT POLICY
+    const decision = this.pep.enforce({
       toolName: name,
       args: args || {},
       actor,
       executionToken,
       idempotencyKey,
+      correlationId,
+      requestedApprovalTimeoutMs: context?.requestedApprovalTimeoutMs,
+      retryAttempt: context?.retryAttempt,
     });
 
     if (!decision.allowed) {
@@ -191,6 +199,8 @@ export class ToolRegistry {
         executionStatus: 'FAILURE',
       });
       throw err;
+    } finally {
+      this.pep.releaseLease(decision.leaseId);
     }
   }
 

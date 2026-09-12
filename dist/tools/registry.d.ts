@@ -1,3 +1,4 @@
+import { GovernedPolicyEnforcementPoint } from '../core/policyEnforcement/index.js';
 export interface ToolDefinition {
     name: string;
     description: string;
@@ -17,6 +18,8 @@ export interface ToolExecutionContext {
     idempotencyKey?: string;
     executionToken?: string;
     authToken?: string;
+    requestedApprovalTimeoutMs?: number;
+    retryAttempt?: number;
     actor?: {
         userId?: string;
         role?: string;
@@ -27,21 +30,24 @@ export interface ToolExecutionContext {
 }
 export declare class ToolRegistry {
     private tools;
+    private pep;
+    constructor(pep?: GovernedPolicyEnforcementPoint);
+    getPEP(): GovernedPolicyEnforcementPoint;
     register(tool: ToolDefinition): void;
     getTool(name: string): ToolDefinition | undefined;
     getAllTools(): ToolDefinition[];
     hasTool(name: string): boolean;
     /**
      * Execute tool with authoritative Level 4 governance boundary:
-     * 1. Schema parameter validation
-     * 2. Context / Actor resolution (with default safe owner context)
-     * 3. Atomic Idempotency Check (cached replay or conflict detection)
-     * 4. Central PDP Policy & Approval Evaluation
-     * 5. Tool Execution
-     * 6. Idempotency Recording
-     * 7. Cryptographic Audit Ledger Recording (Fail-closed)
+     * 1. Auth/Context Resolution
+     * 2. Atomic Idempotency Check
+     * 3. Governed Policy Enforcement Point (PEP) Verification
+     * 4. Approval Verification
+     * 5. Execution
+     * 6. Idempotency Store Commit
+     * 7. Append-Only Audit Ledger
      */
-    executeTool(name: string, args?: any, context?: ToolExecutionContext): Promise<any>;
+    executeTool(name: string, args?: Record<string, any>, context?: ToolExecutionContext): Promise<any>;
     private resolveDomain;
 }
 export declare const toolRegistry: ToolRegistry;
