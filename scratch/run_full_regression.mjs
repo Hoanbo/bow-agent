@@ -50,6 +50,15 @@ const suites = [
   'tests/test_v4_agent_cognitive_resilience_episodic_synthesis.ts',
   'tests/test_v4_agent_durable_resilience_cross_episode_continuity.ts',
   'tests/test_v4_agent_delegation_federation_governance.ts',
+  'tests/test_v4_agent_multi_agent_task_orchestration_evidence.ts',
+  'tests/test_v4_agent_governed_sandbox_worktree_isolation.ts',
+  'tests/test_v4_agent_controlled_change_promotion.ts',
+  'tests/test_v4_agent_governed_quality_pipeline.ts',
+  'tests/test_v4_agent_governed_release_verification.ts',
+  'tests/test_v4_agent_governed_release_execution.ts',
+  'tests/test_v4_agent_governed_production_deployment.ts',
+  'tests/test_v4_agent_governed_post_deployment_observability.ts',
+  'tests/test_v4_agent_governed_self_diagnosis_decision_support.ts',
 ];
 
 let reportedAssertionTotal = 0;

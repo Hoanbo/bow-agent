@@ -432,5 +432,257 @@
     "recordedAt": 1788985007402,
     "expiresAt": 1789071407402,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtujuyt6_466378d67bd5_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1788985640636
+    },
+    "recordedAt": 1788985640636,
+    "expiresAt": 1789072040636,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvl3i58_732e73eb7627_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789048184734
+    },
+    "recordedAt": 1789048184735,
+    "expiresAt": 1789134584735,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvl9b93_3b1a2ef22aa9_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789048455737
+    },
+    "recordedAt": 1789048455737,
+    "expiresAt": 1789134855737,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvlf1pl_a9a427af9fc4_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789048723307
+    },
+    "recordedAt": 1789048723307,
+    "expiresAt": 1789135123307,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvm4uq9_71a92620a074_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789049927315
+    },
+    "recordedAt": 1789049927316,
+    "expiresAt": 1789136327316,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvnc21u_11b91aa4247a_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789051943012
+    },
+    "recordedAt": 1789051943012,
+    "expiresAt": 1789138343012,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvnj12h_c3091d02b9c7_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789052268331
+    },
+    "recordedAt": 1789052268331,
+    "expiresAt": 1789138668331,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvnnod4_37fbe3097e48_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789052485146
+    },
+    "recordedAt": 1789052485146,
+    "expiresAt": 1789138885146,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvod1vv_a853eb02d89d_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789053669070
+    },
+    "recordedAt": 1789053669070,
+    "expiresAt": 1789140069070,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvohp96_54bb2d97637c_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789053885981
+    },
+    "recordedAt": 1789053885981,
+    "expiresAt": 1789140285981,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvpfkre_4a530a27a4af_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789055466460
+    },
+    "recordedAt": 1789055466460,
+    "expiresAt": 1789141866460,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvpptnx_75c7d8fac3c8_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789055944559
+    },
+    "recordedAt": 1789055944559,
+    "expiresAt": 1789142344559,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvq9nbj_176cd1f9c6ed_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789056869457
+    },
+    "recordedAt": 1789056869457,
+    "expiresAt": 1789143269457,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtvs2v7y_e85f78c478f6_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789059912337
+    },
+    "recordedAt": 1789059912337,
+    "expiresAt": 1789146312337,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtx6aknf_402e26c3aec5_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789144252686
+    },
+    "recordedAt": 1789144252686,
+    "expiresAt": 1789230652686,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtx6eqkn_890aa1d76c9d_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789144446985
+    },
+    "recordedAt": 1789144446986,
+    "expiresAt": 1789230846986,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtx6j50v_edc38a7ffbd5_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789144652338
+    },
+    "recordedAt": 1789144652338,
+    "expiresAt": 1789231052338,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtx7xsqg_91edd170c372_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789147015867
+    },
+    "recordedAt": 1789147015867,
+    "expiresAt": 1789233415867,
+    "status": "COMPLETED"
   }
 ]

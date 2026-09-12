@@ -1,9 +1,10 @@
 // src/core/orchestration/index.ts
-// BOWCON V4.0 — MILESTONE 1.3.11: ORCHESTRATION SUBSYSTEM PUBLIC INTERFACE
+// BOWCON V4.0 — ORCHESTRATION SUBSYSTEM PUBLIC INTERFACE
 //
-// EN: Public API exports for the Action Orchestration & Governed Execution Bridge Subsystem.
-// VI: Xuất bản giao diện công khai cho Subsystem Điều phối Hành động & Cầu nối Thực thi có Quản trị.
+// Milestone 1.3.11: Action Orchestration & Governed Execution Bridge
+// Milestone 1.3.46: Governed Multi-Agent Task Orchestration & Distributed Evidence Verification
 
+// 1. Action Orchestration & Governed Execution Bridge (MS-1.3.11)
 export * from './orchestrationTypes.js';
 export * from './orchestrationFingerprint.js';
 export * from './orchestrationValidator.js';
@@ -13,3 +14,13 @@ export * from './executionGate.js';
 export * from './executionRequest.js';
 export * from './orchestrationResult.js';
 export * from './actionOrchestrator.js';
+
+// 2. Governed Multi-Agent Task Orchestration & Distributed Evidence Verification (MS-1.3.46)
+export * from './taskOrchestrationTypes.js';
+export * from './taskDependencyEngine.js';
+export * from './artifactEvidenceEngine.js';
+export * from './evidenceVerificationEngine.js';
+export * from './evidenceAggregationEngine.js';
+export * from './taskReviewEngine.js';
+export * from './governedTaskOrchestrator.js';
+export * from './orchestrationRuntime.js';

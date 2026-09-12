@@ -285,3 +285,39 @@ export * from './core/resilience/index.js';
 // 58. BOWCON V4.0 — Milestone 1.3.45: Master Owner Delegation Governance, Multi-Agent Federation & Authority Lease Architecture
 export * from './core/delegation/index.js';
 
+// Explicit re-exports to resolve TS2308 ambiguity
+export type { TaskId, TaskDependency } from './core/orchestration/index.js';
+export type { FailureCategory } from './core/lifecycle/index.js';
+export type { IncidentSeverity } from './monitoring/analyticsTypes.js';
+export type { IncidentSeverity as DiagnosisIncidentSeverity, FailureCategory as DiagnosisFailureCategory } from './core/diagnosis/index.js';
+
+// 59. BOWCON V4.0 — Milestone 1.3.47: Governed Autonomous Project Sandbox & Controlled Worktree Isolation
+export * from './core/sandbox/index.js';
+
+// 60. BOWCON V4.0 — Milestone 1.3.48: Controlled Change Promotion & Governed Project Integration
+export * from './core/promotion/index.js';
+
+// 61. BOWCON V4.0 — Milestone 1.3.49: Governed Project Build, Test & Continuous Quality Gate Pipeline
+// 61. BOWCON V4.0 — Mốc 1.3.49: Đường ống Dựng Dự án, Kiểm thử & Cổng Chất lượng Liên tục Có quản trị
+export * from './core/quality/index.js';
+
+// 62. BOWCON V4.0 — Milestone 1.3.50: Governed Continuous Integration & Milestone Release Verification Pipeline
+// 62. BOWCON V4.0 — Mốc 1.3.50: Đường ống Tích hợp Liên tục & Xác minh Phát hành Mốc Có quản trị
+export * from './core/release/index.js';
+
+// 63. BOWCON V4.0 — Milestone 1.3.51: Governed Release Execution & Authorized Deployment Boundary
+// 63. BOWCON V4.0 — Mốc 1.3.51: Ranh giới Thực thi Phát hành Có quản trị & Triển khai Được ủy quyền
+export * from './core/releaseExecution/index.js';
+
+// 64. BOWCON V4.0 — Milestone 1.3.52: Governed Production Deployment & Canary Verification Pipeline
+// 64. BOWCON V4.0 — Mốc 1.3.52: Đường ống Triển khai Sản xuất & Xác minh Canary Có quản trị
+export * from './core/deployment/index.js';
+
+// 65. BOWCON V4.0 — Milestone 1.3.53: Governed Post-Deployment Autonomous Verification, Drift Detection & Observability Telemetry Mesh
+// 65. BOWCON V4.0 — Mốc 1.3.53: Lưới Đo từ xa Quan sát, Xác minh Tự động & Phát hiện Sai lệch Sau Triển khai Có quản trị
+export * from './core/observability/index.js';
+
+// 66. BOWCON V4.0 — Milestone 1.3.54: Governed Autonomous Self-Diagnosis, Incident Classification & Supervisor Decision-Support Synthesis
+// 66. BOWCON V4.0 — Mốc 1.3.54: Tự Chẩn đoán Có quản trị, Phân loại Sự cố & Tổng hợp Hỗ trợ Quyết định Giám sát viên
+export * from './core/diagnosis/index.js';
+

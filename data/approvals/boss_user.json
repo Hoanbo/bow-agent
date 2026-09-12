@@ -3970,5 +3970,804 @@
     "status": "PENDING",
     "createdAt": "2026-09-09T20:26:54.671Z",
     "expiresAt": "2026-09-09T20:31:54.671Z"
+  },
+  {
+    "id": "appr_1789048113021_116f07",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T13:48:33.021Z",
+    "expiresAt": "2026-09-10T13:53:33.021Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T13:48:33.074Z",
+    "executionToken": "tok_ee96e62130bc99f6b04f68845ad9c2e7408bce8aaa2833dd"
+  },
+  {
+    "id": "appr_1789048113090_9a5702",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T13:48:33.090Z",
+    "expiresAt": "2026-09-10T13:53:33.090Z",
+    "approver": "boss_user",
+    "executionToken": "tok_9250306fbee462918a081a31f113919a08f69bb2d6579ad3"
+  },
+  {
+    "id": "appr_1789048159312_85dab9",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T13:49:19.312Z",
+    "expiresAt": "2026-09-10T13:54:19.312Z"
+  },
+  {
+    "id": "appr_1789048383203_e76559",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T13:53:03.203Z",
+    "expiresAt": "2026-09-10T13:58:03.203Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T13:53:03.250Z",
+    "executionToken": "tok_8bb47b46fa045ba0b2377ec076bf37b1ef5bf28911edff5e"
+  },
+  {
+    "id": "appr_1789048383267_b21da2",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T13:53:03.267Z",
+    "expiresAt": "2026-09-10T13:58:03.267Z",
+    "approver": "boss_user",
+    "executionToken": "tok_3151be5657b753b873a46f6e919e70ceac7c46f88bf01d02"
+  },
+  {
+    "id": "appr_1789048429474_ab345c",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T13:53:49.474Z",
+    "expiresAt": "2026-09-10T13:58:49.474Z"
+  },
+  {
+    "id": "appr_1789048651470_5225c7",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T13:57:31.470Z",
+    "expiresAt": "2026-09-10T14:02:31.470Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T13:57:31.523Z",
+    "executionToken": "tok_f6f2b845b667db61dc44870f060069f93509396261d7ae7d"
+  },
+  {
+    "id": "appr_1789048651537_bc80b6",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T13:57:31.537Z",
+    "expiresAt": "2026-09-10T14:02:31.537Z",
+    "approver": "boss_user",
+    "executionToken": "tok_bccd8eb400f56b1983ad4dc77ebcb6121c5b590d5376c9fc"
+  },
+  {
+    "id": "appr_1789048697292_a06773",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T13:58:17.292Z",
+    "expiresAt": "2026-09-10T14:03:17.292Z"
+  },
+  {
+    "id": "appr_1789049853783_8f8040",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T14:17:33.783Z",
+    "expiresAt": "2026-09-10T14:22:33.783Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T14:17:33.836Z",
+    "executionToken": "tok_826ab1edfd8c5de92caab68d969dbd21eb81124bd57c2e59"
+  },
+  {
+    "id": "appr_1789049853851_46d7c8",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T14:17:33.851Z",
+    "expiresAt": "2026-09-10T14:22:33.851Z",
+    "approver": "boss_user",
+    "executionToken": "tok_0f045bdf5e0610a3525e38d35f191832114653540dce55a2"
+  },
+  {
+    "id": "appr_1789049900797_4049e7",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T14:18:20.797Z",
+    "expiresAt": "2026-09-10T14:23:20.797Z"
+  },
+  {
+    "id": "appr_1789051870557_8f8b66",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T14:51:10.557Z",
+    "expiresAt": "2026-09-10T14:56:10.557Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T14:51:10.609Z",
+    "executionToken": "tok_238b5f367b8807dbd5c9d9f427dc762efde2e2c1f36c025a"
+  },
+  {
+    "id": "appr_1789051870623_d636ae",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T14:51:10.623Z",
+    "expiresAt": "2026-09-10T14:56:10.623Z",
+    "approver": "boss_user",
+    "executionToken": "tok_2ce7bf125414682f2a4291cb3ed2d62ca844a0e98086b304"
+  },
+  {
+    "id": "appr_1789051917020_0148bd",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T14:51:57.020Z",
+    "expiresAt": "2026-09-10T14:56:57.020Z"
+  },
+  {
+    "id": "appr_1789052195069_37beb4",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T14:56:35.069Z",
+    "expiresAt": "2026-09-10T15:01:35.069Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T14:56:35.119Z",
+    "executionToken": "tok_6645950188b72e598c5b1715890647698a8cafbf2bffcbf3"
+  },
+  {
+    "id": "appr_1789052195133_3ce685",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T14:56:35.133Z",
+    "expiresAt": "2026-09-10T15:01:35.133Z",
+    "approver": "boss_user",
+    "executionToken": "tok_8d3879670d2e3857ff32a08f3cdef3857a240f542a205f71"
+  },
+  {
+    "id": "appr_1789052242124_595163",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T14:57:22.124Z",
+    "expiresAt": "2026-09-10T15:02:22.124Z"
+  },
+  {
+    "id": "appr_1789052411864_6f1704",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T15:00:11.864Z",
+    "expiresAt": "2026-09-10T15:05:11.864Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T15:00:11.916Z",
+    "executionToken": "tok_97c2a9e0695b223ba38222a14cdce43fc185d76b66beebaf"
+  },
+  {
+    "id": "appr_1789052411932_bb5806",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T15:00:11.932Z",
+    "expiresAt": "2026-09-10T15:05:11.932Z",
+    "approver": "boss_user",
+    "executionToken": "tok_7ba99007810237a2447f0d56cbc5e73323ca436922d43af8"
+  },
+  {
+    "id": "appr_1789052458903_bb62fb",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T15:00:58.903Z",
+    "expiresAt": "2026-09-10T15:05:58.903Z"
+  },
+  {
+    "id": "appr_1789053592437_4f2c87",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T15:19:52.437Z",
+    "expiresAt": "2026-09-10T15:24:52.437Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T15:19:52.489Z",
+    "executionToken": "tok_3b7e318913db9c736bd2557ec7547f7120e353c9d58dabeb"
+  },
+  {
+    "id": "appr_1789053592505_5f9437",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T15:19:52.505Z",
+    "expiresAt": "2026-09-10T15:24:52.505Z",
+    "approver": "boss_user",
+    "executionToken": "tok_735a2b0698c1ca360f04422ea6b951b7da159e3745277561"
+  },
+  {
+    "id": "appr_1789053641516_cddde3",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T15:20:41.516Z",
+    "expiresAt": "2026-09-10T15:25:41.516Z"
+  },
+  {
+    "id": "appr_1789053810229_13668d",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T15:23:30.229Z",
+    "expiresAt": "2026-09-10T15:28:30.229Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T15:23:30.276Z",
+    "executionToken": "tok_63d977be51e4492a814d3261539e0fcac084cb046e4f19c8"
+  },
+  {
+    "id": "appr_1789053810290_c7ea28",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T15:23:30.290Z",
+    "expiresAt": "2026-09-10T15:28:30.290Z",
+    "approver": "boss_user",
+    "executionToken": "tok_567a3b4e3098092407265887930bdee5337dbd008d0f1293"
+  },
+  {
+    "id": "appr_1789053858825_b4769a",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T15:24:18.825Z",
+    "expiresAt": "2026-09-10T15:29:18.825Z"
+  },
+  {
+    "id": "appr_1789055387446_767949",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T15:49:47.446Z",
+    "expiresAt": "2026-09-10T15:54:47.446Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T15:49:47.496Z",
+    "executionToken": "tok_86e23f6328a568108923847d19daf72959ea1333eb40f440"
+  },
+  {
+    "id": "appr_1789055387511_8ec1ef",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T15:49:47.511Z",
+    "expiresAt": "2026-09-10T15:54:47.511Z",
+    "approver": "boss_user",
+    "executionToken": "tok_e4c47f79870688d0da37ccebe55b2b7f78c6f883add174fc"
+  },
+  {
+    "id": "appr_1789055438364_3d48c7",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T15:50:38.364Z",
+    "expiresAt": "2026-09-10T15:55:38.364Z"
+  },
+  {
+    "id": "appr_1789055867126_cdd5bf",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T15:57:47.127Z",
+    "expiresAt": "2026-09-10T16:02:47.127Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T15:57:47.181Z",
+    "executionToken": "tok_dc1b68c634bd86dd4870e1136eadebef176efd65fd27e945"
+  },
+  {
+    "id": "appr_1789055867196_1c7c50",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T15:57:47.196Z",
+    "expiresAt": "2026-09-10T16:02:47.196Z",
+    "approver": "boss_user",
+    "executionToken": "tok_ed949ba2674e04fd1df46ee657fc519f3df9a26f6f4c3d6f"
+  },
+  {
+    "id": "appr_1789055916759_305811",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T15:58:36.759Z",
+    "expiresAt": "2026-09-10T16:03:36.759Z"
+  },
+  {
+    "id": "appr_1789056792218_144b13",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T16:13:12.218Z",
+    "expiresAt": "2026-09-10T16:18:12.218Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T16:13:12.274Z",
+    "executionToken": "tok_7cc950d78d0f4d95bd496cf14543a5066146821b5ed731dd"
+  },
+  {
+    "id": "appr_1789056792289_5077fd",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T16:13:12.289Z",
+    "expiresAt": "2026-09-10T16:18:12.289Z",
+    "approver": "boss_user",
+    "executionToken": "tok_7f868944a247e2c145bcdbe35de68148d967232dc944d5aa"
+  },
+  {
+    "id": "appr_1789056841809_7d09d5",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T16:14:01.809Z",
+    "expiresAt": "2026-09-10T16:19:01.809Z"
+  },
+  {
+    "id": "appr_1789059831245_949812",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-10T17:03:51.245Z",
+    "expiresAt": "2026-09-10T17:08:51.245Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-10T17:03:51.298Z",
+    "executionToken": "tok_9a2440c0883bbecf262239a7c771175513721a21fd723f3b"
+  },
+  {
+    "id": "appr_1789059831314_7b98d5",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-10T17:03:51.314Z",
+    "expiresAt": "2026-09-10T17:08:51.314Z",
+    "approver": "boss_user",
+    "executionToken": "tok_ee562194fcd224df2c79a58e9fe996e6c70fcdf35bffe70d"
+  },
+  {
+    "id": "appr_1789059883468_7ff0a9",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-10T17:04:43.468Z",
+    "expiresAt": "2026-09-10T17:09:43.468Z"
+  },
+  {
+    "id": "appr_1789144169405_f1ee65",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-11T16:29:29.405Z",
+    "expiresAt": "2026-09-11T16:34:29.405Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-11T16:29:29.453Z",
+    "executionToken": "tok_b9fd057a9f0cd2822bca36fb7dfc8f6c35a76c6200463417"
+  },
+  {
+    "id": "appr_1789144169468_2bcc62",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-11T16:29:29.468Z",
+    "expiresAt": "2026-09-11T16:34:29.468Z",
+    "approver": "boss_user",
+    "executionToken": "tok_8daeeb81746f0f393f948b707f302e59a71352c092dedab8"
+  },
+  {
+    "id": "appr_1789144223333_d9f001",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-11T16:30:23.333Z",
+    "expiresAt": "2026-09-11T16:35:23.333Z"
+  },
+  {
+    "id": "appr_1789144363558_2b9b4d",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-11T16:32:43.558Z",
+    "expiresAt": "2026-09-11T16:37:43.558Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-11T16:32:43.632Z",
+    "executionToken": "tok_15a44ede94bf73b972af468ce88fcdf732efb59a35510e78"
+  },
+  {
+    "id": "appr_1789144363653_1d720f",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-11T16:32:43.653Z",
+    "expiresAt": "2026-09-11T16:37:43.653Z",
+    "approver": "boss_user",
+    "executionToken": "tok_e420c429e86cbd390f8273fb9b8c2792b7fab02a8261a9da"
+  },
+  {
+    "id": "appr_1789144417605_d52b0b",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-11T16:33:37.605Z",
+    "expiresAt": "2026-09-11T16:38:37.605Z"
+  },
+  {
+    "id": "appr_1789144569899_d56c5b",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-11T16:36:09.899Z",
+    "expiresAt": "2026-09-11T16:41:09.899Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-11T16:36:09.958Z",
+    "executionToken": "tok_c1658421e9a8d6c73f4bb22fea8abd7361c1133e668a86c0"
+  },
+  {
+    "id": "appr_1789144569973_1344ee",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-11T16:36:09.973Z",
+    "expiresAt": "2026-09-11T16:41:09.973Z",
+    "approver": "boss_user",
+    "executionToken": "tok_d65a25336c4d2d417d7da41272af34d2e8a0c525ce66aa2c"
+  },
+  {
+    "id": "appr_1789144623218_5a3f3e",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-11T16:37:03.218Z",
+    "expiresAt": "2026-09-11T16:42:03.218Z"
+  },
+  {
+    "id": "appr_1789146930732_7b7119",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-11T17:15:30.732Z",
+    "expiresAt": "2026-09-11T17:20:30.732Z",
+    "approver": "boss_user",
+    "consumedAt": "2026-09-11T17:15:30.786Z",
+    "executionToken": "tok_f71d6299b44a2423fc2d5dc00b19fc1b5768315bc3d8fe38"
+  },
+  {
+    "id": "appr_1789146930801_54b92b",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "APPROVED",
+    "createdAt": "2026-09-11T17:15:30.802Z",
+    "expiresAt": "2026-09-11T17:20:30.802Z",
+    "approver": "boss_user",
+    "executionToken": "tok_7847b69377e0b6302e2bc60a6b8a7d1c9c1657a358cc1f48"
+  },
+  {
+    "id": "appr_1789146985691_b7c40f",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-11T17:16:25.691Z",
+    "expiresAt": "2026-09-11T17:21:25.691Z"
   }
 ]

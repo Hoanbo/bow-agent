@@ -7,10 +7,21 @@ BOWCON belongs to the broader BOW personal ecosystem.
 ShopOfBow is one independent project within BOW and is not the architectural parent of BOWCON.
 BOWCON is designed around runtime host observation and capability discovery rather than assuming a specific operating system.
 
-**Current status:** `@bow/agent@4.0.0` — MS-1.3.43 (Master Owner Cognitive Resilience, Adaptive Host Orchestration & Self-Reflective Episodic Synthesis) — All 46 regression test suites PASS, 128 reality gate assertions PASS, 0 failures.
+**Current status:** `@bow/agent@4.0.0` — MS-1.3.53 (Governed Post-Deployment Autonomous Verification, Drift Detection & Observability Telemetry Mesh) — All 56 regression test suites PASS, 29 reality gate assertions PASS, 0 failures.
 
 ### Architecture Quick Reference
 
+- **Governed Post-Deployment Autonomous Verification, Drift Detection & Observability Telemetry Mesh (EN/VI):** `docs/BOWCON_V4_GOVERNED_POST_DEPLOYMENT_OBSERVABILITY_EN_VI.md`
+- **Governed Production Deployment & Canary Verification Pipeline (EN/VI):** `docs/BOWCON_V4_GOVERNED_PRODUCTION_DEPLOYMENT_CANARY_EN_VI.md`
+- **Governed Release Execution & Authorized Deployment Boundary (EN/VI):** `docs/BOWCON_V4_GOVERNED_RELEASE_EXECUTION_EN_VI.md`
+- **Governed Continuous Integration & Milestone Release Verification Pipeline (EN/VI):** `docs/BOWCON_V4_GOVERNED_CI_MILESTONE_RELEASE_VERIFICATION_EN_VI.md`
+- **Governed Project Build, Test & Quality Pipeline (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_GOVERNED_BUILD_TEST_QUALITY_GATE_EN_VI.md`
+- **Controlled Change Promotion & Governed Project Integration (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_CONTROLLED_CHANGE_PROMOTION_EN_VI.md`
+- **Governed Autonomous Project Sandbox & Worktree Isolation (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_GOVERNED_SANDBOX_WORKTREE_EN_VI.md`
+- **Governed Multi-Agent Task Orchestration & Evidence (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_MULTI_AGENT_ORCHESTRATION_EVIDENCE_EN_VI.md`
+- **Master Owner Delegation Governance (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_DELEGATION_FEDERATION_GOVERNANCE_EN_VI.md`
+- **Master Owner Durable Resilience & Goal Continuity (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_DURABLE_RESILIENCE_CONTINUITY_EN_VI.md`
+- **Master Owner Cognitive Resilience & Episodic Synthesis (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_COGNITIVE_RESILIENCE_EPISODIC_SYNTHESIS_EN_VI.md`
 - **Master Owner World Model & Capability Reasoning (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_WORLD_MODEL_REASONING_MODEL_EN_VI.md`
 - **Master Architecture Identity Model (EN/VI):** `docs/BOWCON_V4_MASTER_ARCHITECTURE_IDENTITY_EN_VI.md`
 - **Master Owner Personal Operating System Model (EN/VI):** `docs/BOWCON_V4_MASTER_OWNER_PERSONAL_OPERATING_SYSTEM_MODEL_EN_VI.md`
@@ -33,7 +44,7 @@ BOWCON thuộc về hệ sinh thái cá nhân rộng hơn là BOW.
 ShopOfBow là một dự án độc lập bên trong BOW và không phải là cha đẻ kiến trúc của BOWCON.
 BOWCON được thiết kế dựa trên quan sát host tại runtime và khám phá năng lực thay vì giả định một hệ điều hành cụ thể.
 
-**Trạng thái hiện tại:** `@bow/agent@4.0.0` — MS-1.3.43 (Khả năng phục hồi nhận thức Master Owner, Điều phối Host thích ứng & Tổng hợp ký ức giai đoạn tự phản chiếu) — Tất cả 46 bộ kiểm thử hồi quy ĐẠT, 128 khẳng định cổng thực tế ĐẠT, 0 thất bại.
+**Trạng thái hiện tại:** `@bow/agent@4.0.0` — MS-1.3.53 (Lưới Đo từ xa Quan sát, Xác minh Tự động & Phát hiện Sai lệch Sau Triển khai Có quản trị) — Tất cả 56 bộ kiểm thử hồi quy ĐẠT, 29 khẳng định cổng thực tế ĐẠT, 0 thất bại.
 
 ---
 
@@ -111,24 +122,23 @@ Fill in `.env`: `GEMINI_API_KEY`, `BOW_DESKTOP_AUTH_TOKEN`, `ROBOT_GATEWAY_SECRE
 
 ```powershell
 # Run all BOWCON V4.0 regression tests
-npx tsx tests/test_v4_architecture_contract.ts
-npx tsx tests/test_v4_agent_loop.ts
-npx tsx tests/test_v4_memory_session_isolation.ts
-npx tsx tests/test_v4_durable_memory_persistence.ts
-npx tsx tests/test_v4_multi_user_durable_memory.ts
-npx tsx tests/test_v4_multi_tenant_approval_idempotency.ts
-npx tsx tests/test_v4_agent_voice_runtime.ts
-npx tsx tests/test_v4_agent_voice_quality.ts
-npx tsx tests/test_v4_agent_conversation_context.ts
+node scratch/run_full_regression.mjs
 ```
 
-Expected: **404 / 404 PASS** across all suites.
+Expected: **55 / 55 PASS** across all suites.
 
 ---
 
 ## Further Reading / Đọc Thêm
 
-- **MS-1.3.45 (Current)** establishes Master Owner delegation governance, agent identity separation (`AGENT != MASTER_OWNER`), federated device registry, capability leases, scope containment (`DELEGATED_AUTHORITY <= OWNER_GRANTED_SCOPE`), immediate revocation (`REVOCATION > AGENT_INTENT`), and replay protection. See `docs/BOWCON_V4_MASTER_OWNER_DELEGATION_FEDERATION_GOVERNANCE_EN_VI.md`.
+- **MS-1.3.52 (Current)** establishes Governed Production Deployment & Canary Verification Pipeline, staged rollout rings (`RING_0`..`RING_4`), automated SLO degradation circuit breaking, governed rollbacks, multi-agent contradiction detection without majority voting, and immutable audit evidence (`CANARY_PASS != OWNER_APPROVAL`). See `docs/BOWCON_V4_GOVERNED_PRODUCTION_DEPLOYMENT_CANARY_EN_VI.md`.
+- **MS-1.3.51** established Governed Release Execution & Authorized Deployment Boundary, single-use WorldActionAuthorization tokens, supervisory review, post-release verification, atomic rollback, and provenance logging (`OWNER_APPROVAL != EXECUTION_TOKEN`). See `docs/BOWCON_V4_GOVERNED_RELEASE_EXECUTION_EN_VI.md`.
+- **MS-1.3.50** established Governed Continuous Integration & Milestone Release Verification Pipeline, multi-stage release audit, acceptance criteria checklist verification, multi-agent contradiction detection, cryptographic verification packet assembly (`TECHNICAL_VERIFICATION != OWNER_APPROVAL`), and advisory release recommendation. See `docs/BOWCON_V4_GOVERNED_CI_MILESTONE_RELEASE_VERIFICATION_EN_VI.md`.
+- **MS-1.3.49** established Governed Project Build, Test & Continuous Quality Gate Pipeline, command allowlist registry, in-sandbox execution, cryptographic evidence aggregation, contradiction engine, and continuous quality gates. See `docs/BOWCON_V4_MASTER_OWNER_GOVERNED_BUILD_TEST_QUALITY_GATE_EN_VI.md`.
+- **MS-1.3.48** established Controlled Change Promotion & Governed Project Integration, deterministic proposal generation, freshness validation, conflict detection, review gates, and atomic rollback. See `docs/BOWCON_V4_MASTER_OWNER_CONTROLLED_CHANGE_PROMOTION_EN_VI.md`.
+- **MS-1.3.47** established Governed Autonomous Project Sandbox & Controlled Worktree Isolation, deterministic path containment, symlink/junction escape rejection, protected workspace isolation (`C:\BOW\shopofbow`), deterministic SHA-256 manifests, cryptographic diffs, sandbox change rollback, and governed export without unrestricted execution. See `docs/BOWCON_V4_MASTER_OWNER_GOVERNED_SANDBOX_WORKTREE_EN_VI.md`.
+- **MS-1.3.46** established Governed Multi-Agent Task Orchestration, parent/child task lifecycle management, task dependency and cycle validation, verifiable artifact handoffs, cryptographic evidence aggregation, evidence provenance and integrity verification, supervisor review (`VERIFIED != OWNER_APPROVED`), cross-agent contradiction preservation, and safe recovery without unrestricted execution. See `docs/BOWCON_V4_MASTER_OWNER_MULTI_AGENT_ORCHESTRATION_EVIDENCE_EN_VI.md`.
+- **MS-1.3.45** established Master Owner delegation governance, agent identity separation (`AGENT != MASTER_OWNER`), federated device registry, capability leases, scope containment (`DELEGATED_AUTHORITY <= OWNER_GRANTED_SCOPE`), immediate revocation (`REVOCATION > AGENT_INTENT`), and replay protection. See `docs/BOWCON_V4_MASTER_OWNER_DELEGATION_FEDERATION_GOVERNANCE_EN_VI.md`.
 - **MS-1.3.44** established Master Owner durable cognitive resilience, cross-episode learning with minimum observation threshold, world-model learning federation (advisory only), and long-horizon goal continuity across restarts with Master Owner intent supremacy. See `docs/BOWCON_V4_MASTER_OWNER_DURABLE_RESILIENCE_CONTINUITY_EN_VI.md`.
 - **MS-1.3.43** established Master Owner cognitive resilience, adaptive host orchestration, self-reflective cognitive engine, and episodic memory synthesis. See `docs/BOWCON_V4_MASTER_OWNER_COGNITIVE_RESILIENCE_EPISODIC_SYNTHESIS_EN_VI.md`.
 - **MS-1.3.38** unifies the runtime under a single **Master Human Authority** (`MasterHumanAuthority`), subordinating executive orchestration, continuous operating loop, and recovery under canonical `HumanGate` with 12-attribute cryptographic token bindings, fail-closed DAG safety, and absolute `USER_STOP` supremacy. See `docs/BOWCON_V4_MASTER_HUMAN_AUTHORITY_EXECUTIVE_GOVERNANCE_MODEL_EN_VI.md`.
@@ -136,6 +146,13 @@ Expected: **404 / 404 PASS** across all suites.
 
 | Document | Language | Contents |
 |---|---|---|
+| `docs/BOWCON_V4_GOVERNED_PRODUCTION_DEPLOYMENT_CANARY_EN_VI.md` | EN + VI | Governed Production Deployment & Canary Pipeline (MS-1.3.52) |
+| `docs/BOWCON_V4_GOVERNED_RELEASE_EXECUTION_EN_VI.md` | EN + VI | Governed Release Execution & Authorized Deployment Boundary (MS-1.3.51) |
+| `docs/BOWCON_V4_GOVERNED_CI_MILESTONE_RELEASE_VERIFICATION_EN_VI.md` | EN + VI | Governed CI & Milestone Release Verification Pipeline (MS-1.3.50) |
+| `docs/BOWCON_V4_MASTER_OWNER_GOVERNED_BUILD_TEST_QUALITY_GATE_EN_VI.md` | EN + VI | Governed Project Build, Test & Quality Pipeline (MS-1.3.49) |
+| `docs/BOWCON_V4_MASTER_OWNER_CONTROLLED_CHANGE_PROMOTION_EN_VI.md` | EN + VI | Controlled Change Promotion & Governed Project Integration (MS-1.3.48) |
+| `docs/BOWCON_V4_MASTER_OWNER_GOVERNED_SANDBOX_WORKTREE_EN_VI.md` | EN + VI | Governed Autonomous Project Sandbox & Controlled Worktree Isolation (MS-1.3.47) |
+| `docs/BOWCON_V4_MASTER_OWNER_MULTI_AGENT_ORCHESTRATION_EVIDENCE_EN_VI.md` | EN + VI | Governed Multi-Agent Task Orchestration & Distributed Evidence Verification (MS-1.3.46) |
 | `docs/BOWCON_V4_MASTER_OWNER_DELEGATION_FEDERATION_GOVERNANCE_EN_VI.md` | EN + VI | Master Owner Delegation Governance & Authority Lease Architecture (MS-1.3.45) |
 | `docs/BOWCON_V4_MASTER_OWNER_DURABLE_RESILIENCE_CONTINUITY_EN_VI.md` | EN + VI | Master Owner Durable Resilience, Cross-Episode Learning & Goal Continuity (MS-1.3.44) |
 | `docs/BOWCON_V4_MASTER_OWNER_COGNITIVE_RESILIENCE_EPISODIC_SYNTHESIS_EN_VI.md` | EN + VI | Master Owner Cognitive Resilience & Episodic Synthesis (MS-1.3.43) |
