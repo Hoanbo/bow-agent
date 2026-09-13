@@ -1,30 +1,30 @@
 {
   "decisions": [
     {
-      "decisionId": "authdec_db42df646169169c",
-      "requestId": "authreq_a831629713ab7708",
-      "candidateDraftId": "cand_1789322747405_hq8h",
-      "evolutionPlanId": "evplan_1789322747405_vf47",
-      "intakeId": "peintake_1789322747405_w7jb",
+      "decisionId": "authdec_c0691b71c18dbb01",
+      "requestId": "authreq_ed5f1226c636f841",
+      "candidateDraftId": "cand_1789325499112_rdbo",
+      "evolutionPlanId": "evplan_1789325499112_whk9",
+      "intakeId": "peintake_1789325499112_oz01",
       "tenantPartition": "tenant_def_test",
       "reviewerId": "operator_alice",
       "reviewerRole": "MASTER_HUMAN_OPERATOR",
       "decision": "DEFER",
       "reason": "Deferred until maintenance window",
-      "decidedAt": "2026-09-13T18:05:47.407Z",
+      "decidedAt": "2026-09-13T18:51:39.113Z",
       "isActivePolicy": false,
       "isPolicyMutation": false,
       "isAutonomousMutation": false,
-      "provenanceHash": "f48d48cdf1b8c27c0b8a7924bf1d07bc8398518fff467123037770c0c0f248fe"
+      "provenanceHash": "19793b18ce1b86f026aac0a6735943950f4625fa83c94178ce540f307cbee4d3"
     }
   ],
   "readinessDecisions": [
     {
-      "readinessId": "actready_edb37bb73bdec4b0",
-      "candidateDraftId": "cand_1789322747405_hq8h",
+      "readinessId": "actready_385f03d6b1d45c35",
+      "candidateDraftId": "cand_1789325499112_rdbo",
       "authorizationDecisionId": "[REDACTED]",
-      "evolutionPlanId": "evplan_1789322747405_vf47",
-      "intakeId": "peintake_1789322747405_w7jb",
+      "evolutionPlanId": "evplan_1789325499112_whk9",
+      "intakeId": "peintake_1789325499112_oz01",
       "tenantPartition": "tenant_def_test",
       "state": "PENDING_HUMAN_AUTHORIZATION",
       "prerequisitesSatisfied": [
@@ -35,7 +35,7 @@
       "blockingReasons": [
         "HUMAN_DECISION_DEFERRED: Deferred until maintenance window"
       ],
-      "evaluatedAt": "2026-09-13T18:05:47.409Z",
+      "evaluatedAt": "2026-09-13T18:51:39.116Z",
       "isActivePolicy": false,
       "isActivated": false
     }

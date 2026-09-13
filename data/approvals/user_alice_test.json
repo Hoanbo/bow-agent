@@ -474,5 +474,33 @@
     "status": "PENDING",
     "createdAt": "2026-09-13T18:05:38.005Z",
     "expiresAt": "2026-09-13T18:10:38.005Z"
+  },
+  {
+    "id": "appr_1789324072469_826110",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:27:52.469Z",
+    "expiresAt": "2026-09-13T18:32:52.469Z"
+  },
+  {
+    "id": "appr_1789325488899_82c1a2",
+    "ownerUserId": "user_alice_test",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "5c620fa60be0adaef3036af5109c8e4578f189ae12a18b936759851b8f8ee1ba",
+    "argumentsPreview": {
+      "orderId": "ord_require_approval"
+    },
+    "requestedBy": "user_alice_test",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:51:28.899Z",
+    "expiresAt": "2026-09-13T18:56:28.899Z"
   }
 ]

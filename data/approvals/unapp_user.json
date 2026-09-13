@@ -1622,5 +1622,33 @@
     "status": "PENDING",
     "createdAt": "2026-09-13T18:02:32.783Z",
     "expiresAt": "2026-09-13T18:07:32.783Z"
+  },
+  {
+    "id": "appr_1789323874387_502686",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:24:34.387Z",
+    "expiresAt": "2026-09-13T18:29:34.387Z"
+  },
+  {
+    "id": "appr_1789325289717_8cc726",
+    "ownerUserId": "unapp_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "d173714e35fb9c82d551690e017095aa3f34013b845d725fef39c1ecf3cea4f1",
+    "argumentsPreview": {
+      "target": "critical_core"
+    },
+    "requestedBy": "unapp_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:48:09.717Z",
+    "expiresAt": "2026-09-13T18:53:09.717Z"
   }
 ]

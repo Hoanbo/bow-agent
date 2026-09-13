@@ -94,6 +94,8 @@ const suites = [
   'tests/test_v4_episodic_memory_synthesis.ts',
   'tests/test_v4_production_agent_loop_facade.ts',
   'tests/test_v4_agent_task_observability.ts',
+  'tests/test_v4_phase14_reality_validation_readiness.ts',
+  'tests/test_v4_phase14_exit_boundary_independent_governance_audit.ts',
 ];
 
 

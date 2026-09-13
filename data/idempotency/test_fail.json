@@ -1258,5 +1258,33 @@
     "recordedAt": 1789322645976,
     "expiresAt": 1789409045976,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mu05anzr_db3dab8d5bb4_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789323975928
+    },
+    "recordedAt": 1789323975928,
+    "expiresAt": 1789410375928,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mu06502m_8a50553b7e3a_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789325391264
+    },
+    "recordedAt": 1789325391264,
+    "expiresAt": 1789411791264,
+    "status": "COMPLETED"
   }
 ]

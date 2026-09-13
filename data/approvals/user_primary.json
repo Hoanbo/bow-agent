@@ -4004,5 +4004,97 @@
     "status": "PENDING",
     "createdAt": "2026-09-13T18:04:56.623Z",
     "expiresAt": "2026-09-13T18:09:56.623Z"
+  },
+  {
+    "id": "appr_1789324026986_8a9581",
+    "ownerUserId": "user_primary",
+    "actionName": "world_process_start",
+    "targetDomain": "shop",
+    "argumentsHash": "f164797bce33e90f380dcb26bdb6331d16233ed2ab389ff6f810998672323f41",
+    "argumentsPreview": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "-e",
+        "setInterval(() => {}, 500)"
+      ]
+    },
+    "requestedBy": "user_primary",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:27:06.986Z",
+    "expiresAt": "2026-09-13T18:32:06.986Z"
+  },
+  {
+    "id": "appr_1789324027017_2d637f",
+    "ownerUserId": "user_primary",
+    "actionName": "world_process_stop",
+    "targetDomain": "shop",
+    "argumentsHash": "f5b4f111c39efef29ee499c48ed5375dec74a0a76de6fb4e28a45a439240d54a",
+    "argumentsPreview": {
+      "pid": 7560
+    },
+    "requestedBy": "user_primary",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:27:07.017Z",
+    "expiresAt": "2026-09-13T18:32:07.017Z"
+  },
+  {
+    "id": "appr_1789324027149_ecfab7",
+    "ownerUserId": "user_primary",
+    "actionName": "world_fs_delete",
+    "targetDomain": "shop",
+    "argumentsHash": "2c56ab624c720353c54edbc6e3957ffe4d17d943f99e648ebc1cfc190c50e7fe",
+    "argumentsPreview": {
+      "path": "C:\\Windows\\System32\\calc.exe"
+    },
+    "requestedBy": "user_primary",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:27:07.149Z",
+    "expiresAt": "2026-09-13T18:32:07.149Z"
+  },
+  {
+    "id": "appr_1789325442469_359d55",
+    "ownerUserId": "user_primary",
+    "actionName": "world_process_start",
+    "targetDomain": "shop",
+    "argumentsHash": "f164797bce33e90f380dcb26bdb6331d16233ed2ab389ff6f810998672323f41",
+    "argumentsPreview": {
+      "command": "C:\\Program Files\\nodejs\\node.exe",
+      "args": [
+        "-e",
+        "setInterval(() => {}, 500)"
+      ]
+    },
+    "requestedBy": "user_primary",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:50:42.469Z",
+    "expiresAt": "2026-09-13T18:55:42.469Z"
+  },
+  {
+    "id": "appr_1789325442503_0e0a31",
+    "ownerUserId": "user_primary",
+    "actionName": "world_process_stop",
+    "targetDomain": "shop",
+    "argumentsHash": "5584f667dbe6913c72fc3f6137e01879fa6eb733d4668c4fcc4524cf1ffe4b0f",
+    "argumentsPreview": {
+      "pid": 12188
+    },
+    "requestedBy": "user_primary",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:50:42.503Z",
+    "expiresAt": "2026-09-13T18:55:42.503Z"
+  },
+  {
+    "id": "appr_1789325442638_ae9101",
+    "ownerUserId": "user_primary",
+    "actionName": "world_fs_delete",
+    "targetDomain": "shop",
+    "argumentsHash": "2c56ab624c720353c54edbc6e3957ffe4d17d943f99e648ebc1cfc190c50e7fe",
+    "argumentsPreview": {
+      "path": "C:\\Windows\\System32\\calc.exe"
+    },
+    "requestedBy": "user_primary",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T18:50:42.638Z",
+    "expiresAt": "2026-09-13T18:55:42.638Z"
   }
 ]

@@ -1258,5 +1258,33 @@
     "recordedAt": 1789322645987,
     "expiresAt": 1789409045987,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mu05ao02_93c8d01bada9_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789323975940
+    },
+    "recordedAt": 1789323975940,
+    "expiresAt": 1789410375940,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mu065030_b03894751ea0_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789325391278
+    },
+    "recordedAt": 1789325391278,
+    "expiresAt": 1789411791278,
+    "status": "COMPLETED"
   }
 ]

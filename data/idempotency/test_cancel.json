@@ -1258,5 +1258,33 @@
     "recordedAt": 1789322645981,
     "expiresAt": 1789409045981,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mu05anzw_c6ac23c5812f_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789323975934
+    },
+    "recordedAt": 1789323975934,
+    "expiresAt": 1789410375934,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mu06502t_d7a3aeb62373_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789325391271
+    },
+    "recordedAt": 1789325391271,
+    "expiresAt": 1789411791271,
+    "status": "COMPLETED"
   }
 ]
