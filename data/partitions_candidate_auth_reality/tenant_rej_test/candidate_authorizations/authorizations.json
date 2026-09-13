@@ -1,30 +1,30 @@
 {
   "decisions": [
     {
-      "decisionId": "authdec_78e4eccf525fd186",
-      "requestId": "authreq_af029009ef1a9639",
-      "candidateDraftId": "cand_1789287669836_sntc",
-      "evolutionPlanId": "evplan_1789287669836_g1j7",
-      "intakeId": "peintake_1789287669836_6c3p",
+      "decisionId": "authdec_44921d76ca72bfbd",
+      "requestId": "authreq_9eae163679f6624a",
+      "candidateDraftId": "cand_1789322747398_dw64",
+      "evolutionPlanId": "evplan_1789322747398_5k6c",
+      "intakeId": "peintake_1789322747398_zblj",
       "tenantPartition": "tenant_rej_test",
       "reviewerId": "operator_alice",
       "reviewerRole": "MASTER_HUMAN_OPERATOR",
       "decision": "REJECT",
       "reason": "Safety margins inadequate",
-      "decidedAt": "2026-09-13T08:21:09.837Z",
+      "decidedAt": "2026-09-13T18:05:47.399Z",
       "isActivePolicy": false,
       "isPolicyMutation": false,
       "isAutonomousMutation": false,
-      "provenanceHash": "9768fc22d95e28c117568a86f6e6b4ed00dfbd1173e44f387e9608df43916604"
+      "provenanceHash": "1a2caf15a8d604835fc5ea7c30dadbbe28b3a00b65fb7e2f254adac8a5e2f830"
     }
   ],
   "readinessDecisions": [
     {
-      "readinessId": "actready_ebdb68fd1fd8b964",
-      "candidateDraftId": "cand_1789287669836_sntc",
+      "readinessId": "actready_8ac6c14d489d41ff",
+      "candidateDraftId": "cand_1789322747398_dw64",
       "authorizationDecisionId": "[REDACTED]",
-      "evolutionPlanId": "evplan_1789287669836_g1j7",
-      "intakeId": "peintake_1789287669836_6c3p",
+      "evolutionPlanId": "evplan_1789322747398_5k6c",
+      "intakeId": "peintake_1789322747398_zblj",
       "tenantPartition": "tenant_rej_test",
       "state": "REJECTED",
       "prerequisitesSatisfied": [
@@ -35,7 +35,7 @@
       "blockingReasons": [
         "HUMAN_DECISION_REJECTED: Safety margins inadequate"
       ],
-      "evaluatedAt": "2026-09-13T08:21:09.851Z",
+      "evaluatedAt": "2026-09-13T18:05:47.403Z",
       "isActivePolicy": false,
       "isActivated": false
     }

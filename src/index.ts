@@ -286,7 +286,8 @@ export * from './core/resilience/index.js';
 export * from './core/delegation/index.js';
 
 // Explicit re-exports to resolve TS2308 ambiguity
-export type { TaskId, TaskDependency, EvidenceIntegrityStatus } from './core/orchestration/index.js';
+export type { TaskId, TaskDependency, EvidenceIntegrityStatus, AgentTask as OrchestrationAgentTask } from './core/orchestration/index.js';
+export type { AgentTask } from './core/taskLifecycle/index.js';
 export type { FailureCategory } from './core/lifecycle/index.js';
 export type { IncidentSeverity } from './monitoring/analyticsTypes.js';
 export type { IncidentSeverity as DiagnosisIncidentSeverity, FailureCategory as DiagnosisFailureCategory } from './core/diagnosis/index.js';
@@ -299,6 +300,7 @@ export { createReconciliationId } from './core/incidentResilience/index.js';
 export { createReconciliationId as createPolicyReconciliationId } from './core/policyPostExecution/index.js';
 export { HARD_FORBIDDEN_ACTIONS } from './core/policyDecision/index.js';
 export { HARD_FORBIDDEN_ACTIONS as POLICY_EVOLUTION_HARD_FORBIDDEN_ACTIONS } from './core/policyEvolutionPlanning/index.js';
+export type { VerificationFailure, VerificationRecommendation, VerificationRequest } from './core/verification/index.js';
 
 
 
@@ -678,3 +680,93 @@ export {
   type CircularityAnalysisResult,
   type AuditProvenanceVerificationResult,
 } from './core/policyPhaseExitAudit/index.js';
+
+// 87. BOWCON V4.0 — Milestone 1.4.01: Agent Task Lifecycle & State Engine
+export * from './core/taskLifecycle/index.js';
+
+// 88. BOWCON V4.0 — Milestone 1.4.03: Context Assembly & Dynamic Compaction
+export * from './core/contextAssembly/index.js';
+
+// 89. BOWCON V4.0 — Milestone 1.4.05: Governed Action Proposal & PDP / PEP Bridge
+export * from './core/actionProposal/index.js';
+
+// 90. BOWCON V4.0 — Milestone 1.4.06: Production Tool Adapter Plane
+export * from './core/toolAdapter/index.js';
+
+// 91. BOWCON V4.0 — Milestone 1.4.07: Empirical Reality Verification Engine
+export * from './core/realityVerification/index.js';
+
+// 92. BOWCON V4.0 — Milestone 1.4.08: Durable Commit Engine
+export * from './core/durableCommit/index.js';
+
+// 93. BOWCON V4.0 — Milestone 1.4.09: Episodic Memory & Synthesis
+export * from './core/episodicMemory/index.js';
+
+// 94. BOWCON V4.0 — Milestone 1.4.10: Production Agent Loop Façade
+export {
+  AGENT_LOOP_FACADE_VERSION,
+  AGENT_LOOP_FACADE_AUDIT_DOMAIN,
+  MAX_LOOP_ITERATIONS,
+  MAX_STEP_ATTEMPTS,
+  MAX_CONSECUTIVE_DENIALS,
+  MAX_TASK_EXECUTION_TIME_MS,
+  AGENT_LOOP_BOUNDS,
+  AgentLoopError,
+  AgentLoopAbortedError,
+  AgentLoopValidationError,
+  AgentLoopSecurityViolationError,
+  AgentLoopConcurrencyError,
+  AgentLoopBudgetExceededError,
+  AgentLoopAuthorizationError,
+  AgentLoopExecutionError,
+  type AgentLoopOutcomeStatus,
+  type AgentLoopContext,
+  type AgentLoopStepExecution,
+  type AgentLoopAuditEventType,
+  type AgentLoopRequest as ProductionAgentLoopRequest,
+  type AgentLoopResult as ProductionAgentLoopResult,
+  type AgentLoopState as ProductionAgentLoopState,
+  AgentLoopExecutionGate,
+  globalAgentLoopExecutionGate,
+  type AgentLoopGateContext,
+  type AgentLoopExecutionGateOptions,
+  AgentLoopStateCoordinator,
+  type StateTransitionEvent,
+  AgentLoopRetryGovernor,
+  type RetryGovernorOptions,
+  AgentLoopSubsystemComposer,
+  type AgentLoopSubsystemComposerOptions,
+  ProductionAgentLoopFacade,
+  globalProductionAgentLoopFacade,
+  type ProductionAgentLoopFacadeOptions,
+} from './core/agentLoopFacade/index.js';
+
+// 95. BOWCON V4.0 — Milestone 1.4.11: Agent Task Observability & Distributed Tracing
+export {
+  type SpanId as AgentSpanId,
+  type ParentSpanId as AgentParentSpanId,
+  type AgentLifecycleStage,
+  type AgentSpanStatus,
+  type AgentTelemetryEventType,
+  type AgentTraceProvenanceReferences,
+  type AgentExecutionSpan,
+  type AgentTelemetryEvent,
+  type AgentSLOSummary,
+  type AgentTraceEnvelope,
+  type AgentObservabilityResult,
+  OBSERVABILITY_BOUNDS,
+  AgentObservabilityError,
+  AgentObservabilityAbortedError,
+  AgentObservabilityValidationError,
+  AgentObservabilityConcurrencyError,
+  AgentObservabilitySecurityError,
+  AgentExecutionSpanGate,
+  type SpanGateOptions,
+  AgentTraceCollector,
+  type StartSpanInput,
+  type EndSpanInput,
+  AgentTaskTelemetryEmitter,
+  AgentSLOBudgetTracker,
+  AgentObservabilityRuntime,
+  type StartTraceInput,
+} from './core/agentObservability/index.js';

@@ -76,7 +76,7 @@ export class PromptBuilder {
         const sanitizedCap = this.sanitizeText(context.capabilitiesContext || 'Available tools: brain_fs_write, brain_fs_read, brain_fs_append, brain_fs_list, brain_fs_delete, brain_echo.');
         const sanitizedMem = this.sanitizeText(context.memoryContext || 'None.');
         const sanitizedTask = this.sanitizeText(context.taskContext || 'Process current request.');
-        const safeUserInput = this.neutralizeInjection(context.userContext);
+        const safeUserInput = this.neutralizeInjection(context.userContext || '');
         let turnsText = '';
         if (context.previousTurns && context.previousTurns.length > 0) {
             turnsText = '\n### CONVERSATION HISTORY (RECENT TURNS)\n' +

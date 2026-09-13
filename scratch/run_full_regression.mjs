@@ -83,7 +83,19 @@ const suites = [
   'tests/test_v4_agent_governed_policy_governance_readiness.ts',
   'tests/test_v4_agent_governed_phase_exit_and_phase14_entry.ts',
   'tests/test_v4_agent_governed_phase_exit_evidence_audit.ts',
+  'tests/test_v4_agent_task_lifecycle.ts',
+  'tests/test_v4_agent_cognitive_provider_runtime.ts',
+  'tests/test_v4_context_assembly_dynamic_compaction.ts',
+  'tests/test_v4_governed_multi_step_action_planner.ts',
+  'tests/test_v4_governed_action_proposal_pep_bridge.ts',
+  'tests/test_v4_production_tool_adapter_plane.ts',
+  'tests/test_v4_reality_verification_engine.ts',
+  'tests/test_v4_durable_commit_engine.ts',
+  'tests/test_v4_episodic_memory_synthesis.ts',
+  'tests/test_v4_production_agent_loop_facade.ts',
+  'tests/test_v4_agent_task_observability.ts',
 ];
+
 
 
 
@@ -103,7 +115,7 @@ for (const suite of suites) {
       timeout: 120000,
     });
     // Extract passed count if present
-    const passMatches = output.match(/(?:TOTAL ASSERTIONS PASSED|REALITY GATE COMPLETE|EXECUTIVE REALITY GATE COMPLETE|REALITY GATE SUCCESS:\s*All\s+|REALITY GATE PASSED:\s*|REALITY GATE PASS:\s*)(\d+)/i);
+    const passMatches = output.match(/(?:TOTAL ASSERTIONS PASSED|REALITY GATE COMPLETE:\s*All\s*|REALITY GATE COMPLETE:\s*|REALITY GATE COMPLETE|EXECUTIVE REALITY GATE COMPLETE|REALITY GATE SUCCESS:\s*All\s+|REALITY GATE PASSED:\s*|REALITY GATE PASS:\s*)(\d+)/i);
     let count;
     if (passMatches && passMatches[1] && Number.isFinite(Number.parseInt(passMatches[1], 10))) {
       count = Number.parseInt(passMatches[1], 10);

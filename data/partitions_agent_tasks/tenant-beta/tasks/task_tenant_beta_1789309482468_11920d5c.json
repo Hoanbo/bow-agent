@@ -1,0 +1,16 @@
+{
+  "taskId": "task_tenant_beta_1789309482468_11920d5c",
+  "tenantId": "tenant-beta",
+  "userId": "user-bob",
+  "title": "Tenant Beta Task",
+  "intent": "Beta intent",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [],
+  "currentStepIndex": -1,
+  "createdAt": "2026-09-13T14:24:42.468Z",
+  "updatedAt": "2026-09-13T14:24:42.468Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "6d819d06bd944e5a46015a3991ec7ea05848eb7bd287c4b30f63faf8dfd91d36"
+}

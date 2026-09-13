@@ -8,3 +8,6 @@ export * from './ollamaProvider.js';
 export * from './deterministicFallbackProvider.js';
 export * from './cognitiveRegistry.js';
 export * from './cognitivePipeline.js';
+export * from './cognitiveProviders.js';
+export * from './cognitiveCircuitBreaker.js';
+export * from './cognitiveProviderRuntime.js';

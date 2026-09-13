@@ -1,0 +1,16 @@
+{
+  "taskId": "task_tenant_alpha_1789309472030_c78f67b5",
+  "tenantId": "tenant-alpha",
+  "userId": "user-alice",
+  "title": "Order Address Correction Task",
+  "intent": "Amend order shipping address for customer",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [],
+  "currentStepIndex": -1,
+  "createdAt": "2026-09-13T14:24:32.030Z",
+  "updatedAt": "2026-09-13T14:24:32.030Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "148789c7a882fad32060b44e844f19d212199d2b1815e72b9bfcef2d9e74e9a4"
+}

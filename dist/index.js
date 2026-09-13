@@ -314,3 +314,21 @@ export * as policyPhaseTransition from './core/policyPhaseTransition/index.js';
 export { createPhaseExitCandidateId, createPhaseExitAuthorizationId, createPhaseExitCommitId, createPhase14EntryReadinessId, createPhase14EntryAuthorizationId, createPhase14EntryCommitId, createPhaseTransitionProvenanceId, CANONICAL_PHASE_1_4_PREREQUISITES, PolicyPhaseExitReadinessResolver, PolicyPhaseExitCriteriaRevalidator, PolicyPhaseExitReviewEngine, PolicyPhaseExitAuthorizationBoundary, PolicyPhaseExitTransitionEngine, PolicyPhase14EntryReadinessEngine, PolicyPhase14EntryAuthorizationBoundary, PolicyPhase14EntryTransitionEngine, PolicyPhaseTransitionStore, PolicyPhaseTransitionProvenanceEngine, PolicyPhaseTransitionAuditEngine, PolicyPhaseTransitionRuntime, POLICY_PHASE_TRANSITION_AUDIT_DOMAIN, } from './core/policyPhaseTransition/index.js';
 // 89. BOWCON V4.0 — Milestone 1.3.78: Independent Phase 1.3 Exit Evidence Audit & Governance Readiness Certification
 export { PolicyPhaseExitEvidenceStrengthEngine, PolicyPhaseExitEvidenceCollector, PolicyPhaseExitMilestoneInspector, PolicyPhaseExitIntegrationInspector, PolicyPhaseExitRuntimeInspector, PolicyPhaseExitSecurityInspector, PolicyPhaseExitAuthorityBoundaryInspector, PolicyPhaseExitTenantIsolationInspector, PolicyPhaseExitProvenanceInspector, PolicyPhaseExitAntiCircularityEngine, PolicyPhaseExitIndependentAssessmentEngine, PolicyPhaseExitAuditReportStore, PolicyPhaseExitAuditProvenanceEngine, PolicyPhaseExitAuditEngine, PolicyPhaseExitAuditRuntime, CANONICAL_AUDIT_CRITERIA, POLICY_PHASE_EXIT_EVIDENCE_AUDIT_DOMAIN, AUDIT_PROVENANCE_GENESIS_ANCHOR, createPhaseExitAuditId, createAuditEvidenceId, createAuditCriterionId, createAuditReportId, createAuditProvenanceId, } from './core/policyPhaseExitAudit/index.js';
+// 87. BOWCON V4.0 — Milestone 1.4.01: Agent Task Lifecycle & State Engine
+export * from './core/taskLifecycle/index.js';
+// 88. BOWCON V4.0 — Milestone 1.4.03: Context Assembly & Dynamic Compaction
+export * from './core/contextAssembly/index.js';
+// 89. BOWCON V4.0 — Milestone 1.4.05: Governed Action Proposal & PDP / PEP Bridge
+export * from './core/actionProposal/index.js';
+// 90. BOWCON V4.0 — Milestone 1.4.06: Production Tool Adapter Plane
+export * from './core/toolAdapter/index.js';
+// 91. BOWCON V4.0 — Milestone 1.4.07: Empirical Reality Verification Engine
+export * from './core/realityVerification/index.js';
+// 92. BOWCON V4.0 — Milestone 1.4.08: Durable Commit Engine
+export * from './core/durableCommit/index.js';
+// 93. BOWCON V4.0 — Milestone 1.4.09: Episodic Memory & Synthesis
+export * from './core/episodicMemory/index.js';
+// 94. BOWCON V4.0 — Milestone 1.4.10: Production Agent Loop Façade
+export { AGENT_LOOP_FACADE_VERSION, AGENT_LOOP_FACADE_AUDIT_DOMAIN, MAX_LOOP_ITERATIONS, MAX_STEP_ATTEMPTS, MAX_CONSECUTIVE_DENIALS, MAX_TASK_EXECUTION_TIME_MS, AGENT_LOOP_BOUNDS, AgentLoopError, AgentLoopAbortedError, AgentLoopValidationError, AgentLoopSecurityViolationError, AgentLoopConcurrencyError, AgentLoopBudgetExceededError, AgentLoopAuthorizationError, AgentLoopExecutionError, AgentLoopExecutionGate, globalAgentLoopExecutionGate, AgentLoopStateCoordinator, AgentLoopRetryGovernor, AgentLoopSubsystemComposer, ProductionAgentLoopFacade, globalProductionAgentLoopFacade, } from './core/agentLoopFacade/index.js';
+// 95. BOWCON V4.0 — Milestone 1.4.11: Agent Task Observability & Distributed Tracing
+export { OBSERVABILITY_BOUNDS, AgentObservabilityError, AgentObservabilityAbortedError, AgentObservabilityValidationError, AgentObservabilityConcurrencyError, AgentObservabilitySecurityError, AgentExecutionSpanGate, AgentTraceCollector, AgentTaskTelemetryEmitter, AgentSLOBudgetTracker, AgentObservabilityRuntime, } from './core/agentObservability/index.js';

@@ -6,3 +6,8 @@ export * from './planValidator.js';
 export * from './planRiskClassifier.js';
 export * from './clarificationPlanner.js';
 export * from './planningService.js';
+export * from './governedPlanningTypes.js';
+export * from './planStepBuilder.js';
+export * from './planDependencyResolver.js';
+export * from './governedPlanValidator.js';
+export * from './governedActionPlanner.js';

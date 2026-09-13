@@ -113,6 +113,214 @@
         "totalCriteriaCount": 24,
         "unresolvedRisksCount": 0
       }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789294373657_zt09ls",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T10:12:53.657Z",
+      "readinessProvenanceHash": "7e77994e53e8683a3d981224498da9049a7b3d87f57808e6755cfabd10f687b5",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789295389245_h8gr4n",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T10:29:49.245Z",
+      "readinessProvenanceHash": "0c51bcfae8485bec1f707b83f09b5a6d682a588941b12c32793a9bf241c33461",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789302135023_nenplk",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T12:22:15.023Z",
+      "readinessProvenanceHash": "da10c0c6f45c6833592c6b0c5690c16e25c90a6daea10cf14b95ff587f32e501",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789308436474_ghonmn",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T14:07:16.474Z",
+      "readinessProvenanceHash": "468ffdd0c32f7d6ce28150cf4d609f00b539e6618f75a5582466ff2b00c62b7a",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789309746336_mxq9s0",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T14:29:06.336Z",
+      "readinessProvenanceHash": "e5ca647f3f1549d24f3bf06db683c20b5b3b6f4d5748da523230e7b71cac842d",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789311312520_791yyj",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T14:55:12.520Z",
+      "readinessProvenanceHash": "bd9b8f5827d6401039abf60e7fcb4f277dd3cc2dbbdcd9318db7c289415825e1",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789311536289_9ue9v6",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T14:58:56.289Z",
+      "readinessProvenanceHash": "16f4541303d9b7537387adb4529c8ac039e69894f747ef79e551c0d57508d312",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789312849929_egzijr",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T15:20:49.929Z",
+      "readinessProvenanceHash": "cdde4d916f06d5d1a601b222ec04d3944f55b19a38082a55b0da95fdce1333f4",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789316712476_f8mf79",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T16:25:12.476Z",
+      "readinessProvenanceHash": "95a43f4a5e41db73fac86b244d51fbdd89c3f76fdc27dad5766b39c7eb1ceeba",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789318776624_qylitv",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T16:59:36.624Z",
+      "readinessProvenanceHash": "bf934696cb5c1dfbe3fb3292b271191fc0db23e2b3d2f3642f14fde856f0bcdd",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789319822010_r1tx3l",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T17:17:02.010Z",
+      "readinessProvenanceHash": "f4f4bfc9d5fc9b28ad055657cd01b66b050dfcc35de1bb2fb576d52d09398f76",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789321619647_0zqgje",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T17:46:59.647Z",
+      "readinessProvenanceHash": "488f1e8f7323520f68d9d7be6a10af881f60f380b9e1b0cb9b67fd45d48a9645",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
+    },
+    {
+      "candidateId": "cand_exit_tenant_test_readiness_1789322761087_ecwq0d",
+      "tenantId": "tenant_test_readiness",
+      "readinessReportId": "rep_tenant_test_readiness_001",
+      "assessmentId": "assess_tenant_test_readiness_001",
+      "currentPhase": "PHASE_1_3_ACTIVE",
+      "targetPhase": "PHASE_1_3_EXIT_COMMITTED",
+      "proposedBy": "operator_alice_proposer",
+      "createdAt": "2026-09-13T18:06:01.087Z",
+      "readinessProvenanceHash": "be52f55d9cc0360fa9a3f981cbd5bfc211d461bf8bdbbf76e08bf23032203adc",
+      "summary": {
+        "passedCriteriaCount": 24,
+        "totalCriteriaCount": 24,
+        "unresolvedRisksCount": 0
+      }
     }
   ],
   "exitAuthorizations": [
@@ -199,6 +407,162 @@
       "decision": "AUTHORIZED",
       "authorizedAt": "2026-09-13T08:30:26.118Z",
       "fingerprint": "28f15388ae87b186d8bb8779febb994c11b068c8ce82f79fcabb2b484bf17499"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789294373664_iunddb",
+      "candidateId": "cand_exit_tenant_test_readiness_1789294373657_zt09ls",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T10:12:53.664Z",
+      "fingerprint": "32a76a9bdcfe8336fd1466f2bd81a14ae4d1e7184823de011b638bfec4e64afe"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789295389253_o7z97z",
+      "candidateId": "cand_exit_tenant_test_readiness_1789295389245_h8gr4n",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T10:29:49.253Z",
+      "fingerprint": "d20ae9e79843b82c004492b067b42045142b587f85a0512f3813a827f77ec2cb"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789302135030_rarw4c",
+      "candidateId": "cand_exit_tenant_test_readiness_1789302135023_nenplk",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T12:22:15.030Z",
+      "fingerprint": "691fc168438cd3a6fc9bc7b7a7141f43cc9f0227f4966f99f88b2fdf70edcdba"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789308436482_lrt3bp",
+      "candidateId": "cand_exit_tenant_test_readiness_1789308436474_ghonmn",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:07:16.482Z",
+      "fingerprint": "aea905acabda485085977097b117a2f30d309477027a1e6285c63d05e319af62"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789309746343_dcruit",
+      "candidateId": "cand_exit_tenant_test_readiness_1789309746336_mxq9s0",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:29:06.343Z",
+      "fingerprint": "4a3f070a58e353ea5b847879b7865951f26c212802125c8a925c04b2b719e502"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789311312527_fkf4p1",
+      "candidateId": "cand_exit_tenant_test_readiness_1789311312520_791yyj",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:55:12.527Z",
+      "fingerprint": "bb1d8a5bb9ec9c91d9ef42873e0326d0469a4332eedc4502d0fb684d38adcc89"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789311536296_4jffx7",
+      "candidateId": "cand_exit_tenant_test_readiness_1789311536289_9ue9v6",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:58:56.296Z",
+      "fingerprint": "8ed46b185dbec8cd472aaf1fbf8dd21d163b787362eb102c8a9707c678d85cee"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789312849938_f4xhqq",
+      "candidateId": "cand_exit_tenant_test_readiness_1789312849929_egzijr",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T15:20:49.938Z",
+      "fingerprint": "8fc9f94a1af30a59e8e097005ad5be2e69958eefcfd08fe662bae6bba3a8a475"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789316712484_rszccb",
+      "candidateId": "cand_exit_tenant_test_readiness_1789316712476_f8mf79",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T16:25:12.484Z",
+      "fingerprint": "bc87fe5c5c2c90b7e8c1e980ac8f51a1394c5f3523ed6af6e6bb48b59448a21a"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789318776632_lnlcr7",
+      "candidateId": "cand_exit_tenant_test_readiness_1789318776624_qylitv",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T16:59:36.632Z",
+      "fingerprint": "b3d3f506653ca3ed989ee02ee360b117c8962b2167f317186f3cb68271969ee4"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789319822017_bvcpk9",
+      "candidateId": "cand_exit_tenant_test_readiness_1789319822010_r1tx3l",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T17:17:02.017Z",
+      "fingerprint": "17a88bf67bd38e30eeb8a995d0dc420a5bdbe87cf41d6bfb542a5ce45c29beff"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789321619655_jmg8ba",
+      "candidateId": "cand_exit_tenant_test_readiness_1789321619647_0zqgje",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T17:46:59.655Z",
+      "fingerprint": "cb6c535697a6eadc3b254bd1cd1760f0077e25e3b32ea40d6e05f87d5abc9831"
+    },
+    {
+      "authorizationId": "auth_exit_tenant_test_readiness_1789322761094_flwfus",
+      "candidateId": "cand_exit_tenant_test_readiness_1789322761087_ecwq0d",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_alice_proposer",
+      "authorizedBy": "operator_bob_security_lead",
+      "operatorRole": "HUMAN_SECURITY_ADMIN",
+      "rationale": "Comprehensive audit verified; all 24 criteria passed; authorized Phase 1.3 exit",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T18:06:01.094Z",
+      "fingerprint": "bfca2173b4a86d4c01c9cb881af97116b6cfc4f3f0db98cc5056682d46ffe607"
     }
   ],
   "entryAuthorizations": [
@@ -273,26 +637,182 @@
       "decision": "AUTHORIZED",
       "authorizedAt": "2026-09-13T08:30:26.129Z",
       "fingerprint": "77b18bb8413764911cedaf21bb22d75f49acebcf3f968beb8b777cccfc932f1d"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789294373675_2q6yan",
+      "readinessId": "readiness_14_tenant_test_readiness_1789294373672_h5g0yq",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T10:12:53.675Z",
+      "fingerprint": "3435b91fe6353b68fc90c6dc4eae66c94cccdcb46f7df2cbd2856393e1001d65"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789295389265_59331x",
+      "readinessId": "readiness_14_tenant_test_readiness_1789295389262_ia4vjz",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T10:29:49.265Z",
+      "fingerprint": "c1e137ba0169f8e162e19babc129aafac81f4efc05e98877c25e607c5357f1ff"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789302135042_pnz06n",
+      "readinessId": "readiness_14_tenant_test_readiness_1789302135038_xs15ia",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T12:22:15.042Z",
+      "fingerprint": "12358724826aa765c74ccce4b70d637090977eb5dacd1a27ddff169653b230e5"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789308436494_8jkozo",
+      "readinessId": "readiness_14_tenant_test_readiness_1789308436491_ovmeyt",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:07:16.495Z",
+      "fingerprint": "4fdcd34e1dbcd30affe2e4fe9cf51e3279ad8fea72f6754fb46ced5ed70076c1"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789309746355_4ovt1p",
+      "readinessId": "readiness_14_tenant_test_readiness_1789309746351_vf78na",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:29:06.355Z",
+      "fingerprint": "707d7e1c92803f5dbfd91cf56e600f9c27f09c3c6fb66db044254bd0d0b6ca6c"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789311312539_kmb106",
+      "readinessId": "readiness_14_tenant_test_readiness_1789311312536_oy1mir",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:55:12.539Z",
+      "fingerprint": "a3a01edad7ce62d4a26edb9eac331fedd49e218d495d6d9b9ced65185db78eb6"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789311536308_bimw2m",
+      "readinessId": "readiness_14_tenant_test_readiness_1789311536305_leppev",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T14:58:56.308Z",
+      "fingerprint": "4089dc688f5c55457d6d1f0fe44f3b1591d7e1d7f7a019ce73ae8899d81b8709"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789312849954_uuqm8d",
+      "readinessId": "readiness_14_tenant_test_readiness_1789312849949_u0xpfn",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T15:20:49.954Z",
+      "fingerprint": "2d1a5896592d275bd54ea6f69076a0423d45b4d866d9e44aa0b17bf2aeddbf3f"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789316712498_vklmfs",
+      "readinessId": "readiness_14_tenant_test_readiness_1789316712494_2codao",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T16:25:12.498Z",
+      "fingerprint": "78e51d89a5fb9e42ffe72bb1244053ea83a6c2224c861dae4e03dc0025908bcb"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789318776644_bud57l",
+      "readinessId": "readiness_14_tenant_test_readiness_1789318776640_rtp0te",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T16:59:36.644Z",
+      "fingerprint": "ac00abe9929266c87ccfa40d2a239354ed25296f9de3c523b59eb020f7643740"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789319822030_fv9rz5",
+      "readinessId": "readiness_14_tenant_test_readiness_1789319822026_c31vk4",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T17:17:02.030Z",
+      "fingerprint": "278eadf99a8e5ef491a57512144766b148b91273025b8ee638c505bda06d43ad"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789321619670_6dbq0c",
+      "readinessId": "readiness_14_tenant_test_readiness_1789321619666_gfopx1",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T17:46:59.670Z",
+      "fingerprint": "1829abc8d5377b3dc18883b5561840c5a35321f1694d496c06fc4e32e9073453"
+    },
+    {
+      "authorizationId": "auth_14_tenant_test_readiness_1789322761107_5djph6",
+      "readinessId": "readiness_14_tenant_test_readiness_1789322761103_41i1nf",
+      "tenantId": "tenant_test_readiness",
+      "requestedBy": "operator_david_committer",
+      "authorizedBy": "operator_frank_owner",
+      "operatorRole": "OWNER",
+      "rationale": "Phase 1.3 complete; governance plane verified; authorizing transition to Phase 1.4",
+      "decision": "AUTHORIZED",
+      "authorizedAt": "2026-09-13T18:06:01.107Z",
+      "fingerprint": "88bbd52511533394c943db8229e15b9065fbeae8db0de3eb71a13a956df134f4"
     }
   ],
-  "updatedAt": "2026-09-13T08:30:26.133Z",
+  "updatedAt": "2026-09-13T18:06:01.111Z",
   "exitCommit": {
-    "commitId": "commit_exit_tenant_test_readiness_1789288226123_lw7rgo",
+    "commitId": "commit_exit_tenant_test_readiness_1789322761099_ydc2oi",
     "tenantId": "tenant_test_readiness",
-    "candidateId": "cand_exit_tenant_test_readiness_1789288226111_w62p39",
-    "authorizationId": "auth_exit_tenant_test_readiness_1789288226118_y2kc0r",
+    "candidateId": "cand_exit_tenant_test_readiness_1789322761087_ecwq0d",
+    "authorizationId": "auth_exit_tenant_test_readiness_1789322761094_flwfus",
     "previousPhase": "PHASE_1_3_EXIT_AUTHORIZED",
     "committedPhase": "PHASE_1_3_EXIT_COMMITTED",
-    "committedAt": "2026-09-13T08:30:26.123Z",
+    "committedAt": "2026-09-13T18:06:01.099Z",
     "committedBy": "operator_david_committer",
-    "provenanceHash": "d000265bcc4032d63f97f9986dac1ab40cab23e634b17f13aaffc98da06073c5"
+    "provenanceHash": "63352b08a800c06fc5490ac315f3efa1ab76eb41854b24ea89cd005a010763bb"
   },
   "entryReadiness": {
-    "readinessId": "readiness_14_tenant_test_readiness_1789288226126_d77y7r",
+    "readinessId": "readiness_14_tenant_test_readiness_1789322761103_41i1nf",
     "tenantId": "tenant_test_readiness",
-    "exitCommitId": "commit_exit_tenant_test_readiness_1789288226123_lw7rgo",
+    "exitCommitId": "commit_exit_tenant_test_readiness_1789322761099_ydc2oi",
     "status": "PHASE_1_4_ENTRY_READY",
-    "evaluatedAt": "2026-09-13T08:30:26.126Z",
+    "evaluatedAt": "2026-09-13T18:06:01.103Z",
     "prerequisitesSatisfied": true,
     "reasons": [
       "Phase 1.3 exit committed and cryptographically verified",
@@ -309,15 +829,15 @@
     ]
   },
   "entryCommit": {
-    "commitId": "commit_14_tenant_test_readiness_1789288226133_9j7k7h",
+    "commitId": "commit_14_tenant_test_readiness_1789322761111_lx4o85",
     "tenantId": "tenant_test_readiness",
-    "exitCommitId": "commit_exit_tenant_test_readiness_1789288226123_lw7rgo",
-    "entryReadinessId": "readiness_14_tenant_test_readiness_1789288226126_d77y7r",
-    "authorizationId": "auth_14_tenant_test_readiness_1789288226129_3hlv7v",
+    "exitCommitId": "commit_exit_tenant_test_readiness_1789322761099_ydc2oi",
+    "entryReadinessId": "readiness_14_tenant_test_readiness_1789322761103_41i1nf",
+    "authorizationId": "auth_14_tenant_test_readiness_1789322761107_5djph6",
     "previousPhase": "PHASE_1_4_ENTRY_AUTHORIZED",
     "committedPhase": "PHASE_1_4_ENTRY_COMMITTED",
-    "committedAt": "2026-09-13T08:30:26.133Z",
+    "committedAt": "2026-09-13T18:06:01.111Z",
     "committedBy": "operator_grace_committer",
-    "provenanceHash": "71fcf17c30804cfa5f33d25e7d37a9b328c4471dcb1b9bffcf4e842cffb32ac4"
+    "provenanceHash": "63e6962e896fbb34c270e1638e32edfae4db612d2c7296ea63708a04e62ef9d3"
   }
 }

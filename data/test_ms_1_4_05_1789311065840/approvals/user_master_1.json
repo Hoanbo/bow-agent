@@ -1,0 +1,69 @@
+[
+  {
+    "id": "appr_1789311065865_268087",
+    "ownerUserId": "user_master_1",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "a1c488154cd5662fa89cc48eaf6d6810dca424b212248a5d0bb93c18dce23fe5",
+    "argumentsPreview": {
+      "orderId": "ord_998",
+      "courier": "express_speed"
+    },
+    "requestedBy": "user_master_1",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-13T14:51:05.865Z",
+    "expiresAt": "2026-09-13T14:56:05.865Z",
+    "approver": "master_operator",
+    "consumedAt": "2026-09-13T14:51:05.873Z",
+    "executionToken": "tok_f4fbbcda2d01d8567eefaac054451bd2dbc0c9dab351fbd1"
+  },
+  {
+    "id": "appr_1789311065877_df3704",
+    "ownerUserId": "user_master_1",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "dynamic_code",
+    "argumentsHash": "a1c488154cd5662fa89cc48eaf6d6810dca424b212248a5d0bb93c18dce23fe5",
+    "argumentsPreview": {
+      "orderId": "ord_998",
+      "courier": "express_speed"
+    },
+    "requestedBy": "user_master_1",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T14:51:05.877Z",
+    "expiresAt": "2026-09-13T14:56:05.877Z",
+    "correlationId": "prop_task_alpha_1_step_2_v1"
+  },
+  {
+    "id": "appr_1789311065880_6c9aa3",
+    "ownerUserId": "user_master_1",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "shop",
+    "argumentsHash": "a1c488154cd5662fa89cc48eaf6d6810dca424b212248a5d0bb93c18dce23fe5",
+    "argumentsPreview": {
+      "orderId": "ord_998",
+      "courier": "express_speed"
+    },
+    "requestedBy": "user_master_1",
+    "status": "APPROVED",
+    "createdAt": "2026-09-13T14:51:05.880Z",
+    "expiresAt": "2026-09-13T14:56:05.880Z",
+    "approver": "master_operator",
+    "executionToken": "tok_b0b1fb06ce198caa2cadae72b232cea8ba8fa39abf761650"
+  },
+  {
+    "id": "appr_1789311065886_ee9f27",
+    "ownerUserId": "user_master_1",
+    "actionName": "fulfill_order_handover",
+    "targetDomain": "dynamic_code",
+    "argumentsHash": "827deacfdb23a2c4dd341da6289f4b9a1109bfa04562fe38742532f2bc92e649",
+    "argumentsPreview": {
+      "orderId": "ord_TAMPERED",
+      "courier": "express_speed"
+    },
+    "requestedBy": "user_master_1",
+    "status": "PENDING",
+    "createdAt": "2026-09-13T14:51:05.886Z",
+    "expiresAt": "2026-09-13T14:56:05.886Z",
+    "correlationId": "prop_task_alpha_1_step_2_v1"
+  }
+]

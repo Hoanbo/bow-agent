@@ -2392,5 +2392,499 @@
     "phase": "DECISION",
     "integrityHash": "48d7d96e78fa989b72d9236bc6a8dc3c",
     "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789294338628_041ba5",
+    "createdAt": 1789294338629,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789294338630_d041f5",
+        "phase": "OBSERVATION",
+        "timestamp": 1789294338630,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "eff60325f4a82cced5ef9d045b6958b1",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789295352687_f16b13",
+    "createdAt": 1789295352687,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789295352689_198a50",
+        "phase": "OBSERVATION",
+        "timestamp": 1789295352689,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "fcc6b0510a5f682241f8b85ee6c42f84",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789302098963_9cc063",
+    "createdAt": 1789302098964,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789302098965_4e1e9c",
+        "phase": "OBSERVATION",
+        "timestamp": 1789302098965,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "7dbeadcb304746c297f33104d01cd537",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789308396803_9bd081",
+    "createdAt": 1789308396803,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789308396805_d38374",
+        "phase": "OBSERVATION",
+        "timestamp": 1789308396805,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "ef841e6b66d4ab329834db9e69a1c5c9",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789309709809_fd0ea5",
+    "createdAt": 1789309709809,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789309709811_3574b9",
+        "phase": "OBSERVATION",
+        "timestamp": 1789309709811,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "a4e0a98614085770f73de8daff8825ff",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789311273223_48e086",
+    "createdAt": 1789311273223,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789311273225_fc53b8",
+        "phase": "OBSERVATION",
+        "timestamp": 1789311273225,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "2682f2e6d9bcb5d045e7044328b77ca5",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789311499711_110992",
+    "createdAt": 1789311499711,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789311499713_778577",
+        "phase": "OBSERVATION",
+        "timestamp": 1789311499713,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "68e48869271e6dc7d31890fb8897bb50",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789312813248_555504",
+    "createdAt": 1789312813249,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789312813250_341f67",
+        "phase": "OBSERVATION",
+        "timestamp": 1789312813250,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "cd97e3bd66fb3cda776604b05ea45539",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789316671950_0c43e8",
+    "createdAt": 1789316671950,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789316671952_055554",
+        "phase": "OBSERVATION",
+        "timestamp": 1789316671952,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "18d68deb03bbd450652101d6b294a788",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789318735256_d1aadb",
+    "createdAt": 1789318735256,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789318735258_03b302",
+        "phase": "OBSERVATION",
+        "timestamp": 1789318735258,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "9c070737f567884e4b59d45897c07091",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789319779767_fc7acd",
+    "createdAt": 1789319779767,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789319779769_ccd42a",
+        "phase": "OBSERVATION",
+        "timestamp": 1789319779769,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "0126d0891cd828fb2f3a982d622079e2",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789321578148_7726d7",
+    "createdAt": 1789321578148,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789321578150_8a189c",
+        "phase": "OBSERVATION",
+        "timestamp": 1789321578150,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "b69309e23c881265e35a39f351c1deaf",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789322721973_6c88c6",
+    "createdAt": 1789322721973,
+    "ownerId": "master_operator",
+    "projectId": "bowcon_core",
+    "goalId": "ms_1_3_43",
+    "triggeringContext": "Owner requested capability audit",
+    "relatedObjective": "Verify cognitive resilience",
+    "events": [
+      {
+        "eventId": "evt_1789322721975_9e61d7",
+        "phase": "OBSERVATION",
+        "timestamp": 1789322721975,
+        "description": "Host CPU cores observed: 16",
+        "provenance": "HOST_TELEMETRY",
+        "confidence": 0.9
+      }
+    ],
+    "observations": [
+      "RAM: 32GB available"
+    ],
+    "decisions": [
+      "Proceed with capability audit"
+    ],
+    "ownerDecision": "Approved by Master Owner",
+    "bowconRecommendation": "Audit is safe to proceed",
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "HOST_TELEMETRY"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "DECISION",
+    "integrityHash": "b60d3d485f0fe81d8b2753ff745ff1bf",
+    "isComplete": false
   }
 ]
