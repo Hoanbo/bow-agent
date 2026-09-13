@@ -219,6 +219,10 @@ export * from './core/world-model/index.js';
 export * from './core/resilience/index.js';
 // 58. BOWCON V4.0 — Milestone 1.3.45: Master Owner Delegation Governance, Multi-Agent Federation & Authority Lease Architecture
 export * from './core/delegation/index.js';
+export { createReconciliationId } from './core/incidentResilience/index.js';
+export { createReconciliationId as createPolicyReconciliationId } from './core/policyPostExecution/index.js';
+export { HARD_FORBIDDEN_ACTIONS } from './core/policyDecision/index.js';
+export { HARD_FORBIDDEN_ACTIONS as POLICY_EVOLUTION_HARD_FORBIDDEN_ACTIONS } from './core/policyEvolutionPlanning/index.js';
 // 59. BOWCON V4.0 — Milestone 1.3.47: Governed Autonomous Project Sandbox & Controlled Worktree Isolation
 export * from './core/sandbox/index.js';
 // 60. BOWCON V4.0 — Milestone 1.3.48: Controlled Change Promotion & Governed Project Integration
@@ -268,3 +272,34 @@ export * from './core/policyEvidence/index.js';
 // 75. BOWCON V4.0 — Milestone 1.3.64: Governed Policy Decision & Controlled Remediation Layer
 // 75. BOWCON V4.0 — Mốc 1.3.64: Lớp Quyết định Chính sách Có quản trị & Khắc phục Có kiểm soát
 export * from './core/policyDecision/index.js';
+// 76. BOWCON V4.0 — Milestone 1.3.65: Governed Remediation Execution & Outcome Verification Layer
+// 76. BOWCON V4.0 — Mốc 1.3.65: Lớp Thực thi Khắc phục Có quản trị & Xác minh Kết quả
+export * from './core/policyExecution/index.js';
+// 77. BOWCON V4.0 — Milestone 1.3.66: Governed Post-Execution Reconciliation, Impact Analysis & Policy Feedback Proposal Layer
+// 77. BOWCON V4.0 — Mốc 1.3.66: Lớp Điều hòa Sau Thực thi Có quản trị, Phân tích Tác động & Đề xuất Phản hồi Chính sách
+export * from './core/policyPostExecution/index.js';
+// 78. BOWCON V4.0 — Milestone 1.3.67: Governed Feedback Review, Policy Evolution Intake & Human Review Queue Layer
+// 78. BOWCON V4.0 — Mốc 1.3.67: Lớp Đánh giá Phản hồi Có quản trị, Nạp Tiến hóa Chính sách & Hàng đợi Đánh giá Con người
+export * from './core/policyFeedbackReview/index.js';
+// 79. BOWCON V4.0 — Milestone 1.3.68: Governed Policy Evolution Planning & Candidate Synthesis Layer
+// 79. BOWCON V4.0 — Mốc 1.3.68: Lớp Lập kế hoạch Tiến hóa Chính sách Có quản trị & Tổng hợp Ứng viên
+export * from './core/policyEvolutionPlanning/index.js';
+// 80. BOWCON V4.0 — Milestone 1.3.69: Governed Candidate Authorization & Activation Readiness Layer
+// 80. BOWCON V4.0 — Mốc 1.3.69: Lớp Ủy quyền Ứng viên Có quản trị & Sẵn sàng Kích hoạt
+export * from './core/policyCandidateAuthorization/index.js';
+// 81. BOWCON V4.0 — Milestone 1.3.70: Governed Staged Policy Activation Layer
+// 81. BOWCON V4.0 — Mốc 1.3.70: Lớp Kích hoạt Chính sách Theo giai đoạn Có quản trị
+export * from './core/policyStagedActivation/index.js';
+// 82. BOWCON V4.0 — Milestone 1.3.71: Governed Active Policy Runtime Synchronization & Enforcement Bridge
+// 82. BOWCON V4.0 — Mốc 1.3.71: Cầu nối Đồng bộ & Thực thi Thời gian chạy Chính sách Hoạt động Có quản trị
+export * from './core/policyActiveRuntime/index.js';
+// 83. BOWCON V4.0 — Milestone 1.3.72: Governed Active Policy Rollback, Sunset & Recovery Boundary
+// 83. BOWCON V4.0 — Mốc 1.3.72: Ranh giới Quay lui, Hết hạn & Khôi phục Chính sách Hoạt động Có quản trị
+export * as policyActiveRollback from './core/policyActiveRollback/index.js';
+export { createActiveRollbackRequestId, createRollbackTargetId, createRollbackEvaluationId, createSunsetRequestId, createSunsetEvaluationId, createRecoveryRequestId, createRecoveryEvaluationId, createRollbackCommitId, createSunsetCommitId, createRecoveryCommitId, createRollbackProvenanceId, ROLLBACK_HARD_FORBIDDEN_ACTIONS, PolicyActiveRollbackStore, PolicyRollbackTargetResolver, PolicyRollbackRevalidationEngine, PolicySunsetEvaluationEngine, PolicyRecoveryEvaluationEngine, PolicyGovernedRollbackBoundary, PolicyRollbackStateTransitionEngine, PolicyActiveRollbackProvenanceEngine, PolicyActiveRollbackAuditEngine, PolicyActiveRollbackRuntime, POLICY_ACTIVE_ROLLBACK_AUDIT_DOMAIN, } from './core/policyActiveRollback/index.js';
+// 84. BOWCON V4.0 — Mốc 1.3.73: Điều hòa Vòng đời & Xác minh Tính nhất quán Chính sách Hoạt động Có quản trị
+export * as policyActiveLifecycleReconciliation from './core/policyActiveLifecycleReconciliation/index.js';
+export { createLifecycleReconciliationId, createLifecycleConsistencyCheckId, createLifecycleDriftId, createRuntimeConsistencyId, createLifecycleVerificationId, createReconciliationProvenanceId, PolicyActiveLifecycleStateResolver, PolicyActiveLifecycleVersionConsistencyEngine, PolicyActiveLifecycleRuntimeDriftDetector, PolicyActiveLifecycleRollbackConsistencyEngine, PolicyActiveLifecycleProvenanceConsistencyEngine, PolicyActiveLifecycleTenantConsistencyEngine, PolicyActiveLifecycleConsistencyEngine, PolicyActiveLifecycleReconciliationAuditEngine, PolicyActiveLifecycleReconciliationRuntime, POLICY_ACTIVE_LIFECYCLE_RECONCILIATION_AUDIT_DOMAIN, } from './core/policyActiveLifecycleReconciliation/index.js';
+// 85. BOWCON V4.0 — Mốc 1.3.74: Phản ứng Sự cố Chính sách Hoạt động, Phát hiện Suy thoái & Ranh giới An toàn Khẩn cấp Có quản trị
+export * as policyActiveIncidentResponse from './core/policyActiveIncidentResponse/index.js';
+export { createActiveIncidentId, createIncidentDetectionId, createDegradationEventId, createSafetyBoundaryActivationId, createIncidentEscalationId, createIncidentResolutionId, createIncidentProvenanceId, PolicyActiveIncidentSignalResolver, PolicyActivePolicyDegradationDetector, PolicyActiveIncidentClassifier, PolicyEmergencySafetyBoundary, PolicyIncidentEscalationEngine, PolicyActiveIncidentStore, PolicyActiveIncidentProvenanceEngine, PolicyActiveIncidentAuditEngine, PolicyActiveIncidentResponseRuntime, POLICY_ACTIVE_INCIDENT_RESPONSE_AUDIT_DOMAIN, } from './core/policyActiveIncidentResponse/index.js';

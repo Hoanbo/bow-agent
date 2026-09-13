@@ -1,0 +1,14 @@
+[
+  {
+    "sunsetRequestId": "sunreq_60daa9fc658eec4c",
+    "tenantPartition": "tenant_alpha",
+    "currentActivePolicyStateId": "actpol_8253e69e796a44bca87a",
+    "currentActivePolicyVersion": "1.0.0",
+    "requestedBy": "operator_eve",
+    "reason": "Retiring active policy v1.0.0 for maintenance window",
+    "state": "COMMITTED",
+    "requestedAt": "2026-09-13T03:13:26.184Z",
+    "isAutonomous": false,
+    "isActivePolicy": false
+  }
+]

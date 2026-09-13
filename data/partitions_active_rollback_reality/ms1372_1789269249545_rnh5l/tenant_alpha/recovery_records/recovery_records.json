@@ -1,0 +1,15 @@
+[
+  {
+    "recoveryRequestId": "recreq_59afda18f22f4caf",
+    "tenantPartition": "tenant_alpha",
+    "sourceState": "SUNSET",
+    "recoveryTargetVersion": "2.0.0",
+    "targetId": "roltgt_585da86c2f4a6bbd",
+    "requestedBy": "operator_grace",
+    "reason": "Restoring verified v2.0.0 after maintenance",
+    "state": "BLOCKED",
+    "requestedAt": "2026-09-13T03:14:09.620Z",
+    "isAutonomous": false,
+    "isActivePolicy": false
+  }
+]

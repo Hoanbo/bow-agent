@@ -1,0 +1,152 @@
+[
+  {
+    "targetId": "roltgt_92521fc3cbd964bd",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "1.0.0",
+    "activePolicyStateId": "aps_hist_1.0.0",
+    "activationCommitId": "actcmt_hist_1.0.0",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "file_read": "PERMIT",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    },
+    "activatedBy": "prior_human_operator",
+    "activatedRole": "MASTER_HUMAN_OPERATOR",
+    "activatedAt": "2026-09-13T03:13:26.124Z",
+    "provenanceHeadHash": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  },
+  {
+    "targetId": "roltgt_30c99e8b103eacbe",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "0.9.0",
+    "activePolicyStateId": "aps_hist_0.9.0",
+    "activationCommitId": "actcmt_hist_0.9.0",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "file_read": "PERMIT",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    },
+    "activatedBy": "prior_human_operator",
+    "activatedRole": "MASTER_HUMAN_OPERATOR",
+    "activatedAt": "2026-09-13T03:13:26.149Z",
+    "provenanceHeadHash": "",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  },
+  {
+    "targetId": "roltgt_dd95472b8c0a81c4",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "0.8.0",
+    "activePolicyStateId": "aps_hist_0.8.0",
+    "activationCommitId": "actcmt_hist_0.8.0",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "file_read": "PERMIT",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    },
+    "activatedBy": "prior_human_operator",
+    "activatedRole": "MASTER_HUMAN_OPERATOR",
+    "activatedAt": "2026-09-13T03:13:26.152Z",
+    "provenanceHeadHash": "dd95472b8c0a81c48adabbe42d451bc1343dade7d15ad83263df0f77a66b20ff",
+    "verified": false,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  },
+  {
+    "targetId": "roltgt_b0cb276cde517779",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "0.7.0",
+    "activePolicyStateId": "aps_hist_0.7.0",
+    "activationCommitId": "actcmt_hist_0.7.0",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "transfer_funds": "PERMIT",
+      "delete_database": "FORBIDDEN"
+    },
+    "activatedBy": "prior_human_operator",
+    "activatedRole": "MASTER_HUMAN_OPERATOR",
+    "activatedAt": "2026-09-13T03:13:26.154Z",
+    "provenanceHeadHash": "b0cb276cde517779ca43a5f8fe94adcd6b1ca3b4e7da5e97f2ccd9c3b4381df8",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  },
+  {
+    "targetId": "roltgt_36d4c228b36570d9",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "2.0.0",
+    "activePolicyStateId": "aps_1789269206113_qa52",
+    "activationCommitId": "actcommit_1789269206113_yefg",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "file_read": "PERMIT",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    },
+    "activatedBy": "human_admin",
+    "activatedRole": "HUMAN_SECURITY_ADMIN",
+    "activatedAt": "2026-09-13T03:13:26.113Z",
+    "provenanceHeadHash": "1e3dd52600f6f11c7f7933ab16c6aa84cd858bda1e5f245fbc013f6b6168e93a",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  },
+  {
+    "targetId": "roltgt_a3dd93a21c84f497",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "1.0.0",
+    "activePolicyStateId": "actpol_8253e69e796a44bca87a",
+    "activationCommitId": "rolcmt_8253e69e796a44bc",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "file_read": "PERMIT",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    },
+    "activatedBy": "operator_david",
+    "activatedRole": "HUMAN_SECURITY_ADMIN",
+    "activatedAt": "2026-09-13T03:13:26.176Z",
+    "provenanceHeadHash": "37a58665c1b14d9ff1a22ec9a2e3f89425e1e72375d341b86c73734f27bcb9d1",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  },
+  {
+    "targetId": "roltgt_682ad252cd9adb07",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "1.0.0-SUNSET",
+    "activePolicyStateId": "actpol_cf01cb32a12cbb226408",
+    "activationCommitId": "suncmt_cf01cb32a12cbb22",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {},
+    "activatedBy": "operator_frank",
+    "activatedRole": "OWNER",
+    "activatedAt": "2026-09-13T03:13:26.194Z",
+    "provenanceHeadHash": "3b8472f356b179edbd96dfff348307d84d8ce22781ca89627b0d5625831f7611",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  }
+]

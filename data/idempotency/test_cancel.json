@@ -852,5 +852,159 @@
     "recordedAt": 1789240884624,
     "expiresAt": 1789327284624,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz3q9zx_31f0a810c1ff_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789260878879
+    },
+    "recordedAt": 1789260878879,
+    "expiresAt": 1789347278879,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz4cbzj_f6594b8e4ee2_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789261907889
+    },
+    "recordedAt": 1789261907889,
+    "expiresAt": 1789348307889,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz51lz0_1f7143fb2652_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789263087231
+    },
+    "recordedAt": 1789263087231,
+    "expiresAt": 1789349487231,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz5kik7_600bf03fe00c_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789263969273
+    },
+    "recordedAt": 1789263969273,
+    "expiresAt": 1789350369273,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz68mwt_02a86492c0a9_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789265094655
+    },
+    "recordedAt": 1789265094655,
+    "expiresAt": 1789351494655,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz7ak5u_27fe8034e485_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789266864021
+    },
+    "recordedAt": 1789266864021,
+    "expiresAt": 1789353264021,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz7yhei_362c41366451_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789267980187
+    },
+    "recordedAt": 1789267980187,
+    "expiresAt": 1789354380187,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz8gh1z_9ba8c237a1d0_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789268819544
+    },
+    "recordedAt": 1789268819544,
+    "expiresAt": 1789355219544,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtz8vihh_a41d9482d660_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789269521238
+    },
+    "recordedAt": 1789269521238,
+    "expiresAt": 1789355921238,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzax2rd_4903d812ebcf_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789272953402
+    },
+    "recordedAt": 1789272953402,
+    "expiresAt": 1789359353402,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzbkiqf_2116f0ae2fd3_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789274047192
+    },
+    "recordedAt": 1789274047192,
+    "expiresAt": 1789360447192,
+    "status": "COMPLETED"
   }
 ]

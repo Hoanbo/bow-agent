@@ -1,0 +1,19 @@
+{
+  "version": "4.0.0",
+  "serviceId": "bsvc_6046b327391c28c7",
+  "brainId": "brain_bowcon_3aa527ae5fc587c1",
+  "hostMode": "workstation",
+  "totalRequestsReceived": 5,
+  "totalRequestsCompleted": 5,
+  "totalRequestsFailed": 0,
+  "completedRequestIds": [
+    "req_cog_fs_1_27bfa708",
+    "req_cog_fs_2_27bfa708",
+    "req_cog_fs_3_27bfa708",
+    "req_cog_fs_4_27bfa708",
+    "req_cog_fs_5_27bfa708"
+  ],
+  "lastCommittedAt": 1789268028943,
+  "createdAt": 1789268025734,
+  "lastShutdownAt": 1789268029160
+}

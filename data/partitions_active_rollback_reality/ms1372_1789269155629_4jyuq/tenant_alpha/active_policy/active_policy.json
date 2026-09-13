@@ -1,0 +1,29 @@
+{
+  "activePolicyStateId": "aps_1789269155634_7pvf",
+  "activationCommitId": "actcommit_1789269155634_hd0o",
+  "stagedActivationId": "stagedact_1789269155634_ztum",
+  "candidateDraftId": "canddraft_1789269155634_fk79",
+  "evolutionPlanId": "evoplan_1789269155634_3cnp",
+  "intakeId": "intake_1789269155635_l6i8",
+  "authorizationDecisionId": "[REDACTED]",
+  "activationReadinessId": "actready_1789269155635_nxx8",
+  "preflightId": "preflight_1789269155635_2m3k",
+  "tenantPartition": "tenant_alpha",
+  "previousPolicyVersion": "1.0.0",
+  "activePolicyVersion": "2.0.0",
+  "targetPolicyDomain": "SYSTEM_OPERATIONS",
+  "activeModifications": {
+    "file_read": "PERMIT",
+    "file_write": "HIGH_IMPACT",
+    "transfer_funds": "FORBIDDEN",
+    "delete_database": "FORBIDDEN",
+    "bypass_robot_interlocks": "FORBIDDEN",
+    "execute_untrusted_host_script": "FORBIDDEN"
+  },
+  "activatedBy": "human_admin",
+  "activatedRole": "HUMAN_SECURITY_ADMIN",
+  "activatedAt": "2026-09-13T03:12:35.635Z",
+  "provenanceHeadHash": "2caeb71f2a812f2a70b23b4044c4c4a0701e2032722e313f183dd65eb0905db4",
+  "isActivePolicy": true,
+  "isActivated": true
+}

@@ -1,0 +1,43 @@
+{
+  "decisions": [
+    {
+      "decisionId": "authdec_177158b800d5f383",
+      "requestId": "authreq_a3971f841dc2d469",
+      "candidateDraftId": "cand_1789274141333_u17p",
+      "evolutionPlanId": "evplan_1789274141333_btqj",
+      "intakeId": "peintake_1789274141333_una0",
+      "tenantPartition": "tenant_rej_test",
+      "reviewerId": "operator_alice",
+      "reviewerRole": "MASTER_HUMAN_OPERATOR",
+      "decision": "REJECT",
+      "reason": "Safety margins inadequate",
+      "decidedAt": "2026-09-13T04:35:41.335Z",
+      "isActivePolicy": false,
+      "isPolicyMutation": false,
+      "isAutonomousMutation": false,
+      "provenanceHash": "96413cff3afce9003432230687c09231adf5db4dc30448b1bd840b54078f80eb"
+    }
+  ],
+  "readinessDecisions": [
+    {
+      "readinessId": "actready_d08a250b7fc5cc84",
+      "candidateDraftId": "cand_1789274141333_u17p",
+      "authorizationDecisionId": "[REDACTED]",
+      "evolutionPlanId": "evplan_1789274141333_btqj",
+      "intakeId": "peintake_1789274141333_una0",
+      "tenantPartition": "tenant_rej_test",
+      "state": "REJECTED",
+      "prerequisitesSatisfied": [
+        "CANDIDATE_SCHEMA_AND_CONSTRAINTS_VALID",
+        "CANDIDATE_FRESHNESS_VERIFIED",
+        "CANDIDATE_NOT_SUPERSEDED"
+      ],
+      "blockingReasons": [
+        "HUMAN_DECISION_REJECTED: Safety margins inadequate"
+      ],
+      "evaluatedAt": "2026-09-13T04:35:41.350Z",
+      "isActivePolicy": false,
+      "isActivated": false
+    }
+  ]
+}

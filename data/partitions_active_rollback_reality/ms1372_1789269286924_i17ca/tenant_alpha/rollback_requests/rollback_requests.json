@@ -1,0 +1,17 @@
+[
+  {
+    "rollbackRequestId": "rolreq_4981a12dd1758ef5",
+    "tenantPartition": "tenant_alpha",
+    "currentActivePolicyStateId": "aps_1789269286927_1ujb",
+    "currentActivePolicyVersion": "2.0.0",
+    "targetPolicyVersion": "1.0.0",
+    "targetId": "roltgt_92521fc3cbd964bd",
+    "requestedBy": "proposer_charlie",
+    "reason": "Production rollback to verified v1.0.0",
+    "state": "COMMITTED",
+    "requestedAt": "2026-09-13T03:14:46.975Z",
+    "isAutonomous": false,
+    "isActivePolicy": false,
+    "isPolicyMutation": false
+  }
+]

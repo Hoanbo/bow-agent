@@ -1,0 +1,43 @@
+{
+  "decisions": [
+    {
+      "decisionId": "authdec_7e8dbc943a0f5ebc",
+      "requestId": "authreq_59970bf0b46d56c4",
+      "candidateDraftId": "cand_1789274141381_74hy",
+      "evolutionPlanId": "evplan_1789274141381_7jhl",
+      "intakeId": "peintake_1789274141381_gjzd",
+      "tenantPartition": "tenant_ev_test",
+      "reviewerId": "operator_alice",
+      "reviewerRole": "MASTER_HUMAN_OPERATOR",
+      "decision": "REQUEST_MORE_EVIDENCE",
+      "reason": "Need synthetic load simulation receipts",
+      "decidedAt": "2026-09-13T04:35:41.382Z",
+      "isActivePolicy": false,
+      "isPolicyMutation": false,
+      "isAutonomousMutation": false,
+      "provenanceHash": "5c400f5ad0749442d93f704f87698b7e7e311218d4e163bd315cfe8f081764f7"
+    }
+  ],
+  "readinessDecisions": [
+    {
+      "readinessId": "actready_7b1bb52efb8e3d70",
+      "candidateDraftId": "cand_1789274141381_74hy",
+      "authorizationDecisionId": "[REDACTED]",
+      "evolutionPlanId": "evplan_1789274141381_7jhl",
+      "intakeId": "peintake_1789274141381_gjzd",
+      "tenantPartition": "tenant_ev_test",
+      "state": "PENDING_HUMAN_AUTHORIZATION",
+      "prerequisitesSatisfied": [
+        "CANDIDATE_SCHEMA_AND_CONSTRAINTS_VALID",
+        "CANDIDATE_FRESHNESS_VERIFIED",
+        "CANDIDATE_NOT_SUPERSEDED"
+      ],
+      "blockingReasons": [
+        "HUMAN_REQUESTED_MORE_EVIDENCE: Need synthetic load simulation receipts"
+      ],
+      "evaluatedAt": "2026-09-13T04:35:41.385Z",
+      "isActivePolicy": false,
+      "isActivated": false
+    }
+  ]
+}

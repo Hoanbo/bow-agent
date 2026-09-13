@@ -1,0 +1,43 @@
+{
+  "decisions": [
+    {
+      "decisionId": "authdec_fbaf9067e58a636e",
+      "requestId": "authreq_f760c9c0ad9cda57",
+      "candidateDraftId": "cand_1789274141353_ovd3",
+      "evolutionPlanId": "evplan_1789274141353_6a4l",
+      "intakeId": "peintake_1789274141353_bg59",
+      "tenantPartition": "tenant_def_test",
+      "reviewerId": "operator_alice",
+      "reviewerRole": "MASTER_HUMAN_OPERATOR",
+      "decision": "DEFER",
+      "reason": "Deferred until maintenance window",
+      "decidedAt": "2026-09-13T04:35:41.355Z",
+      "isActivePolicy": false,
+      "isPolicyMutation": false,
+      "isAutonomousMutation": false,
+      "provenanceHash": "b75bb76144cbd1a13d78f49334026e714ca948bd092e0521b720447ec85866fe"
+    }
+  ],
+  "readinessDecisions": [
+    {
+      "readinessId": "actready_0dd0f82b1a2ffb40",
+      "candidateDraftId": "cand_1789274141353_ovd3",
+      "authorizationDecisionId": "[REDACTED]",
+      "evolutionPlanId": "evplan_1789274141353_6a4l",
+      "intakeId": "peintake_1789274141353_bg59",
+      "tenantPartition": "tenant_def_test",
+      "state": "PENDING_HUMAN_AUTHORIZATION",
+      "prerequisitesSatisfied": [
+        "CANDIDATE_SCHEMA_AND_CONSTRAINTS_VALID",
+        "CANDIDATE_FRESHNESS_VERIFIED",
+        "CANDIDATE_NOT_SUPERSEDED"
+      ],
+      "blockingReasons": [
+        "HUMAN_DECISION_DEFERRED: Deferred until maintenance window"
+      ],
+      "evaluatedAt": "2026-09-13T04:35:41.377Z",
+      "isActivePolicy": false,
+      "isActivated": false
+    }
+  ]
+}

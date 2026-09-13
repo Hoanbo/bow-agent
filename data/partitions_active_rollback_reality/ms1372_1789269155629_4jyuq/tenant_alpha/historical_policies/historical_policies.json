@@ -1,0 +1,25 @@
+[
+  {
+    "targetId": "roltgt_92521fc3cbd964bd",
+    "tenantPartition": "tenant_alpha",
+    "policyVersion": "1.0.0",
+    "activePolicyStateId": "aps_hist_1.0.0",
+    "activationCommitId": "actcmt_hist_1.0.0",
+    "targetPolicyDomain": "SYSTEM_OPERATIONS",
+    "policyModifications": {
+      "file_read": "PERMIT",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    },
+    "activatedBy": "prior_human_operator",
+    "activatedRole": "MASTER_HUMAN_OPERATOR",
+    "activatedAt": "2026-09-13T03:12:35.647Z",
+    "provenanceHeadHash": "92521fc3cbd964bdc9f584a991b89fddaa5754ed1cc96d6d42445338669c1305",
+    "verified": true,
+    "isHardForbiddenProtected": true,
+    "isActivePolicy": false
+  }
+]

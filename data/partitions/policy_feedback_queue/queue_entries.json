@@ -1,0 +1,99 @@
+[
+  {
+    "reviewId": "rev_4aa96b7b7e09737e",
+    "proposalId": "prop_test_1789262881956_6qz1",
+    "tenantPartition": "boss_user",
+    "executionId": "exec_test_1789262881956",
+    "candidateId": "cand_v4_test",
+    "state": "READY_FOR_HUMAN_REVIEW",
+    "proposedAction": "INVESTIGATE_POLICY_DRIFT",
+    "severity": "LOW",
+    "impactClassification": "EXPECTED",
+    "effectivenessStatus": "PARTIALLY_EFFECTIVE",
+    "regressionTypes": [
+      "NO_REGRESSION"
+    ],
+    "rationale": "Observed policy drift in canary telemetry",
+    "evidenceSummary": "Effectiveness: PARTIALLY_EFFECTIVE, Impact: EXPECTED",
+    "createdAt": "2026-09-13T01:28:01.962Z",
+    "updatedAt": "2026-09-13T01:28:01.962Z",
+    "expiresAt": "2026-09-14T01:28:01.962Z"
+  },
+  {
+    "reviewId": "rev_dup_1",
+    "proposalId": "prop_test_1789262881969_r10h",
+    "tenantPartition": "boss_user",
+    "executionId": "exec_test_1789262881969",
+    "state": "READY_FOR_HUMAN_REVIEW",
+    "proposedAction": "INVESTIGATE_POLICY_DRIFT",
+    "severity": "MEDIUM",
+    "impactClassification": "EXPECTED",
+    "effectivenessStatus": "PARTIALLY_EFFECTIVE",
+    "regressionTypes": [
+      "NO_REGRESSION"
+    ],
+    "rationale": "testing duplicate",
+    "evidenceSummary": "evidence",
+    "createdAt": "2026-09-13T01:28:01.969Z",
+    "updatedAt": "2026-09-13T01:28:01.969Z",
+    "expiresAt": "2026-09-14T01:28:01.969Z"
+  },
+  {
+    "reviewId": "rev_low_1",
+    "proposalId": "prop_low_1",
+    "tenantPartition": "boss_user",
+    "executionId": "exec_test_1789262881969",
+    "state": "READY_FOR_HUMAN_REVIEW",
+    "proposedAction": "INVESTIGATE_POLICY_DRIFT",
+    "severity": "LOW",
+    "impactClassification": "EXPECTED",
+    "effectivenessStatus": "PARTIALLY_EFFECTIVE",
+    "regressionTypes": [
+      "NO_REGRESSION"
+    ],
+    "rationale": "testing duplicate",
+    "evidenceSummary": "evidence",
+    "createdAt": "2026-09-13T01:28:01.972Z",
+    "updatedAt": "2026-09-13T01:28:01.969Z",
+    "expiresAt": "2026-09-14T01:28:01.969Z"
+  },
+  {
+    "reviewId": "rev_crit_1",
+    "proposalId": "prop_crit_1",
+    "tenantPartition": "boss_user",
+    "executionId": "exec_test_1789262881969",
+    "state": "READY_FOR_HUMAN_REVIEW",
+    "proposedAction": "INVESTIGATE_POLICY_DRIFT",
+    "severity": "CRITICAL",
+    "impactClassification": "EXPECTED",
+    "effectivenessStatus": "PARTIALLY_EFFECTIVE",
+    "regressionTypes": [
+      "NO_REGRESSION"
+    ],
+    "rationale": "testing duplicate",
+    "evidenceSummary": "evidence",
+    "createdAt": "2026-09-13T01:27:51.972Z",
+    "updatedAt": "2026-09-13T01:28:01.969Z",
+    "expiresAt": "2026-09-14T01:28:01.969Z"
+  },
+  {
+    "reviewId": "rev_9cc6d1fb3b96e97f",
+    "proposalId": "prop_test_1789262896305_jzsd",
+    "tenantPartition": "boss_user",
+    "executionId": "exec_test_1789262896305",
+    "candidateId": "cand_v4_test",
+    "state": "READY_FOR_HUMAN_REVIEW",
+    "proposedAction": "INVESTIGATE_POLICY_DRIFT",
+    "severity": "LOW",
+    "impactClassification": "EXPECTED",
+    "effectivenessStatus": "PARTIALLY_EFFECTIVE",
+    "regressionTypes": [
+      "NO_REGRESSION"
+    ],
+    "rationale": "Observed policy drift in canary telemetry",
+    "evidenceSummary": "Effectiveness: PARTIALLY_EFFECTIVE, Impact: EXPECTED",
+    "createdAt": "2026-09-13T01:28:16.313Z",
+    "updatedAt": "2026-09-13T01:28:16.313Z",
+    "expiresAt": "2026-09-14T01:28:16.313Z"
+  }
+]

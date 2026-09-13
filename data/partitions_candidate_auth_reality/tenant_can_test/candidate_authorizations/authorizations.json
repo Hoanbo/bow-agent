@@ -1,0 +1,43 @@
+{
+  "decisions": [
+    {
+      "decisionId": "authdec_15a4076c46310332",
+      "requestId": "authreq_92dc24931634c81e",
+      "candidateDraftId": "cand_1789274141388_0kl3",
+      "evolutionPlanId": "evplan_1789274141388_6xhu",
+      "intakeId": "peintake_1789274141388_wnrw",
+      "tenantPartition": "tenant_can_test",
+      "reviewerId": "operator_alice",
+      "reviewerRole": "MASTER_HUMAN_OPERATOR",
+      "decision": "CANCEL",
+      "reason": "Superseded by operational directive",
+      "decidedAt": "2026-09-13T04:35:41.389Z",
+      "isActivePolicy": false,
+      "isPolicyMutation": false,
+      "isAutonomousMutation": false,
+      "provenanceHash": "b88be3a89ada84655b4cfc18a5a4c24a9af589213c58d9ad460b042f702db814"
+    }
+  ],
+  "readinessDecisions": [
+    {
+      "readinessId": "actready_b91f6174d1245c4e",
+      "candidateDraftId": "cand_1789274141388_0kl3",
+      "authorizationDecisionId": "[REDACTED]",
+      "evolutionPlanId": "evplan_1789274141388_6xhu",
+      "intakeId": "peintake_1789274141388_wnrw",
+      "tenantPartition": "tenant_can_test",
+      "state": "NOT_READY",
+      "prerequisitesSatisfied": [
+        "CANDIDATE_SCHEMA_AND_CONSTRAINTS_VALID",
+        "CANDIDATE_FRESHNESS_VERIFIED",
+        "CANDIDATE_NOT_SUPERSEDED"
+      ],
+      "blockingReasons": [
+        "HUMAN_DECISION_CANCELLED: Superseded by operational directive"
+      ],
+      "evaluatedAt": "2026-09-13T04:35:41.392Z",
+      "isActivePolicy": false,
+      "isActivated": false
+    }
+  ]
+}

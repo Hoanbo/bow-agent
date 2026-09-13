@@ -1,0 +1,1016 @@
+// src/core/policyActiveRollback/policyActiveRollbackRuntime.ts
+// BOWCON V4.0 — MS-1.3.72: GOVERNED ACTIVE POLICY ROLLBACK, SUNSET & RECOVERY BOUNDARY
+//
+// Master Active Rollback Runtime Coordinator (Component 817).
+// Orchestrates deterministic rollback target resolution, independent revalidation,
+// human governance review, atomic state transitions, cryptographic provenance,
+// canonical audit logging, and active runtime resynchronization via MS-1.3.71.
+//
+// Core Authority Invariants:
+// - ACTIVE_POLICY != ROLLBACK_TARGET
+// - ACTIVE_POLICY != SUNSET_REQUEST
+// - ROLLBACK_REQUEST != ROLLBACK_COMMIT
+// - SUNSET_REQUEST != POLICY_MUTATION
+// - RECOVERY_REQUEST != AUTONOMOUS_RECOVERY
+// - PDP != POLICY_AUTHORITY
+// - PEP != POLICY_AUTHORITY
+// - HUMAN_AUTHORIZATION > AUTONOMOUS_AUTHORIZATION
+// - USER_STOP > EVERYTHING
+// - ZERO AUTONOMOUS ROLLBACK / SUNSET / RECOVERY
+// - FAIL_CLOSED
+
+import crypto from 'node:crypto';
+import type { HumanAuthorizationRole } from '../policyCandidateAuthorization/policyCandidateAuthorizationTypes.js';
+import type {
+  ActiveRollbackRequestId,
+  RollbackTargetId,
+  SunsetRequestId,
+  RecoveryRequestId,
+  HistoricalPolicyVersion,
+  RollbackRequest,
+  RollbackRevalidationResult,
+  SunsetRequest,
+  SunsetEvaluationResult,
+  RecoveryRequest,
+  RecoveryEvaluationResult,
+  GovernedRollbackAuthorization,
+  RollbackCommitResult,
+  SunsetCommitResult,
+  RecoveryCommitResult,
+  PolicyActiveRollbackOptions,
+} from './policyActiveRollbackTypes.js';
+import { PolicyActiveRollbackStore } from './policyActiveRollbackStore.js';
+import { PolicyRollbackTargetResolver } from './policyRollbackTargetResolver.js';
+import { PolicyRollbackRevalidationEngine } from './policyRollbackRevalidationEngine.js';
+import { PolicySunsetEvaluationEngine } from './policySunsetEvaluationEngine.js';
+import { PolicyRecoveryEvaluationEngine } from './policyRecoveryEvaluationEngine.js';
+import { PolicyGovernedRollbackBoundary } from './policyGovernedRollbackBoundary.js';
+import { PolicyRollbackStateTransitionEngine } from './policyRollbackStateTransitionEngine.js';
+import { PolicyActiveRollbackProvenanceEngine } from './policyActiveRollbackProvenanceEngine.js';
+import { PolicyActiveRollbackAuditEngine } from './policyActiveRollbackAuditEngine.js';
+import { PolicyActivationStateStore } from '../policyStagedActivation/policyActivationStateStore.js';
+import { PolicyActiveRuntimeCoordinator } from '../policyActiveRuntime/policyActiveRuntimeCoordinator.js';
+
+export class PolicyActiveRollbackRuntime {
+  private readonly isUserStopActiveFn?: () => boolean;
+  private readonly stateStore: PolicyActivationStateStore;
+  private readonly rollbackStore: PolicyActiveRollbackStore;
+  private readonly targetResolver: PolicyRollbackTargetResolver;
+  private readonly revalidationEngine: PolicyRollbackRevalidationEngine;
+  private readonly sunsetEngine: PolicySunsetEvaluationEngine;
+  private readonly recoveryEngine: PolicyRecoveryEvaluationEngine;
+  private readonly boundary: PolicyGovernedRollbackBoundary;
+  private readonly transitionEngine: PolicyRollbackStateTransitionEngine;
+  private readonly provenanceEngine: PolicyActiveRollbackProvenanceEngine;
+  private readonly auditEngine: PolicyActiveRollbackAuditEngine;
+  private readonly activeRuntimeCoordinator?: PolicyActiveRuntimeCoordinator;
+
+  constructor(
+    options?: PolicyActiveRollbackOptions,
+    activeRuntimeCoordinator?: PolicyActiveRuntimeCoordinator,
+    stateStore?: PolicyActivationStateStore,
+    rollbackStore?: PolicyActiveRollbackStore
+  ) {
+    this.isUserStopActiveFn = options?.isUserStopActive;
+    this.stateStore = stateStore ?? new PolicyActivationStateStore(options);
+    this.rollbackStore = rollbackStore ?? new PolicyActiveRollbackStore(options);
+    this.targetResolver = new PolicyRollbackTargetResolver(options, this.rollbackStore);
+    this.revalidationEngine = new PolicyRollbackRevalidationEngine(options);
+    this.sunsetEngine = new PolicySunsetEvaluationEngine(options);
+    this.recoveryEngine = new PolicyRecoveryEvaluationEngine(options);
+    this.boundary = new PolicyGovernedRollbackBoundary(options);
+    this.transitionEngine = new PolicyRollbackStateTransitionEngine(options, this.stateStore, this.rollbackStore);
+    this.provenanceEngine = new PolicyActiveRollbackProvenanceEngine(options);
+    this.auditEngine = new PolicyActiveRollbackAuditEngine(options);
+    this.activeRuntimeCoordinator = activeRuntimeCoordinator;
+  }
+
+  private assertUserStopInactive(): void {
+    if (this.isUserStopActiveFn && this.isUserStopActiveFn()) {
+      throw new Error('OPERATION_SUSPENDED_BY_USER_STOP: Active policy rollback runtime suspended by USER_STOP supremacy');
+    }
+  }
+
+  // ============================================================================
+  // 1. HISTORICAL POLICY MANAGEMENT
+  // ============================================================================
+
+  /**
+   * Registers a historically verified active policy version.
+   */
+  public recordHistoricalPolicy(policy: HistoricalPolicyVersion): HistoricalPolicyVersion {
+    this.assertUserStopInactive();
+    return this.rollbackStore.saveHistoricalPolicy(policy);
+  }
+
+  /**
+   * Retrieves a historical policy version by targetId.
+   */
+  public getHistoricalPolicy(tenantPartition: string, targetId: string): HistoricalPolicyVersion | null {
+    this.assertUserStopInactive();
+    return this.rollbackStore.getHistoricalPolicyById(tenantPartition, targetId);
+  }
+
+  // ============================================================================
+  // 2. GOVERNED ROLLBACK LIFECYCLE
+  // ============================================================================
+
+  /**
+   * Initiates a governed rollback request.
+   */
+  public requestRollback(params: {
+    readonly tenantPartition: string;
+    readonly targetPolicyVersion: string;
+    readonly targetId?: string;
+    readonly requestedBy: string;
+    readonly requestedRole?: string;
+    readonly reason: string;
+  }): RollbackRequest {
+    this.assertUserStopInactive();
+
+    const { tenantPartition, targetPolicyVersion, requestedBy, reason } = params;
+
+    // Verify current active policy exists
+    const currentActive = this.stateStore.getActivePolicy(tenantPartition);
+    if (!currentActive) {
+      this.auditEngine.recordEvent({
+        eventType: 'ROLLBACK_BLOCKED',
+        tenantPartition,
+        actorUserId: requestedBy,
+        details: { reason: 'No active policy found to rollback from' },
+      });
+      throw new Error(`NO_ACTIVE_POLICY: Tenant '${tenantPartition}' has no active policy to rollback from`);
+    }
+
+    // Resolve target to verify targetId and basic compatibility
+    const res = this.targetResolver.resolveTarget({
+      tenantPartition,
+      targetPolicyVersion,
+      targetId: params.targetId,
+      currentActiveVersion: currentActive.activePolicyVersion,
+    });
+
+    if (!res.success || !res.target) {
+      this.auditEngine.recordEvent({
+        eventType: 'ROLLBACK_BLOCKED',
+        tenantPartition,
+        actorUserId: requestedBy,
+        details: { failureReason: res.failureReason },
+      });
+      throw new Error(`ROLLBACK_TARGET_RESOLUTION_FAILED: ${res.failureReason}`);
+    }
+
+    const now = new Date().toISOString();
+    const reqHash = crypto.createHash('sha256')
+      .update(`${tenantPartition}:${currentActive.activePolicyVersion}:${targetPolicyVersion}:${requestedBy}:${now}`)
+      .digest('hex');
+    const rollbackRequestId = `rolreq_${reqHash.substring(0, 16)}` as ActiveRollbackRequestId;
+
+    const request: RollbackRequest = Object.freeze({
+      rollbackRequestId,
+      tenantPartition,
+      currentActivePolicyStateId: currentActive.activePolicyStateId,
+      currentActivePolicyVersion: currentActive.activePolicyVersion,
+      targetPolicyVersion: res.target.policyVersion,
+      targetId: res.target.targetId,
+      requestedBy,
+      requestedRole: params.requestedRole,
+      reason,
+      state: 'REQUESTED',
+      requestedAt: now,
+      isAutonomous: false as const,
+      isActivePolicy: false as const,
+      isPolicyMutation: false as const,
+    });
+
+    this.rollbackStore.saveRollbackRequest(request);
+
+    this.auditEngine.recordEvent({
+      eventType: 'ROLLBACK_REQUESTED',
+      tenantPartition,
+      actorUserId: requestedBy,
+      details: {
+        rollbackRequestId,
+        currentActiveVersion: currentActive.activePolicyVersion,
+        targetPolicyVersion: res.target.policyVersion,
+        targetId: res.target.targetId,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      activePolicyStateId: currentActive.activePolicyStateId,
+      targetPolicyVersion: res.target.policyVersion,
+      rollbackRequestId,
+      eventType: 'ROLLBACK_REQUESTED',
+      payload: {
+        rollbackRequestId,
+        requestedBy,
+        reason,
+        targetPolicyVersion: res.target.policyVersion,
+      },
+    });
+
+    return request;
+  }
+
+  /**
+   * Independently revalidates a rollback request.
+   */
+  public revalidateRollback(rollbackRequestId: string, tenantPartition: string): RollbackRevalidationResult {
+    this.assertUserStopInactive();
+
+    const request = this.rollbackStore.getRollbackRequest(tenantPartition, rollbackRequestId);
+    if (!request) {
+      throw new Error(`ROLLBACK_REQUEST_NOT_FOUND: Request '${rollbackRequestId}' not found for tenant '${tenantPartition}'`);
+    }
+
+    const currentActive = this.stateStore.getActivePolicy(tenantPartition);
+    const target = this.rollbackStore.getHistoricalPolicyById(tenantPartition, request.targetId);
+
+    if (!target) {
+      throw new Error(`TARGET_NOT_FOUND: Historical target '${request.targetId}' not found for tenant '${tenantPartition}'`);
+    }
+
+    const revalidation = this.revalidationEngine.revalidate({
+      request,
+      target,
+      actualCurrentActiveStateId: currentActive?.activePolicyStateId,
+      actualCurrentActiveVersion: currentActive?.activePolicyVersion,
+    });
+
+    if (revalidation.valid) {
+      this.rollbackStore.saveRollbackRequest({
+        ...request,
+        state: 'HUMAN_REVIEW_REQUIRED',
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'ROLLBACK_REVALIDATED',
+        tenantPartition,
+        details: {
+          revalidationId: revalidation.revalidationId,
+          rollbackRequestId,
+          status: revalidation.status,
+          checksPassed: revalidation.checksPassed,
+        },
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'ROLLBACK_HUMAN_REVIEW_REQUIRED',
+        tenantPartition,
+        details: {
+          revalidationId: revalidation.revalidationId,
+          rollbackRequestId,
+        },
+      });
+
+      this.provenanceEngine.appendRecord({
+        tenantPartition,
+        activePolicyStateId: request.currentActivePolicyStateId,
+        targetPolicyVersion: request.targetPolicyVersion,
+        rollbackRequestId: request.rollbackRequestId,
+        eventType: 'ROLLBACK_REVALIDATED',
+        payload: {
+          revalidationId: revalidation.revalidationId,
+          status: revalidation.status,
+        },
+      });
+    } else {
+      this.rollbackStore.saveRollbackRequest({
+        ...request,
+        state: 'BLOCKED',
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'ROLLBACK_BLOCKED',
+        tenantPartition,
+        details: {
+          revalidationId: revalidation.revalidationId,
+          rollbackRequestId,
+          status: revalidation.status,
+          blockingReasons: revalidation.blockingReasons,
+        },
+      });
+    }
+
+    return revalidation;
+  }
+
+  /**
+   * Authorizes a revalidated rollback request by an authorized human operator.
+   */
+  public authorizeRollback(params: {
+    readonly rollbackRequestId: string;
+    readonly tenantPartition: string;
+    readonly revalidation: RollbackRevalidationResult;
+    readonly operatorId: string;
+    readonly operatorRole: HumanAuthorizationRole;
+    readonly governanceRationale: string;
+  }): GovernedRollbackAuthorization {
+    this.assertUserStopInactive();
+
+    const { rollbackRequestId, tenantPartition, revalidation, operatorId, operatorRole, governanceRationale } = params;
+
+    const request = this.rollbackStore.getRollbackRequest(tenantPartition, rollbackRequestId);
+    if (!request) {
+      throw new Error(`ROLLBACK_REQUEST_NOT_FOUND: Request '${rollbackRequestId}' not found`);
+    }
+
+    const previousHash = this.provenanceEngine.getHeadHash(tenantPartition);
+
+    const authorization = this.boundary.authorizeOperation({
+      operationType: 'ROLLBACK',
+      targetRequestId: rollbackRequestId,
+      tenantPartition,
+      evaluationId: revalidation.revalidationId,
+      evaluationStatus: revalidation.status,
+      operatorId,
+      operatorRole,
+      governanceRationale,
+      requestedBy: request.requestedBy,
+      previousHash,
+    });
+
+    this.rollbackStore.saveRollbackRequest({
+      ...request,
+      state: 'AUTHORIZED',
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'ROLLBACK_AUTHORIZED',
+      tenantPartition,
+      actorUserId: operatorId,
+      actorRole: operatorRole,
+      details: {
+        authorizationId: authorization.authorizationId,
+        rollbackRequestId,
+        governanceRationale,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      activePolicyStateId: request.currentActivePolicyStateId,
+      targetPolicyVersion: request.targetPolicyVersion,
+      rollbackRequestId: request.rollbackRequestId,
+      authorizationDecisionId: authorization.authorizationId,
+      eventType: 'ROLLBACK_AUTHORIZED',
+      payload: {
+        authorizationId: authorization.authorizationId,
+        authorizedBy: operatorId,
+        authorizedRole: operatorRole,
+      },
+    });
+
+    return authorization;
+  }
+
+  /**
+   * Atomically commits an authorized rollback and triggers active runtime resynchronization via MS-1.3.71.
+   */
+  public commitRollback(params: {
+    readonly rollbackRequestId: string;
+    readonly tenantPartition: string;
+    readonly authorization: GovernedRollbackAuthorization;
+  }): RollbackCommitResult {
+    this.assertUserStopInactive();
+
+    const { rollbackRequestId, tenantPartition, authorization } = params;
+
+    const request = this.rollbackStore.getRollbackRequest(tenantPartition, rollbackRequestId);
+    if (!request) {
+      throw new Error(`ROLLBACK_REQUEST_NOT_FOUND: Request '${rollbackRequestId}' not found`);
+    }
+
+    const target = this.rollbackStore.getHistoricalPolicyById(tenantPartition, request.targetId);
+    if (!target) {
+      throw new Error(`TARGET_NOT_FOUND: Historical target '${request.targetId}' not found`);
+    }
+
+    // Atomic transition commit
+    const commitResult = this.transitionEngine.commitRollback({
+      request,
+      target,
+      authorization,
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'ROLLBACK_COMMITTED',
+      tenantPartition,
+      actorUserId: authorization.authorizedBy,
+      actorRole: authorization.authorizedRole,
+      details: {
+        commitId: commitResult.commitId,
+        rollbackRequestId,
+        newActivePolicyVersion: commitResult.newActivePolicyVersion,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      activePolicyStateId: commitResult.newActivePolicyStateId,
+      targetPolicyVersion: commitResult.newActivePolicyVersion,
+      rollbackRequestId: request.rollbackRequestId,
+      commitId: commitResult.commitId,
+      eventType: 'ROLLBACK_COMMITTED',
+      payload: {
+        commitId: commitResult.commitId,
+        newActivePolicyStateId: commitResult.newActivePolicyStateId,
+        newActivePolicyVersion: commitResult.newActivePolicyVersion,
+      },
+    });
+
+    // Active Runtime Resynchronization via MS-1.3.71 bridge
+    let resynced = false;
+    if (this.activeRuntimeCoordinator) {
+      const syncRes = this.activeRuntimeCoordinator.synchronizeActivePolicy(tenantPartition);
+      resynced = syncRes.state === 'SYNC_COMPLETED';
+    }
+
+    this.auditEngine.recordEvent({
+      eventType: 'ROLLBACK_VERIFIED',
+      tenantPartition,
+      details: {
+        commitId: commitResult.commitId,
+        newActivePolicyVersion: commitResult.newActivePolicyVersion,
+        resynchronized: resynced,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      activePolicyStateId: commitResult.newActivePolicyStateId,
+      commitId: commitResult.commitId,
+      eventType: 'ROLLBACK_VERIFIED',
+      payload: {
+        commitId: commitResult.commitId,
+        resynchronized: resynced,
+      },
+    });
+
+    return Object.freeze({
+      ...commitResult,
+      resynchronized: resynced,
+    });
+  }
+
+  // ============================================================================
+  // 3. GOVERNED SUNSET LIFECYCLE
+  // ============================================================================
+
+  /**
+   * Initiates a governed sunset request.
+   */
+  public requestSunset(params: {
+    readonly tenantPartition: string;
+    readonly requestedBy: string;
+    readonly requestedRole?: string;
+    readonly reason: string;
+    readonly replacementPolicyVersion?: string;
+  }): SunsetRequest {
+    this.assertUserStopInactive();
+
+    const { tenantPartition, requestedBy, reason, replacementPolicyVersion } = params;
+
+    const currentActive = this.stateStore.getActivePolicy(tenantPartition);
+    if (!currentActive) {
+      throw new Error(`NO_ACTIVE_POLICY: Tenant '${tenantPartition}' has no active policy to sunset`);
+    }
+
+    const now = new Date().toISOString();
+    const sunHash = crypto.createHash('sha256')
+      .update(`${tenantPartition}:${currentActive.activePolicyVersion}:${requestedBy}:${now}`)
+      .digest('hex');
+    const sunsetRequestId = `sunreq_${sunHash.substring(0, 16)}` as SunsetRequestId;
+
+    const request: SunsetRequest = Object.freeze({
+      sunsetRequestId,
+      tenantPartition,
+      currentActivePolicyStateId: currentActive.activePolicyStateId,
+      currentActivePolicyVersion: currentActive.activePolicyVersion,
+      requestedBy,
+      requestedRole: params.requestedRole,
+      reason,
+      replacementPolicyVersion,
+      state: 'REQUESTED',
+      requestedAt: now,
+      isAutonomous: false as const,
+      isActivePolicy: false as const,
+    });
+
+    this.rollbackStore.saveSunsetRequest(request);
+
+    this.auditEngine.recordEvent({
+      eventType: 'SUNSET_REQUESTED',
+      tenantPartition,
+      actorUserId: requestedBy,
+      details: {
+        sunsetRequestId,
+        currentActiveVersion: currentActive.activePolicyVersion,
+        replacementPolicyVersion,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      activePolicyStateId: currentActive.activePolicyStateId,
+      sunsetRequestId,
+      eventType: 'SUNSET_REQUESTED',
+      payload: {
+        sunsetRequestId,
+        requestedBy,
+        reason,
+        replacementPolicyVersion,
+      },
+    });
+
+    return request;
+  }
+
+  /**
+   * Evaluates a sunset request.
+   */
+  public evaluateSunset(sunsetRequestId: string, tenantPartition: string): SunsetEvaluationResult {
+    this.assertUserStopInactive();
+
+    const request = this.rollbackStore.getSunsetRequest(tenantPartition, sunsetRequestId);
+    if (!request) {
+      throw new Error(`SUNSET_REQUEST_NOT_FOUND: Request '${sunsetRequestId}' not found`);
+    }
+
+    const currentActive = this.stateStore.getActivePolicy(tenantPartition);
+    let replacementAvailable: boolean | undefined = undefined;
+    if (request.replacementPolicyVersion) {
+      const hist = this.rollbackStore.getHistoricalPolicyByVersion(tenantPartition, request.replacementPolicyVersion);
+      replacementAvailable = hist !== null && hist.verified;
+    }
+
+    const evaluation = this.sunsetEngine.evaluate({
+      request,
+      actualCurrentActiveStateId: currentActive?.activePolicyStateId,
+      actualCurrentActiveVersion: currentActive?.activePolicyVersion,
+      replacementPolicyAvailable: replacementAvailable,
+    });
+
+    if (evaluation.valid) {
+      this.rollbackStore.saveSunsetRequest({
+        ...request,
+        state: 'HUMAN_REVIEW_REQUIRED',
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'SUNSET_EVALUATED',
+        tenantPartition,
+        details: {
+          evaluationId: evaluation.evaluationId,
+          sunsetRequestId,
+          status: evaluation.status,
+        },
+      });
+    } else {
+      this.rollbackStore.saveSunsetRequest({
+        ...request,
+        state: 'BLOCKED',
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'SUNSET_BLOCKED',
+        tenantPartition,
+        details: {
+          evaluationId: evaluation.evaluationId,
+          sunsetRequestId,
+          blockingReasons: evaluation.blockingReasons,
+        },
+      });
+    }
+
+    return evaluation;
+  }
+
+  /**
+   * Authorizes a sunset request.
+   */
+  public authorizeSunset(params: {
+    readonly sunsetRequestId: string;
+    readonly tenantPartition: string;
+    readonly evaluation: SunsetEvaluationResult;
+    readonly operatorId: string;
+    readonly operatorRole: HumanAuthorizationRole;
+    readonly governanceRationale: string;
+  }): GovernedRollbackAuthorization {
+    this.assertUserStopInactive();
+
+    const { sunsetRequestId, tenantPartition, evaluation, operatorId, operatorRole, governanceRationale } = params;
+
+    const request = this.rollbackStore.getSunsetRequest(tenantPartition, sunsetRequestId);
+    if (!request) {
+      throw new Error(`SUNSET_REQUEST_NOT_FOUND: Request '${sunsetRequestId}' not found`);
+    }
+
+    const previousHash = this.provenanceEngine.getHeadHash(tenantPartition);
+
+    const authorization = this.boundary.authorizeOperation({
+      operationType: 'SUNSET',
+      targetRequestId: sunsetRequestId,
+      tenantPartition,
+      evaluationId: evaluation.evaluationId,
+      evaluationStatus: evaluation.status,
+      operatorId,
+      operatorRole,
+      governanceRationale,
+      requestedBy: request.requestedBy,
+      previousHash,
+    });
+
+    this.rollbackStore.saveSunsetRequest({
+      ...request,
+      state: 'AUTHORIZED',
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'SUNSET_AUTHORIZED',
+      tenantPartition,
+      actorUserId: operatorId,
+      actorRole: operatorRole,
+      details: {
+        authorizationId: authorization.authorizationId,
+        sunsetRequestId,
+        governanceRationale,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      activePolicyStateId: request.currentActivePolicyStateId,
+      sunsetRequestId: request.sunsetRequestId,
+      authorizationDecisionId: authorization.authorizationId,
+      eventType: 'SUNSET_AUTHORIZED',
+      payload: {
+        authorizationId: authorization.authorizationId,
+        authorizedBy: operatorId,
+      },
+    });
+
+    return authorization;
+  }
+
+  /**
+   * Commits an authorized sunset request.
+   */
+  public commitSunset(params: {
+    readonly sunsetRequestId: string;
+    readonly tenantPartition: string;
+    readonly authorization: GovernedRollbackAuthorization;
+  }): SunsetCommitResult {
+    this.assertUserStopInactive();
+
+    const { sunsetRequestId, tenantPartition, authorization } = params;
+
+    const request = this.rollbackStore.getSunsetRequest(tenantPartition, sunsetRequestId);
+    if (!request) {
+      throw new Error(`SUNSET_REQUEST_NOT_FOUND: Request '${sunsetRequestId}' not found`);
+    }
+
+    let replacementTarget: HistoricalPolicyVersion | undefined = undefined;
+    if (request.replacementPolicyVersion) {
+      const hist = this.rollbackStore.getHistoricalPolicyByVersion(tenantPartition, request.replacementPolicyVersion);
+      if (hist) replacementTarget = hist;
+    }
+
+    const commitResult = this.transitionEngine.commitSunset({
+      request,
+      authorization,
+      replacementTarget,
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'SUNSET_COMMITTED',
+      tenantPartition,
+      actorUserId: authorization.authorizedBy,
+      actorRole: authorization.authorizedRole,
+      details: {
+        commitId: commitResult.commitId,
+        sunsetRequestId,
+        retiredPolicyVersion: commitResult.retiredPolicyVersion,
+      },
+    });
+
+    let resynced = false;
+    if (this.activeRuntimeCoordinator) {
+      const syncRes = this.activeRuntimeCoordinator.synchronizeActivePolicy(tenantPartition);
+      resynced = syncRes.state === 'SYNC_COMPLETED';
+    }
+
+    this.auditEngine.recordEvent({
+      eventType: 'SUNSET_VERIFIED',
+      tenantPartition,
+      details: {
+        commitId: commitResult.commitId,
+        retiredPolicyVersion: commitResult.retiredPolicyVersion,
+        resynchronized: resynced,
+      },
+    });
+
+    return Object.freeze({
+      ...commitResult,
+      resynchronized: resynced,
+    });
+  }
+
+  // ============================================================================
+  // 4. GOVERNED RECOVERY LIFECYCLE
+  // ============================================================================
+
+  /**
+   * Initiates a governed recovery request.
+   */
+  public requestRecovery(params: {
+    readonly tenantPartition: string;
+    readonly sourceState: 'ROLLED_BACK' | 'SUNSET' | 'DEACTIVATED';
+    readonly recoveryTargetVersion: string;
+    readonly requestedBy: string;
+    readonly requestedRole?: string;
+    readonly reason: string;
+  }): RecoveryRequest {
+    this.assertUserStopInactive();
+
+    const { tenantPartition, sourceState, recoveryTargetVersion, requestedBy, reason } = params;
+
+    const histTarget = this.rollbackStore.getHistoricalPolicyByVersion(tenantPartition, recoveryTargetVersion);
+    if (!histTarget) {
+      throw new Error(`RECOVERY_TARGET_NOT_FOUND: Historical policy version '${recoveryTargetVersion}' not found for tenant '${tenantPartition}'`);
+    }
+
+    const now = new Date().toISOString();
+    const recHash = crypto.createHash('sha256')
+      .update(`${tenantPartition}:${recoveryTargetVersion}:${requestedBy}:${now}`)
+      .digest('hex');
+    const recoveryRequestId = `recreq_${recHash.substring(0, 16)}` as RecoveryRequestId;
+
+    const request: RecoveryRequest = Object.freeze({
+      recoveryRequestId,
+      tenantPartition,
+      sourceState,
+      recoveryTargetVersion,
+      targetId: histTarget.targetId,
+      requestedBy,
+      requestedRole: params.requestedRole,
+      reason,
+      state: 'REQUESTED',
+      requestedAt: now,
+      isAutonomous: false as const,
+      isActivePolicy: false as const,
+    });
+
+    this.rollbackStore.saveRecoveryRequest(request);
+
+    this.auditEngine.recordEvent({
+      eventType: 'RECOVERY_REQUESTED',
+      tenantPartition,
+      actorUserId: requestedBy,
+      details: {
+        recoveryRequestId,
+        sourceState,
+        recoveryTargetVersion,
+      },
+    });
+
+    this.provenanceEngine.appendRecord({
+      tenantPartition,
+      targetPolicyVersion: recoveryTargetVersion,
+      recoveryRequestId,
+      eventType: 'RECOVERY_REQUESTED',
+      payload: {
+        recoveryRequestId,
+        requestedBy,
+        reason,
+      },
+    });
+
+    return request;
+  }
+
+  /**
+   * Revalidates a recovery request.
+   */
+  public revalidateRecovery(recoveryRequestId: string, tenantPartition: string): RecoveryEvaluationResult {
+    this.assertUserStopInactive();
+
+    const request = this.rollbackStore.getRecoveryRequest(tenantPartition, recoveryRequestId);
+    if (!request) {
+      throw new Error(`RECOVERY_REQUEST_NOT_FOUND: Request '${recoveryRequestId}' not found`);
+    }
+
+    const currentActive = this.stateStore.getActivePolicy(tenantPartition);
+    const target = this.rollbackStore.getHistoricalPolicyById(tenantPartition, request.targetId);
+
+    if (!target) {
+      throw new Error(`RECOVERY_TARGET_NOT_FOUND: Target historical policy not found`);
+    }
+
+    const evaluation = this.recoveryEngine.evaluate({
+      request,
+      target,
+      currentActiveVersion: currentActive?.activePolicyVersion,
+    });
+
+    if (evaluation.valid) {
+      this.rollbackStore.saveRecoveryRequest({
+        ...request,
+        state: 'HUMAN_REVIEW_REQUIRED',
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'RECOVERY_REVALIDATED',
+        tenantPartition,
+        details: {
+          evaluationId: evaluation.evaluationId,
+          recoveryRequestId,
+          status: evaluation.status,
+        },
+      });
+    } else {
+      this.rollbackStore.saveRecoveryRequest({
+        ...request,
+        state: 'BLOCKED',
+      });
+
+      this.auditEngine.recordEvent({
+        eventType: 'RECOVERY_BLOCKED',
+        tenantPartition,
+        details: {
+          evaluationId: evaluation.evaluationId,
+          recoveryRequestId,
+          blockingReasons: evaluation.blockingReasons,
+        },
+      });
+    }
+
+    return evaluation;
+  }
+
+  /**
+   * Authorizes a recovery request.
+   */
+  public authorizeRecovery(params: {
+    readonly recoveryRequestId: string;
+    readonly tenantPartition: string;
+    readonly evaluation: RecoveryEvaluationResult;
+    readonly operatorId: string;
+    readonly operatorRole: HumanAuthorizationRole;
+    readonly governanceRationale: string;
+  }): GovernedRollbackAuthorization {
+    this.assertUserStopInactive();
+
+    const { recoveryRequestId, tenantPartition, evaluation, operatorId, operatorRole, governanceRationale } = params;
+
+    const request = this.rollbackStore.getRecoveryRequest(tenantPartition, recoveryRequestId);
+    if (!request) {
+      throw new Error(`RECOVERY_REQUEST_NOT_FOUND: Request '${recoveryRequestId}' not found`);
+    }
+
+    const previousHash = this.provenanceEngine.getHeadHash(tenantPartition);
+
+    const authorization = this.boundary.authorizeOperation({
+      operationType: 'RECOVERY',
+      targetRequestId: recoveryRequestId,
+      tenantPartition,
+      evaluationId: evaluation.evaluationId,
+      evaluationStatus: evaluation.status,
+      operatorId,
+      operatorRole,
+      governanceRationale,
+      requestedBy: request.requestedBy,
+      previousHash,
+    });
+
+    this.rollbackStore.saveRecoveryRequest({
+      ...request,
+      state: 'AUTHORIZED',
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'RECOVERY_AUTHORIZED',
+      tenantPartition,
+      actorUserId: operatorId,
+      actorRole: operatorRole,
+      details: {
+        authorizationId: authorization.authorizationId,
+        recoveryRequestId,
+        governanceRationale,
+      },
+    });
+
+    return authorization;
+  }
+
+  /**
+   * Stages an authorized recovery for deployment.
+   */
+  public stageRecovery(recoveryRequestId: string, tenantPartition: string): RecoveryRequest {
+    this.assertUserStopInactive();
+
+    const request = this.rollbackStore.getRecoveryRequest(tenantPartition, recoveryRequestId);
+    if (!request) {
+      throw new Error(`RECOVERY_REQUEST_NOT_FOUND: Request '${recoveryRequestId}' not found`);
+    }
+    if (request.state !== 'AUTHORIZED') {
+      throw new Error(`RECOVERY_NOT_AUTHORIZED: Request state is '${request.state}', requires 'AUTHORIZED'`);
+    }
+
+    const staged = this.rollbackStore.saveRecoveryRequest({
+      ...request,
+      state: 'STAGED',
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'RECOVERY_STAGED',
+      tenantPartition,
+      details: {
+        recoveryRequestId,
+        recoveryTargetVersion: request.recoveryTargetVersion,
+      },
+    });
+
+    return staged;
+  }
+
+  /**
+   * Commits a staged recovery and triggers active runtime resynchronization via MS-1.3.71.
+   */
+  public commitRecovery(params: {
+    readonly recoveryRequestId: string;
+    readonly tenantPartition: string;
+    readonly authorization: GovernedRollbackAuthorization;
+  }): RecoveryCommitResult {
+    this.assertUserStopInactive();
+
+    const { recoveryRequestId, tenantPartition, authorization } = params;
+
+    const request = this.rollbackStore.getRecoveryRequest(tenantPartition, recoveryRequestId);
+    if (!request) {
+      throw new Error(`RECOVERY_REQUEST_NOT_FOUND: Request '${recoveryRequestId}' not found`);
+    }
+
+    const target = this.rollbackStore.getHistoricalPolicyById(tenantPartition, request.targetId);
+    if (!target) {
+      throw new Error(`RECOVERY_TARGET_NOT_FOUND: Target historical policy not found`);
+    }
+
+    const commitResult = this.transitionEngine.commitRecovery({
+      request,
+      target,
+      authorization,
+    });
+
+    this.auditEngine.recordEvent({
+      eventType: 'RECOVERY_COMMITTED',
+      tenantPartition,
+      actorUserId: authorization.authorizedBy,
+      actorRole: authorization.authorizedRole,
+      details: {
+        commitId: commitResult.commitId,
+        recoveryRequestId,
+        recoveredPolicyVersion: commitResult.recoveredPolicyVersion,
+      },
+    });
+
+    let resynced = false;
+    if (this.activeRuntimeCoordinator) {
+      const syncRes = this.activeRuntimeCoordinator.synchronizeActivePolicy(tenantPartition);
+      resynced = syncRes.state === 'SYNC_COMPLETED';
+    }
+
+    this.auditEngine.recordEvent({
+      eventType: 'RECOVERY_VERIFIED',
+      tenantPartition,
+      details: {
+        commitId: commitResult.commitId,
+        recoveredPolicyVersion: commitResult.recoveredPolicyVersion,
+        resynchronized: resynced,
+      },
+    });
+
+    return Object.freeze({
+      ...commitResult,
+      resynchronized: resynced,
+    });
+  }
+
+  // ============================================================================
+  // ACCESSORS
+  // ============================================================================
+
+  public getProvenanceEngine(): PolicyActiveRollbackProvenanceEngine {
+    return this.provenanceEngine;
+  }
+
+  public getAuditEngine(): PolicyActiveRollbackAuditEngine {
+    return this.auditEngine;
+  }
+
+  public getStore(): PolicyActiveRollbackStore {
+    return this.rollbackStore;
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "activePolicyStateId": "actpol_68c3d2cb46d8eeb2169d",
+  "activationCommitId": "reccmt_68c3d2cb46d8eeb2",
+  "stagedActivationId": "stg_rec_68c3d2cb46d8",
+  "candidateDraftId": "cnd_rec_68c3d2cb46d8",
+  "evolutionPlanId": "pln_rec_68c3d2cb46d8",
+  "intakeId": "itk_rec_68c3d2cb46d8",
+  "authorizationDecisionId": "[REDACTED]",
+  "activationReadinessId": "rdy_rec_68c3d2cb46d8",
+  "preflightId": "pfl_rec_68c3d2cb46d8",
+  "tenantPartition": "tenant_alpha",
+  "previousPolicyVersion": "1.0.0-SUNSET",
+  "activePolicyVersion": "2.0.0",
+  "targetPolicyDomain": "SYSTEM_OPERATIONS",
+  "activeModifications": {
+    "file_read": "REVERSIBLE",
+    "file_write": "HIGH_IMPACT",
+    "transfer_funds": "FORBIDDEN",
+    "delete_database": "FORBIDDEN",
+    "bypass_robot_interlocks": "FORBIDDEN",
+    "execute_untrusted_host_script": "FORBIDDEN",
+    "toolClassifications": {
+      "file_read": "REVERSIBLE",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    }
+  },
+  "activatedBy": "operator_helen",
+  "activatedRole": "MASTER_HUMAN_OPERATOR",
+  "activatedAt": "2026-09-13T03:14:37.638Z",
+  "provenanceHeadHash": "f04fbd21a81e72b20f2514a220388292276c5a2f53114de01324fbbcdca9c5e0",
+  "isActivePolicy": true,
+  "isActivated": true
+}

@@ -1,0 +1,37 @@
+{
+  "activePolicyStateId": "actpol_7ce05aad2d85cb1e40dc",
+  "activationCommitId": "reccmt_7ce05aad2d85cb1e",
+  "stagedActivationId": "stg_rec_7ce05aad2d85",
+  "candidateDraftId": "cnd_rec_7ce05aad2d85",
+  "evolutionPlanId": "pln_rec_7ce05aad2d85",
+  "intakeId": "itk_rec_7ce05aad2d85",
+  "authorizationDecisionId": "[REDACTED]",
+  "activationReadinessId": "rdy_rec_7ce05aad2d85",
+  "preflightId": "pfl_rec_7ce05aad2d85",
+  "tenantPartition": "tenant_alpha",
+  "previousPolicyVersion": "1.0.0-SUNSET",
+  "activePolicyVersion": "2.0.0",
+  "targetPolicyDomain": "SYSTEM_OPERATIONS",
+  "activeModifications": {
+    "file_read": "REVERSIBLE",
+    "file_write": "HIGH_IMPACT",
+    "transfer_funds": "FORBIDDEN",
+    "delete_database": "FORBIDDEN",
+    "bypass_robot_interlocks": "FORBIDDEN",
+    "execute_untrusted_host_script": "FORBIDDEN",
+    "toolClassifications": {
+      "file_read": "REVERSIBLE",
+      "file_write": "HIGH_IMPACT",
+      "transfer_funds": "FORBIDDEN",
+      "delete_database": "FORBIDDEN",
+      "bypass_robot_interlocks": "FORBIDDEN",
+      "execute_untrusted_host_script": "FORBIDDEN"
+    }
+  },
+  "activatedBy": "operator_helen",
+  "activatedRole": "MASTER_HUMAN_OPERATOR",
+  "activatedAt": "2026-09-13T03:15:02.230Z",
+  "provenanceHeadHash": "21363cf0653ceea3d12d39241eea72c0f9b99515746278882bbfbda3eba61bb0",
+  "isActivePolicy": true,
+  "isActivated": true
+}

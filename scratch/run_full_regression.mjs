@@ -69,6 +69,16 @@ const suites = [
   'tests/test_v4_agent_governed_policy_observability.ts',
   'tests/test_v4_agent_governed_policy_evidence_investigation.ts',
   'tests/test_v4_agent_governed_policy_decision.ts',
+  'tests/test_v4_agent_governed_policy_execution.ts',
+  'tests/test_v4_agent_governed_post_execution.ts',
+  'tests/test_v4_agent_governed_feedback_review.ts',
+  'tests/test_v4_agent_governed_policy_evolution_planning.ts',
+  'tests/test_v4_agent_governed_candidate_authorization.ts',
+  'tests/test_v4_agent_governed_staged_policy_activation.ts',
+  'tests/test_v4_agent_governed_active_policy_runtime_synchronization.ts',
+  'tests/test_v4_agent_governed_active_policy_rollback.ts',
+  'tests/test_v4_agent_governed_active_policy_lifecycle_reconciliation.ts',
+  'tests/test_v4_agent_governed_active_policy_incident_response.ts',
 ];
 
 

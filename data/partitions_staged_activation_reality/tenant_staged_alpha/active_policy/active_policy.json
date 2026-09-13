@@ -1,0 +1,25 @@
+{
+  "activePolicyStateId": "polstate_a6f55fda33ec5759",
+  "activationCommitId": "actcom_afe5311e7e28dece",
+  "stagedActivationId": "stgact_c230340d3b0a76fd",
+  "candidateDraftId": "cand_1789274142168_uiqf",
+  "evolutionPlanId": "evplan_1789274142168_wdg8",
+  "intakeId": "peintake_1789274142168_rffe",
+  "authorizationDecisionId": "[REDACTED]",
+  "activationReadinessId": "actready_1789274142168_z91k",
+  "preflightId": "preflt_cdb015cadb8b8356",
+  "tenantPartition": "tenant_staged_alpha",
+  "previousPolicyVersion": "v4.0.0",
+  "activePolicyVersion": "v4.1.0",
+  "targetPolicyDomain": "OPERATIONAL_GOVERNANCE",
+  "activeModifications": {
+    "maxConcurrency": 50,
+    "circuitBreakerErrorThreshold": 10
+  },
+  "activatedBy": "operator_sam",
+  "activatedRole": "MASTER_HUMAN_OPERATOR",
+  "activatedAt": "2026-09-13T04:35:42.197Z",
+  "provenanceHeadHash": "51adbf2372462b503061623641c4b5d07d8b497f3e009ebb93726a7669dd6335",
+  "isActivePolicy": true,
+  "isActivated": true
+}

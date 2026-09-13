@@ -1,0 +1,61 @@
+{
+  "decisions": [
+    {
+      "decisionId": "authdec_63b029ab05529260",
+      "requestId": "authreq_ae73363d18d13555",
+      "candidateDraftId": "cand_1789274141308_jrww",
+      "evolutionPlanId": "evplan_1789274141308_0gb8",
+      "intakeId": "peintake_1789274141308_bagd",
+      "tenantPartition": "tenant_linkage_test",
+      "reviewerId": "operator_alice",
+      "reviewerRole": "MASTER_HUMAN_OPERATOR",
+      "decision": "AUTHORIZE",
+      "reason": "Approved after independent verification and safety checks",
+      "decidedAt": "2026-09-13T04:35:41.323Z",
+      "isActivePolicy": false,
+      "isPolicyMutation": false,
+      "isAutonomousMutation": false,
+      "provenanceHash": "cf46b2186c55097fc7acc7001045e152059e6e5e02067855087b20917df0cbe8"
+    }
+  ],
+  "readinessDecisions": [
+    {
+      "readinessId": "actready_1a8562dbb07e50c5",
+      "candidateDraftId": "cand_1789274141308_jrww",
+      "authorizationDecisionId": "[REDACTED]",
+      "evolutionPlanId": "evplan_1789274141308_0gb8",
+      "intakeId": "peintake_1789274141308_bagd",
+      "tenantPartition": "tenant_linkage_test",
+      "state": "READY_FOR_ACTIVATION",
+      "prerequisitesSatisfied": [
+        "CANDIDATE_SCHEMA_AND_CONSTRAINTS_VALID",
+        "CANDIDATE_FRESHNESS_VERIFIED",
+        "CANDIDATE_NOT_SUPERSEDED",
+        "HUMAN_AUTHORIZATION_GRANTED"
+      ],
+      "blockingReasons": [],
+      "evaluatedAt": "2026-09-13T04:35:41.328Z",
+      "isActivePolicy": false,
+      "isActivated": false
+    },
+    {
+      "readinessId": "actready_8514cd344bd2e292",
+      "candidateDraftId": "cand_1789274141308_jrww",
+      "authorizationDecisionId": "[REDACTED]",
+      "evolutionPlanId": "evplan_1789274141308_0gb8",
+      "intakeId": "peintake_1789274141308_bagd",
+      "tenantPartition": "tenant_linkage_test",
+      "state": "READY_FOR_ACTIVATION",
+      "prerequisitesSatisfied": [
+        "CANDIDATE_SCHEMA_AND_CONSTRAINTS_VALID",
+        "CANDIDATE_FRESHNESS_VERIFIED",
+        "CANDIDATE_NOT_SUPERSEDED",
+        "HUMAN_AUTHORIZATION_GRANTED"
+      ],
+      "blockingReasons": [],
+      "evaluatedAt": "2026-09-13T04:35:41.395Z",
+      "isActivePolicy": false,
+      "isActivated": false
+    }
+  ]
+}

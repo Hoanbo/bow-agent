@@ -1645,5 +1645,104 @@
     "createdAt": "2026-09-12T19:20:51.746Z",
     "updatedAt": "2026-09-12T19:20:51.746Z",
     "enabled": true
+  },
+  {
+    "id": "rule_1789260845387",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T00:54:05.387Z",
+    "updatedAt": "2026-09-13T00:54:05.387Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789261882690",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T01:11:22.690Z",
+    "updatedAt": "2026-09-13T01:11:22.690Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789263059575",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T01:30:59.575Z",
+    "updatedAt": "2026-09-13T01:30:59.575Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789263941118",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T01:45:41.118Z",
+    "updatedAt": "2026-09-13T01:45:41.118Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789265066497",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T02:04:26.497Z",
+    "updatedAt": "2026-09-13T02:04:26.497Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789266835872",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T02:33:55.872Z",
+    "updatedAt": "2026-09-13T02:33:55.872Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789267951992",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T02:52:31.992Z",
+    "updatedAt": "2026-09-13T02:52:31.992Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789268790880",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T03:06:30.880Z",
+    "updatedAt": "2026-09-13T03:06:30.880Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789269491898",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T03:18:11.898Z",
+    "updatedAt": "2026-09-13T03:18:11.898Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789272926883",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T04:15:26.883Z",
+    "updatedAt": "2026-09-13T04:15:26.883Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789274019823",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-13T04:33:39.823Z",
+    "updatedAt": "2026-09-13T04:33:39.823Z",
+    "enabled": true
   }
 ]
