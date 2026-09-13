@@ -1006,5 +1006,75 @@
     "recordedAt": 1789274047192,
     "expiresAt": 1789360447192,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcexth_29006de1ec15_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789275466423
+    },
+    "recordedAt": 1789275466423,
+    "expiresAt": 1789361866423,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdq3cf_28096ac2dbbb_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789277666417
+    },
+    "recordedAt": 1789277666417,
+    "expiresAt": 1789364066417,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhoel4_499ddc53c2d4_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789284306138
+    },
+    "recordedAt": 1789284306138,
+    "expiresAt": 1789370706138,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj5zkz_86103fcb4280_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789286806117
+    },
+    "recordedAt": 1789286806117,
+    "expiresAt": 1789373206117,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjmenx_a99f79393ebb_iter_1",
+    "ownerUserId": "test_cancel",
+    "payloadHash": "4200eb4346156f09ecbb1209fce314a6770e6e7e32756e7860fd31829fa60141",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo test for cancellation",
+      "timestamp": 1789287572159
+    },
+    "recordedAt": 1789287572159,
+    "expiresAt": 1789373972159,
+    "status": "COMPLETED"
   }
 ]

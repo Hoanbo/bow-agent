@@ -79,7 +79,12 @@ const suites = [
   'tests/test_v4_agent_governed_active_policy_rollback.ts',
   'tests/test_v4_agent_governed_active_policy_lifecycle_reconciliation.ts',
   'tests/test_v4_agent_governed_active_policy_incident_response.ts',
+  'tests/test_v4_agent_governed_active_policy_incident_resolution.ts',
+  'tests/test_v4_agent_governed_policy_governance_readiness.ts',
+  'tests/test_v4_agent_governed_phase_exit_and_phase14_entry.ts',
+  'tests/test_v4_agent_governed_phase_exit_evidence_audit.ts',
 ];
+
 
 
 let reportedAssertionTotal = 0;

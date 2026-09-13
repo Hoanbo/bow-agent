@@ -21837,5 +21837,1425 @@
     "recordedAt": 1789274095712,
     "expiresAt": 1789360495712,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcexug_2b3ada37e41d_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3c4d1e9afb40b49b3f366bd59e4ff6b5dd3a4732d6d710dd37de8995b46899a9",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"timeout check\"",
+      "timestamp": 1789275466466
+    },
+    "recordedAt": 1789275466466,
+    "expiresAt": 1789361866466,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcexva_2e72cd57ab88_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"alive\"",
+      "timestamp": 1789275466495
+    },
+    "recordedAt": 1789275466495,
+    "expiresAt": 1789361866495,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcey3y_29520fca27df_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "95cb29dd029f373b46b71d94efb13d1688dd9d45ea762801e0f0fb4dcea02f7e",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"cancellation test\"",
+      "timestamp": 1789275466806
+    },
+    "recordedAt": 1789275466807,
+    "expiresAt": 1789361866807,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfm8s_8bbe00efcbc5_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e55f4118ab6e06bf297b98c122be2f40ecd576076c989e784f74b48591ee1b9c",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Please echo hello from reality test",
+      "timestamp": 1789275501195
+    },
+    "recordedAt": 1789275501196,
+    "expiresAt": 1789361901196,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfoo9_f6728a81d0e5_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "9ef56a1e28948e6859b2ca01b8cef2ba8e8de49b76c6be27167e64a5cad51730",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "bytesWritten": 54,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789275501236,
+    "expiresAt": 1789361901236,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfop6_386a07252533_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "dd2bce0389c635ab24d9c203f6f7cfee135070e75541e86698106d742dd1d9d5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "content": "content: MANIFEST_INITIAL_V4: created at 1789275501224",
+      "byteSize": 54
+    },
+    "recordedAt": 1789275501268,
+    "expiresAt": 1789361901268,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfopy_5950ff429d60_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "d7b57b0dc9e900ef2fb6fb49fdef6345aaaf2deb5cfecae26225fb755ca2edd2",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "newByteSize": 96
+    },
+    "recordedAt": 1789275501295,
+    "expiresAt": 1789361901295,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfoqq_5813a47f6fab_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a4ba152cf197f4002c9ab0838662f7b0830be37f7b0251c8f0f52670f4fa66f3",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 1: verify runtime stability",
+      "timestamp": 1789275501321
+    },
+    "recordedAt": 1789275501321,
+    "expiresAt": 1789361901321,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcforh_5594937a7a3e_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "7310d28ed949368f1c43e6d7cdd91b5fbba631de56916bc4639b8bc5d4200161",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 2: verify runtime stability",
+      "timestamp": 1789275501349
+    },
+    "recordedAt": 1789275501349,
+    "expiresAt": 1789361901349,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfos9_ec68b5c61556_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "193c3deb0d56ad9ba8911084098c0af0c7185a6610d59f2c70b7e1381e27cd46",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 3: verify runtime stability",
+      "timestamp": 1789275501378
+    },
+    "recordedAt": 1789275501378,
+    "expiresAt": 1789361901378,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfot3_a0d2402206d0_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3a133251434f4cbb286484a7465630fe1f78705d143ea6fb3328de5d0ec6144a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 4: verify runtime stability",
+      "timestamp": 1789275501410
+    },
+    "recordedAt": 1789275501410,
+    "expiresAt": 1789361901410,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfou3_6ea30be9799c_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e1b6253a8496c782b1c57c7b513d58fcbbc484797cf3c895bcd3a970a2342ddf",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 5: verify runtime stability",
+      "timestamp": 1789275501444
+    },
+    "recordedAt": 1789275501444,
+    "expiresAt": 1789361901444,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfouw_ab9014a738dd_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8174df3bf5ed8adbf5685640b0b81ea89897b2566b760022c9307a6e4997700b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Execute non_existent_forbidden_tool with invalid arguments",
+      "timestamp": 1789275501473
+    },
+    "recordedAt": 1789275501473,
+    "expiresAt": 1789361901473,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfovq_c4c3099790b4_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e7ce1f7a4468b018025f45874c93ee770156a2703027c18a77d479fed05953df",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo recovery verification after controlled failure",
+      "timestamp": 1789275501503
+    },
+    "recordedAt": 1789275501503,
+    "expiresAt": 1789361901503,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfpfp_5a9c74e1131c_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "0a4d20d016d4825e43d894d9cd0c47a131cc823475b9b341a477c55970675c0a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Request executed successfully on restarted service process",
+      "timestamp": 1789275505321
+    },
+    "recordedAt": 1789275505321,
+    "expiresAt": 1789361905321,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfwtb_6770ebc97ec5_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "13fad3bc2a46d430940f0774207f44a01b125e065c65fb0c90cdac23e5c2d87a",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_e98a532d.txt",
+      "bytesWritten": 42,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789275514818,
+    "expiresAt": 1789361914818,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfz6q_6294e41cf195_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "1cfdc08dcd783078a694cb8c5a303943f40b9a5c1b3111b7d041f5121b939bfd",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_e98a532d.txt",
+      "newByteSize": 66
+    },
+    "recordedAt": 1789275514866,
+    "expiresAt": 1789361914866,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfz7w_a4e38955b66d_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a8c525253af457c8842581dc86c44ad3de616585f58f14b9ef5b8e4d8e6bb937",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_e98a532d.txt",
+      "content": "BOWCON V4 REAL COGNITIVE REALITY GATE PASS\n\\nSECOND COGNITIVE PASS",
+      "byteSize": 66
+    },
+    "recordedAt": 1789275514911,
+    "expiresAt": 1789361914911,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfz93_9cb7d6d92735_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8583d6244d23e0f14d6ac22dced05b40f4a411c3e4996878ed4a234304d477b5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_list",
+      "directory": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\data\\brain",
+      "entries": []
+    },
+    "recordedAt": 1789275514956,
+    "expiresAt": 1789361914956,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcfzab_f2d6a2e35fa9_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "424246ee701889ace659cb0bb36c9d1011534bce66b4b533ecb2bd468b2e3346",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo system continuity verified",
+      "timestamp": 1789275514991
+    },
+    "recordedAt": 1789275514991,
+    "expiresAt": 1789361914991,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdq3dh_c450639473eb_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3c4d1e9afb40b49b3f366bd59e4ff6b5dd3a4732d6d710dd37de8995b46899a9",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"timeout check\"",
+      "timestamp": 1789277666467
+    },
+    "recordedAt": 1789277666467,
+    "expiresAt": 1789364066467,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdq3ek_c7e57693810f_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"alive\"",
+      "timestamp": 1789277666509
+    },
+    "recordedAt": 1789277666509,
+    "expiresAt": 1789364066509,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdq3n7_378b220cc3da_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "95cb29dd029f373b46b71d94efb13d1688dd9d45ea762801e0f0fb4dcea02f7e",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"cancellation test\"",
+      "timestamp": 1789277666811
+    },
+    "recordedAt": 1789277666811,
+    "expiresAt": 1789364066811,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqrrq_68fc72ad980b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e55f4118ab6e06bf297b98c122be2f40ecd576076c989e784f74b48591ee1b9c",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Please echo hello from reality test",
+      "timestamp": 1789277701222
+    },
+    "recordedAt": 1789277701222,
+    "expiresAt": 1789364101222,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqu84_eed6fdbb7742_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3b054985f57be93322b7114157fa1a06ab8c36bc2eae8e20db729f5593680729",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "bytesWritten": 54,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789277701264,
+    "expiresAt": 1789364101264,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqu95_7ac4333a73a1_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "dd2bce0389c635ab24d9c203f6f7cfee135070e75541e86698106d742dd1d9d5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "content": "content: MANIFEST_INITIAL_V4: created at 1789277701251",
+      "byteSize": 54
+    },
+    "recordedAt": 1789277701300,
+    "expiresAt": 1789364101300,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqua2_869c894789ff_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "94c679cf68cb3cdd736f3ddc232e955166b38c05a509ee97b4bcf2726efb3f85",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "newByteSize": 96
+    },
+    "recordedAt": 1789277701331,
+    "expiresAt": 1789364101331,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdquav_0037dff49e92_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a4ba152cf197f4002c9ab0838662f7b0830be37f7b0251c8f0f52670f4fa66f3",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 1: verify runtime stability",
+      "timestamp": 1789277701362
+    },
+    "recordedAt": 1789277701362,
+    "expiresAt": 1789364101362,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqubt_c60f79e7712d_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "7310d28ed949368f1c43e6d7cdd91b5fbba631de56916bc4639b8bc5d4200161",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 2: verify runtime stability",
+      "timestamp": 1789277701393
+    },
+    "recordedAt": 1789277701393,
+    "expiresAt": 1789364101393,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqucm_4692e82d1def_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "193c3deb0d56ad9ba8911084098c0af0c7185a6610d59f2c70b7e1381e27cd46",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 3: verify runtime stability",
+      "timestamp": 1789277701423
+    },
+    "recordedAt": 1789277701423,
+    "expiresAt": 1789364101423,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqudf_cec11db48d6d_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3a133251434f4cbb286484a7465630fe1f78705d143ea6fb3328de5d0ec6144a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 4: verify runtime stability",
+      "timestamp": 1789277701453
+    },
+    "recordedAt": 1789277701453,
+    "expiresAt": 1789364101453,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdque9_22854ed638d7_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e1b6253a8496c782b1c57c7b513d58fcbbc484797cf3c895bcd3a970a2342ddf",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 5: verify runtime stability",
+      "timestamp": 1789277701481
+    },
+    "recordedAt": 1789277701481,
+    "expiresAt": 1789364101481,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdquf0_dd96307fd44d_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8174df3bf5ed8adbf5685640b0b81ea89897b2566b760022c9307a6e4997700b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Execute non_existent_forbidden_tool with invalid arguments",
+      "timestamp": 1789277701510
+    },
+    "recordedAt": 1789277701510,
+    "expiresAt": 1789364101510,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqufu_a587ee7516b4_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e7ce1f7a4468b018025f45874c93ee770156a2703027c18a77d479fed05953df",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo recovery verification after controlled failure",
+      "timestamp": 1789277701537
+    },
+    "recordedAt": 1789277701537,
+    "expiresAt": 1789364101537,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdqv0f_1f0747fcca02_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "0a4d20d016d4825e43d894d9cd0c47a131cc823475b9b341a477c55970675c0a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Request executed successfully on restarted service process",
+      "timestamp": 1789277705399
+    },
+    "recordedAt": 1789277705400,
+    "expiresAt": 1789364105400,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdr2fp_e3f5c2025c58_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "c3674b3f625fb8fd4213f950e17096ddc3b5a5c07a56279b425cc57d2b6cf812",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_d2af47b5.txt",
+      "bytesWritten": 42,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789277714931,
+    "expiresAt": 1789364114931,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdr4su_47514a5a6e56_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a04391901d228227525a22373610c45ebc1999c1bb6b9752928e4b759e2c1da0",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_d2af47b5.txt",
+      "newByteSize": 66
+    },
+    "recordedAt": 1789277714968,
+    "expiresAt": 1789364114968,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdr4tp_8a59888710dc_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "15750de0213051f7d65019af43915f68735f4c3596b4c26a9b7f03d2bb0e5afa",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_d2af47b5.txt",
+      "content": "BOWCON V4 REAL COGNITIVE REALITY GATE PASS\n\\nSECOND COGNITIVE PASS",
+      "byteSize": 66
+    },
+    "recordedAt": 1789277715004,
+    "expiresAt": 1789364115004,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdr4uo_29399b642414_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8583d6244d23e0f14d6ac22dced05b40f4a411c3e4996878ed4a234304d477b5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_list",
+      "directory": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\data\\brain",
+      "entries": []
+    },
+    "recordedAt": 1789277715034,
+    "expiresAt": 1789364115034,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdr4vf_a397aefee969_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "424246ee701889ace659cb0bb36c9d1011534bce66b4b533ecb2bd468b2e3346",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo system continuity verified",
+      "timestamp": 1789277715061
+    },
+    "recordedAt": 1789277715061,
+    "expiresAt": 1789364115061,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhoem3_394ff40e97d1_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3c4d1e9afb40b49b3f366bd59e4ff6b5dd3a4732d6d710dd37de8995b46899a9",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"timeout check\"",
+      "timestamp": 1789284306185
+    },
+    "recordedAt": 1789284306185,
+    "expiresAt": 1789370706185,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhoen2_caff1380ccf7_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"alive\"",
+      "timestamp": 1789284306224
+    },
+    "recordedAt": 1789284306224,
+    "expiresAt": 1789370706224,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhoevg_02fa15881e97_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "95cb29dd029f373b46b71d94efb13d1688dd9d45ea762801e0f0fb4dcea02f7e",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"cancellation test\"",
+      "timestamp": 1789284306516
+    },
+    "recordedAt": 1789284306516,
+    "expiresAt": 1789370706516,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp32t_77d64c54204f_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e55f4118ab6e06bf297b98c122be2f40ecd576076c989e784f74b48591ee1b9c",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Please echo hello from reality test",
+      "timestamp": 1789284341024
+    },
+    "recordedAt": 1789284341024,
+    "expiresAt": 1789370741024,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5j7_03444ecb74aa_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "cf68c9d280eb5cbd1a1ac44540aef70384f50d7012d04ad5415475951e3bc62b",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "bytesWritten": 54,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789284341075,
+    "expiresAt": 1789370741075,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5kh_cd9fcfb92245_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "dd2bce0389c635ab24d9c203f6f7cfee135070e75541e86698106d742dd1d9d5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "content": "content: MANIFEST_INITIAL_V4: created at 1789284341058",
+      "byteSize": 54
+    },
+    "recordedAt": 1789284341119,
+    "expiresAt": 1789370741119,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5lp_cde29bbaa192_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "aab7b54d4870ef0c5f4a503342e4a11b9b7a5d53a425dfbcc435624716058a9b",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "newByteSize": 96
+    },
+    "recordedAt": 1789284341162,
+    "expiresAt": 1789370741162,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5mt_9bbf95c67520_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a4ba152cf197f4002c9ab0838662f7b0830be37f7b0251c8f0f52670f4fa66f3",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 1: verify runtime stability",
+      "timestamp": 1789284341199
+    },
+    "recordedAt": 1789284341199,
+    "expiresAt": 1789370741199,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5nt_a6423598de18_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "7310d28ed949368f1c43e6d7cdd91b5fbba631de56916bc4639b8bc5d4200161",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 2: verify runtime stability",
+      "timestamp": 1789284341236
+    },
+    "recordedAt": 1789284341236,
+    "expiresAt": 1789370741236,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5ou_307e651a8b1b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "193c3deb0d56ad9ba8911084098c0af0c7185a6610d59f2c70b7e1381e27cd46",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 3: verify runtime stability",
+      "timestamp": 1789284341274
+    },
+    "recordedAt": 1789284341274,
+    "expiresAt": 1789370741274,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5py_477a1916cb53_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3a133251434f4cbb286484a7465630fe1f78705d143ea6fb3328de5d0ec6144a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 4: verify runtime stability",
+      "timestamp": 1789284341315
+    },
+    "recordedAt": 1789284341315,
+    "expiresAt": 1789370741315,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5r4_ee11fd5f5668_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e1b6253a8496c782b1c57c7b513d58fcbbc484797cf3c895bcd3a970a2342ddf",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 5: verify runtime stability",
+      "timestamp": 1789284341356
+    },
+    "recordedAt": 1789284341356,
+    "expiresAt": 1789370741356,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5s4_c6477876131c_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8174df3bf5ed8adbf5685640b0b81ea89897b2566b760022c9307a6e4997700b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Execute non_existent_forbidden_tool with invalid arguments",
+      "timestamp": 1789284341391
+    },
+    "recordedAt": 1789284341391,
+    "expiresAt": 1789370741391,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp5t5_589ed790978b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e7ce1f7a4468b018025f45874c93ee770156a2703027c18a77d479fed05953df",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo recovery verification after controlled failure",
+      "timestamp": 1789284341429
+    },
+    "recordedAt": 1789284341429,
+    "expiresAt": 1789370741429,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhp6fz_11ff241d1515_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "0a4d20d016d4825e43d894d9cd0c47a131cc823475b9b341a477c55970675c0a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Request executed successfully on restarted service process",
+      "timestamp": 1789284345358
+    },
+    "recordedAt": 1789284345358,
+    "expiresAt": 1789370745358,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhpdxh_2615ffdfffb6_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "2d61db05a12e82160a624b42d62e21469be3a992efa49e11c071259c546e6117",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_cb780711.txt",
+      "bytesWritten": 42,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789284354984,
+    "expiresAt": 1789370754984,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhpgar_acf01b5d1112_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "be0d7e0f9135bd2ad07d34ea8161d9834b5c7e209cb228237c5231b44aaa6a07",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_cb780711.txt",
+      "newByteSize": 66
+    },
+    "recordedAt": 1789284355022,
+    "expiresAt": 1789370755022,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhpgbo_10e839e78e5e_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "37df0aaeaf803572302c64aaceb2832e503d7d8e47c22bdaf6d82a8c23ed1e76",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_cb780711.txt",
+      "content": "BOWCON V4 REAL COGNITIVE REALITY GATE PASS\n\\nSECOND COGNITIVE PASS",
+      "byteSize": 66
+    },
+    "recordedAt": 1789284355055,
+    "expiresAt": 1789370755055,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhpgcj_de7b843d8b1a_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8583d6244d23e0f14d6ac22dced05b40f4a411c3e4996878ed4a234304d477b5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_list",
+      "directory": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\data\\brain",
+      "entries": []
+    },
+    "recordedAt": 1789284355086,
+    "expiresAt": 1789370755086,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhpgdd_f071bcda080f_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "424246ee701889ace659cb0bb36c9d1011534bce66b4b533ecb2bd468b2e3346",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo system continuity verified",
+      "timestamp": 1789284355116
+    },
+    "recordedAt": 1789284355116,
+    "expiresAt": 1789370755116,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj5zlu_cf97670eca4b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3c4d1e9afb40b49b3f366bd59e4ff6b5dd3a4732d6d710dd37de8995b46899a9",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"timeout check\"",
+      "timestamp": 1789286806159
+    },
+    "recordedAt": 1789286806159,
+    "expiresAt": 1789373206159,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj5zn5_b2d14f21e2d8_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"alive\"",
+      "timestamp": 1789286806202
+    },
+    "recordedAt": 1789286806202,
+    "expiresAt": 1789373206202,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj5zve_4790003c42fd_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "95cb29dd029f373b46b71d94efb13d1688dd9d45ea762801e0f0fb4dcea02f7e",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"cancellation test\"",
+      "timestamp": 1789286806498
+    },
+    "recordedAt": 1789286806498,
+    "expiresAt": 1789373206498,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6o2c_c171366677a2_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e55f4118ab6e06bf297b98c122be2f40ecd576076c989e784f74b48591ee1b9c",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Please echo hello from reality test",
+      "timestamp": 1789286841012
+    },
+    "recordedAt": 1789286841013,
+    "expiresAt": 1789373241013,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qj7_709d0c473ac0_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "755a7fb8aef236016f458a5a4874d07edd446a04ec5a46add23241c8c9676191",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "bytesWritten": 54,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789286841054,
+    "expiresAt": 1789373241054,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qk5_471c01a25fd9_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "dd2bce0389c635ab24d9c203f6f7cfee135070e75541e86698106d742dd1d9d5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "content": "content: MANIFEST_INITIAL_V4: created at 1789286841042",
+      "byteSize": 54
+    },
+    "recordedAt": 1789286841087,
+    "expiresAt": 1789373241087,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6ql0_e00c537ab78d_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "56a433e0ff3ecd1188a73f75b6b87a865eb1e07866a78ee67679fb0848991fb1",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "newByteSize": 96
+    },
+    "recordedAt": 1789286841119,
+    "expiresAt": 1789373241119,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qly_ac27a80d103b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a4ba152cf197f4002c9ab0838662f7b0830be37f7b0251c8f0f52670f4fa66f3",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 1: verify runtime stability",
+      "timestamp": 1789286841151
+    },
+    "recordedAt": 1789286841151,
+    "expiresAt": 1789373241151,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qms_df6d44fc0ae7_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "7310d28ed949368f1c43e6d7cdd91b5fbba631de56916bc4639b8bc5d4200161",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 2: verify runtime stability",
+      "timestamp": 1789286841184
+    },
+    "recordedAt": 1789286841184,
+    "expiresAt": 1789373241184,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qnq_bde5648f46df_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "193c3deb0d56ad9ba8911084098c0af0c7185a6610d59f2c70b7e1381e27cd46",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 3: verify runtime stability",
+      "timestamp": 1789286841216
+    },
+    "recordedAt": 1789286841216,
+    "expiresAt": 1789373241216,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qon_ab23d2236902_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3a133251434f4cbb286484a7465630fe1f78705d143ea6fb3328de5d0ec6144a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 4: verify runtime stability",
+      "timestamp": 1789286841248
+    },
+    "recordedAt": 1789286841248,
+    "expiresAt": 1789373241248,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qpv_85c612adf563_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e1b6253a8496c782b1c57c7b513d58fcbbc484797cf3c895bcd3a970a2342ddf",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 5: verify runtime stability",
+      "timestamp": 1789286841291
+    },
+    "recordedAt": 1789286841291,
+    "expiresAt": 1789373241291,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qqp_c7959ee5eb86_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8174df3bf5ed8adbf5685640b0b81ea89897b2566b760022c9307a6e4997700b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Execute non_existent_forbidden_tool with invalid arguments",
+      "timestamp": 1789286841321
+    },
+    "recordedAt": 1789286841321,
+    "expiresAt": 1789373241321,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6qrk_2987f9a83384_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e7ce1f7a4468b018025f45874c93ee770156a2703027c18a77d479fed05953df",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo recovery verification after controlled failure",
+      "timestamp": 1789286841355
+    },
+    "recordedAt": 1789286841355,
+    "expiresAt": 1789373241355,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6re3_464432caedab_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "0a4d20d016d4825e43d894d9cd0c47a131cc823475b9b341a477c55970675c0a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Request executed successfully on restarted service process",
+      "timestamp": 1789286845285
+    },
+    "recordedAt": 1789286845285,
+    "expiresAt": 1789373245285,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj6yuz_d8dbfab234d4_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "9fd2dcb6171ee9b46ad0b30bf7de694a16f30cc1625af8d0978c81eedc9b2ecd",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_e709d9b0.txt",
+      "bytesWritten": 42,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789286854877,
+    "expiresAt": 1789373254877,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj718a_0733fc2be89f_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "09d36dee903f60790b2b572f797ae541363c5567fc4c02f995c8ce3d9abfea64",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_e709d9b0.txt",
+      "newByteSize": 66
+    },
+    "recordedAt": 1789286854917,
+    "expiresAt": 1789373254917,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj7196_dc355d976432_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "55d1049210951337edb946d4e830738ffc3d7cd185211c824706869cc1890803",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_e709d9b0.txt",
+      "content": "BOWCON V4 REAL COGNITIVE REALITY GATE PASS\n\\nSECOND COGNITIVE PASS",
+      "byteSize": 66
+    },
+    "recordedAt": 1789286854950,
+    "expiresAt": 1789373254950,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj71a5_d184c7676953_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8583d6244d23e0f14d6ac22dced05b40f4a411c3e4996878ed4a234304d477b5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_list",
+      "directory": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\data\\brain",
+      "entries": []
+    },
+    "recordedAt": 1789286854987,
+    "expiresAt": 1789373254987,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj71b4_1c75f709f925_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "424246ee701889ace659cb0bb36c9d1011534bce66b4b533ecb2bd468b2e3346",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo system continuity verified",
+      "timestamp": 1789286855021
+    },
+    "recordedAt": 1789286855021,
+    "expiresAt": 1789373255021,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjmeoo_d72534f409ef_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3c4d1e9afb40b49b3f366bd59e4ff6b5dd3a4732d6d710dd37de8995b46899a9",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"timeout check\"",
+      "timestamp": 1789287572194
+    },
+    "recordedAt": 1789287572194,
+    "expiresAt": 1789373972194,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjmeph_2dd7a63d23aa_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "fa3c18035f6edfac6c870e944261ee2aa128b5ec46f4937c7cd846fef90c8bac",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"alive\"",
+      "timestamp": 1789287572220
+    },
+    "recordedAt": 1789287572221,
+    "expiresAt": 1789373972221,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjmeya_99e22b7f68a4_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "95cb29dd029f373b46b71d94efb13d1688dd9d45ea762801e0f0fb4dcea02f7e",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"cancellation test\"",
+      "timestamp": 1789287572540
+    },
+    "recordedAt": 1789287572540,
+    "expiresAt": 1789373972540,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn34u_b719ca91e123_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e55f4118ab6e06bf297b98c122be2f40ecd576076c989e784f74b48591ee1b9c",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Please echo hello from reality test",
+      "timestamp": 1789287606992
+    },
+    "recordedAt": 1789287606992,
+    "expiresAt": 1789374006992,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5ke_91cf089b6e2c_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e1720c545982cb6c5318516e82c472ee60c7986a6307f06c8d39a899a74adfec",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "bytesWritten": 54,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789287607035,
+    "expiresAt": 1789374007035,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5ld_6c8a12e21197_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "dd2bce0389c635ab24d9c203f6f7cfee135070e75541e86698106d742dd1d9d5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "content": "content: MANIFEST_INITIAL_V4: created at 1789287607021",
+      "byteSize": 54
+    },
+    "recordedAt": 1789287607068,
+    "expiresAt": 1789374007068,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5me_f00febd63cdd_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "155f16809976088919db93799b1b5a4c2822b534a9816ef7799ab1d2df5b5374",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\reality_manifest.txt",
+      "newByteSize": 96
+    },
+    "recordedAt": 1789287607105,
+    "expiresAt": 1789374007105,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5na_600c50009b4e_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "a4ba152cf197f4002c9ab0838662f7b0830be37f7b0251c8f0f52670f4fa66f3",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 1: verify runtime stability",
+      "timestamp": 1789287607134
+    },
+    "recordedAt": 1789287607134,
+    "expiresAt": 1789374007134,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5o5_89a1ba3289fc_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "7310d28ed949368f1c43e6d7cdd91b5fbba631de56916bc4639b8bc5d4200161",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 2: verify runtime stability",
+      "timestamp": 1789287607166
+    },
+    "recordedAt": 1789287607166,
+    "expiresAt": 1789374007166,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5p1_2106ac330a90_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "193c3deb0d56ad9ba8911084098c0af0c7185a6610d59f2c70b7e1381e27cd46",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 3: verify runtime stability",
+      "timestamp": 1789287607200
+    },
+    "recordedAt": 1789287607200,
+    "expiresAt": 1789374007200,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5q2_fd913d431106_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "3a133251434f4cbb286484a7465630fe1f78705d143ea6fb3328de5d0ec6144a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 4: verify runtime stability",
+      "timestamp": 1789287607238
+    },
+    "recordedAt": 1789287607238,
+    "expiresAt": 1789374007238,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5r6_96c7130f74fd_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e1b6253a8496c782b1c57c7b513d58fcbbc484797cf3c895bcd3a970a2342ddf",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Continuous multi-request cycle 5: verify runtime stability",
+      "timestamp": 1789287607277
+    },
+    "recordedAt": 1789287607277,
+    "expiresAt": 1789374007277,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5s3_c63ad21883da_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8174df3bf5ed8adbf5685640b0b81ea89897b2566b760022c9307a6e4997700b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Execute non_existent_forbidden_tool with invalid arguments",
+      "timestamp": 1789287607307
+    },
+    "recordedAt": 1789287607307,
+    "expiresAt": 1789374007307,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn5sy_0062f5a8a2ad_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "e7ce1f7a4468b018025f45874c93ee770156a2703027c18a77d479fed05953df",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo recovery verification after controlled failure",
+      "timestamp": 1789287607342
+    },
+    "recordedAt": 1789287607342,
+    "expiresAt": 1789374007342,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjn6eq_380d72e47430_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "0a4d20d016d4825e43d894d9cd0c47a131cc823475b9b341a477c55970675c0a",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Request executed successfully on restarted service process",
+      "timestamp": 1789287611243
+    },
+    "recordedAt": 1789287611243,
+    "expiresAt": 1789374011243,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjndvr_cc5de702177e_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "18c717c7d7b4f810fa34b670105947ac7d584852731aa96da24db5b3b141a23b",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_write",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_44b14d05.txt",
+      "bytesWritten": 42,
+      "existsAfterWrite": true
+    },
+    "recordedAt": 1789287620840,
+    "expiresAt": 1789374020840,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjng92_24465921515b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "fc9d138e1fd2037b6a71e363967b4864ec07722f75d8ef070b5256050cae0996",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_append",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_44b14d05.txt",
+      "newByteSize": 66
+    },
+    "recordedAt": 1789287620884,
+    "expiresAt": 1789374020884,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjnga2_a6e90c2bd6fd_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "b03a02dd4f1af312cb1b2686d0ef7fbb75cce02b55a79d174380314f84d20003",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_read",
+      "path": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\reality\\cog_live_file_44b14d05.txt",
+      "content": "BOWCON V4 REAL COGNITIVE REALITY GATE PASS\n\\nSECOND COGNITIVE PASS",
+      "byteSize": 66
+    },
+    "recordedAt": 1789287620917,
+    "expiresAt": 1789374020917,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjngb0_9eb2e87ace85_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "8583d6244d23e0f14d6ac22dced05b40f4a411c3e4996878ed4a234304d477b5",
+    "result": {
+      "success": true,
+      "toolName": "brain_fs_list",
+      "directory": "C:\\Users\\MSI_dualXeon\\Desktop\\BOW\\bow-agent\\data\\brain\\data\\brain",
+      "entries": []
+    },
+    "recordedAt": 1789287620952,
+    "expiresAt": 1789374020952,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjngbv_50f8f52de78b_iter_1",
+    "ownerUserId": "brain_owner",
+    "payloadHash": "424246ee701889ace659cb0bb36c9d1011534bce66b4b533ecb2bd468b2e3346",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo system continuity verified",
+      "timestamp": 1789287620981
+    },
+    "recordedAt": 1789287620981,
+    "expiresAt": 1789374020981,
+    "status": "COMPLETED"
   }
 ]

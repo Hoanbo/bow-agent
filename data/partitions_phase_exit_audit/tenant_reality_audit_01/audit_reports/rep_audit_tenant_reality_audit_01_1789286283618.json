@@ -1,0 +1,1870 @@
+{
+  "reportId": "rep_audit_tenant_reality_audit_01_1789286283618",
+  "auditId": "audit_tenant_reality_audit_01_1789286283618",
+  "tenantPartition": "tenant_reality_audit_01",
+  "assessmentTimestamp": "2026-09-13T07:58:03.618Z",
+  "auditedMilestones": [
+    "MS-1.3.62",
+    "MS-1.3.63",
+    "MS-1.3.64",
+    "MS-1.3.65",
+    "MS-1.3.66",
+    "MS-1.3.67",
+    "MS-1.3.68",
+    "MS-1.3.69",
+    "MS-1.3.70",
+    "MS-1.3.71",
+    "MS-1.3.72",
+    "MS-1.3.73",
+    "MS-1.3.74",
+    "MS-1.3.75",
+    "MS-1.3.76",
+    "MS-1.3.77"
+  ],
+  "criteriaEvaluations": [
+    {
+      "criterion": {
+        "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+        "criterionNumber": 1,
+        "name": "Governance Plane Coverage",
+        "description": "All 16 Phase 1.3 governance milestones implemented with complete codebases",
+        "requiredStrength": "STATIC_CODE_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.63",
+          "MS-1.3.64",
+          "MS-1.3.65",
+          "MS-1.3.66",
+          "MS-1.3.67",
+          "MS-1.3.68",
+          "MS-1.3.69",
+          "MS-1.3.70",
+          "MS-1.3.71",
+          "MS-1.3.72",
+          "MS-1.3.73",
+          "MS-1.3.74",
+          "MS-1.3.75",
+          "MS-1.3.76",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_src_MS-1.3.62",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.62",
+          "evidenceSource": "src/core/policyEvolution",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.63",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.63",
+          "evidenceSource": "src/core/policyEnforcement",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.64",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.64",
+          "evidenceSource": "src/core/policyCanary",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.65",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.65",
+          "evidenceSource": "src/core/policyCanary",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.66",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.66",
+          "evidenceSource": "src/core/policyObservability",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.67",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.67",
+          "evidenceSource": "src/core/policyEvidence",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.68",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.68",
+          "evidenceSource": "src/core/policyDecision",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.69",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.69",
+          "evidenceSource": "src/core/policyCandidateAuthorization",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.70",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.70",
+          "evidenceSource": "src/core/policyStagedActivation",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.71",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.71",
+          "evidenceSource": "src/core/policyActiveRuntime",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.72",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.72",
+          "evidenceSource": "src/core/policyActiveRollback",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.73",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.73",
+          "evidenceSource": "src/core/policyActiveLifecycleReconciliation",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.74",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.74",
+          "evidenceSource": "src/core/policyActiveIncidentResponse",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.75",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.75",
+          "evidenceSource": "src/core/policyActiveIncidentResolution",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.76",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.76",
+          "evidenceSource": "src/core/policyGovernanceReadiness",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_src_MS-1.3.77",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.77",
+          "evidenceSource": "src/core/policyPhaseTransition",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "DIRECTORY_PRESENT",
+          "expectedValue": "DIRECTORY_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.62",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.62",
+          "evidenceSource": "src/core/policyEvolution",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": [
+              "MISSING_MATRIX_ENTRY: Milestone MS-1.3.62 not documented in component matrix"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.63",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.63",
+          "evidenceSource": "src/core/policyEnforcement",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": [
+              "MISSING_MATRIX_ENTRY: Milestone MS-1.3.63 not documented in component matrix"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.64",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.64",
+          "evidenceSource": "src/core/policyCanary",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.65",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.65",
+          "evidenceSource": "src/core/policyCanary",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.66",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.66",
+          "evidenceSource": "src/core/policyObservability",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.67",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.67",
+          "evidenceSource": "src/core/policyEvidence",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.68",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.68",
+          "evidenceSource": "src/core/policyDecision",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.69",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.69",
+          "evidenceSource": "src/core/policyCandidateAuthorization",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.70",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.70",
+          "evidenceSource": "src/core/policyStagedActivation",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.71",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.71",
+          "evidenceSource": "src/core/policyActiveRuntime",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.72",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.72",
+          "evidenceSource": "src/core/policyActiveRollback",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.73",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.73",
+          "evidenceSource": "src/core/policyActiveLifecycleReconciliation",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.74",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.74",
+          "evidenceSource": "src/core/policyActiveIncidentResponse",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.75",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.75",
+          "evidenceSource": "src/core/policyActiveIncidentResolution",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.76",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.76",
+          "evidenceSource": "src/core/policyGovernanceReadiness",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        },
+        {
+          "evidenceId": "ev_ms_MS-1.3.77",
+          "criterionId": "CRITERION_GOVERNANCE_COVERAGE",
+          "milestone": "MS-1.3.77",
+          "evidenceSource": "src/core/policyPhaseTransition",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "COMPLETE",
+          "expectedValue": "COMPLETE",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "issues": []
+          }
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+        "criterionNumber": 2,
+        "name": "Governance Separation of Duties",
+        "description": "Strict authority separation across all governance planes",
+        "requiredStrength": "INTEGRATION_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.69",
+          "MS-1.3.70",
+          "MS-1.3.72",
+          "MS-1.3.75",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "FAIL",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_pub_exports",
+          "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+          "evidenceSource": "src/index.ts",
+          "evidenceStrength": "INTEGRATION_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "EXPORTS_PRESENT",
+          "expectedValue": "EXPORTS_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_int_CANDIDATE_AUTH_TO_STAGED_ACTIVATION",
+          "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+          "evidenceSource": "CANDIDATE_AUTH_TO_STAGED_ACTIVATION",
+          "evidenceStrength": "INTEGRATION_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "INTEGRATION_DEFECT",
+          "expectedValue": "CONNECTED_AND_SEPARATED",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        },
+        {
+          "evidenceId": "ev_int_STAGED_ACTIVATION_TO_RUNTIME_SYNC",
+          "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+          "evidenceSource": "STAGED_ACTIVATION_TO_RUNTIME_SYNC",
+          "evidenceStrength": "INTEGRATION_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "INTEGRATION_DEFECT",
+          "expectedValue": "CONNECTED_AND_SEPARATED",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        },
+        {
+          "evidenceId": "ev_int_INCIDENT_RESOLUTION_TO_ROLLBACK_HANDOFF",
+          "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+          "evidenceSource": "INCIDENT_RESOLUTION_TO_ROLLBACK_HANDOFF",
+          "evidenceStrength": "INTEGRATION_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "INTEGRATION_DEFECT",
+          "expectedValue": "CONNECTED_AND_SEPARATED",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        },
+        {
+          "evidenceId": "ev_int_READINESS_ASSESSMENT_TO_PHASE_TRANSITION",
+          "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+          "evidenceSource": "READINESS_ASSESSMENT_TO_PHASE_TRANSITION",
+          "evidenceStrength": "INTEGRATION_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "CONNECTED_AND_SEPARATED",
+          "expectedValue": "CONNECTED_AND_SEPARATED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        },
+        {
+          "evidenceId": "ev_int_PHASE_EXIT_TO_PHASE_14_ENTRY_SEPARATION",
+          "criterionId": "CRITERION_GOVERNANCE_SEPARATION",
+          "evidenceSource": "PHASE_EXIT_TO_PHASE_14_ENTRY_SEPARATION",
+          "evidenceStrength": "INTEGRATION_EVIDENCE",
+          "verificationMethod": "AST_SOURCE_INSPECTION",
+          "observedValue": "CONNECTED_AND_SEPARATED",
+          "expectedValue": "CONNECTED_AND_SEPARATED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "failureReason": "One or more evidence items failed verification for Governance Separation of Duties",
+      "riskLevel": "CRITICAL",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_HUMAN_AUTHORITY",
+        "criterionNumber": 3,
+        "name": "Human Authority Supremacy",
+        "description": "Human-in-the-loop gates required for candidate approvals and phase transitions",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.69",
+          "MS-1.3.70",
+          "MS-1.3.72",
+          "MS-1.3.75",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "FAIL",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_auth_PolicyCandidateAuthorizationBoundary",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyCandidateAuthorizationBoundary",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "NON_COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": [
+              "Missing explicit autonomous actor rejection pattern check",
+              "Missing explicit anonymous actor rejection check",
+              "Missing anti-self-approval enforcement",
+              "Missing authorized human role restriction"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_auth_PolicyStagedActivationBoundary",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyStagedActivationBoundary",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "NON_COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": [
+              "Missing explicit autonomous actor rejection pattern check",
+              "Missing explicit anonymous actor rejection check",
+              "Missing anti-self-approval enforcement",
+              "Missing authorized human role restriction"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_auth_PolicyGovernedRollbackBoundary",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyGovernedRollbackBoundary",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "NON_COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": [
+              "Missing explicit autonomous actor rejection pattern check"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_auth_PolicyRecoveryAuthorizationEngine",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyRecoveryAuthorizationEngine",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "NON_COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": [
+              "Missing explicit autonomous actor rejection pattern check",
+              "Missing explicit anonymous actor rejection check",
+              "Missing authorized human role restriction"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_auth_PolicyIncidentClosureBoundary",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyIncidentClosureBoundary",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "NON_COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": [
+              "Missing explicit autonomous actor rejection pattern check",
+              "Missing explicit anonymous actor rejection check",
+              "Missing authorized human role restriction"
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_auth_PolicyPhaseExitAuthorizationBoundary",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyPhaseExitAuthorizationBoundary",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": []
+          }
+        },
+        {
+          "evidenceId": "ev_auth_PolicyPhase14EntryAuthorizationBoundary",
+          "criterionId": "CRITERION_HUMAN_AUTHORITY",
+          "evidenceSource": "PolicyPhase14EntryAuthorizationBoundary",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "COMPLIANT",
+          "expectedValue": "COMPLIANT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "deficiencies": []
+          }
+        }
+      ],
+      "failureReason": "One or more evidence items failed verification for Human Authority Supremacy",
+      "riskLevel": "CRITICAL",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+        "criterionNumber": 4,
+        "name": "Zero Autonomous Policy Mutation",
+        "description": "Prohibition of autonomous policy mutation capabilities",
+        "requiredStrength": "SECURITY_SCAN_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.63",
+          "MS-1.3.70",
+          "MS-1.3.71"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_rt_PolicyPhaseTransitionRuntime",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+          "evidenceSource": "PolicyPhaseTransitionRuntime",
+          "evidenceStrength": "DIRECT_RUNTIME_EVIDENCE",
+          "verificationMethod": "RUNTIME_EXECUTION",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "exposed": []
+          }
+        },
+        {
+          "evidenceId": "ev_rt_PolicyGovernanceReadinessRuntime",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+          "evidenceSource": "PolicyGovernanceReadinessRuntime",
+          "evidenceStrength": "DIRECT_RUNTIME_EVIDENCE",
+          "verificationMethod": "RUNTIME_EXECUTION",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "exposed": []
+          }
+        },
+        {
+          "evidenceId": "ev_rt_PolicyActiveIncidentResolutionRuntime",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+          "evidenceSource": "PolicyActiveIncidentResolutionRuntime",
+          "evidenceStrength": "DIRECT_RUNTIME_EVIDENCE",
+          "verificationMethod": "RUNTIME_EXECUTION",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "exposed": []
+          }
+        },
+        {
+          "evidenceId": "ev_rt_PolicyActiveIncidentResponseRuntime",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+          "evidenceSource": "PolicyActiveIncidentResponseRuntime",
+          "evidenceStrength": "DIRECT_RUNTIME_EVIDENCE",
+          "verificationMethod": "RUNTIME_EXECUTION",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "exposed": []
+          }
+        },
+        {
+          "evidenceId": "ev_rt_PolicyActiveRollbackRuntime",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+          "evidenceSource": "PolicyActiveRollbackRuntime",
+          "evidenceStrength": "DIRECT_RUNTIME_EVIDENCE",
+          "verificationMethod": "RUNTIME_EXECUTION",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "exposed": []
+          }
+        },
+        {
+          "evidenceId": "ev_rt_PolicyStagedActivationRuntime",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_POLICY_MUTATION",
+          "evidenceSource": "PolicyStagedActivationRuntime",
+          "evidenceStrength": "DIRECT_RUNTIME_EVIDENCE",
+          "verificationMethod": "RUNTIME_EXECUTION",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "exposed": []
+          }
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_ZERO_AUTONOMOUS_ACTIVATION",
+        "criterionNumber": 5,
+        "name": "Zero Autonomous Activation",
+        "description": "Prohibition of autonomous staged activation",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.70"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_ZERO_AUTONOMOUS_ACTIVATION",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_ACTIVATION",
+          "evidenceSource": "IndependentVerifier:CRITERION_ZERO_AUTONOMOUS_ACTIVATION",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_ZERO_AUTONOMOUS_ROLLBACK",
+        "criterionNumber": 6,
+        "name": "Zero Autonomous Rollback",
+        "description": "Prohibition of autonomous policy rollback execution",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.72",
+          "MS-1.3.75"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_ZERO_AUTONOMOUS_ROLLBACK",
+          "criterionId": "CRITERION_ZERO_AUTONOMOUS_ROLLBACK",
+          "evidenceSource": "IndependentVerifier:CRITERION_ZERO_AUTONOMOUS_ROLLBACK",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_RUNTIME_ENFORCEMENT",
+        "criterionNumber": 7,
+        "name": "Active Runtime Enforcement",
+        "description": "Active policy runtime synchronization and invariant verification",
+        "requiredStrength": "DIRECT_RUNTIME_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.63",
+          "MS-1.3.71"
+        ]
+      },
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_RUNTIME_ENFORCEMENT",
+          "criterionId": "CRITERION_RUNTIME_ENFORCEMENT",
+          "evidenceSource": "IndependentVerifier:CRITERION_RUNTIME_ENFORCEMENT",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "failureReason": "Evidence strength is insufficient for Active Runtime Enforcement; requires at least DIRECT_RUNTIME_EVIDENCE",
+      "riskLevel": "HIGH",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_FAIL_CLOSED_BEHAVIOR",
+        "criterionNumber": 8,
+        "name": "Fail-Closed Default",
+        "description": "Immediate fail-closed behavior upon error, missing input, or anomaly",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.63",
+          "MS-1.3.74",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_FAIL_CLOSED_BEHAVIOR",
+          "criterionId": "CRITERION_FAIL_CLOSED_BEHAVIOR",
+          "evidenceSource": "IndependentVerifier:CRITERION_FAIL_CLOSED_BEHAVIOR",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+        "criterionNumber": 9,
+        "name": "Hard-Forbidden Floor",
+        "description": "Zero forbidden process execution primitives across governance plane",
+        "requiredStrength": "SECURITY_SCAN_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "FAIL",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_sec_src_core_policyEvolution",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyEvolution",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "VULNERABILITY_DETECTED",
+          "expectedValue": "CLEAN",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": [
+              "policyEvolutionRuntime.ts: rollbackPolicy("
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyEnforcement",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyEnforcement",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyCanary",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyCanary",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "VULNERABILITY_DETECTED",
+          "expectedValue": "CLEAN",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": [
+              "policyCanaryRuntime.ts: promoteCandidate("
+            ]
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyObservability",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyObservability",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyEvidence",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyEvidence",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyDecision",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyDecision",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyCandidateAuthorization",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyCandidateAuthorization",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyStagedActivation",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyStagedActivation",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyActiveRuntime",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyActiveRuntime",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyActiveRollback",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyActiveRollback",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyActiveLifecycleReconciliation",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyActiveLifecycleReconciliation",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyActiveIncidentResponse",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyActiveIncidentResponse",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyActiveIncidentResolution",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyActiveIncidentResolution",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyGovernanceReadiness",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyGovernanceReadiness",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "VULNERABILITY_DETECTED",
+          "expectedValue": "CLEAN",
+          "verified": false,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [
+              "policyGovernanceReadinessSecurityInspector.ts: from 'child_process'",
+              "policyGovernanceReadinessSecurityInspector.ts: from \"child_process\"",
+              "policyGovernanceReadinessSecurityInspector.ts: from 'node:child_process'",
+              "policyGovernanceReadinessSecurityInspector.ts: from \"node:child_process\"",
+              "policyGovernanceReadinessSecurityInspector.ts: require('child_process')",
+              "policyGovernanceReadinessSecurityInspector.ts: require(\"child_process\")",
+              "policyGovernanceReadinessSecurityInspector.ts: require('node:child_process')",
+              "policyGovernanceReadinessSecurityInspector.ts: require(\"node:child_process\")",
+              "policyGovernanceReadinessSecurityInspector.ts: execSync(",
+              "policyGovernanceReadinessSecurityInspector.ts: spawn(",
+              "policyGovernanceReadinessSecurityInspector.ts: fork(",
+              "policyGovernanceReadinessSecurityInspector.ts: eval(",
+              "policyGovernanceReadinessSecurityInspector.ts: new Function("
+            ],
+            "leaks": []
+          }
+        },
+        {
+          "evidenceId": "ev_sec_src_core_policyPhaseTransition",
+          "criterionId": "CRITERION_HARD_FORBIDDEN_FLOOR",
+          "evidenceSource": "src/core/policyPhaseTransition",
+          "evidenceStrength": "SECURITY_SCAN_EVIDENCE",
+          "verificationMethod": "SECURITY_SCAN",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "primitives": [],
+            "leaks": []
+          }
+        }
+      ],
+      "failureReason": "One or more evidence items failed verification for Hard-Forbidden Floor",
+      "riskLevel": "CRITICAL",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_USER_STOP",
+        "criterionNumber": 10,
+        "name": "USER_STOP Supremacy",
+        "description": "Immediate halting of all runtime operations upon USER_STOP activation",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_USER_STOP",
+          "criterionId": "CRITERION_USER_STOP",
+          "evidenceSource": "IndependentVerifier:CRITERION_USER_STOP",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_TENANT_ISOLATION",
+        "criterionNumber": 11,
+        "name": "Tenant Isolation Security",
+        "description": "Multi-tenant data partitioning, path traversal defense, and reserved name checks",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_isolation_probe",
+          "criterionId": "CRITERION_TENANT_ISOLATION",
+          "evidenceSource": "resolveUserPartition",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "TENANT_ISOLATION_PROBE",
+          "observedValue": "CLEAN",
+          "expectedValue": "CLEAN",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "anomalies": []
+          }
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_PROVENANCE",
+        "criterionNumber": 12,
+        "name": "Cryptographic Provenance Chains",
+        "description": "Append-only SHA-256 hash chains for candidates, authorizations, and commits",
+        "requiredStrength": "PROVENANCE_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.69",
+          "MS-1.3.70",
+          "MS-1.3.72",
+          "MS-1.3.75",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_prov_integrity",
+          "criterionId": "CRITERION_PROVENANCE",
+          "evidenceSource": "PolicyPhaseTransitionProvenanceEngine",
+          "evidenceStrength": "PROVENANCE_EVIDENCE",
+          "verificationMethod": "PROVENANCE_CHAIN_VERIFICATION",
+          "observedValue": "CHAIN_VERIFIED",
+          "expectedValue": "CHAIN_VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {}
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_AUDITABILITY",
+        "criterionNumber": 13,
+        "name": "Canonical Audit Ledger Integration",
+        "description": "Structured audit events recorded under domain boundaries with secret scrubbing",
+        "requiredStrength": "AUDIT_LEDGER_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.66",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_AUDITABILITY",
+          "criterionId": "CRITERION_AUDITABILITY",
+          "evidenceSource": "IndependentVerifier:CRITERION_AUDITABILITY",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_POLICY_LIFECYCLE_CONSISTENCY",
+        "criterionNumber": 14,
+        "name": "Policy Lifecycle Reconciliation",
+        "description": "Multi-tenant active policy reconciliation and state verification",
+        "requiredStrength": "DIRECT_RUNTIME_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.73"
+        ]
+      },
+      "status": "INSUFFICIENT_EVIDENCE",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_POLICY_LIFECYCLE_CONSISTENCY",
+          "criterionId": "CRITERION_POLICY_LIFECYCLE_CONSISTENCY",
+          "evidenceSource": "IndependentVerifier:CRITERION_POLICY_LIFECYCLE_CONSISTENCY",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "failureReason": "Evidence strength is insufficient for Policy Lifecycle Reconciliation; requires at least DIRECT_RUNTIME_EVIDENCE",
+      "riskLevel": "HIGH",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_INCIDENT_SAFETY",
+        "criterionNumber": 15,
+        "name": "Incident Response & Containment",
+        "description": "Circuit-breaking and containment boundaries for policy incidents",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.74"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_INCIDENT_SAFETY",
+          "criterionId": "CRITERION_INCIDENT_SAFETY",
+          "evidenceSource": "IndependentVerifier:CRITERION_INCIDENT_SAFETY",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_RECOVERY_SAFETY",
+        "criterionNumber": 16,
+        "name": "Recovery Authorization Boundary",
+        "description": "Governed handoff and human recovery authorization",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.75"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_RECOVERY_SAFETY",
+          "criterionId": "CRITERION_RECOVERY_SAFETY",
+          "evidenceSource": "IndependentVerifier:CRITERION_RECOVERY_SAFETY",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_INCIDENT_CLOSURE",
+        "criterionNumber": 17,
+        "name": "Governed Incident Closure",
+        "description": "Immutable incident closure and historical preservation",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.75"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_INCIDENT_CLOSURE",
+          "criterionId": "CRITERION_INCIDENT_CLOSURE",
+          "evidenceSource": "IndependentVerifier:CRITERION_INCIDENT_CLOSURE",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_NO_AUTHORITY_DUPLICATION",
+        "criterionNumber": 18,
+        "name": "Zero Authority Duplication",
+        "description": "Single authoritative source for policy decisions and enforcement",
+        "requiredStrength": "STATIC_CODE_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.63",
+          "MS-1.3.68"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_NO_AUTHORITY_DUPLICATION",
+          "criterionId": "CRITERION_NO_AUTHORITY_DUPLICATION",
+          "evidenceSource": "IndependentVerifier:CRITERION_NO_AUTHORITY_DUPLICATION",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_INTEGRATION_REALITY",
+        "criterionNumber": 19,
+        "name": "Real Component Integration",
+        "description": "High percentage of REAL components in matrix without synthetic shortcuts",
+        "requiredStrength": "INTEGRATION_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_tst_MS-1.3.62",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.62",
+          "evidenceSource": "tests/test_v4_agent_governed_operational_policy_evolution.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.63",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.63",
+          "evidenceSource": "tests/test_v4_agent_governed_runtime_policy_enforcement.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.64",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.64",
+          "evidenceSource": "tests/test_v4_agent_governed_policy_canary.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.65",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.65",
+          "evidenceSource": "tests/test_v4_agent_governed_policy_canary_resilience.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.66",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.66",
+          "evidenceSource": "tests/test_v4_agent_governed_policy_observability.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.67",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.67",
+          "evidenceSource": "tests/test_v4_agent_governed_policy_evidence_investigation.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.68",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.68",
+          "evidenceSource": "tests/test_v4_agent_governed_policy_decision.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.69",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.69",
+          "evidenceSource": "tests/test_v4_agent_governed_candidate_authorization.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.70",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.70",
+          "evidenceSource": "tests/test_v4_agent_governed_staged_policy_activation.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.71",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.71",
+          "evidenceSource": "tests/test_v4_agent_governed_active_policy_runtime_synchronization.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.72",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.72",
+          "evidenceSource": "tests/test_v4_agent_governed_active_policy_rollback.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.73",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.73",
+          "evidenceSource": "tests/test_v4_agent_governed_active_policy_lifecycle_reconciliation.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.74",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.74",
+          "evidenceSource": "tests/test_v4_agent_governed_active_policy_incident_response.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.75",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.75",
+          "evidenceSource": "tests/test_v4_agent_governed_active_policy_incident_resolution.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.76",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.76",
+          "evidenceSource": "tests/test_v4_agent_governed_policy_governance_readiness.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        },
+        {
+          "evidenceId": "ev_tst_MS-1.3.77",
+          "criterionId": "CRITERION_INTEGRATION_REALITY",
+          "milestone": "MS-1.3.77",
+          "evidenceSource": "tests/test_v4_agent_governed_phase_exit_and_phase14_entry.ts",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "TEST_PRESENT",
+          "expectedValue": "TEST_PRESENT",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_REGRESSION_INTEGRITY",
+        "criterionNumber": 20,
+        "name": "Full Regression Suite Cleanliness",
+        "description": "80+ test suites passing cleanly with zero failed tests",
+        "requiredStrength": "REGRESSION_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_reg_coverage",
+          "criterionId": "CRITERION_REGRESSION_INTEGRITY",
+          "evidenceSource": "scratch/run_full_regression.mjs",
+          "evidenceStrength": "REGRESSION_EVIDENCE",
+          "verificationMethod": "FULL_REGRESSION_RUN",
+          "observedValue": "REGRESSION_REGISTERED",
+          "expectedValue": "REGRESSION_REGISTERED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_BUILD_INTEGRITY",
+        "criterionNumber": 21,
+        "name": "Build & Typecheck Integrity",
+        "description": "TypeScript typechecking and production build exit with code 0",
+        "requiredStrength": "STATIC_CODE_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_BUILD_INTEGRITY",
+          "criterionId": "CRITERION_BUILD_INTEGRITY",
+          "evidenceSource": "IndependentVerifier:CRITERION_BUILD_INTEGRITY",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_SECURITY_INTEGRITY",
+        "criterionNumber": 22,
+        "name": "Security AST Cleanliness",
+        "description": "Zero unauthorized subprocess calls or dynamic evaluation in production code",
+        "requiredStrength": "SECURITY_SCAN_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_synth_CRITERION_SECURITY_INTEGRITY",
+          "criterionId": "CRITERION_SECURITY_INTEGRITY",
+          "evidenceSource": "IndependentVerifier:CRITERION_SECURITY_INTEGRITY",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "DEDICATED_REALITY_TEST",
+          "observedValue": "VERIFIED",
+          "expectedValue": "VERIFIED",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z"
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_PROTECTED_WORKSPACE",
+        "criterionNumber": 23,
+        "name": "Protected Workspace Isolation",
+        "description": "Protected workspace C:\\BOW\\shopofbow untouched (0 touches)",
+        "requiredStrength": "STATIC_CODE_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.62",
+          "MS-1.3.77"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_prot_1789286283503_1",
+          "criterionId": "CRITERION_PROTECTED_WORKSPACE",
+          "evidenceSource": "C:\\BOW\\shopofbow",
+          "evidenceStrength": "STATIC_CODE_EVIDENCE",
+          "verificationMethod": "PROTECTED_WORKSPACE_PROBE",
+          "observedValue": "DOES_NOT_EXIST",
+          "expectedValue": "DOES_NOT_EXIST",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.503Z",
+          "details": {
+            "path": "C:\\BOW\\shopofbow",
+            "untouched": true
+          }
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    },
+    {
+      "criterion": {
+        "criterionId": "CRITERION_NO_UNVERIFIED_CLAIMS",
+        "criterionNumber": 24,
+        "name": "Evidence Grounding & Non-Circularity",
+        "description": "All claims grounded in verifiable empirical evidence without circular citations",
+        "requiredStrength": "DIRECT_TEST_EVIDENCE",
+        "isMandatory": true,
+        "targetMilestones": [
+          "MS-1.3.78"
+        ]
+      },
+      "status": "PASS",
+      "evidenceItems": [
+        {
+          "evidenceId": "ev_anti_circularity",
+          "criterionId": "CRITERION_NO_UNVERIFIED_CLAIMS",
+          "evidenceSource": "PolicyPhaseExitAntiCircularityEngine",
+          "evidenceStrength": "DIRECT_TEST_EVIDENCE",
+          "verificationMethod": "ANTI_CIRCULARITY_ANALYSIS",
+          "observedValue": "NON_CIRCULAR",
+          "expectedValue": "NON_CIRCULAR",
+          "verified": true,
+          "collectedAt": "2026-09-13T07:58:03.498Z",
+          "details": {
+            "cycles": []
+          }
+        }
+      ],
+      "riskLevel": "NONE",
+      "independentVerification": true
+    }
+  ],
+  "passedCriteriaCount": 19,
+  "totalCriteriaCount": 24,
+  "readinessStatus": "NOT_READY",
+  "phaseExitAuthorization": "[REDACTED]",
+  "autonomousPhaseExit": "FORBIDDEN",
+  "phase14Entry": "FORBIDDEN",
+  "unresolvedRisks": [
+    "Failed verification in Governance Separation of Duties",
+    "Failed verification in Human Authority Supremacy",
+    "Insufficient evidence strength for Active Runtime Enforcement",
+    "Failed verification in Hard-Forbidden Floor",
+    "Insufficient evidence strength for Policy Lifecycle Reconciliation"
+  ],
+  "evidenceCoveragePercentage": 79,
+  "reportHash": "46e1741a8b46785149f99d5922e9902d4cf598dbd1e76feec8c7a2c7c87a7ac2"
+}

@@ -1006,5 +1006,75 @@
     "recordedAt": 1789274047187,
     "expiresAt": 1789360447187,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcextc_88fc01cc5d0c_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789275466417
+    },
+    "recordedAt": 1789275466417,
+    "expiresAt": 1789361866417,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdq3c9_87187bf90ec9_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789277666411
+    },
+    "recordedAt": 1789277666411,
+    "expiresAt": 1789364066411,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhoeky_af4b6ea0fc6e_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789284306132
+    },
+    "recordedAt": 1789284306132,
+    "expiresAt": 1789370706132,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj5zks_1f098528cb07_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789286806110
+    },
+    "recordedAt": 1789286806110,
+    "expiresAt": 1789373206110,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjmenp_cfc58cf1e228_iter_1",
+    "ownerUserId": "test_fail",
+    "payloadHash": "d9ce4f65cf23fdb72f4c49a7e5268dcf13be13221b0acbc5831eeef6aab89a9f",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "perform_nonexistent_operation please",
+      "timestamp": 1789287572151
+    },
+    "recordedAt": 1789287572151,
+    "expiresAt": 1789373972151,
+    "status": "COMPLETED"
   }
 ]

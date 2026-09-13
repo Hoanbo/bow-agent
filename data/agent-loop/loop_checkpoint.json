@@ -1,16 +1,16 @@
 {
-  "checkpointId": "chk_1789274099287_f9a981dc",
-  "timestamp": 1789274099287,
+  "checkpointId": "chk_1789287624883_f7112a04",
+  "timestamp": 1789287624883,
   "state": "EVALUATING",
   "objective": {
-    "objectiveId": "obj_1789274099254_58e1b936",
+    "objectiveId": "obj_1789287624837_8d27db08",
     "title": "Verify System Health",
     "description": "Ensure host system telemetry is within nominal operating range.",
     "targetResource": "system",
     "priority": "HIGH",
     "status": "PENDING",
-    "createdTimestamp": 1789274099255,
-    "updatedTimestamp": 1789274099255,
+    "createdTimestamp": 1789287624838,
+    "updatedTimestamp": 1789287624838,
     "metadata": {
       "scope": "full"
     }
@@ -18,17 +18,17 @@
   "session": "session_agent_loop",
   "iteration": 6,
   "lastObservation": {
-    "observationId": "obs_1789274099286_c2676e58",
-    "timestamp": 1789274099286,
+    "observationId": "obs_1789287624881_3c68ca6d",
+    "timestamp": 1789287624881,
     "host": {
       "platform": "win32",
       "cores": 28,
-      "freeMemMb": 54334,
+      "freeMemMb": 53418,
       "totalMemMb": 65415
     },
     "process": {
-      "pid": 18140,
-      "memoryRssMb": 120,
+      "pid": 8292,
+      "memoryRssMb": 115,
       "uptimeSeconds": 1
     },
     "capabilities": {
@@ -51,11 +51,11 @@
       "isSafeStopActive": false,
       "activeAnomaliesCount": 0
     },
-    "activeObjectiveId": "obj_1789274099254_58e1b936"
+    "activeObjectiveId": "obj_1789287624837_8d27db08"
   },
   "lastDecision": {
-    "decisionId": "dec_1789274099287_f1af5fbd",
-    "objectiveId": "obj_1789274099254_58e1b936",
+    "decisionId": "dec_1789287624883_8455a73a",
+    "objectiveId": "obj_1789287624837_8d27db08",
     "actionRequired": true,
     "rationale": "Conducting routine governed observation for objective \"Verify System Health\".",
     "proposedCapability": "cap_obs_system",
@@ -66,9 +66,9 @@
     "targetResource": "system"
   },
   "lastPlan": {
-    "planId": "lplan_1789274099287_dea6c251",
-    "objectiveId": "obj_1789274099254_58e1b936",
-    "decisionId": "dec_1789274099287_f1af5fbd",
+    "planId": "lplan_1789287624883_ec58c57e",
+    "objectiveId": "obj_1789287624837_8d27db08",
+    "decisionId": "dec_1789287624883_8455a73a",
     "steps": [
       {
         "stepIndex": 1,
@@ -86,10 +86,10 @@
     "riskLevel": "OBSERVE",
     "timeoutMs": 15000,
     "maxAttempts": 3,
-    "createdTimestamp": 1789274099287
+    "createdTimestamp": 1789287624883
   },
   "authorizationState": "NOT_REQUIRED",
   "verificationState": "PASSED",
   "recoveryAttempts": 0,
-  "checkpointHash": "b3213ed21ba0bf6a7f516a7858a1646bacbe833a1473dc7136bdaa7315a82495"
+  "checkpointHash": "802b20a2fb18ae2ac7d820843c5082d44d3febd81ad5d481ed047f6ac64fdb62"
 }

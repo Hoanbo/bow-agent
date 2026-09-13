@@ -1006,5 +1006,75 @@
     "recordedAt": 1789274047198,
     "expiresAt": 1789360447198,
     "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzcexto_2de7f5e31366_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789275466429
+    },
+    "recordedAt": 1789275466429,
+    "expiresAt": 1789361866429,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzdq3cm_29b406cae200_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789277666423
+    },
+    "recordedAt": 1789277666423,
+    "expiresAt": 1789364066423,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzhoelb_ce845cf21bd5_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789284306144
+    },
+    "recordedAt": 1789284306144,
+    "expiresAt": 1789370706144,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzj5zl7_dda9a1cbea2e_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789286806125
+    },
+    "recordedAt": 1789286806125,
+    "expiresAt": 1789373206125,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "brain_task_task_mtzjmeo5_83e13b06a2e8_iter_1",
+    "ownerUserId": "audit_user",
+    "payloadHash": "c46320f4a81feafd792a62463187a35fd978b3a951781ad51e15eef01e3a6f8b",
+    "result": {
+      "success": true,
+      "toolName": "brain_echo",
+      "echo": "Echo \"audit test\"",
+      "timestamp": 1789287572167
+    },
+    "recordedAt": 1789287572167,
+    "expiresAt": 1789373972167,
+    "status": "COMPLETED"
   }
 ]

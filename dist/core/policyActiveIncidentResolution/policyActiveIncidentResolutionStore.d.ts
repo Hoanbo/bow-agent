@@ -1,0 +1,34 @@
+import { DiagnosisSanitizer } from '../diagnosis/diagnosisSanitizer.js';
+import type { ContainmentAssessmentRecord, ContainmentClearanceRecord, RecoveryAuthorizationRecord, IncidentRecoveryHandoffRecord, IncidentRecoveryVerificationRecord, IncidentResolutionRecord, IncidentClosureRecord, PolicyActiveIncidentResolutionOptions } from './policyActiveIncidentResolutionTypes.js';
+export declare class PolicyActiveIncidentResolutionStore {
+    private readonly baseDir;
+    private readonly isUserStopActiveFn?;
+    private readonly sanitizer;
+    private readonly assessments;
+    private readonly clearances;
+    private readonly authorizations;
+    private readonly handoffs;
+    private readonly verifications;
+    private readonly resolutions;
+    private readonly closures;
+    constructor(options?: PolicyActiveIncidentResolutionOptions, sanitizer?: DiagnosisSanitizer);
+    private assertUserStopInactive;
+    private getTenantStorageDir;
+    private loadTenantStateIfEmpty;
+    private loadFile;
+    private persistList;
+    saveAssessment(record: ContainmentAssessmentRecord): ContainmentAssessmentRecord;
+    getAssessment(tenantPartition: string, assessmentId: string): ContainmentAssessmentRecord | null;
+    saveClearance(record: ContainmentClearanceRecord): ContainmentClearanceRecord;
+    getClearance(tenantPartition: string, clearanceId: string): ContainmentClearanceRecord | null;
+    saveRecoveryAuthorization(record: RecoveryAuthorizationRecord): RecoveryAuthorizationRecord;
+    getRecoveryAuthorization(tenantPartition: string, authorizationId: string): RecoveryAuthorizationRecord | null;
+    saveRecoveryHandoff(record: IncidentRecoveryHandoffRecord): IncidentRecoveryHandoffRecord;
+    getRecoveryHandoff(tenantPartition: string, handoffId: string): IncidentRecoveryHandoffRecord | null;
+    saveRecoveryVerification(record: IncidentRecoveryVerificationRecord): IncidentRecoveryVerificationRecord;
+    getRecoveryVerification(tenantPartition: string, verificationId: string): IncidentRecoveryVerificationRecord | null;
+    saveResolution(record: IncidentResolutionRecord): IncidentResolutionRecord;
+    getResolution(tenantPartition: string, resolutionId: string): IncidentResolutionRecord | null;
+    saveClosure(record: IncidentClosureRecord): IncidentClosureRecord;
+    getClosure(tenantPartition: string, closureId: string): IncidentClosureRecord | null;
+}

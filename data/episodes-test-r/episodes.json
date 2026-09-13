@@ -1423,5 +1423,130 @@
     "phase": "INTERRUPTED",
     "integrityHash": "aaa8034b6e97805ba804145f2cdbf189",
     "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789275538824_7a2468",
+    "createdAt": 1789275538824,
+    "ownerId": "master_operator",
+    "projectId": "crash_test",
+    "goalId": "goal_interrupt",
+    "triggeringContext": "Simulate crash mid-cycle",
+    "relatedObjective": "Test recovery after interruption",
+    "events": [],
+    "observations": [
+      "Observation captured before crash"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "INTERRUPTED",
+    "integrityHash": "30caffebc8287b3b64901b5ced4b845c",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789277738666_0dc2c8",
+    "createdAt": 1789277738666,
+    "ownerId": "master_operator",
+    "projectId": "crash_test",
+    "goalId": "goal_interrupt",
+    "triggeringContext": "Simulate crash mid-cycle",
+    "relatedObjective": "Test recovery after interruption",
+    "events": [],
+    "observations": [
+      "Observation captured before crash"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "INTERRUPTED",
+    "integrityHash": "0ffe5ad8c5d00e8c5a762f9c8c2a071a",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789284381865_fea35c",
+    "createdAt": 1789284381865,
+    "ownerId": "master_operator",
+    "projectId": "crash_test",
+    "goalId": "goal_interrupt",
+    "triggeringContext": "Simulate crash mid-cycle",
+    "relatedObjective": "Test recovery after interruption",
+    "events": [],
+    "observations": [
+      "Observation captured before crash"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "INTERRUPTED",
+    "integrityHash": "bdfe86aef3910557576e3b945ce7862f",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789286880455_a1017a",
+    "createdAt": 1789286880455,
+    "ownerId": "master_operator",
+    "projectId": "crash_test",
+    "goalId": "goal_interrupt",
+    "triggeringContext": "Simulate crash mid-cycle",
+    "relatedObjective": "Test recovery after interruption",
+    "events": [],
+    "observations": [
+      "Observation captured before crash"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "INTERRUPTED",
+    "integrityHash": "5ba32f47085f72b7c8584e84e36e3ca1",
+    "isComplete": false
+  },
+  {
+    "episodeId": "ep_1789287646269_30ee2b",
+    "createdAt": 1789287646269,
+    "ownerId": "master_operator",
+    "projectId": "crash_test",
+    "goalId": "goal_interrupt",
+    "triggeringContext": "Simulate crash mid-cycle",
+    "relatedObjective": "Test recovery after interruption",
+    "events": [],
+    "observations": [
+      "Observation captured before crash"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.5,
+    "phase": "INTERRUPTED",
+    "integrityHash": "e2bb05eb3959296eac0a367cd0375d65",
+    "isComplete": false
   }
 ]

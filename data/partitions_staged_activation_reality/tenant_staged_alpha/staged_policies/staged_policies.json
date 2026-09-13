@@ -1,12 +1,12 @@
 [
   {
-    "stagedActivationId": "stgact_c230340d3b0a76fd",
-    "candidateDraftId": "cand_1789274142168_uiqf",
-    "evolutionPlanId": "evplan_1789274142168_wdg8",
-    "intakeId": "peintake_1789274142168_rffe",
+    "stagedActivationId": "stgact_2d3ee1e66e7d1961",
+    "candidateDraftId": "cand_1789287670642_dwk8",
+    "evolutionPlanId": "evplan_1789287670642_g1ve",
+    "intakeId": "peintake_1789287670642_zfoz",
     "authorizationRequestId": "[REDACTED]",
     "authorizationDecisionId": "[REDACTED]",
-    "activationReadinessId": "actready_1789274142168_z91k",
+    "activationReadinessId": "actready_1789287670642_fpsu",
     "tenantPartition": "tenant_staged_alpha",
     "sourcePolicyVersion": "v4.0.0",
     "proposedPolicyVersion": "v4.1.0",
@@ -23,8 +23,8 @@
       "VERIFY_NO_CONCURRENT_ACTIVATION",
       "VERIFY_PROVENANCE_HASH_CHAIN"
     ],
-    "provenanceHeadHash": "fab1e7a435a4b18ef6ac87d3a687ce4ac95af0817c60e6c24d457e0931534f9a",
-    "stagedAt": "2026-09-13T04:35:42.171Z",
+    "provenanceHeadHash": "3f5d44c78f6bcb29905fe3ca0b02943f4cb742a55daaddf60584778d3c5a9d4c",
+    "stagedAt": "2026-09-13T08:21:10.646Z",
     "isActivePolicy": false,
     "isActivated": false,
     "isAutonomousMutation": false

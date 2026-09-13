@@ -1564,5 +1564,140 @@
     "integrityHash": "769fc32e508d567f4832a33e81c662f7",
     "isComplete": true,
     "completedAt": 1789274118829
+  },
+  {
+    "episodeId": "ep_1789275538779_577721",
+    "createdAt": 1789275538779,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "29e65dcc78b05ff069d085e0cbfaefe5",
+    "isComplete": true,
+    "completedAt": 1789275538782
+  },
+  {
+    "episodeId": "ep_1789277738621_370297",
+    "createdAt": 1789277738621,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "35efd28e2e9a96abfeccba36f8f30771",
+    "isComplete": true,
+    "completedAt": 1789277738625
+  },
+  {
+    "episodeId": "ep_1789284381815_93ed8a",
+    "createdAt": 1789284381815,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "6ca75db77309aaea4e0633414b7759ee",
+    "isComplete": true,
+    "completedAt": 1789284381818
+  },
+  {
+    "episodeId": "ep_1789286880406_9abd9f",
+    "createdAt": 1789286880406,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "34bd086ada68860b9695b833cda312a1",
+    "isComplete": true,
+    "completedAt": 1789286880410
+  },
+  {
+    "episodeId": "ep_1789287646211_31c47e",
+    "createdAt": 1789287646211,
+    "ownerId": "master_operator",
+    "projectId": "persistence_test",
+    "goalId": "goal_persist",
+    "triggeringContext": "Crash test",
+    "relatedObjective": "Verify episode survives restart",
+    "events": [],
+    "observations": [
+      "Initial observation before shutdown"
+    ],
+    "decisions": [],
+    "authorizedActions": [],
+    "outcome": "Completed before shutdown",
+    "lessons": [],
+    "contradictions": [],
+    "uncertainties": [],
+    "provenanceChain": [
+      "DIRECT_OBSERVATION"
+    ],
+    "overallConfidence": 0.85,
+    "phase": "COMPLETED",
+    "integrityHash": "5cb91071e1275b268e06e28520b8ecec",
+    "isComplete": true,
+    "completedAt": 1789287646215
   }
 ]
