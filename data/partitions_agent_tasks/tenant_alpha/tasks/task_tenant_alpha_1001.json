@@ -1,0 +1,43 @@
+{
+  "taskId": "task_tenant_alpha_1001",
+  "tenantId": "tenant_alpha",
+  "userId": "user_operator",
+  "title": "Governed Inspection Task",
+  "intent": "Inspect system safely",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 3,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_alpha_1001_0",
+      "stepIndex": 0,
+      "description": "Inspect execution environment",
+      "capabilityId": "desktop_inspect",
+      "actionName": "read_status",
+      "parameters": {
+        "target": "system_panel"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "COMPLETED",
+      "attemptCount": 1,
+      "maxAttempts": 3,
+      "executionTokenId": "[REDACTED]",
+      "executionResult": {
+        "inspected": true,
+        "operation": "read_status",
+        "targetTaskId": "task_tenant_alpha_1001",
+        "targetStepId": "step_task_0",
+        "parameters": {
+          "target": "system_panel"
+        },
+        "timestamp": "2026-09-14T11:43:33.702Z"
+      }
+    }
+  ],
+  "currentStepIndex": 1,
+  "createdAt": "2026-09-14T11:43:33.694Z",
+  "updatedAt": "2026-09-14T11:43:33.703Z",
+  "previousProvenanceHash": "0c9bc007ab74421c18b5b1b99309a9012b060bc9ece0ea9c97d77e5c5abd8601",
+  "provenanceHash": "de4f8825c364d59639474220d97740f3609c3ded0a7f28db389a424439f36656"
+}

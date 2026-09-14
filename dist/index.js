@@ -344,3 +344,11 @@ export * from './core/semanticMemory/index.js';
 export * from './core/goal/index.js';
 // 101. BOWCON V4.0 — Milestone 1.5.05: Native Neuro-Symbolic Deliberation Engine
 export * from './core/deliberation/index.js';
+// 102. BOWCON V4.0 — Milestone 1.5.06: Native Brain Integration & Screen Vision Localization
+export * from './core/vision/index.js';
+// 103. BOWCON V4.0 — Milestone 1.5.07: Native Grounded Action Plan Synthesis & Governed Proposal Engine
+export * from './core/groundedPlanning/index.js';
+// 104. BOWCON V4.0 — Milestone 1.5.08: Native Grounded Plan Execution Preparation & Human Confirmation Gate
+export * from './core/groundedPlanTaskBridge/index.js';
+// 105. BOWCON V4.0 — Milestone 1.5.09: Native Governed Execution Worker & Lease-Bound Actuation Engine
+export { GOVERNED_EXECUTION_SCHEMA_VERSION, DEFAULT_EXECUTION_LEASE_TTL_MS, MAX_EXECUTION_PAYLOAD_BYTES, GovernedExecutionError, ExecutionValidationError, ExecutionAuthorizationError, ExecutionLeaseError, ExecutionTenantIsolationError, ExecutionSessionIsolationError, ExecutionConcurrencyError, ExecutionUserStopError, ExecutionAdapterError, ExecutionPersistenceError, computeLeaseSignatureHash, computeAuthorizationHash, computeRequestHash, computeExecutionResultProvenanceHash, computeExecutionSessionDocumentHash, ExecutionRequestValidator, DANGEROUS_KEYS, PROHIBITED_COT_MARKERS, SUSPICIOUS_INJECTION_PATTERNS, ExecutionAuthorizationVerifier, ExecutionLeaseManager, ExecutionBoundaryGate, SafeInspectionAdapter, DeterministicActuationAdapter, ExecutionResultFailureManager, ExecutionAuditBridge, ExecutionPersistenceRecoveryEngine, GovernedExecutionWorker, } from './core/governedExecution/index.js';

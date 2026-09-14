@@ -1,0 +1,135 @@
+[
+  {
+    "id": "appr_1789374152416_4616e8",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "desktop_screen_vision",
+    "targetDomain": "desktop",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T08:22:32.416Z",
+    "expiresAt": "2026-09-14T08:27:32.416Z"
+  },
+  {
+    "id": "appr_1789374176053_db6b4f",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T08:22:56.053Z",
+    "expiresAt": "2026-09-14T08:27:56.053Z"
+  },
+  {
+    "id": "appr_1789374221688_a0e531",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T08:23:41.688Z",
+    "expiresAt": "2026-09-14T08:28:41.688Z"
+  },
+  {
+    "id": "appr_1789374292672_dc0a98",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T08:24:52.673Z",
+    "expiresAt": "2026-09-14T08:29:52.673Z"
+  },
+  {
+    "id": "appr_1789377803893_dd540a",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "desktop_observation_inspect_state",
+    "targetDomain": "desktop",
+    "argumentsHash": "136303ea84dd4f2e15c3bfdfc19e32c0ee8bdf2fad9046d4e26ebe327e9a08ff",
+    "argumentsPreview": {
+      "target": "status_panel",
+      "intentType": "INSPECT",
+      "sourceStepId": "step_1",
+      "dependsOnStepIds": [],
+      "preconditions": [
+        "session_active",
+        "tenant_match"
+      ],
+      "postconditions": [
+        "status_visible"
+      ],
+      "isQuarantinedText": false
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T09:23:23.893Z",
+    "expiresAt": "2026-09-14T09:28:23.893Z"
+  },
+  {
+    "id": "appr_1789377803896_44e6ee",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "desktop_interaction_type_text",
+    "targetDomain": "desktop",
+    "argumentsHash": "8d992defde2558b9574c108c8b971ed3e4e83644ca680e5ae8f3c2d542c79d30",
+    "argumentsPreview": {
+      "query": "status details",
+      "intentType": "INPUT_TEXT",
+      "sourceStepId": "step_2",
+      "dependsOnStepIds": [
+        "step_1"
+      ],
+      "preconditions": [
+        "provenance_valid"
+      ],
+      "postconditions": [
+        "query_submitted"
+      ],
+      "isQuarantinedText": false
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T09:23:23.896Z",
+    "expiresAt": "2026-09-14T09:28:23.896Z"
+  },
+  {
+    "id": "appr_1789377925367_20b0a4",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T09:25:25.367Z",
+    "expiresAt": "2026-09-14T09:30:25.367Z"
+  },
+  {
+    "id": "appr_1789386228459_7405e2",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T11:43:48.459Z",
+    "expiresAt": "2026-09-14T11:48:48.459Z"
+  }
+]

@@ -1,0 +1,93 @@
+// src/core/vision/visualLocalizationEngine.ts
+// BOWCON V4.0 — MS-1.5.06: VISUAL LOCALIZATION ENGINE
+// Component 1032 — REAL
+//
+// EN: Provides deterministic geometry operations, centroid math, spatial containment,
+//     overlap testing, and Euclidean distance computation without execution authority.
+// VI: Cung cấp các phép toán hình học tất định, tính trọng tâm, bao hàm không gian,
+//     kiểm tra chồng lấn và tính khoảng cách Euclid mà không chứa thẩm quyền thực thi.
+import { VisionValidationError, } from './visionTypes.js';
+export class VisualLocalizationEngine {
+    /**
+     * EN: Tests whether containerBox completely contains childBox.
+     * VI: Kiểm tra xem containerBox có bao bọc hoàn toàn childBox hay không.
+     */
+    static contains(containerBox, childBox) {
+        return (childBox.x >= containerBox.x &&
+            childBox.y >= containerBox.y &&
+            childBox.x + childBox.width <= containerBox.x + containerBox.width &&
+            childBox.y + childBox.height <= containerBox.y + containerBox.height);
+    }
+    /**
+     * EN: Tests whether two bounding boxes overlap/intersect.
+     * VI: Kiểm tra xem hai hộp bao có giao nhau/chồng lấn không.
+     */
+    static overlaps(boxA, boxB) {
+        const noOverlap = boxA.x + boxA.width <= boxB.x ||
+            boxB.x + boxB.width <= boxA.x ||
+            boxA.y + boxA.height <= boxB.y ||
+            boxB.y + boxB.height <= boxA.y;
+        return !noOverlap;
+    }
+    /**
+     * EN: Calculates the intersection area in pixels between two boxes.
+     * VI: Tính diện tích giao nhau theo pixel giữa hai hộp bao.
+     */
+    static intersectionArea(boxA, boxB) {
+        const xLeft = Math.max(boxA.x, boxB.x);
+        const yTop = Math.max(boxA.y, boxB.y);
+        const xRight = Math.min(boxA.x + boxA.width, boxB.x + boxB.width);
+        const yBottom = Math.min(boxA.y + boxA.height, boxB.y + boxB.height);
+        if (xRight <= xLeft || yBottom <= yTop) {
+            return 0;
+        }
+        return (xRight - xLeft) * (yBottom - yTop);
+    }
+    /**
+     * EN: Calculates Euclidean distance between the center points of two elements or bounding boxes.
+     * VI: Tính khoảng cách Euclid giữa điểm tâm của hai phần tử hoặc hộp bao.
+     */
+    static distance(pointA, pointB) {
+        const p1 = 'normX' in pointA && !('width' in pointA)
+            ? pointA
+            : { x: pointA.x + pointA.width / 2, y: pointA.y + pointA.height / 2 };
+        const p2 = 'normX' in pointB && !('width' in pointB)
+            ? pointB
+            : { x: pointB.x + pointB.width / 2, y: pointB.y + pointB.height / 2 };
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        return Math.round(Math.sqrt(dx * dx + dy * dy) * 100) / 100;
+    }
+    /**
+     * EN: Tests whether a specific coordinate point lies inside a bounding box.
+     * VI: Kiểm tra xem một tọa độ điểm có nằm bên trong hộp bao không.
+     */
+    static isPointInside(box, x, y) {
+        if (!Number.isFinite(x) || !Number.isFinite(y)) {
+            throw new VisionValidationError('Coordinates must be finite numbers', [`x=${x}, y=${y}`]);
+        }
+        return x >= box.x && x <= box.x + box.width && y >= box.y && y <= box.y + box.height;
+    }
+    /**
+     * EN: Finds the smallest enclosing container element for a given target element.
+     * VI: Tìm phần tử vùng chứa bao bọc nhỏ nhất cho một phần tử mục tiêu.
+     */
+    static findEnclosingContainer(target, candidates) {
+        const enclosing = candidates.filter((c) => c.elementId !== target.elementId && this.contains(c.boundingBox, target.boundingBox));
+        if (enclosing.length === 0)
+            return null;
+        // Smallest enclosing container by area (Vùng chứa nhỏ nhất theo diện tích)
+        return enclosing.sort((a, b) => {
+            const areaA = a.boundingBox.width * a.boundingBox.height;
+            const areaB = b.boundingBox.width * b.boundingBox.height;
+            return areaA - areaB;
+        })[0];
+    }
+    /**
+     * EN: Filters visual elements that intersect or lie within a search region.
+     * VI: Lọc các phần tử thị giác giao cắt hoặc nằm trong vùng tìm kiếm.
+     */
+    static filterByRegion(elements, region) {
+        return elements.filter((el) => this.overlaps(el.boundingBox, region));
+    }
+}
