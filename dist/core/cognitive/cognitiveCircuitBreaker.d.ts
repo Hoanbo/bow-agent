@@ -5,12 +5,15 @@ export interface CognitiveCircuitState {
     lastFailureAt: number;
     isOpen: boolean;
 }
+export type CognitiveRoutingHierarchy = 'local-first' | 'cloud-first';
 export interface CognitiveCircuitBreakerOptions {
     readonly failureThreshold?: number;
     readonly cooldownMs?: number;
     readonly geminiProvider?: GeminiCognitiveProvider;
     readonly ollamaProvider?: OllamaCognitiveProvider;
     readonly fallbackProvider?: DeterministicFallbackCognitiveProvider;
+    readonly routingMode?: CognitiveRoutingHierarchy;
+    readonly cloudEscalationEnabled?: boolean;
 }
 export interface RoutedInferenceResult extends ProviderExecutionResult {
     readonly providerType: 'cloud-gemini' | 'ollama-local' | 'deterministic-fallback';
@@ -21,6 +24,8 @@ export interface RoutedInferenceResult extends ProviderExecutionResult {
 export declare class CognitiveCircuitBreaker {
     private readonly failureThreshold;
     private readonly cooldownMs;
+    readonly routingMode: CognitiveRoutingHierarchy;
+    readonly cloudEscalationEnabled: boolean;
     readonly geminiProvider: GeminiCognitiveProvider;
     readonly ollamaProvider: OllamaCognitiveProvider;
     readonly fallbackProvider: DeterministicFallbackCognitiveProvider;
@@ -37,7 +42,7 @@ export declare class CognitiveCircuitBreaker {
      * Tier 3: deterministic-fallback (guaranteed)
      */
     routeInference(context: CognitivePromptContext, options: {
-        readonly preference?: 'auto' | 'cloud-gemini' | 'ollama-local' | 'deterministic-fallback';
+        readonly preference?: 'auto' | 'cloud-gemini' | 'ollama-local' | 'deterministic-fallback' | 'local-first';
         readonly budget?: CognitiveInferenceBudget;
         readonly signal?: AbortSignal;
         readonly isUserStopActive?: () => boolean;

@@ -31,12 +31,16 @@ export interface CognitiveCircuitState {
   isOpen: boolean;
 }
 
+export type CognitiveRoutingHierarchy = 'local-first' | 'cloud-first';
+
 export interface CognitiveCircuitBreakerOptions {
   readonly failureThreshold?: number;
   readonly cooldownMs?: number;
   readonly geminiProvider?: GeminiCognitiveProvider;
   readonly ollamaProvider?: OllamaCognitiveProvider;
   readonly fallbackProvider?: DeterministicFallbackCognitiveProvider;
+  readonly routingMode?: CognitiveRoutingHierarchy;
+  readonly cloudEscalationEnabled?: boolean;
 }
 
 export interface RoutedInferenceResult extends ProviderExecutionResult {
@@ -49,6 +53,8 @@ export interface RoutedInferenceResult extends ProviderExecutionResult {
 export class CognitiveCircuitBreaker {
   private readonly failureThreshold: number;
   private readonly cooldownMs: number;
+  public readonly routingMode: CognitiveRoutingHierarchy;
+  public readonly cloudEscalationEnabled: boolean;
 
   public readonly geminiProvider: GeminiCognitiveProvider;
   public readonly ollamaProvider: OllamaCognitiveProvider;
@@ -59,6 +65,8 @@ export class CognitiveCircuitBreaker {
   constructor(options?: CognitiveCircuitBreakerOptions) {
     this.failureThreshold = options?.failureThreshold ?? 3;
     this.cooldownMs = options?.cooldownMs ?? 30000;
+    this.routingMode = options?.routingMode || (process.env.COGNITIVE_ROUTING_MODE === 'local-first' ? 'local-first' : 'cloud-first');
+    this.cloudEscalationEnabled = options?.cloudEscalationEnabled ?? (process.env.CLOUD_ESCALATION_ENABLED !== 'false');
 
     this.geminiProvider = options?.geminiProvider || new GeminiCognitiveProvider();
     this.ollamaProvider = options?.ollamaProvider || new OllamaCognitiveProvider();
@@ -113,7 +121,7 @@ export class CognitiveCircuitBreaker {
   public async routeInference(
     context: CognitivePromptContext,
     options: {
-      readonly preference?: 'auto' | 'cloud-gemini' | 'ollama-local' | 'deterministic-fallback';
+      readonly preference?: 'auto' | 'cloud-gemini' | 'ollama-local' | 'deterministic-fallback' | 'local-first';
       readonly budget?: CognitiveInferenceBudget;
       readonly signal?: AbortSignal;
       readonly isUserStopActive?: () => boolean;
@@ -145,6 +153,105 @@ export class CognitiveCircuitBreaker {
         fallbackChain: [],
       };
     }
+
+    // Determine if we are routing Local-First
+    const isLocalFirst = preference === 'local-first' || (preference === 'auto' && this.routingMode === 'local-first');
+
+    if (isLocalFirst) {
+      // ======================================================================
+      // MS-1.5.01 LOCAL-FIRST LADDER: Ollama -> Gemini Escalation -> Fallback
+      // ======================================================================
+
+      // Tier 1: Local Ollama
+      if (!this.isAvailable('ollama-local')) {
+        fallbackChain.push('ollama-local:circuit-open');
+      } else {
+        checkStop();
+        fallbackChain.push('ollama-local');
+        options.onTierAttempt?.('ollama-local');
+        try {
+          const result = await this.ollamaProvider.executeInference(context, {
+            timeoutMs: Math.min(options.budget?.maxLatencyMs || 30000, 30000),
+            budget: options.budget,
+            signal: options.signal,
+          });
+          checkStop();
+          this.recordSuccess('ollama-local');
+          return {
+            ...result,
+            providerType: 'ollama-local',
+            modelName: this.ollamaProvider.modelName,
+            fallbackOccurred: false,
+            fallbackChain: Object.freeze([...fallbackChain]),
+          };
+        } catch (err: any) {
+          this.recordFailure('ollama-local');
+          if (err.message === 'USER_STOP_PREEMPTED' || options.isUserStopActive?.() || options.signal?.aborted) {
+            throw new Error('USER_STOP_PREEMPTED');
+          }
+          // Fall through to Tier 2: Cloud Gemini Escalation
+        }
+      }
+
+      checkStop();
+
+      // Tier 2: Cloud Gemini Escalation (Optional & Gated)
+      if (this.cloudEscalationEnabled && this.geminiProvider.isConfigured()) {
+        if (!this.isAvailable('cloud-gemini')) {
+          fallbackChain.push('cloud-gemini:circuit-open');
+        } else {
+          fallbackChain.push('cloud-gemini');
+          options.onTierAttempt?.('cloud-gemini');
+          try {
+            const result = await this.geminiProvider.executeInference(context, {
+              timeoutMs: Math.min(options.budget?.maxLatencyMs || 10000, 15000),
+              budget: options.budget,
+              signal: options.signal,
+            });
+            checkStop();
+            this.recordSuccess('cloud-gemini');
+            return {
+              ...result,
+              providerType: 'cloud-gemini',
+              modelName: this.geminiProvider.modelName,
+              fallbackOccurred: true,
+              fallbackChain: Object.freeze([...fallbackChain]),
+            };
+          } catch (err: any) {
+            this.recordFailure('cloud-gemini');
+            if (err.message === 'USER_STOP_PREEMPTED' || options.isUserStopActive?.() || options.signal?.aborted) {
+              throw new Error('USER_STOP_PREEMPTED');
+            }
+            // Fall through to Tier 3: Deterministic Fallback
+          }
+        }
+      } else {
+        fallbackChain.push('cloud-gemini:skipped');
+      }
+
+      checkStop();
+
+      // Tier 3: Deterministic Fallback
+      fallbackChain.push('deterministic-fallback');
+      options.onTierAttempt?.('deterministic-fallback');
+      const result = await this.fallbackProvider.executeInference(context, {
+        signal: options.signal,
+      });
+      checkStop();
+
+      return {
+        ...result,
+        providerType: 'deterministic-fallback',
+        modelName: this.fallbackProvider.modelName,
+        fallbackOccurred: true,
+        fallbackChain: Object.freeze([...fallbackChain]),
+      };
+    }
+
+    // ========================================================================
+    // LEGACY CLOUD-FIRST LADDER (Gemini -> Ollama -> Fallback)
+    // Preserves backward compatibility for MS-1.4.02 regressions
+    // ========================================================================
 
     // Tier 1: Cloud Gemini
     if ((preference === 'auto' || preference === 'cloud-gemini') && this.geminiProvider.isConfigured()) {

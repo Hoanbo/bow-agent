@@ -16,3 +16,11 @@ export * from './cognitivePipeline.js';
 export * from './cognitiveProviders.js';
 export * from './cognitiveCircuitBreaker.js';
 export * from './cognitiveProviderRuntime.js';
+// MS-1.5.01 Local-First Cognition Additions
+export * from './providerNeutralContracts.js';
+export * from './modelCapabilityRegistry.js';
+export * from './structuredCognitiveValidator.js';
+export * from './cloudEscalationSanitizer.js';
+export * from './localFirstOllamaRuntime.js';
+export * from './localFirstRouterEngine.js';
+export * from './localCognitiveRuntimeFacade.js';

@@ -1,0 +1,37 @@
+{
+  "attention": {
+    "primaryTarget": null,
+    "secondaryTargets": [],
+    "stack": []
+  },
+  "lifecycleState": "ACTIVE",
+  "provenance": {
+    "mutatedBy": "test",
+    "mutationReason": "test",
+    "previousStateHash": "e42d3f939c166f94b86a2a13b2a2ab5f35696e0c2d125e0b15055c90f390714a",
+    "stateHash": "fffa7832892224df01c81efd07d0e8b37368279a377c7be367ad6a993598cd2a",
+    "stateVersion": 2,
+    "timestamp": "2026-09-14T01:39:15.350Z"
+  },
+  "registers": {
+    "active_constraints": [],
+    "active_entities": {},
+    "active_goal_ref": null,
+    "active_intent": null,
+    "active_task_ref": null,
+    "attention_target": null,
+    "cognitive_priority": 0.3,
+    "current_environment": {},
+    "current_focus": null,
+    "hypotheses": [],
+    "last_verified_state": null,
+    "pending_decisions": [],
+    "recent_observations": [],
+    "uncertainty_state": {},
+    "unresolved_questions": []
+  },
+  "schemaVersion": 1,
+  "sessionId": "sess-stop",
+  "stateVersion": 2,
+  "tenantId": "tenant-stop"
+}

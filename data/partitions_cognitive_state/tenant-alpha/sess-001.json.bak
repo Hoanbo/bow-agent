@@ -1,0 +1,48 @@
+{
+  "attention": {
+    "primaryTarget": null,
+    "secondaryTargets": [],
+    "stack": []
+  },
+  "lifecycleState": "ACTIVE",
+  "provenance": {
+    "mutatedBy": "writerA",
+    "mutationReason": "test",
+    "previousStateHash": "885c199455813073debad85da3b888581b1fcd29d83aa013a2f763fc7ffbcf93",
+    "stateHash": "d43f8f1ee0fef2ccadeaa5ae4351861c2dbeff1208de0419e7ee116f4930e65c",
+    "stateVersion": 4,
+    "timestamp": "2026-09-14T01:41:08.567Z"
+  },
+  "registers": {
+    "active_constraints": [],
+    "active_entities": {},
+    "active_goal_ref": "goal-A",
+    "active_intent": {
+      "confidence": 0.9,
+      "description": "Locate config file",
+      "intentId": "int-1",
+      "intentType": "QUERY",
+      "registeredAt": "2026-09-14T01:41:08.566Z"
+    },
+    "active_task_ref": null,
+    "attention_target": null,
+    "cognitive_priority": 0.8,
+    "current_environment": {},
+    "current_focus": {
+      "domain": "filesystem",
+      "establishedAt": "2026-09-14T01:41:08.566Z",
+      "rationale": "search config",
+      "subject": "file_search"
+    },
+    "hypotheses": [],
+    "last_verified_state": null,
+    "pending_decisions": [],
+    "recent_observations": [],
+    "uncertainty_state": {},
+    "unresolved_questions": []
+  },
+  "schemaVersion": 1,
+  "sessionId": "sess-001",
+  "stateVersion": 4,
+  "tenantId": "tenant-alpha"
+}

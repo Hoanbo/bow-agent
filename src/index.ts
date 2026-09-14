@@ -301,6 +301,8 @@ export { createReconciliationId as createPolicyReconciliationId } from './core/p
 export { HARD_FORBIDDEN_ACTIONS } from './core/policyDecision/index.js';
 export { HARD_FORBIDDEN_ACTIONS as POLICY_EVOLUTION_HARD_FORBIDDEN_ACTIONS } from './core/policyEvolutionPlanning/index.js';
 export type { VerificationFailure, VerificationRecommendation, VerificationRequest } from './core/verification/index.js';
+export type { GoalStatus } from './core/executive/index.js';
+export type { GoalStatus as GovernedGoalStatus } from './core/goal/index.js';
 
 
 
@@ -833,3 +835,15 @@ export {
   Phase14ExitCertificateRuntime,
   type ExecuteIndependentAuditInput,
 } from './core/phase14ExitBoundary/index.js';
+
+// 98. BOWCON V4.0 — Milestone 1.5.02: Persistent Cognitive State Engine & Working Registers
+export * from './core/cognitiveState/index.js';
+
+// 99. BOWCON V4.0 — Milestone 1.5.03: Local Embedding Engine & Native Dense Vector Semantic Memory
+export * from './core/semanticMemory/index.js';
+
+// 100. BOWCON V4.0 — Milestone 1.5.04: Native Goal Formation & Priority Graph Engine
+export * from './core/goal/index.js';
+
+// 101. BOWCON V4.0 — Milestone 1.5.05: Native Neuro-Symbolic Deliberation Engine
+export * from './core/deliberation/index.js';

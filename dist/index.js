@@ -336,3 +336,11 @@ export { OBSERVABILITY_BOUNDS, AgentObservabilityError, AgentObservabilityAborte
 export { PHASE14_CRITERIA_DEFINITIONS, Phase14ReadinessError, Phase14ReadinessAbortedError, Phase14ValidationError, Phase14SecurityError, Phase14ConcurrencyError, Phase14ExecutionGate, ChaosFaultInjector, Phase14ExitCriteriaEvaluator, Phase14ReadinessAssessor, Phase14ReadinessRuntime, } from './core/phase14Readiness/index.js';
 // 97. BOWCON V4.0 — Milestone 1.4.13: Phase 1.4 Exit Boundary & Independent Governance Audit
 export { CANONICAL_EXIT_CRITERIA_METADATA, Phase14ExitBoundaryError, Phase14AuditAbortedError, Phase14ValidationError as Phase14ExitValidationError, Phase14SecurityError as Phase14ExitSecurityError, Phase14ProvenanceMismatchError, Phase14ContradictionError, Phase14ExitBoundaryGate, IndependentEvidenceCollector, Phase14EvidenceReconciler, Phase14GovernanceAuditEngine, Phase14ExitCertificateRuntime, } from './core/phase14ExitBoundary/index.js';
+// 98. BOWCON V4.0 — Milestone 1.5.02: Persistent Cognitive State Engine & Working Registers
+export * from './core/cognitiveState/index.js';
+// 99. BOWCON V4.0 — Milestone 1.5.03: Local Embedding Engine & Native Dense Vector Semantic Memory
+export * from './core/semanticMemory/index.js';
+// 100. BOWCON V4.0 — Milestone 1.5.04: Native Goal Formation & Priority Graph Engine
+export * from './core/goal/index.js';
+// 101. BOWCON V4.0 — Milestone 1.5.05: Native Neuro-Symbolic Deliberation Engine
+export * from './core/deliberation/index.js';
