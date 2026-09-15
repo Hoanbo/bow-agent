@@ -1,0 +1,47 @@
+{
+  "taskId": "task_tenant_replan_trig_1789437187749_b9fd48f2",
+  "tenantId": "tenant_replan_trig",
+  "userId": "tenant_replan_trig",
+  "title": "Governed Multi-Step Automated Process",
+  "intent": "Multi-Step Execution Pipeline",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_replan_trig_1789437187749_b9fd48f2_0",
+      "stepIndex": 0,
+      "description": "Execute multi-step phase 0",
+      "capabilityId": "desktop_action",
+      "actionName": "inspect_element",
+      "parameters": {
+        "target": "target_0"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    },
+    {
+      "stepId": "step_task_tenant_replan_trig_1789437187749_b9fd48f2_1",
+      "stepIndex": 1,
+      "description": "Execute multi-step phase 1",
+      "capabilityId": "desktop_action",
+      "actionName": "execute_governed_action",
+      "parameters": {
+        "target": "target_1"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    }
+  ],
+  "currentStepIndex": 0,
+  "createdAt": "2026-09-15T01:53:07.750Z",
+  "updatedAt": "2026-09-15T01:53:07.750Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "3ca3b31b641e08b018b56d21aff9852b29700f0e5f13fc1a57a16a33ac81f26e"
+}

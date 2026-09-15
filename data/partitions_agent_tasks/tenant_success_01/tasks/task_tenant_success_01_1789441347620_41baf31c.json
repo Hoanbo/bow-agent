@@ -1,0 +1,69 @@
+{
+  "taskId": "task_tenant_success_01_1789441347620_41baf31c",
+  "tenantId": "tenant_success_01",
+  "userId": "tenant_success_01",
+  "title": "Governed Multi-Step Automated Process",
+  "intent": "Multi-Step Execution Pipeline",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 5,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_success_01_1789441347620_41baf31c_0",
+      "stepIndex": 0,
+      "description": "Execute multi-step phase 0",
+      "capabilityId": "desktop_action",
+      "actionName": "inspect_element",
+      "parameters": {
+        "target": "target_0"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "COMPLETED",
+      "attemptCount": 1,
+      "maxAttempts": 3,
+      "executionTokenId": "[REDACTED]",
+      "executionResult": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_success_01_1789441347620_41baf31c",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-15T03:02:27.642Z"
+      }
+    },
+    {
+      "stepId": "step_task_tenant_success_01_1789441347620_41baf31c_1",
+      "stepIndex": 1,
+      "description": "Execute multi-step phase 1",
+      "capabilityId": "desktop_action",
+      "actionName": "execute_governed_action",
+      "parameters": {
+        "target": "target_1"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "COMPLETED",
+      "attemptCount": 1,
+      "maxAttempts": 3,
+      "executionTokenId": "[REDACTED]",
+      "executionResult": {
+        "executed": true,
+        "action": "Execute multi-step phase 1",
+        "taskId": "task_tenant_success_01_1789441347620_41baf31c",
+        "stepId": "step_1",
+        "riskLevel": "LOW",
+        "resultData": {
+          "status": "ACTUATION_COMPLETED",
+          "parameters": {}
+        },
+        "completedAt": "2026-09-15T03:02:27.670Z"
+      }
+    }
+  ],
+  "currentStepIndex": 2,
+  "createdAt": "2026-09-15T03:02:27.621Z",
+  "updatedAt": "2026-09-15T03:02:27.671Z",
+  "previousProvenanceHash": "fd2b9d4cb674762c350d4ad01dcbf53f16d6ed1a25332a2f886c4e761ccb38bf",
+  "provenanceHash": "b21d616205fee526b94e13d44a4ebe767d8fea015420b75be11c922f7da65f19"
+}

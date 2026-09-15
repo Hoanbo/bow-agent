@@ -1,0 +1,196 @@
+{
+  "dossierId": "urn:bow:dossier:587dd7c3-0b83-44cd-bede-61081907d940",
+  "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+  "tenantId": "tenant_pol_alpha",
+  "sessionId": "session_delib_001",
+  "missionId": "mission_eval_01",
+  "compiledAt": 1789460021515,
+  "proposalSummary": {
+    "policyDomain": "CONVERGENCE",
+    "proposedChanges": [
+      {
+        "fieldPath": "convergence.patienceRounds",
+        "currentValue": 3,
+        "proposedValue": 4,
+        "rationale": "Improve cross-federation stability"
+      }
+    ],
+    "justification": "Observed intermittent timeout during heavy cross-federation sync"
+  },
+  "sourceEvidence": {
+    "metaLearningRecommendationId": "rec_meta_001",
+    "strategicMemoryRecordIds": [
+      "mem_01",
+      "mem_02"
+    ]
+  },
+  "impactAnalysis": {
+    "analysisId": "urn:bow:analysis:b6ccf376-f207-4f5f-98b1-722f0282eb60",
+    "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+    "tenantId": "tenant_pol_alpha",
+    "dimensionScores": [
+      {
+        "dimension": "FEDERATION_BLAST_RADIUS",
+        "score": 0.5,
+        "description": "Affects approximately 2 active federations in domain CONVERGENCE"
+      },
+      {
+        "dimension": "MISSION_SCOPE_SPREAD",
+        "score": 0.5499999999999999,
+        "description": "Cross-mission impact across 3 active mission contexts"
+      },
+      {
+        "dimension": "LEASE_SAFETY_MARGIN",
+        "score": 0.2,
+        "description": "Nominal lease interaction"
+      },
+      {
+        "dimension": "RESOURCE_BUDGET_VOLATILITY",
+        "score": 0.25,
+        "description": "Projected volatility in token and compute budgets"
+      },
+      {
+        "dimension": "CONVERGENCE_STABILITY",
+        "score": 0.7,
+        "description": "Sensitivity of multi-phase convergence rounds"
+      },
+      {
+        "dimension": "CONFLICT_RATE_PROJECTION",
+        "score": 0.25,
+        "description": "Projected conflict probability based on 1 proposed field deltas"
+      },
+      {
+        "dimension": "REVERSIBILITY_RATING",
+        "score": 0.8,
+        "description": "Directly reversible field update"
+      },
+      {
+        "dimension": "DEPENDENT_POLICY_COUPLING",
+        "score": 0.2,
+        "description": "Structural coupling with upstream and downstream constraints"
+      },
+      {
+        "dimension": "DRIFT_ACCELERATION_RISK",
+        "score": 0.6,
+        "description": "Probability of accelerating multi-mission policy compliance divergence"
+      },
+      {
+        "dimension": "SECURITY_PERIMETER_IMPACT",
+        "score": 0.15,
+        "description": "Zero authentication boundary delta"
+      }
+    ],
+    "compositeImpactScore": 0.648,
+    "reversibilityScore": 0.8,
+    "riskLevel": "HIGH",
+    "affectedFederationIds": [
+      "fed_tenant_pol_alpha_01"
+    ],
+    "affectedMissionIds": [
+      "mission_eval_01"
+    ],
+    "provenanceHash": "d5c9c518053618cb5fb9f46ca90b348f2f3276e93e2b7dfa4b1c6462ec022f76",
+    "analyzedAt": 1789460021512
+  },
+  "counterfactualSimulation": {
+    "simulationId": "urn:bow:simulation:ff9b65cb-bc7c-49ee-a34a-4ec6c7282571",
+    "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+    "tenantId": "tenant_pol_alpha",
+    "scenarios": [
+      {
+        "scenarioId": "scenario_4fcb816d_0",
+        "description": "Hypothetical perturbation run 1 with 4 simulated agents across 3 rounds",
+        "simulatedAgentCount": 4,
+        "simulatedConvergenceRounds": 3,
+        "projectedSuccessRate": 0.81,
+        "projectedConflictDelta": 2,
+        "projectedDriftDelta": 0.04
+      },
+      {
+        "scenarioId": "scenario_4fcb816d_1",
+        "description": "Hypothetical perturbation run 2 with 6 simulated agents across 4 rounds",
+        "simulatedAgentCount": 6,
+        "simulatedConvergenceRounds": 4,
+        "projectedSuccessRate": 0.84,
+        "projectedConflictDelta": 1,
+        "projectedDriftDelta": 0.03
+      },
+      {
+        "scenarioId": "scenario_4fcb816d_2",
+        "description": "Hypothetical perturbation run 3 with 8 simulated agents across 5 rounds",
+        "simulatedAgentCount": 8,
+        "simulatedConvergenceRounds": 5,
+        "projectedSuccessRate": 0.87,
+        "projectedConflictDelta": 1,
+        "projectedDriftDelta": 0.02
+      }
+    ],
+    "recursionDepth": 2,
+    "isHypothetical": true,
+    "cannotGrantAuthority": true,
+    "overallConvergenceFeasibility": 0.84,
+    "provenanceHash": "2807d349cd63241368507d994d2059dcd2744fd1b04cd0221d6c95a3d8026107",
+    "simulatedAt": 1789460021513
+  },
+  "constitutionalCompliance": {
+    "evaluationId": "urn:bow:invariant_eval:a417383e-7806-4ad1-80da-6507fff8dd00",
+    "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+    "tenantId": "tenant_pol_alpha",
+    "passed": true,
+    "evaluatedAxioms": [
+      "AGENT_CAPABILITY_NOT_HUMAN_AUTHORITY",
+      "KNOWLEDGE_NOT_AUTHORIZATION",
+      "CONSENSUS_NOT_AUTHORIZATION",
+      "CONFIDENCE_NOT_AUTHORITY",
+      "LEASE_EXPANSION_PROHIBITION",
+      "PDP_SUPREMACY",
+      "TENANT_SOVEREIGNTY",
+      "EMERGENCY_STOP_PRESERVATION",
+      "AUDIT_NON_REPUDIATION"
+    ],
+    "violations": [],
+    "provenanceHash": "35324b371cea8f47d044cbc29ead483b7b58d265db54f571d609d80a164c407e",
+    "evaluatedAt": 1789460021515
+  },
+  "riskClassification": "HIGH",
+  "reversibilityScore": 0.8,
+  "humanReviewRequirements": {
+    "requiresExplicitSignOff": true,
+    "minimumOperatorRole": "OPERATIONS_SUPERVISOR",
+    "twoPersonRuleRequired": false
+  },
+  "version": 2,
+  "provenanceHash": "f5c733b9e5c0495655bf162d259c39d9b76138b9b4c7628977ac119aae995913",
+  "humanDecision": {
+    "recordId": "urn:bow:decision:c1a25ab9-a288-4092-80ee-1f0a23d0a7c8",
+    "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+    "dossierId": "urn:bow:dossier:587dd7c3-0b83-44cd-bede-61081907d940",
+    "tenantId": "tenant_pol_alpha",
+    "decision": "APPROVE",
+    "operatorId": "operator_alpha_01",
+    "operatorSignature": "sig_human_alpha_valid",
+    "rationale": "Reviewed impact and counterfactual models; certified safe for submission",
+    "timestamp": 1789460021516,
+    "verified": true,
+    "provenanceHash": "0cecc21db350bd2070542aaaecc210bfcb0c593c47abcd6df344c27b7af79e77"
+  },
+  "pdpHandoffPackage": {
+    "handoffId": "urn:bow:pdp_handoff:2f727f77-1a03-4b59-a7b7-9ae4d5490435",
+    "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+    "dossierId": "urn:bow:dossier:587dd7c3-0b83-44cd-bede-61081907d940",
+    "tenantId": "tenant_pol_alpha",
+    "policyDomain": "CONVERGENCE",
+    "proposedChanges": [
+      {
+        "fieldPath": "convergence.patienceRounds",
+        "currentValue": 3,
+        "proposedValue": 4,
+        "rationale": "Improve cross-federation stability"
+      }
+    ],
+    "humanApprovalCertified": true,
+    "isAuthoritativePolicy": false,
+    "dossierProvenanceHash": "f5c733b9e5c0495655bf162d259c39d9b76138b9b4c7628977ac119aae995913",
+    "packagedAt": 1789460021516
+  }
+}

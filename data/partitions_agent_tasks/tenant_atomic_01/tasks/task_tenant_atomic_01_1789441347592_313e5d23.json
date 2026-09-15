@@ -1,0 +1,62 @@
+{
+  "taskId": "task_tenant_atomic_01_1789441347592_313e5d23",
+  "tenantId": "tenant_atomic_01",
+  "userId": "tenant_atomic_01",
+  "title": "Governed Multi-Step Automated Process",
+  "intent": "Multi-Step Execution Pipeline",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_atomic_01_1789441347592_313e5d23_0",
+      "stepIndex": 0,
+      "description": "Execute multi-step phase 0",
+      "capabilityId": "desktop_action",
+      "actionName": "inspect_element",
+      "parameters": {
+        "target": "target_0"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    },
+    {
+      "stepId": "step_task_tenant_atomic_01_1789441347592_313e5d23_1",
+      "stepIndex": 1,
+      "description": "Execute multi-step phase 1",
+      "capabilityId": "desktop_action",
+      "actionName": "execute_governed_action",
+      "parameters": {
+        "target": "target_1"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    },
+    {
+      "stepId": "step_task_tenant_atomic_01_1789441347592_313e5d23_2",
+      "stepIndex": 2,
+      "description": "Execute multi-step phase 2",
+      "capabilityId": "desktop_action",
+      "actionName": "execute_governed_action",
+      "parameters": {
+        "target": "target_2"
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    }
+  ],
+  "currentStepIndex": 0,
+  "createdAt": "2026-09-15T03:02:27.593Z",
+  "updatedAt": "2026-09-15T03:02:27.593Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "87fdf8bc4546dfb6132873060fdf95403aa2b90a7847c88ac0ac5017e2025383"
+}

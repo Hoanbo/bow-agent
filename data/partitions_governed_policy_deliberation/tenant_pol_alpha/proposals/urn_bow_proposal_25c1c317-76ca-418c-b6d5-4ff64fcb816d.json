@@ -1,0 +1,28 @@
+{
+  "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+  "tenantId": "tenant_pol_alpha",
+  "sessionId": "session_delib_001",
+  "missionId": "mission_eval_01",
+  "sourceRecommendationId": "rec_meta_001",
+  "sourceStrategicMemoryRecordIds": [
+    "mem_01",
+    "mem_02"
+  ],
+  "policyDomain": "CONVERGENCE",
+  "proposedChanges": [
+    {
+      "fieldPath": "convergence.patienceRounds",
+      "currentValue": 3,
+      "proposedValue": 4,
+      "rationale": "Improve cross-federation stability"
+    }
+  ],
+  "justification": "Observed intermittent timeout during heavy cross-federation sync",
+  "advisoryOnly": true,
+  "requiresHumanReview": true,
+  "status": "ADMITTED",
+  "version": 2,
+  "provenanceHash": "fa08703d5fbb796bb78ad78e775b7af19e774e71857a51378eea2f2091232dc7",
+  "createdAt": 1789460021471,
+  "updatedAt": 1789460021533
+}

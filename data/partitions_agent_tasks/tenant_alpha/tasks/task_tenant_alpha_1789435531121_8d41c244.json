@@ -1,0 +1,70 @@
+{
+  "taskId": "task_tenant_alpha_1789435531121_8d41c244",
+  "tenantId": "tenant_alpha",
+  "userId": "tenant_alpha",
+  "title": "Task for Plan: Test Plan",
+  "intent": "A test plan for execution preparation",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_alpha_1789435531121_8d41c244_0",
+      "stepIndex": 0,
+      "description": "Inspect status panel",
+      "capabilityId": "desktop_observation",
+      "actionName": "inspect_state",
+      "parameters": {
+        "target": "status_panel",
+        "intentType": "INSPECT",
+        "sourceStepId": "step_1",
+        "dependsOnStepIds": [],
+        "preconditions": [
+          "session_active",
+          "tenant_match"
+        ],
+        "postconditions": [
+          "status_visible"
+        ],
+        "isQuarantinedText": false
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    },
+    {
+      "stepId": "step_task_tenant_alpha_1789435531121_8d41c244_1",
+      "stepIndex": 1,
+      "description": "Type confirmation query",
+      "capabilityId": "desktop_interaction",
+      "actionName": "type_text",
+      "parameters": {
+        "query": "status details",
+        "intentType": "INPUT_TEXT",
+        "sourceStepId": "step_2",
+        "dependsOnStepIds": [
+          "step_1"
+        ],
+        "preconditions": [
+          "provenance_valid"
+        ],
+        "postconditions": [
+          "query_submitted"
+        ],
+        "isQuarantinedText": false
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    }
+  ],
+  "currentStepIndex": 0,
+  "createdAt": "2026-09-15T01:25:31.121Z",
+  "updatedAt": "2026-09-15T01:25:31.121Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "d7d3fdde9c7e88f3231a2ab0b0b2972af44d9b2fa81ef6573f035ceec65a35e8"
+}

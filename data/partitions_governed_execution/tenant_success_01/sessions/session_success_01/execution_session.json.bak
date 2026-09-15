@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "tenantId": "tenant_success_01",
   "sessionId": "session_success_01",
-  "sessionVersion": 8,
+  "sessionVersion": 16,
   "activeLeases": [],
   "executionResults": [
     {
@@ -226,8 +226,264 @@
       "completedAt": "2026-09-15T00:39:26.978Z",
       "sessionVersion": 7,
       "provenanceHash": "6d09269c610604717ec9f97eba6c3e3749075c76930128f38c4971b3f4190a5a"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789432766952_7e89d6f7_1_1789432766993_0e4c5373",
+      "requestId": "req_tenant_success_01_session_success_01_step_1_1789432766992",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789432766952_7e89d6f7",
+      "stepId": "step_1",
+      "stepIndex": 1,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "executed": true,
+        "action": "Execute multi-step phase 1",
+        "taskId": "task_tenant_success_01_1789432766952_7e89d6f7",
+        "stepId": "step_1",
+        "riskLevel": "LOW",
+        "resultData": {
+          "status": "ACTUATION_COMPLETED",
+          "parameters": {}
+        },
+        "completedAt": "2026-09-15T00:39:26.998Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T00:39:26.993Z",
+        "endTime": "2026-09-15T00:39:27.002Z",
+        "durationMs": 9,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789432766952_7e89d6f7_1_1789432766992_cb588de7",
+      "completedAt": "2026-09-15T00:39:27.002Z",
+      "sessionVersion": 8,
+      "provenanceHash": "785a90ef515917334345d85bcf650317738acb8a6150d9616344408308ecea1c"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789435537142_a78855cc_0_1789435537158_e46d4b40",
+      "requestId": "req_tenant_success_01_session_success_01_step_0_1789435537157",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789435537142_a78855cc",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_success_01_1789435537142_a78855cc",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-15T01:25:37.164Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T01:25:37.158Z",
+        "endTime": "2026-09-15T01:25:37.168Z",
+        "durationMs": 10,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789435537142_a78855cc_0_1789435537157_437711f5",
+      "completedAt": "2026-09-15T01:25:37.168Z",
+      "sessionVersion": 9,
+      "provenanceHash": "3e1fce9f29a405e9ac721fc8df1e929b9de4cd3b38aa541a29e2f4e28e2a0357"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789435537142_a78855cc_1_1789435537182_9eef4922",
+      "requestId": "req_tenant_success_01_session_success_01_step_1_1789435537181",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789435537142_a78855cc",
+      "stepId": "step_1",
+      "stepIndex": 1,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "executed": true,
+        "action": "Execute multi-step phase 1",
+        "taskId": "task_tenant_success_01_1789435537142_a78855cc",
+        "stepId": "step_1",
+        "riskLevel": "LOW",
+        "resultData": {
+          "status": "ACTUATION_COMPLETED",
+          "parameters": {}
+        },
+        "completedAt": "2026-09-15T01:25:37.189Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T01:25:37.182Z",
+        "endTime": "2026-09-15T01:25:37.193Z",
+        "durationMs": 11,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789435537142_a78855cc_1_1789435537181_af4abdea",
+      "completedAt": "2026-09-15T01:25:37.193Z",
+      "sessionVersion": 10,
+      "provenanceHash": "6ee8f09baa31a350e2792bcb0cc2a235c094ff43acc2bff84a4db426f9014ccf"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789437187911_1eeb3d0e_0_1789437187927_6682c20b",
+      "requestId": "req_tenant_success_01_session_success_01_step_0_1789437187926",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789437187911_1eeb3d0e",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_success_01_1789437187911_1eeb3d0e",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-15T01:53:07.933Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T01:53:07.927Z",
+        "endTime": "2026-09-15T01:53:07.937Z",
+        "durationMs": 10,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789437187911_1eeb3d0e_0_1789437187926_f03b4e84",
+      "completedAt": "2026-09-15T01:53:07.937Z",
+      "sessionVersion": 11,
+      "provenanceHash": "cc8b85b7592a30b8bcbb581950bd2f04ea8ddcd36e03fa7a7f65340e7cf5889b"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789437187911_1eeb3d0e_1_1789437187951_a500c518",
+      "requestId": "req_tenant_success_01_session_success_01_step_1_1789437187951",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789437187911_1eeb3d0e",
+      "stepId": "step_1",
+      "stepIndex": 1,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "executed": true,
+        "action": "Execute multi-step phase 1",
+        "taskId": "task_tenant_success_01_1789437187911_1eeb3d0e",
+        "stepId": "step_1",
+        "riskLevel": "LOW",
+        "resultData": {
+          "status": "ACTUATION_COMPLETED",
+          "parameters": {}
+        },
+        "completedAt": "2026-09-15T01:53:07.957Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T01:53:07.951Z",
+        "endTime": "2026-09-15T01:53:07.961Z",
+        "durationMs": 10,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789437187911_1eeb3d0e_1_1789437187951_267e482d",
+      "completedAt": "2026-09-15T01:53:07.961Z",
+      "sessionVersion": 12,
+      "provenanceHash": "880000da0db1e5e264eb1915f182f27d357422f3b5050d119b09929b5fe77de5"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789441347620_41baf31c_0_1789441347636_cc4ce0e3",
+      "requestId": "req_tenant_success_01_session_success_01_step_0_1789441347635",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789441347620_41baf31c",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_success_01_1789441347620_41baf31c",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-15T03:02:27.642Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T03:02:27.636Z",
+        "endTime": "2026-09-15T03:02:27.645Z",
+        "durationMs": 9,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789441347620_41baf31c_0_1789441347635_ccedff1d",
+      "completedAt": "2026-09-15T03:02:27.645Z",
+      "sessionVersion": 13,
+      "provenanceHash": "8a8ff240421439435910657877e0c1ae6ba57e4c19224c8c68085e2134473ac7"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789441347620_41baf31c_1_1789441347662_f8a05413",
+      "requestId": "req_tenant_success_01_session_success_01_step_1_1789441347661",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789441347620_41baf31c",
+      "stepId": "step_1",
+      "stepIndex": 1,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "executed": true,
+        "action": "Execute multi-step phase 1",
+        "taskId": "task_tenant_success_01_1789441347620_41baf31c",
+        "stepId": "step_1",
+        "riskLevel": "LOW",
+        "resultData": {
+          "status": "ACTUATION_COMPLETED",
+          "parameters": {}
+        },
+        "completedAt": "2026-09-15T03:02:27.670Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T03:02:27.662Z",
+        "endTime": "2026-09-15T03:02:27.674Z",
+        "durationMs": 12,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789441347620_41baf31c_1_1789441347661_6bee3151",
+      "completedAt": "2026-09-15T03:02:27.674Z",
+      "sessionVersion": 14,
+      "provenanceHash": "8b4ceaa21b676beefeb539ce7fb57364ac5578ba3f50bcb05bd9f7723742064b"
+    },
+    {
+      "executionId": "exec_tenant_success_01_task_tenant_success_01_1789445053039_6424d449_0_1789445053054_91360e04",
+      "requestId": "req_tenant_success_01_session_success_01_step_0_1789445053054",
+      "tenantId": "tenant_success_01",
+      "sessionId": "session_success_01",
+      "taskId": "task_tenant_success_01_1789445053039_6424d449",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_success_01_1789445053039_6424d449",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-15T04:04:13.060Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-15T04:04:13.054Z",
+        "endTime": "2026-09-15T04:04:13.064Z",
+        "durationMs": 10,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_success_01_task_tenant_success_01_1789445053039_6424d449_0_1789445053053_4875befc",
+      "completedAt": "2026-09-15T04:04:13.064Z",
+      "sessionVersion": 15,
+      "provenanceHash": "4e6a54aef7c327dc1e35a9ba17737165984faeeebd795f67672e06f85fc982d6"
     }
   ],
-  "updatedAt": "2026-09-15T00:39:26.978Z",
-  "documentHash": "4d36ade822b999d2c38672807bbf8ee17908ef41ac0ed7d5822c37beec64230a"
+  "updatedAt": "2026-09-15T04:04:13.065Z",
+  "documentHash": "ff581bc8645d2ed04a31bb161d2535971570578173cfe8169c93c168a447fdd9"
 }

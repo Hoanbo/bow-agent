@@ -1,0 +1,32 @@
+{
+  "taskId": "task_tenant_forgery_01_1789445052985_128719cc",
+  "tenantId": "tenant_forgery_01",
+  "userId": "tenant_forgery_01",
+  "title": "Governed Multi-Step Automated Process",
+  "intent": "Multi-Step Execution Pipeline",
+  "riskLevel": "CRITICAL",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_forgery_01_1789445052985_128719cc_0",
+      "stepIndex": 0,
+      "description": "Execute multi-step phase 0",
+      "capabilityId": "desktop_action",
+      "actionName": "inspect_element",
+      "parameters": {
+        "target": "target_0"
+      },
+      "riskLevel": "CRITICAL",
+      "requiresApproval": true,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    }
+  ],
+  "currentStepIndex": 0,
+  "createdAt": "2026-09-15T04:04:12.985Z",
+  "updatedAt": "2026-09-15T04:04:12.985Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "e9d1ec534628d6fad21f7a4d8afcbd65940c7ac679c5c8f61781b351f166902d"
+}
