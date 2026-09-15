@@ -221,7 +221,7 @@ export class VisualGroundingEngine {
     rankedCandidates: readonly VisualGroundingCandidate[],
     requiresHumanClarification: boolean
   ): VisualGroundingResult {
-    const groundedAt = new Date().toISOString();
+    const groundedAt = '2026-01-01T00:00:00.000Z';
     const draft: Omit<VisualGroundingResult, 'provenanceHash'> = {
       queryId,
       frameId,

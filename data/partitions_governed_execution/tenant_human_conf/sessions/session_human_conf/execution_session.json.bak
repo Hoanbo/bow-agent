@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "1.0.0",
+  "tenantId": "tenant_human_conf",
+  "sessionId": "session_human_conf",
+  "sessionVersion": 4,
+  "activeLeases": [],
+  "executionResults": [
+    {
+      "executionId": "exec_tenant_human_conf_task_tenant_human_conf_1789393260281_a6af5ab0_0_1789393260295_accc54ff",
+      "requestId": "req_tenant_human_conf_session_human_conf_step_0_1789393260294",
+      "tenantId": "tenant_human_conf",
+      "sessionId": "session_human_conf",
+      "taskId": "task_tenant_human_conf_1789393260281_a6af5ab0",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_human_conf_1789393260281_a6af5ab0",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-14T13:41:00.306Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-14T13:41:00.295Z",
+        "endTime": "2026-09-14T13:41:00.309Z",
+        "durationMs": 14,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_human_conf_task_tenant_human_conf_1789393260281_a6af5ab0_0_1789393260294_e738d36e",
+      "completedAt": "2026-09-14T13:41:00.309Z",
+      "sessionVersion": 1,
+      "provenanceHash": "59a937f13435629bca3a378a458ff6f226aacad5dc36779ab8c71e9156da981a"
+    },
+    {
+      "executionId": "exec_tenant_human_conf_task_tenant_human_conf_1789395125625_860d0582_0_1789395125638_dec250c5",
+      "requestId": "req_tenant_human_conf_session_human_conf_step_0_1789395125637",
+      "tenantId": "tenant_human_conf",
+      "sessionId": "session_human_conf",
+      "taskId": "task_tenant_human_conf_1789395125625_860d0582",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_human_conf_1789395125625_860d0582",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-14T14:12:05.646Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-14T14:12:05.638Z",
+        "endTime": "2026-09-14T14:12:05.650Z",
+        "durationMs": 12,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_human_conf_task_tenant_human_conf_1789395125625_860d0582_0_1789395125637_a0577caf",
+      "completedAt": "2026-09-14T14:12:05.650Z",
+      "sessionVersion": 2,
+      "provenanceHash": "d4d55b721c8adddc9b77260fe53b2c652c261363d77dd4978c821f2afce58a4e"
+    },
+    {
+      "executionId": "exec_tenant_human_conf_task_tenant_human_conf_1789398105029_8231ead7_0_1789398105042_9a3748dd",
+      "requestId": "req_tenant_human_conf_session_human_conf_step_0_1789398105041",
+      "tenantId": "tenant_human_conf",
+      "sessionId": "session_human_conf",
+      "taskId": "task_tenant_human_conf_1789398105029_8231ead7",
+      "stepId": "step_0",
+      "stepIndex": 0,
+      "state": "SUCCEEDED",
+      "outcome": "SUCCESS",
+      "success": true,
+      "output": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_human_conf_1789398105029_8231ead7",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-14T15:01:45.050Z"
+      },
+      "telemetry": {
+        "startTime": "2026-09-14T15:01:45.042Z",
+        "endTime": "2026-09-14T15:01:45.054Z",
+        "durationMs": 12,
+        "retryCount": 0
+      },
+      "leaseId": "lease_tenant_human_conf_task_tenant_human_conf_1789398105029_8231ead7_0_1789398105041_53ae8461",
+      "completedAt": "2026-09-14T15:01:45.054Z",
+      "sessionVersion": 3,
+      "provenanceHash": "e635019e97d8869a5d272138ee68167185e91ac4258cd2b72ca704da21481598"
+    }
+  ],
+  "updatedAt": "2026-09-14T15:01:45.055Z",
+  "documentHash": "cb669280b43122c0abb5627b0380935f1d30084db8406d589dd29f3ab4be3558"
+}

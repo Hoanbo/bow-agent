@@ -1,0 +1,41 @@
+{
+  "taskId": "task_tenant_human_conf_1789432766861_2045a442",
+  "tenantId": "tenant_human_conf",
+  "userId": "tenant_human_conf",
+  "title": "Governed Multi-Step Automated Process",
+  "intent": "Multi-Step Execution Pipeline",
+  "riskLevel": "HIGH",
+  "state": "SUBMITTED",
+  "version": 3,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_human_conf_1789432766861_2045a442_0",
+      "stepIndex": 0,
+      "description": "Execute multi-step phase 0",
+      "capabilityId": "desktop_action",
+      "actionName": "inspect_element",
+      "parameters": {
+        "target": "target_0"
+      },
+      "riskLevel": "HIGH",
+      "requiresApproval": true,
+      "status": "COMPLETED",
+      "attemptCount": 1,
+      "maxAttempts": 3,
+      "executionTokenId": "[REDACTED]",
+      "executionResult": {
+        "inspected": true,
+        "operation": "Execute multi-step phase 0",
+        "targetTaskId": "task_tenant_human_conf_1789432766861_2045a442",
+        "targetStepId": "step_0",
+        "parameters": {},
+        "timestamp": "2026-09-15T00:39:26.883Z"
+      }
+    }
+  ],
+  "currentStepIndex": 1,
+  "createdAt": "2026-09-15T00:39:26.861Z",
+  "updatedAt": "2026-09-15T00:39:26.884Z",
+  "previousProvenanceHash": "49571dc5d1eb488933da4498c5e3933d4a2416cd188104239eb00e7c91bda627",
+  "provenanceHash": "3936a01802cc34646778cf94a3e9bdd4cedef4c7144ba6a7c3169512f7b75fd1"
+}

@@ -1,0 +1,70 @@
+{
+  "taskId": "task_tenant_alpha_1789395140268_c617562a",
+  "tenantId": "tenant_alpha",
+  "userId": "tenant_alpha",
+  "title": "Task for Plan: Test Plan",
+  "intent": "A test plan for execution preparation",
+  "riskLevel": "LOW",
+  "state": "SUBMITTED",
+  "version": 1,
+  "steps": [
+    {
+      "stepId": "step_task_tenant_alpha_1789395140268_c617562a_0",
+      "stepIndex": 0,
+      "description": "Inspect status panel",
+      "capabilityId": "desktop_observation",
+      "actionName": "inspect_state",
+      "parameters": {
+        "target": "status_panel",
+        "intentType": "INSPECT",
+        "sourceStepId": "step_1",
+        "dependsOnStepIds": [],
+        "preconditions": [
+          "session_active",
+          "tenant_match"
+        ],
+        "postconditions": [
+          "status_visible"
+        ],
+        "isQuarantinedText": false
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    },
+    {
+      "stepId": "step_task_tenant_alpha_1789395140268_c617562a_1",
+      "stepIndex": 1,
+      "description": "Type confirmation query",
+      "capabilityId": "desktop_interaction",
+      "actionName": "type_text",
+      "parameters": {
+        "query": "status details",
+        "intentType": "INPUT_TEXT",
+        "sourceStepId": "step_2",
+        "dependsOnStepIds": [
+          "step_1"
+        ],
+        "preconditions": [
+          "provenance_valid"
+        ],
+        "postconditions": [
+          "query_submitted"
+        ],
+        "isQuarantinedText": false
+      },
+      "riskLevel": "LOW",
+      "requiresApproval": false,
+      "status": "PENDING",
+      "attemptCount": 0,
+      "maxAttempts": 3
+    }
+  ],
+  "currentStepIndex": 0,
+  "createdAt": "2026-09-14T14:12:20.268Z",
+  "updatedAt": "2026-09-14T14:12:20.268Z",
+  "previousProvenanceHash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "provenanceHash": "c7dab91d74d2bfe806fa3caa5edd184630918cd21e0888ec99dca5544a334069"
+}

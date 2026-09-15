@@ -131,5 +131,61 @@
     "status": "PENDING",
     "createdAt": "2026-09-14T11:43:48.459Z",
     "expiresAt": "2026-09-14T11:48:48.459Z"
+  },
+  {
+    "id": "appr_1789393295580_f2a489",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T13:41:35.580Z",
+    "expiresAt": "2026-09-14T13:46:35.580Z"
+  },
+  {
+    "id": "appr_1789395147706_33be90",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T14:12:27.706Z",
+    "expiresAt": "2026-09-14T14:17:27.706Z"
+  },
+  {
+    "id": "appr_1789398081150_0c67ec",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-14T15:01:21.150Z",
+    "expiresAt": "2026-09-14T15:06:21.150Z"
+  },
+  {
+    "id": "appr_1789432758904_be562c",
+    "ownerUserId": "tenant_alpha",
+    "actionName": "generic_action_proposal",
+    "targetDomain": "shop",
+    "argumentsHash": "1abbf036007bd6b99a4d722633b28f033ee1987733947bead80c0386561dd9f9",
+    "argumentsPreview": {
+      "toolName": "transfer_funds"
+    },
+    "requestedBy": "tenant_alpha",
+    "status": "PENDING",
+    "createdAt": "2026-09-15T00:39:18.904Z",
+    "expiresAt": "2026-09-15T00:44:18.904Z"
   }
 ]

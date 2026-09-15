@@ -161,7 +161,7 @@ export class VisualGroundingEngine {
         };
     }
     makeResult(queryId, frameId, status, targetElement, rankedCandidates, requiresHumanClarification) {
-        const groundedAt = new Date().toISOString();
+        const groundedAt = '2026-01-01T00:00:00.000Z';
         const draft = {
             queryId,
             frameId,
