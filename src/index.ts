@@ -1536,3 +1536,179 @@ export {
   GovernedRuntimeComplianceModuleIndex,
   type GovernedRuntimeComplianceContainerConfig,
 } from './core/governedRuntimeCompliance/index.js';
+
+// ============================================================================
+// 10. Governed Policy Remediation, Incident Root-Cause Diagnosis & Adaptive Operational Resilience Engine (MS-1.5.23)
+// ============================================================================
+export {
+  // Branded IDs & Constructors
+  type RemediationId,
+  type RootCauseDiagnosisId,
+  type CircuitBreakerStateId,
+  type RemediationDossierId,
+  type RemediationAuditRecordId,
+  type HandoffId as RemediationHandoffId,
+  asRemediationId,
+  asRootCauseDiagnosisId,
+  asCircuitBreakerStateId,
+  asRemediationDossierId,
+  asRemediationAuditRecordId,
+  asHandoffId as asRemediationHandoffId,
+
+  // Taxonomy & Enums
+  type RootCauseCategory,
+  ALL_ROOT_CAUSE_CATEGORIES,
+  type RemediationActionType,
+  type RemediationLifecycleState as GovernedPolicyRemediationLifecycleState,
+  type BlastRadiusRiskLevel,
+  type AnonymizedDependencyTopology,
+  type PolicyBlastRadiusRiskRecord,
+  type CircuitBreakerState,
+  type CircuitBreakerParameters,
+  DEFAULT_CIRCUIT_BREAKER_PARAMS,
+  type CircuitBreakerStatus,
+  type RemediationCandidate,
+  type RemediationHandoffPackage,
+  type CorrelatedIncidentEnvelope,
+  type RootCauseDiagnosisRecord,
+  type GovernedPolicyRemediationEvidenceDossier,
+  type RemediationAuditEventType,
+  type RemediationAuditRecord,
+
+  // Invariants & Constants
+  GOVERNED_POLICY_REMEDIATION_INVARIANTS,
+  GENESIS_REMEDIATION_HASH,
+
+  // Typed Errors
+  GovernedPolicyRemediationBaseError,
+  RemediationAuthorityViolationError,
+  CrossTenantAccessForbiddenError as RemediationCrossTenantAccessForbiddenError,
+  CircuitBreakerOpenError,
+  CircuitBreakerLockoutError,
+  DuplicateRemediationHandoffError,
+  ExpiredRemediationHandoffError,
+  DeterministicDiagnosisError,
+  RemediationEvidenceError,
+  RemediationAuditLedgerError,
+  EmergencyStopActiveError as RemediationEmergencyStopActiveError,
+  SecondaryAuthorityRejectedError as RemediationSecondaryAuthorityRejectedError,
+  UntrustedInputSanitizationError,
+
+  // Hashes & Helpers
+  canonicalJsonSerialize,
+  computeSha256 as computeRemediationSha256,
+  computeCorrelationHash,
+  computeDiagnosisHash,
+  computeBlastRadiusHash,
+  computeCandidateRemediationHash,
+  computeEvidenceDossierFingerprint,
+  computeAuditEventHash as computeRemediationAuditEventHash,
+
+  // Components & Classes
+  IncidentComplianceEvidenceCorrelator,
+  type EmergencyStopProvider as RemediationEmergencyStopProvider,
+  type IngestedComplianceData,
+  type IncidentCorrelationConfig,
+  DeterministicPolicyRootCauseEngine,
+  type LineageGraphNode,
+  type DiagnosisContext,
+  PolicyBlastRadiusRiskAnalyzer,
+  type WorkflowImpactInput,
+  GovernedRemediationStrategySynthesizer,
+  type SynthesisContext,
+  OperationalCircuitBreakerAntiThrashingController,
+  ClosedLoopDeliberationHandoffBridge,
+  type HandoffPackageContext,
+  PolicyRemediationEvidenceDossierEngine,
+  type DossierCompilationInput,
+  PolicyRemediationAuditLedger,
+  GovernedPolicyRemediationModuleIndex,
+  type PipelineExecutionInput,
+  type PipelineExecutionResult,
+  type GovernedPolicyRemediationContainerConfig,
+} from './core/governedPolicyRemediation/index.js';
+
+// ============================================================================
+// 11. Governed Policy Simulation, Counterfactual Verification & Pre-Ratification Shadow Evaluation Engine (MS-1.5.24)
+// ============================================================================
+export {
+  // Branded IDs & Constructors
+  type SimulationSessionId,
+  type CounterfactualEvaluationId,
+  type ShadowRunId,
+  type SimulationDossierId,
+  type SimulationAuditRecordId,
+  type SimulationHandoffId,
+  asSimulationSessionId,
+  asCounterfactualEvaluationId,
+  asShadowRunId,
+  asSimulationDossierId,
+  asSimulationAuditRecordId,
+  asSimulationHandoffId,
+
+  // Taxonomy & Data Contracts
+  type SimulationMode,
+  type SimulationVerdict,
+  type SimulationSessionState,
+  type HistoricalObservationItem,
+  type ReplayExecutionResult,
+  type CounterfactualAssuranceProjection,
+  type PolicyDomainDependency,
+  type CrossDomainInvariantResult,
+  type SyntheticStressConfig,
+  type SyntheticStressResult,
+  type ShadowEvaluationRecord,
+  type PolicySimulationEvidenceDossier,
+  type SimulationAdvisoryPackage,
+  type SimulationAuditEventType,
+  type SimulationAuditRecord,
+
+  // Invariants & Constants
+  GENESIS_SIMULATION_HASH,
+  MAX_HANDOFF_TTL_MS as MAX_SIMULATION_HANDOFF_TTL_MS,
+  DEFAULT_SIMULATION_DOSSIER_TTL_MS,
+  DEFAULT_FALSE_REJECTION_THRESHOLD,
+  GOVERNED_POLICY_SIMULATION_INVARIANTS,
+
+  // Typed Errors
+  GovernedPolicySimulationBaseError,
+  SimulationAuthorityViolationError,
+  SimulationCrossTenantAccessForbiddenError,
+  SimulationDeadlockDetectedError,
+  SimulationReplayCorpusCorruptedError,
+  SimulationEmergencyStopActiveError,
+  SimulationSecondaryAuthorityRejectedError,
+  SimulationAuditLedgerIntegrityError,
+  SimulationHandoffExpiredError,
+  DuplicateSimulationHandoffError,
+  SimulationUntrustedInputSanitizationError,
+  SimulationLockTimeoutError,
+
+  // Hashes & Helpers
+  computeReplayCorpusHash,
+  computeCandidatePolicyHash as computeSimulationCandidatePolicyHash,
+  computeProjectionHash,
+  computeInvariantCheckHash,
+  computeStressHash,
+  computeSimulationDossierFingerprint,
+  computeAuditEventHash as computeSimulationAuditEventHash,
+  sanitizeUntrustedText as sanitizeSimulationUntrustedText,
+
+  // Components & Classes
+  HistoricalExecutionReplayEngine,
+  type ReplayEngineConfig,
+  CounterfactualAssuranceProjector,
+  CrossDomainPolicyInvariantChecker,
+  SyntheticPolicyStressHarness,
+  ShadowDualEvaluationBridge,
+  type LiveSanitizedObservationInput,
+  SimulationEvidenceDossierEngine,
+  type DossierCompilationInput as SimulationDossierCompilationInput,
+  PreRatificationSimulationAdvisoryBridge,
+  type HandoffDeliveryRecord as SimulationHandoffDeliveryRecord,
+  PolicySimulationAuditLedger,
+  GovernedPolicySimulationModuleIndex,
+  type SimulationPipelineInput,
+  type SimulationPipelineResult,
+  type GovernedPolicySimulationContainerConfig,
+} from './core/governedPolicySimulation/index.js';
