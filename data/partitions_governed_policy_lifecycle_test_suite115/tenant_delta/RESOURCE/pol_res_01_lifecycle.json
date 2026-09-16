@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_delta_pol_res_01_v2_1789541955658",
+  "tenantId": "tenant_delta",
+  "policyDomain": "RESOURCE",
+  "policyId": "pol_res_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 2,
+  "state": "SUSPENDED",
+  "previousState": "RATIFIED",
+  "reason": "Halted",
+  "transitionTrigger": "AUTOMATIC_SAFETY_INTERLOCK",
+  "canonicalPolicyHash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "ratificationId": "rat_res_01",
+  "updatedAt": 1789541955658,
+  "recordHash": "e011ea08952dd55fc526791806872d70d86eee10a92ac5af5fc00ddc237e6c94"
+}

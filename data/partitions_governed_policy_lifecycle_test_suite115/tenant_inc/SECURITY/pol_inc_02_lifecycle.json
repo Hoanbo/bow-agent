@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_inc_pol_inc_02_v5_1789541955705",
+  "tenantId": "tenant_inc",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_inc_02",
+  "policyVersion": 1,
+  "lifecycleVersion": 5,
+  "state": "SUSPENDED",
+  "previousState": "DEGRADED",
+  "reason": "Automated safety trip triggered by incident 'INC_INTEGRITY_DRIFT' (CRITICAL): Hash drift detected on active policy",
+  "transitionTrigger": "AUTOMATIC_SAFETY_INTERLOCK",
+  "canonicalPolicyHash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "ratificationId": "rat_inc_02",
+  "updatedAt": 1789541955705,
+  "recordHash": "e354fc5cb9e96af4adc562441103f0c77367950408e66636a456a3b8ee6166f2"
+}

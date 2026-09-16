@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_ctrl_pol_stop_01_v3_1789541955849",
+  "tenantId": "tenant_ctrl",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_stop_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 3,
+  "state": "SUSPENDED",
+  "previousState": "STAGED",
+  "reason": "Emergency stop safety halt",
+  "transitionTrigger": "EMERGENCY_STOP",
+  "canonicalPolicyHash": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+  "ratificationId": "rat_stop_01",
+  "updatedAt": 1789541955849,
+  "recordHash": "cdc75d8334ecf4677e2c3e952afaa3fd8f3ee83bdf638089e5faeef6a9c9c507"
+}

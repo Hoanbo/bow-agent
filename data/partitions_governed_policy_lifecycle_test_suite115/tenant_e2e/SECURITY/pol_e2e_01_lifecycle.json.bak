@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_e2e_pol_e2e_01_v4_1789541955885",
+  "tenantId": "tenant_e2e",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_e2e_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 4,
+  "state": "DEGRADED",
+  "previousState": "ACTIVE",
+  "reason": "Automated safety trip triggered by incident 'INC_HEALTH_DEGRADED' (HIGH): Composite health score dropped to 0.875 (< 0.95). Operational degradation engaged.",
+  "transitionTrigger": "AUTOMATIC_SAFETY_INTERLOCK",
+  "canonicalPolicyHash": "4444444444444444444444444444444444444444444444444444444444444444",
+  "ratificationId": "rat_e2e_01",
+  "updatedAt": 1789541955885,
+  "recordHash": "80b92431b6cb036713927696a629d81f24ad2d7de831adcc8a2f43d7309a792d"
+}

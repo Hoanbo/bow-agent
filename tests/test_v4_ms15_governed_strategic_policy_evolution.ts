@@ -292,7 +292,7 @@ async function runDedicatedRegressionSuite113(): Promise<void> {
       constitutionalCompliance: {} as any,
       riskClassification: 'LOW',
       reversibilityScore: 0.8,
-      humanReviewRequirements: { requiresExplicitSignOff: true, minimumOperatorRole: 'OPERATIONS_SUPERVISOR', twoPersonRuleRequired: false },
+      humanReviewRequirements: { requiresExplicitSignOff: true, minimumOperatorRole: 'OPERATIONS_SUPERVISOR', elevatedSingleHumanAffirmationRequired: false },
       version: 1,
       provenanceHash: '',
     };
@@ -1173,7 +1173,7 @@ async function runDedicatedRegressionSuite113(): Promise<void> {
   // Vector 99: Human review requirements set according to risk level
   {
     expect(dossier1.humanReviewRequirements.requiresExplicitSignOff === true, 'Vector 99: Explicit sign-off required');
-    expect(dossier1.humanReviewRequirements.twoPersonRuleRequired === false, 'Vector 99: Single sign-off for LOW risk');
+    expect(dossier1.humanReviewRequirements.elevatedSingleHumanAffirmationRequired === false, 'Vector 99: Single sign-off for LOW risk');
     passedVectors++;
   }
 
@@ -1256,9 +1256,7 @@ async function runDedicatedRegressionSuite113(): Promise<void> {
     passedVectors++;
   }
 
-  // Vector 105: Two-person rule enforced for CRITICAL impact proposals
-  // Vector 106: Single human approval rejected for CRITICAL impact proposal
-  // Vector 107: Two distinct human operators pass CRITICAL impact approval
+  // Vectors 105-107: CRITICAL requires one explicit human APPROVE, never a second operator.
   {
     const critImpact = { ...impactResult1, riskLevel: 'CRITICAL' as const };
     const critDossier = humanGateway.compileDossier(
@@ -1267,14 +1265,14 @@ async function runDedicatedRegressionSuite113(): Promise<void> {
       simResult1,
       validInvariantCheck
     );
-    expect(critDossier.humanReviewRequirements.twoPersonRuleRequired === true, 'Vector 105: Two person rule required');
+    expect(critDossier.humanReviewRequirements.elevatedSingleHumanAffirmationRequired === true, 'Vector 105: Elevated single-human affirmation required');
     passedVectors++;
 
-    // Vector 106: Single approval fails
+    // Vector 106: non-APPROVE fails for CRITICAL
     let singleCritBlocked = false;
     try {
       humanGateway.recordHumanDecision(critDossier, {
-        decision: 'APPROVE',
+        decision: 'REJECT',
         operatorId: 'operator_lead_01',
         operatorSignature: 'sig_lead',
         rationale: 'Lead only',
@@ -1282,19 +1280,17 @@ async function runDedicatedRegressionSuite113(): Promise<void> {
     } catch (err) {
       if (err instanceof UnauthorizedHumanDecisionError) singleCritBlocked = true;
     }
-    expect(singleCritBlocked, 'Vector 106: Single approval rejected for critical impact proposal');
+    expect(singleCritBlocked, 'Vector 106: Non-APPROVE rejected for critical impact proposal');
     passedVectors++;
 
-    // Vector 107: Two distinct human operators succeed
-    const dualRes = humanGateway.recordHumanDecision(critDossier, {
+    // Vector 107: sole Human Authority succeeds
+    const soleRes = humanGateway.recordHumanDecision(critDossier, {
       decision: 'APPROVE',
       operatorId: 'operator_lead_01',
       operatorSignature: 'sig_lead',
-      twoPersonVerifierId: 'operator_sec_02',
-      twoPersonVerifierSignature: 'sig_sec',
-      rationale: 'Lead and security co-signed',
+      rationale: 'Sole-human CRITICAL affirmation',
     });
-    expect(dualRes.decisionRecord.decision === 'APPROVE', 'Vector 107: Dual human approval succeeded');
+    expect(soleRes.decisionRecord.decision === 'APPROVE', 'Vector 107: Sole-human approval succeeded');
     passedVectors++;
   }
 
@@ -1349,24 +1345,11 @@ async function runDedicatedRegressionSuite113(): Promise<void> {
     passedVectors++;
   }
 
-  // Vector 112: Two-person rule rejects identical primary and verifier operators
+  // Vector 112: CRITICAL dossier retains elevated sole-human requirement
   {
     const critImpact = { ...impactResult1, riskLevel: 'CRITICAL' as const };
     const critDossier = humanGateway.compileDossier(compilingProp, critImpact, simResult1, validInvariantCheck);
-    let selfVerifyBlocked = false;
-    try {
-      humanGateway.recordHumanDecision(critDossier, {
-        decision: 'APPROVE',
-        operatorId: 'operator_lead_01',
-        operatorSignature: 'sig_lead',
-        twoPersonVerifierId: 'operator_lead_01', // Identical!
-        twoPersonVerifierSignature: 'sig_lead_2',
-        rationale: 'Self-co-signing',
-      });
-    } catch (err) {
-      if (err instanceof UnauthorizedHumanDecisionError) selfVerifyBlocked = true;
-    }
-    expect(selfVerifyBlocked, 'Vector 112: Self-verification rejected');
+    expect(critDossier.humanReviewRequirements.elevatedSingleHumanAffirmationRequired, 'Vector 112: No synthetic second human is required');
     passedVectors++;
   }
 

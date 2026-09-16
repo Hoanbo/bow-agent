@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_ctrl_pol_stop_01_v2_1789541955846",
+  "tenantId": "tenant_ctrl",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_stop_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 2,
+  "state": "STAGED",
+  "previousState": "RATIFIED",
+  "reason": "Staged",
+  "transitionTrigger": "PDP_DEPLOYMENT",
+  "canonicalPolicyHash": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+  "ratificationId": "rat_stop_01",
+  "updatedAt": 1789541955846,
+  "recordHash": "f149f0996f220b83cc85992571430df4de5d5265aefaf9a12568f6fb6d85a527"
+}

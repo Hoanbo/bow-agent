@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_gamma_pol_conv_01_v2_1789541955646",
+  "tenantId": "tenant_gamma",
+  "policyDomain": "CONVERGENCE",
+  "policyId": "pol_conv_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 2,
+  "state": "STAGED",
+  "previousState": "RATIFIED",
+  "reason": "Staging",
+  "transitionTrigger": "PDP_DEPLOYMENT",
+  "canonicalPolicyHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "ratificationId": "rat_conv_01",
+  "updatedAt": 1789541955646,
+  "recordHash": "e135d244bbdbbe72490afae0d8f8d0d4c077d411b0a88fde1e6f24c36db6ff8c"
+}

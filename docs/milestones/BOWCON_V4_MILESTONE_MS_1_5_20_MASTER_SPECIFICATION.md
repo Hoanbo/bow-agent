@@ -39,6 +39,7 @@ SIMULATION != EXECUTION
 SIMULATION_RESULT != AUTHORIZATION
 HASH != AUTHORIZATION
 HUMAN_APPROVAL != DIRECT_EXECUTION
+HUMAN_APPROVAL != AUTONOMOUS_APPROVAL
 APPROVED_FOR_PDP_HANDOFF != POLICY_APPROVED
 APPROVED_FOR_PDP_HANDOFF != EXECUTION_AUTHORIZATION
 MS-1.5.19 != PDP
@@ -61,6 +62,14 @@ ROLLBACK_AUTHORITY != POLICY_CREATION_AUTHORITY
 ROLLBACK != POLICY_CREATION
 ROLLBACK != AUTHORITY_ESCALATION
 ROLLBACK != PDP_BYPASS
+
+SOLE_HUMAN_AUTHORITY = TRUE
+HUMAN_AUTHORITY_COUNT = 1
+SECOND_HUMAN_AUTHORITY = FORBIDDEN
+SYNTHETIC_SECOND_OPERATOR != VALID_SECURITY_CONTROL
+AGENT_CONSENSUS != HUMAN_AUTHORITY
+SECOND_HUMAN_AUTHORITY != REQUIRED
+SECOND_HUMAN_AUTHORITY != ALLOWED
 ```
 
 ---
@@ -83,7 +92,7 @@ MS-1.5.19 established the Governed Strategic Policy Evolution, Advisory Mediatio
 
 **MS-1.5.20 closes the architectural gap between deliberation and runtime enforcement:**
 1. Ingests `PdpPolicyHandoffPackage` at the formal entrance to the PolicyDecisionPoint (PDP).
-2. Authenticates Human Decision Tokens (including mandatory two-person rule for `CRITICAL` risk proposals).
+2. Authenticates Human Decision Tokens from the sole Human Authority with elevated cryptographic affirmation and strict freshness gates for `CRITICAL` risk proposals.
 3. Authoritatively ratifies proposed policy deltas into canonical, versioned strategic policies.
 4. Compiles policies into deterministic runtime representations with strict monotonic versioning (OCC/CAS).
 5. Orchestrates atomic staged activation (`Shadow` → `Canary Ring` → `Full Active Deployment`).
@@ -95,7 +104,7 @@ MS-1.5.19 established the Governed Strategic Policy Evolution, Advisory Mediatio
 
 MS-1.5.20 encompasses:
 - Intake validation and replay defense for `PdpPolicyHandoffPackage`.
-- Cryptographic verification of human operator signatures and two-person verifier signatures.
+- Cryptographic verification of the sole Human Authority operator signatures, durable nonces, and elevated CRITICAL proposal affirmations.
 - Authoritative PDP ratification ledger and certificate generation.
 - Canonical policy normalization, deterministic ordering, and canonical hashing.
 - Tenant-partitioned durable policy storage with atomic filesystem swaps (`.tmp` → `.bak` → active).
@@ -148,6 +157,7 @@ MS-1.5.20 strictly does **NOT**:
 - **Deliberation vs Ratification:** Deliberation in MS-1.5.19 compiles evidence and certifies that humans deliberated. Ratification in MS-1.5.20 legally binds the proposal into the PDP authoritative rule-set.
 - **Ratification vs Activation:** A policy may be ratified but held in `RATIFIED` or `SHADOW` state before activation. It only affects live decisions once promoted to `CANARY` or `ACTIVE`.
 - **Activation vs Execution:** An active policy only sets the rules under which agents operate; it never triggers execution directly.
+- **Sole-Authority Rule:** Exactly one Human Authority exists: Boss / Ultimate Root Operator. A second administrator, verifier, co-owner, committee, synthetic operator, or agent consensus is neither required nor permitted as a governance control.
 
 ---
 
@@ -159,7 +169,7 @@ MS-1.5.20 defines exactly 10 discrete, modular components:
 | :--- | :--- | :--- | :---: |
 | `NEXT_COMPONENT_01` | `GovernedPolicyDecisionIngestionTypes` | Canonical types, branded IDs, 18-state lifecycle, 16 checkpoints, 38 audit event types, error hierarchy, and 8 SHA-256 hashers. | `SPECIFIED / ALLOCATED (Target: REAL)` |
 | `NEXT_COMPONENT_02` | `PdpPolicyHandoffIntakeGateway` | Ingests `PdpPolicyHandoffPackage` from MS-1.5.19, validates schema, verifies provenance hash, checks base version freshness, and defends against replay. | `SPECIFIED / ALLOCATED (Target: REAL)` |
-| `NEXT_COMPONENT_03` | `HumanDecisionTokenVerificationEngine` | Cryptographically verifies human operator signatures, enforces two-person rules for `CRITICAL` proposals, checks expiration, nonces, and binds tokens to dossiers. | `SPECIFIED / ALLOCATED (Target: REAL)` |
+| `NEXT_COMPONENT_03` | `HumanDecisionTokenVerificationEngine` | Cryptographically verifies the sole Human Authority operator signatures, enforces elevated single-human affirmation for `CRITICAL` proposals, checks expiration, nonces, and binds tokens to dossiers. | `SPECIFIED / ALLOCATED (Target: REAL)` |
 | `NEXT_COMPONENT_04` | `AuthoritativePolicyRatificationEngine` | Authoritative PDP ratification gate; transitions verified handoffs to ratified policies, generates signed ratification records, and enforces constitutional invariants. | `SPECIFIED / ALLOCATED (Target: REAL)` |
 | `NEXT_COMPONENT_05` | `CanonicalStrategicPolicyCompiler` | Deterministically compiles `PolicyDelta[]` into normalized, ordered canonical policy structures and computes canonical policy SHA-256 hashes. | `SPECIFIED / ALLOCATED (Target: REAL)` |
 | `NEXT_COMPONENT_06` | `StrategicPolicyVersionStore` | Multi-tenant crash-safe partitioned policy store (`.tmp` → readback checksum → `.bak` → atomic rename) with monotonic OCC/CAS versioning and lineage DAG tracking. | `SPECIFIED / ALLOCATED (Target: REAL)` |
@@ -172,7 +182,10 @@ MS-1.5.20 defines exactly 10 discrete, modular components:
 
 ## 9. Input/Output Contracts
 
-### Input Contract: `PdpPolicyHandoffPackage` (from MS-1.5.19)
+### Input Contract: `PdpPolicyHandoffPackage` & `PdpPolicyHandoffEnvelope` (from MS-1.5.19)
+
+To ensure cryptographic verification without ambiguity, MS-1.5.20 ingests the handoff package either directly with its companion `HumanDecisionToken` or enveloped:
+
 ```typescript
 export interface PdpPolicyHandoffPackage {
   handoffId: string;
@@ -184,9 +197,39 @@ export interface PdpPolicyHandoffPackage {
   humanApprovalCertified: true;
   isAuthoritativePolicy: false; // Must be false upon intake
   dossierProvenanceHash: string;
+  policyDeltaHash: string; // SHA-256(canonicalPolicyDeltaArray(proposedChanges))
   packagedAt: number;
 }
+
+export interface HumanDecisionToken {
+  tokenId: string; // Unique token identifier (UUIDv4)
+  operatorId: string; // Authenticated sole Human Authority operator ID (must NOT match agent/bot regex)
+  operatorSignature: string; // Hex-encoded HMAC-SHA256 signature
+  decision: 'APPROVE' | 'REJECT';
+  rationale: string;
+  nonce: string; // Single-use UUIDv4 nonce
+  timestamp: number; // Issuance timestamp (ms)
+  expiresAt: number; // Expiration timestamp (ms); bounded by the applicable standard or CRITICAL governance TTL
+  keyId: string; // Secret / key identifier (e.g., 'bow-gov-sec-v1')
+  policyDeltaHash: string; // Must equal handoff and resolved-dossier canonical delta commitment
+}
+
+export interface PdpPolicyHandoffEnvelope {
+  handoffPackage: PdpPolicyHandoffPackage;
+  humanDecisionToken: HumanDecisionToken;
+  humanDecisionRecord?: HumanDecisionRecord;
+}
 ```
+
+`HumanDecisionToken` represents exactly one Human Authority. It contains no secondary-verifier identity, signature, nonce, approval flag, or equivalent dual-custody field. Such fields have no independent security purpose in this architecture: signature validity, nonce uniqueness, timestamp/TTL validity, tenant/domain/proposal/dossier binding, delta integrity, interlocks, and immutable audit records supply the relevant controls. A future implementation pass must reject rather than silently ignore a token carrying a secondary-human approval claim.
+
+### Canonical Policy-Delta Commitment
+
+`dossierProvenanceHash` and `policyDeltaHash` are separate SHA-256 commitments. `dossierProvenanceHash` is the hash of the complete canonical deliberation dossier (excluding its own hash field); `policyDeltaHash` is `SHA256(canonicalPolicyDeltaArray(proposedChanges))` and commits only the policy deltas. Neither hash grants authority.
+
+`canonicalPolicyDeltaArray` is UTF-8 canonical JSON of a non-empty `PolicyDelta[]`: every delta must contain `fieldPath`, `operation`, `beforeValue`, `afterValue`, and `justification`; object keys are recursively lexicographically ordered; deltas are ordered by `fieldPath`, then `operation`, then their canonical JSON representation; arrays inside a delta retain declared order; required fields may not be omitted; absent optional fields are encoded as `null`; strings are Unicode NFC; insignificant whitespace is excluded; numbers must be finite JSON numbers with no alternate textual representation. Duplicate canonical sort keys are rejected rather than relying on source order. This makes semantically equivalent permitted delta sets hash identically and makes ambiguous representations fail closed.
+
+The upstream dossier commits `policyDeltaHash`; the handoff repeats it; the token carries and signs it. The receiver reconstructs the canonical delta array from `handoff.proposedChanges`, recomputes the hash, and requires equality with the handoff, token, and resolved dossier commitments. Any mismatch is a TOCTOU rejection.
 
 ### Ratification Output Contract: `AuthoritativeRatificationRecord`
 ```typescript
@@ -249,18 +292,55 @@ The `PdpPolicyHandoffIntakeGateway` evaluates 20 discrete validation criteria fa
 17. **Source Milestone Tag:** Provenance verifies origin from `MS-1.5.19`.
 18. **Payload Size Ceiling:** Total handoff JSON payload `<= 512 KB`.
 19. **Constitutional Axiom Gate:** Policy deltas do not attempt to modify hard-forbidden invariants or safety interlocks.
-20. **Deterministic Re-Hash:** Recomputing hash over `proposedChanges` matches `dossierProvenanceHash` cross-reference.
+20. **Deterministic Delta Commitment:** Recomputed `SHA256(canonicalPolicyDeltaArray(proposedChanges))` identically matches `handoff.policyDeltaHash`, `token.policyDeltaHash`, and the resolved dossier's `policyDeltaHash`; dossier provenance is verified separately.
 
 ---
 
 ## 11. Human Decision Verification
 
-The `HumanDecisionTokenVerificationEngine` strictly enforces:
-- **Operator Signature Validation:** Cryptographic verification using public key binding or HMAC-SHA256 secret tokens.
-- **Two-Person Rule for CRITICAL:** If impact analysis classified the proposal as `CRITICAL`, ingestion requires two distinct verifiers (`operatorId !== twoPersonVerifierId`), each with distinct verified signatures.
-- **Nonce & Replay Defense:** Each decision token includes a single-use UUIDv4 nonce; used nonces are recorded in a durable cache.
-- **Binding to Dossier Hash:** The signature payload must include `operatorId + proposalId + dossierProvenanceHash + decision + tenantId`.
-- **Anti-Agent Self-Approval:** Rejects any signature generated by an agent identity, synthetic persona, or automated loop.
+The `HumanDecisionTokenVerificationEngine` strictly enforces cryptographic human authority boundaries:
+
+### B-01 RESOLVED: Token Transmission & Binding Contract
+- MS-1.5.20 receives the human authority evidence via the `PdpPolicyHandoffEnvelope` or direct pairing of `(handoff: PdpPolicyHandoffPackage, token: HumanDecisionToken, record?: HumanDecisionRecord)`.
+- The token is cryptographically bound to the handoff package via `proposalId`, `dossierId`, `dossierProvenanceHash`, `policyDeltaHash`, `tenantId`, and `policyDomain`.
+- If a deliberation dossier is resolved from durable storage via `dossierId`, its provenance and delta commitments must identically match the handoff and token.
+
+### B-02 RESOLVED: Cryptographic Signature Scheme & Key Management Contract
+- **Authoritative Algorithm:** `HMAC-SHA256` (via `node:crypto`).
+- **Key Type & Secret Management:** 256-bit symmetric shared secret loaded from `BOW_GOVERNANCE_HMAC_SECRET` or a registered key provider mapping `keyId` to secret bytes.
+- **Key Ownership:** Held exclusively by the sole Human Authority ("Boss" / Ultimate Root Operator). Agents, models, bots, and automated execution loops NEVER hold or access the governance signing secret.
+- **Canonical Signed Payload (Sole Operator):**
+  The exact string format before HMAC computation is strictly delimited:
+  ```text
+  BOW-GOV-TOKEN-V1:<tenantId>:<policyDomain>:<proposalId>:<dossierId>:<dossierProvenanceHash>:<policyDeltaHash>:<decision>:<nonce>:<timestamp>:<operatorId>:<keyId>
+  ```
+- **Authoritative Serialization & Encoding:**
+  This is the sole production payload format. Every placeholder is its already-validated canonical string representation; fields appear once, in the order shown, separated by literal ASCII `:` characters with no escaping, trimming, locale conversion, or alternate serialization. The resulting `canonicalPayload` is encoded as UTF-8 bytes with an explicit encoding argument before computation: `HMAC-SHA256(key, UTF8(canonicalPayload))`. Platform-default, implicit, UTF-16, ASCII substitution, locale-dependent, or implementation-defined encoding is forbidden. Encoding failure, invalid Unicode input, delimiter ambiguity, or malformed field data fails closed.
+- **Strict Production Verification Path:**
+  Production verification has exactly one authoritative path: `HMAC-SHA256` over the UTF-8 canonical payload using the configured Human Authority key resolved by `keyId`, followed by constant-time comparison. It must not use a hard-coded or fallback secret; accept a legacy secret, payload, signature, compatibility signature, development bypass, or test signature prefix; or silently downgrade verification. `MISSING_KEY`, `INVALID_KEY`, `UNKNOWN_KEY_ID`, `MALFORMED_SIGNATURE`, `INVALID_SIGNATURE`, `LEGACY_PAYLOAD`, `LEGACY_SIGNATURE`, and `TEST_SIGNATURE` each reject fail-closed. `FALLBACK_SECRET` is forbidden.
+- **Timing-Safe Verification:**
+  Signatures are compared using constant-time comparison to prevent timing attacks:
+  `crypto.timingSafeEqual(Buffer.from(tokenSignature, 'hex'), Buffer.from(expectedSignature, 'hex'))`. The verifier must first validate hex syntax and equal buffer lengths; plaintext `signature === expectedSignature` is forbidden as a production verification mechanism.
+- **Anti-Agent Self-Approval Gate:**
+  `operatorId` is validated against anti-agent regex:
+  `^(agent_|bot_|synthetic_|system|autonomous_|ai_).*$`
+  Any match fails closed immediately with `HumanDecisionVerificationError('AGENT_SELF_APPROVAL_PROHIBITED')`.
+- **Elevated Single-Human Verification for CRITICAL Proposals:**
+  For proposals classified as `CRITICAL` risk, the system enforces multi-tiered single-human authority safeguards without requiring a fictitious second human:
+  1. **Mandatory Explicit Human Approval:** Requires explicit `token.decision === 'APPROVE'` signed by the sole Human Authority.
+  2. **Cryptographic HMAC-SHA256 Verification:** Single-human signature over the canonical payload evaluated using constant-time comparison.
+  3. **Strict Freshness & Bounded TTL:** `MAX_CRITICAL_TTL_MS` is a configurable bounded governance parameter. `3,600,000ms` (one hour) is an audit proposal, not a constitutional constant; the selected configured value must be positive and no greater than `MAX_HANDOFF_TTL_MS`, and must be audited with the decision.
+  4. **Mandatory TOCTOU Hash Cross-Reference:** The verifier recomputes `policyDeltaHash` from canonical deltas and requires equality with the handoff, token, and resolved dossier; `dossierProvenanceHash` independently matches the handoff, resolved dossier, and signed payload. A hash is integrity evidence, not authorization.
+  5. **Durable Nonce Consumption:** Single-use UUIDv4 nonce consumed in durable registry before ratification.
+  6. **Synchronous Emergency Interlock Gate:** Interlocks evaluate synchronously; any active `USER_STOP` or `EMERGENCY_STOP` aborts CRITICAL ingestion fail-closed.
+  7. **Anti-Agent Gate:** Operator ID must not match agent regex `^(agent_|bot_|synthetic_|system|autonomous_|ai_).*$`.
+  8. **Immediate Rollback Snapshot Staging:** Pre-promotion snapshot of current active policy (`.bak`) staged immediately prior to deployment.
+  9. **Audit Ledger Record:** Emits dedicated audit event `CRITICAL_PROPOSAL_AFFIRMED` on success or `CRITICAL_PROPOSAL_REJECTED` on failure.
+- **Durable Nonce & Replay Defense:**
+  Nonces are single-use UUIDv4 strings recorded in a durable replay registry (`(nonce, consumedAt, proposalId, tenantId)`). Reusing an ingested nonce aborts with `PolicyHandoffReplayError`.
+- **Token Expiration & Freshness:**
+  Tokens expire when `Date.now() > token.expiresAt` or `Date.now() - token.timestamp > applicableTtlMs`; `applicableTtlMs` is `MAX_CRITICAL_TTL_MS` for CRITICAL proposals and `MAX_HANDOFF_TTL_MS` otherwise. Future-skewed tokens (`timestamp > Date.now() + 5000ms`) fail closed. Missing keys, malformed hex, unequal signature buffer lengths, or unavailable nonce storage fail closed.
+- **Verification-Boundary Key Access:** The dedicated verification boundary may obtain the secret only through the configured key provider to compute the HMAC; it must not expose it to model/agent contexts, logs, token records, or runtime tool execution. Missing `keyId` mapping or secret provisioning fails closed. This preserves `AGENT_CAPABILITY != HUMAN_AUTHORITY` while retaining the specified symmetric HMAC scheme.
 
 ---
 
@@ -421,7 +501,7 @@ Rollback restores a known-good prior policy version:
 ## 23. Cryptographic Provenance
 
 Provenance is maintained via an unbroken chain of SHA-256 hashes:
-$$\text{StrategicMemoryHash (MS-1.5.18)} \longrightarrow \text{DeliberationDossierHash (MS-1.5.19)} \longrightarrow \text{HandoffHash} \longrightarrow \text{RatificationHash (MS-1.5.20)} \longrightarrow \text{CanonicalPolicyHash} \longrightarrow \text{DeploymentHash}$$
+$$\text{StrategicMemoryHash (MS-1.5.18)} \longrightarrow \text{DeliberationDossierHash (MS-1.5.19)} + \text{PolicyDeltaHash} \longrightarrow \text{HandoffHash} \longrightarrow \text{RatificationHash (MS-1.5.20)} \longrightarrow \text{CanonicalPolicyHash} \longrightarrow \text{DeploymentHash}$$
 Any retroactive modification of a past proposal or dossier invalidates the entire downstream cryptographic chain.
 
 ---
@@ -438,8 +518,8 @@ A dedicated, append-only cryptographic ledger (`data/partitions_strategic_polici
 7. `HUMAN_TOKEN_REJECTED_INVALID_SIG`
 8. `HUMAN_TOKEN_REJECTED_EXPIRED`
 9. `HUMAN_TOKEN_REJECTED_NONCE_REUSED`
-10. `TWO_PERSON_RULE_VERIFIED`
-11. `TWO_PERSON_RULE_FAILED`
+10. `CRITICAL_PROPOSAL_AFFIRMED`
+11. `CRITICAL_PROPOSAL_REJECTED`
 12. `POLICY_RATIFIED_BY_PDP`
 13. `RATIFICATION_REJECTED_INVARIANT_VIOLATION`
 14. `RATIFICATION_REJECTED_OCC_CONFLICT`
@@ -476,9 +556,9 @@ A dedicated, append-only cryptographic ledger (`data/partitions_strategic_polici
 | :---: | :--- | :--- | :--- | :--- | :--- |
 | **T-01** | Handoff Replay | Attacker resubmits old approved handoff package to revert policy. | Intake gateway checks `handoffId` in durable replay cache. | Immediate rejection if `handoffId` exists. | `REPLAY_ATTEMPT_REJECTED` |
 | **T-02** | Stale Policy Replay | Attacker submits handoff built against obsolete policy version $V_{n-5}$. | Gateway verifies `basePolicyVersion === currentActiveVersion`. | OCC check aborts ingestion. | `STALE_POLICY_VERSION_REJECTED` |
-| **T-03** | Operator Signature Forgery | Attacker fabricates operator signature without key. | Cryptographic verification against Human Authority public key. | Signature mismatch halts pipeline. | `SIGNATURE_VERIFICATION_FAILED` |
-| **T-04** | Two-Person Rule Evasion | Attacker uses same operator ID for both signers on CRITICAL policy. | Verification engine asserts `operatorId !== twoPersonVerifierId`. | Rejects duplicate signer identities. | `TWO_PERSON_RULE_COLLUSION_BLOCKED` |
-| **T-05** | TOCTOU Delta Tampering | Attacker alters `PolicyDelta[]` payload after human signed dossier. | Recomputes SHA-256 over deltas and compares to `dossierProvenanceHash`. | Hash discrepancy trips security alert. | `TOCTOU_HASH_MISMATCH_REJECTED` |
+| **T-03** | Operator Signature Forgery | Attacker fabricates operator signature without key. | HMAC-SHA256 verification through the configured Human Authority key provider using constant-time comparison. | Signature mismatch halts pipeline. | `SIGNATURE_VERIFICATION_FAILED` |
+| **T-04** | CRITICAL Affirmation Bypass | Attacker attempts to ratify CRITICAL proposal with expired token, forged operator signature, or bypass elevated freshness/provenance gates. | Verification engine enforces elevated single-human checks (shortened TTL, strict TOCTOU hash match, and HMAC signature). | Missing or invalid sole-human affirmation blocks ratification fail-closed. | `CRITICAL_AFFIRMATION_FAILED` |
+| **T-05** | TOCTOU Delta Tampering | Attacker alters `PolicyDelta[]` payload after human signed dossier. | Recomputes `policyDeltaHash` from canonical deltas and compares it with the token, handoff, and dossier; verifies `dossierProvenanceHash` independently. | Any commitment discrepancy rejects the handoff. | `TOCTOU_HASH_MISMATCH_REJECTED` |
 | **T-06** | Split-Brain Activation | Concurrent deployment tasks attempt to activate different versions. | In-memory deployment mutex lock and atomic CAS on version number. | Second activation receives CAS conflict error. | `OCC_VERSION_CONFLICT_ABORT` |
 | **T-07** | Canary Direct Bypass | Operator or agent attempts direct jump from ingestion to Ring 4. | Staged deployment state machine enforces mandatory state sequence. | Direct transition rejected. | `ILLEGAL_LIFECYCLE_TRANSITION` |
 | **T-08** | Unauthorized Rollback | Attacker triggers rollback to downgrade security guardrails. | Rollback controller validates operator revocation token. | Rollback without valid token denied. | `UNAUTHORIZED_ROLLBACK_REJECTED` |
@@ -494,6 +574,10 @@ A dedicated, append-only cryptographic ledger (`data/partitions_strategic_polici
 | **T-18** | Replay of Used Nonce | Attacker reuses valid historic Human Decision Token nonce. | Durable nonce registry checks token uniqueness. | Reused nonce rejected. | `NONCE_ALREADY_CONSUMED` |
 | **T-19** | Autonomy Charter Erosion | Delta attempts to reclassify `FORBIDDEN` tool to `ALLOW`. | Compiler asserts `CANONICAL_HARD_FORBIDDEN_ACTIONS` immunity. | Invariant violation fails closed. | `HARD_FORBIDDEN_MODIFICATION_BLOCKED` |
 | **T-20** | Audit Ledger Truncation | Attacker deletes trailing lines of audit ledger. | Ledger loader verifies unbroken SHA-256 chain from genesis. | Broken hash chain halts all operations. | `AUDIT_CHAIN_CORRUPTION_HALT` |
+| **T-21** | Synthetic Operator Creation | Agent or attacker presents a bot, persona, committee, or fabricated verifier as Human Authority. | Anti-agent identity validation and sole-authority identity binding. | No synthetic or additional operator can satisfy a CRITICAL gate. | `AGENT_SELF_APPROVAL_PROHIBITED` |
+| **T-22** | Cross-Tenant Approval Reuse | Valid token for one tenant/domain is submitted to another. | Signed tenant and policy-domain bindings are compared with the handoff and calling partition. | Binding mismatch blocks ratification. | `TENANT_BOUNDARY_VIOLATION_BLOCKED` |
+| **T-23** | Stop-Interlock Bypass | Approval is valid but USER_STOP or EMERGENCY_STOP is active. | Synchronous interlock evaluation before ratification and before promotion. | Operation halts despite token validity. | `OPERATION_SUSPENDED_BY_USER_STOP` |
+| **T-24** | Signing-Secret Exposure | Secret reaches an agent, log, record, or general runtime context. | Provider-bound access boundary and secret-redaction review. | Key access is denied outside the verifier; missing isolation fails closed. | `GOVERNANCE_KEY_ACCESS_DENIED` |
 
 ---
 
@@ -574,6 +658,25 @@ Terminal Fault & Interlock States (3):
 
 ---
 
+### 29A. Two-Person-Rule Migration Impact Map (Specification Only)
+
+| Component | Current dependency discovered in repository | Required specification change | Future implementation consequence | Security consequence | Test consequence |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| 1168 `GovernedPolicyDecisionIngestionTypes` | Checkpoint/event contracts retain legacy dual-approval concepts. | Replace them with elevated sole-human affirmation contracts and the invariants in Section 2. | Remove secondary-verifier fields/types and rename the checkpoint/event semantics. | Prevents a synthetic or extra operator from becoming an authority path. | Migrate Group 5 assertions without changing its 13-vector allocation. |
+| 1169 `PdpPolicyHandoffIntakeGateway` | No direct secondary-verifier gate found; it supplies the bound handoff. | Preserve sole-human tenant, domain, proposal, dossier, provenance, and delta-integrity bindings. | Reject secondary-approval claims rather than consuming them. | Retains replay, tenant, and TOCTOU defenses. | Cover cross-tenant and malformed secondary-field rejection. |
+| 1170 `HumanDecisionTokenVerificationEngine` | Direct dual-verification flow, verifier identity/signature/nonce handling, and dual result. | Define one explicit sole-human APPROVE plus HMAC, nonce, TTL, binding, identity, and stop safeguards. | Remove secondary-verifier verification and implement elevated sole-human checks. | Replaces artificial dual custody with cryptographic and interlock controls. | Group 5 covers sole-human CRITICAL affirmation, replay, expiry, and identity rejection. |
+| 1171 `AuthoritativePolicyRatificationEngine` | Ratification record adds a secondary verifier when verification reports it. | Ratification consumes only the verified sole-human result. | Remove second-signature recording; preserve PDP invariant/OCC gates. | Keeps ratification distinct from approval and execution. | Assert critical-affirmation audit emission and PDP boundary. |
+| 1172 `CanonicalStrategicPolicyCompiler` | No direct secondary-verifier dependency found. | Use the authoritative `canonicalPolicyDeltaArray` contract before compilation and preserve constitutional validation. | Implement canonical delta reconstruction and reject commitment mismatch before compilation. | TOCTOU and invariant protection remain intact. | Retain canonical-hash vectors and add canonicalization/mismatch coverage within the fixed suite total. |
+| 1173 `StrategicPolicyVersionStore` | No direct secondary-verifier dependency found. | Preserve nonce/audit durability and OCC/CAS requirements. | No authority-model algorithm change. | Replay, persistence, and tenant isolation remain fail-closed. | Retain persistence, replay, and OCC/CAS vectors. |
+| 1174 `StrategicPolicyShadowEvaluationEngine` | No direct secondary-verifier dependency found. | Reaffirm simulation is not approval or execution. | No authority-model algorithm change. | Shadow success cannot substitute for Human Authority. | Retain non-actuation vectors. |
+| 1175 `StrategicPolicyStagedDeploymentController` | No direct secondary-verifier dependency found. | Preserve health gates, USER_STOP, and EMERGENCY_STOP after ratification. | No authority-model algorithm change. | A valid approval cannot bypass interlocks or health gates. | Retain stop and deployment-health vectors. |
+| 1176 `StrategicPolicyRollbackController` | No direct secondary-verifier dependency found. | Preserve rollback boundaries; rollback is never a new approval. | No authority-model algorithm change. | Rollback cannot create policy or escalate authority. | Retain lineage and rollback authorization vectors. |
+| 1177 `GovernedPolicyDecisionIngestionModuleIndex` | May surface types/results exposing legacy verifier state. | Expose only corrected sole-human contracts. | Update exports/coordinator only in a separately authorized pass. | Avoids leaking a false authority primitive across boundaries. | Retain boundary/export coverage. |
+
+This is a migration specification, not an implementation claim. Components, the matrix, source, and tests are intentionally untouched by this task.
+
+---
+
 ## 30. Existing Foundation Reuse Matrix
 
 | Existing Subsystem / Component | Repository Location | How MS-1.5.20 Reuses It | Why Duplication is Avoided |
@@ -594,7 +697,7 @@ Terminal Fault & Interlock States (3):
   2. **Group 2 (Vectors 11–22):** Handoff Intake Gateway & Schema Validation.
   3. **Group 3 (Vectors 23–35):** Replay Defense, Nonce Registry & Expiration.
   4. **Group 4 (Vectors 36–47):** Human Decision Token & Cryptographic Signature Verification.
-  5. **Group 5 (Vectors 48–60):** Two-Person Rule Enforcement for CRITICAL Proposals.
+  5. **Group 5 (Vectors 48–60):** Elevated Single-Human Verification & CRITICAL Proposal Governance.
   6. **Group 6 (Vectors 61–73):** TOCTOU Delta Hash Matching & Integrity Gates.
   7. **Group 7 (Vectors 74–85):** Authoritative PDP Ratification & Constitutional Invariants.
   8. **Group 8 (Vectors 86–97):** Canonical Policy Compilation & Deterministic Hashing.
@@ -608,6 +711,10 @@ Terminal Fault & Interlock States (3):
 
 ---
 
+**Group 5 acceptance rule:** Its existing 13 vectors must collectively and genuinely cover valid sole-human CRITICAL approval; invalid HMAC; agent-like identity; CRITICAL expiration and future timestamp; nonce replay; `policyDeltaHash` mismatch; `dossierProvenanceHash` mismatch; tenant, policy-domain, proposal, and dossier mismatch; `decision !== APPROVE`; USER_STOP; EMERGENCY_STOP; successful CRITICAL affirmation; and immutable CRITICAL audit emission. Group 6 must cover canonical delta serialization and the same commitment checks at the intake boundary. No mock-only verification, tautologies, disabled assertions, or fake approvals are permitted.
+
+---
+
 ## 32. Future Milestone Firewall
 
 - **Prohibition:** MS-1.5.20 must contain **ZERO** imports, dependencies, or references to `MS-1.5.21`, `MS-1.5.22`, or future milestones.
@@ -615,13 +722,26 @@ Terminal Fault & Interlock States (3):
 
 ---
 
-## 33. Open Human Decisions
+## 33. Resolved & Open Governance Decisions
 
-The following items cannot be autonomously decided and are flagged for Human Authority:
-1. **Approval of Milestone MS-1.5.20:** Explicit authorization token required to begin implementation.
-2. **Cryptographic Key Provider:** Confirmation whether Human Authority public keys will be read from environment configuration (`BOW_GOVERNANCE_PUBKEY`) or a local secure keystore.
-3. **Automated Rollback Metric Sensitivity:** Confirmation of the default canary error budget threshold (recommended: 5% error rate or >50ms latency increase over baseline).
-4. **Historical Version Pruning:** Confirmation of whether historical versions older than 180 days can be archived or must be retained perpetually.
+### Resolved Architectural Decisions:
+1. **B-01 (Token Transmission & Binding Contract): RESOLVED**
+   - Handoff intake formally accepts `PdpPolicyHandoffEnvelope` or `(handoff, token, record?, callingTenantContext?)`.
+   - Token is cryptographically bound to proposal, dossier, dossier provenance hash, policy-delta hash, tenant, and policy domain.
+2. **B-02 (Cryptographic Scheme & Key Management): RESOLVED**
+   - Authoritative algorithm is `HMAC-SHA256` via `node:crypto`.
+   - Key material is 256-bit symmetric shared secret loaded from `BOW_GOVERNANCE_HMAC_SECRET` or key provider with `keyId`.
+   - Canonical signed payload format: `BOW-GOV-TOKEN-V1:<tenantId>:<policyDomain>:<proposalId>:<dossierId>:<dossierProvenanceHash>:<policyDeltaHash>:<decision>:<nonce>:<timestamp>:<operatorId>:<keyId>`.
+   - Anti-agent regex and elevated single-human cryptographic affirmation for CRITICAL risk proposals (no secondary human required).
+
+3. **B-03 (Critical TTL): RESOLVED AS CONFIGURABLE, NOT CONSTITUTIONAL**
+   - `MAX_CRITICAL_TTL_MS = 3,600,000ms` is retained only as an audit proposal/default candidate.
+   - The future implementation must use a positive configured bound no greater than `MAX_HANDOFF_TTL_MS`, record the selected value in the audit context, and fail closed when absent or invalid.
+
+### Open Human Authority Preconditions:
+1. **Approval of Milestone MS-1.5.20 Implementation:** Requires explicit Human Authority token: `APPROVE MS-1.5.20 IMPLEMENTATION`.
+2. **Automated Rollback Metric Sensitivity:** Human Authority must confirm the intended canary error-budget threshold before implementation; the current 5% / >50ms values are proposals, not constitutional facts.
+3. **Historical Version Pruning:** Human Authority must confirm retention before implementation; `MAX_ROLLBACK_LINEAGE_DEPTH = 20` is a current specification parameter subject to that implementation authorization.
 
 ---
 
@@ -638,5 +758,5 @@ Before implementation of MS-1.5.20 may commence:
 
 ## 35. Final Governance Gate
 
-**MILESTONE MS-1.5.20 MASTER SPECIFICATION GENERATION: COMPLETE & HARDENED.**  
-Implementation remains strictly **BLOCKED** pending explicit Human Authority authorization.
+**SPECIFICATION HARDENED — IMPLEMENTATION NOT AUTHORIZED BY THIS PROMPT.**
+Implementation remains strictly **BLOCKED** pending explicit Human Authority authorization and a separate implementation pass.

@@ -1,0 +1,21 @@
+{
+  "recordId": "lfc_tenant_ctrl_pol_ctrl_02_v5_1789541955833",
+  "tenantId": "tenant_ctrl",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_ctrl_02",
+  "policyVersion": 1,
+  "lifecycleVersion": 5,
+  "state": "ACTIVE",
+  "previousState": "SUSPENDED",
+  "reason": "Human Authority reinstated policy: First valid call",
+  "transitionTrigger": "OPERATOR_COMMAND",
+  "authorizationRef": {
+    "operatorId": "boss_root_01",
+    "nonce": "nonce_1789541955830_rrvmlg",
+    "tokenSignature": "359eb857e3179a601350f94df9bc21aa5fcbf41521c31853487c28144bebb67a"
+  },
+  "canonicalPolicyHash": "2222222222222222222222222222222222222222222222222222222222222222",
+  "ratificationId": "rat_ctrl_02",
+  "updatedAt": 1789541955833,
+  "recordHash": "aa60874dff4a2271787902f714f0837a7805a45990681bfebb3a5e6eacd21f31"
+}

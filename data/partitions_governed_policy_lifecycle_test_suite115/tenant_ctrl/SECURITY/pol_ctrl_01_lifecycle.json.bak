@@ -1,0 +1,21 @@
+{
+  "recordId": "lfc_tenant_ctrl_pol_ctrl_01_v5_1789541955797",
+  "tenantId": "tenant_ctrl",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_ctrl_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 5,
+  "state": "ACTIVE",
+  "previousState": "DEGRADED",
+  "reason": "Human Authority overrode degraded status: Operator verified and overrode degraded state",
+  "transitionTrigger": "OPERATOR_COMMAND",
+  "authorizationRef": {
+    "operatorId": "boss_root_01",
+    "nonce": "nonce_1789541955793_91vmv5",
+    "tokenSignature": "79821fa8a20b7481d2880e8c8487d3f17039b4a0ae6c8c0982140fd225936542"
+  },
+  "canonicalPolicyHash": "1111111111111111111111111111111111111111111111111111111111111111",
+  "ratificationId": "rat_ctrl_01",
+  "updatedAt": 1789541955797,
+  "recordHash": "aeef261c8fe92ef0228e6cf6a0e848a9857d8fd0356d23552a4a5cd63d3d8d9d"
+}

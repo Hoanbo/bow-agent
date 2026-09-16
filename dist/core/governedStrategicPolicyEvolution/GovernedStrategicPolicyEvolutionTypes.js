@@ -104,6 +104,38 @@ function canonicalJsonSerialize(obj) {
 function sha256(content) {
     return crypto.createHash('sha256').update(content, 'utf8').digest('hex');
 }
+/** Canonical UTF-8 commitment for policy deltas. */
+export function canonicalPolicyDeltaArray(deltas) {
+    if (!Array.isArray(deltas) || deltas.length === 0)
+        throw new Error('Policy deltas must be non-empty');
+    const normalized = deltas.map((delta) => {
+        if (!delta || typeof delta.fieldPath !== 'string' || !delta.fieldPath)
+            throw new Error('Invalid policy delta fieldPath');
+        const normalize = (value) => {
+            if (typeof value === 'number' && !Number.isFinite(value))
+                throw new Error('Non-finite policy delta number');
+            if (typeof value === 'string')
+                return value.normalize('NFC');
+            if (Array.isArray(value))
+                return value.map(normalize);
+            if (value && typeof value === 'object') {
+                return Object.fromEntries(Object.keys(value).sort().map((k) => [k.normalize('NFC'), normalize(value[k])]));
+            }
+            return value ?? null;
+        };
+        return normalize(delta);
+    }).sort((a, b) => {
+        const aKey = `${a.fieldPath}\u0000${canonicalJsonSerialize(a)}`;
+        const bKey = `${b.fieldPath}\u0000${canonicalJsonSerialize(b)}`;
+        if (aKey === bKey)
+            throw new Error('Duplicate canonical policy delta');
+        return aKey.localeCompare(bKey, 'en', { sensitivity: 'variant' });
+    });
+    return canonicalJsonSerialize(normalized);
+}
+export function computePolicyDeltaHash(deltas) {
+    return sha256(canonicalPolicyDeltaArray(deltas));
+}
 // EN: 8 deterministic SHA-256 provenance hashers.
 // VI: 8 hàm băm nguồn gốc xác định SHA-256.
 export function computePolicyEvolutionProposalHash(proposal) {

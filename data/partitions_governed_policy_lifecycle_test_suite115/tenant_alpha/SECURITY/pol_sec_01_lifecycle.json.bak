@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_alpha_pol_sec_01_v7_1789541955632",
+  "tenantId": "tenant_alpha",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_sec_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 7,
+  "state": "ROLLED_BACK",
+  "previousState": "ACTIVE",
+  "reason": "Rollback executed by controller",
+  "transitionTrigger": "ROLLBACK",
+  "canonicalPolicyHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "ratificationId": "rat_01",
+  "updatedAt": 1789541955632,
+  "recordHash": "56ce87e3ae102cb7c16f8f96682be75c7f3b6f9c66e76ff311288f3eebc1284c"
+}

@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_gamma_pol_conv_01_v3_1789541955650",
+  "tenantId": "tenant_gamma",
+  "policyDomain": "CONVERGENCE",
+  "policyId": "pol_conv_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 3,
+  "state": "ROLLED_BACK",
+  "previousState": "STAGED",
+  "reason": "Rollback",
+  "transitionTrigger": "ROLLBACK",
+  "canonicalPolicyHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "ratificationId": "rat_conv_01",
+  "updatedAt": 1789541955650,
+  "recordHash": "b96dd0443b785e56e9b44e568972addc193f5366af0731238a00f2c4970e45f5"
+}

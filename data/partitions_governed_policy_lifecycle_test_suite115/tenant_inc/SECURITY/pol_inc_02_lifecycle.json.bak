@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_inc_pol_inc_02_v4_1789541955701",
+  "tenantId": "tenant_inc",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_inc_02",
+  "policyVersion": 1,
+  "lifecycleVersion": 4,
+  "state": "DEGRADED",
+  "previousState": "ACTIVE",
+  "reason": "Automated safety trip triggered by incident 'INC_HEALTH_DEGRADED' (HIGH): Health score breached threshold 0.95",
+  "transitionTrigger": "AUTOMATIC_SAFETY_INTERLOCK",
+  "canonicalPolicyHash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "ratificationId": "rat_inc_02",
+  "updatedAt": 1789541955701,
+  "recordHash": "2da073d8cd70cefd17c9ef71416f244db05de20b9943d3cce6d09db001991083"
+}

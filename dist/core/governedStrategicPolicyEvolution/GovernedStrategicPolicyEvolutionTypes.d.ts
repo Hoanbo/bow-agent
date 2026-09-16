@@ -167,13 +167,19 @@ export interface InvariantCheckResult {
     evaluatedAt: number;
 }
 export interface HumanDecisionToken {
+    tokenId: string;
+    proposalId: string;
+    dossierId: string;
+    policyDomain: PolicyDomain;
     operatorId: string;
     operatorSignature: string;
     decision: 'APPROVE' | 'REJECT';
     rationale: string;
+    nonce: string;
     timestamp: number;
-    twoPersonVerifierId?: string;
-    twoPersonVerifierSignature?: string;
+    expiresAt: number;
+    keyId: string;
+    policyDeltaHash: string;
 }
 export interface HumanDecisionRecord {
     recordId: string;
@@ -198,12 +204,13 @@ export interface PdpPolicyHandoffPackage {
     humanApprovalCertified: true;
     isAuthoritativePolicy: false;
     dossierProvenanceHash: string;
+    policyDeltaHash: string;
     packagedAt: number;
 }
 export interface HumanReviewRequirements {
     requiresExplicitSignOff: boolean;
     minimumOperatorRole: string;
-    twoPersonRuleRequired: boolean;
+    elevatedSingleHumanAffirmationRequired: boolean;
 }
 export interface StrategicPolicyDeliberationDossier {
     dossierId: string;
@@ -230,12 +237,13 @@ export interface StrategicPolicyDeliberationDossier {
     humanReviewRequirements: {
         requiresExplicitSignOff: true;
         minimumOperatorRole: string;
-        twoPersonRuleRequired: boolean;
+        elevatedSingleHumanAffirmationRequired: boolean;
     };
     humanDecision?: HumanDecisionRecord;
     pdpHandoffPackage?: PdpPolicyHandoffPackage;
     version: number;
     provenanceHash: string;
+    policyDeltaHash: string;
 }
 export type StrategicPolicyAuditEventType = 'PROPOSAL_CREATED' | 'PROPOSAL_VALIDATED' | 'PROPOSAL_ADMITTED' | 'PROPOSAL_REJECTED_ADMISSION' | 'IMPACT_ANALYSIS_STARTED' | 'IMPACT_ANALYSIS_COMPLETED' | 'IMPACT_ANALYSIS_FAILED' | 'SIMULATION_STARTED' | 'SIMULATION_SCENARIO_EVALUATED' | 'SIMULATION_COMPLETED' | 'SIMULATION_ABORTED' | 'INVARIANT_CHECK_STARTED' | 'INVARIANT_CHECK_PASSED' | 'INVARIANT_CHECK_VIOLATION' | 'DOSSIER_COMPILATION_STARTED' | 'DOSSIER_COMPILED' | 'DOSSIER_SEALED' | 'DOSSIER_CORRUPTED' | 'DELIBERATION_SESSION_OPENED' | 'DELIBERATION_AWAITING_INPUT' | 'DELIBERATION_TIMEOUT' | 'HUMAN_REVIEW_SUBMITTED' | 'HUMAN_APPROVED' | 'HUMAN_REJECTED' | 'INVALID_DECISION_TOKEN' | 'PDP_HANDOFF_PACKAGED' | 'PDP_HANDOFF_DISPATCHED' | 'PDP_HANDOFF_FAILED' | 'USER_STOP_HALT' | 'EMERGENCY_STOP_HALT' | 'FIREWALL_MUTATION_BLOCKED' | 'SECURITY_VIOLATION' | 'OCC_CONFLICT' | 'PERSISTENCE_SAVED' | 'BACKUP_RECOVERED' | 'PERSISTENCE_CORRUPTION' | 'SANITIZATION_SCRUB' | 'PROPOSAL_SUPERSEDED';
 export interface StrategicPolicyAuditEvent {
@@ -289,6 +297,9 @@ export declare class TenantIsolationViolationError extends StrategicPolicyEvolut
 }
 export declare class StrategicPolicyPersistenceError extends StrategicPolicyEvolutionBaseError {
 }
+/** Canonical UTF-8 commitment for policy deltas. */
+export declare function canonicalPolicyDeltaArray(deltas: PolicyDelta[]): string;
+export declare function computePolicyDeltaHash(deltas: PolicyDelta[]): string;
 export declare function computePolicyEvolutionProposalHash(proposal: PolicyEvolutionProposal): string;
 export declare function computeAdvisoryMediationRecordHash(record: AdvisoryMediationRecord): string;
 export declare function computePolicyImpactAnalysisHash(analysis: PolicyImpactAnalysisResult): string;

@@ -1,0 +1,16 @@
+{
+  "recordId": "lfc_tenant_ctrl_pol_ctrl_02_v6_1789541955838",
+  "tenantId": "tenant_ctrl",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_ctrl_02",
+  "policyVersion": 1,
+  "lifecycleVersion": 6,
+  "state": "SUSPENDED",
+  "previousState": "ACTIVE",
+  "reason": "Halt",
+  "transitionTrigger": "AUTOMATIC_SAFETY_INTERLOCK",
+  "canonicalPolicyHash": "2222222222222222222222222222222222222222222222222222222222222222",
+  "ratificationId": "rat_ctrl_02",
+  "updatedAt": 1789541955838,
+  "recordHash": "fae86fdac807df543d9132e36959a5b9c7f597d3ea36d28bafcf741dd6e0f3d7"
+}

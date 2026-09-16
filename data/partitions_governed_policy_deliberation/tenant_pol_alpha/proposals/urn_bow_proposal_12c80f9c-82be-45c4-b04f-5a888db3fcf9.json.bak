@@ -1,5 +1,5 @@
 {
-  "proposalId": "urn:bow:proposal:25c1c317-76ca-418c-b6d5-4ff64fcb816d",
+  "proposalId": "urn:bow:proposal:12c80f9c-82be-45c4-b04f-5a888db3fcf9",
   "tenantId": "tenant_pol_alpha",
   "sessionId": "session_delib_001",
   "missionId": "mission_eval_01",
@@ -22,7 +22,7 @@
   "requiresHumanReview": true,
   "status": "ADMITTED",
   "version": 1,
-  "provenanceHash": "fa08703d5fbb796bb78ad78e775b7af19e774e71857a51378eea2f2091232dc7",
-  "createdAt": 1789460021471,
-  "updatedAt": 1789460021525
+  "provenanceHash": "90b3bba137aabee4880c52927a696a26facc1f4be20f4962e0d719592cef55e1",
+  "createdAt": 1789541937283,
+  "updatedAt": 1789541937329
 }

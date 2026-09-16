@@ -80,11 +80,19 @@ Governed Actuation Boundary
 * `ADVISORY_RESULT != AUTHORIZATION`
 * `LEASE_SUPERVISION != LEASE_EXPANSION`
 * `HASH != AUTHORIZATION`
+* `SOLE_HUMAN_AUTHORITY = TRUE`
+* `HUMAN_AUTHORITY_COUNT = 1`
+* `SECOND_HUMAN_AUTHORITY = FORBIDDEN`
+* `HUMAN_APPROVAL != AUTONOMOUS_APPROVAL`
 
 MS-1.5.19 PREPARES GOVERNANCE. MS-1.5.19 DOES NOT BECOME GOVERNANCE.  
 MS-1.5.19 MUST NEVER create, extend, clone, revive, or modify autonomy leases.  
 MS-1.5.19 MUST NEVER mutate production policies, approve its own proposals, or bypass the PolicyDecisionPoint (PDP).  
 MS-1.5.19 MUST NEVER possess or invoke direct execution primitives.
+
+### MS-1.5.20 Governance Supersession Notice
+
+Any earlier MS-1.5.19 wording or implementation behavior that required multi-operator, dual-custody, or secondary-verifier approval for a CRITICAL proposal is **HISTORICAL / SUPERSEDED**. It is not an active requirement of the MS-1.5.19 to MS-1.5.20 handoff contract. The active contract recognizes exactly one Human Authority: Boss / Ultimate Root Operator. A CRITICAL proposal requires elevated verification of that one authority's explicit `APPROVE`; it must not require, accept as an authorization condition, or synthesize a second human.
 
 ### Required Operating Protocol:
 `BRAINSTORM → INSPECT → BASELINE VERIFICATION → ARCHITECTURAL GAP ANALYSIS → AUTHORITY-BOUNDARY ANALYSIS → SPECIFICATION DRAFT → COMPLETENESS AUDIT → CONSISTENCY AUDIT → SECURITY/GOVERNANCE AUDIT → SPECIFICATION LOCK PREPARATION → VERIFY → REPORT`
@@ -404,7 +412,7 @@ Component 1161 (`StrategicPolicyImpactAnalysisEngine`) evaluates the operational
 
 ### Scoring & Reversibility Formulation:
 * **Composite Impact Score:** $S_{impact} = \max(D_i) \times 0.6 + \text{mean}(D_i) \times 0.4$, bounded in $[0.0, 1.0]$.
-* If $S_{impact} > 0.70$ or Reversibility $< 0.40$, the proposal is classified as `CRITICAL_RISK` and requires multi-operator human confirmation.
+* If $S_{impact} > 0.70$ or Reversibility $< 0.40$, the proposal is classified as `CRITICAL_RISK` and requires elevated single-human cryptographic affirmation before PDP handoff. Classification does not itself grant approval or execution authority.
 
 ================================================================================
 
@@ -506,18 +514,39 @@ export interface StrategicPolicyDeliberationDossier {
   humanReviewRequirements: {
     requiresExplicitSignOff: true;
     minimumOperatorRole: string;                  // e.g., 'CONSTITUTIONAL_ADMIN'
-    twoPersonRuleRequired: boolean;               // True if CRITICAL_RISK
+    elevatedSingleHumanAffirmationRequired: boolean; // True if CRITICAL_RISK
   };
   humanDecision?: HumanDecisionRecord;            // Populated upon human action
   pdpHandoffPackage?: PdpPolicyHandoffPackage;    // Formatted strictly for PDP
-  provenanceHash: string;                         // SHA-256 hash of entire dossier
+  provenanceHash: string;                         // SHA-256 hash of the canonical dossier, excluding its own hash field
+  policyDeltaHash: string;                        // SHA-256 hash of canonical proposalSummary.proposedChanges
 }
 ```
 
 ### Human Decision Recording:
-* **Token Structure:** A valid decision requires an authenticated `HumanDecisionToken` containing `operatorId`, `operatorSignature`, `decision` (`APPROVE` | `REJECT`), `rationale`, and `timestamp`.
+* **Token Structure:** A valid decision requires an authenticated sole-human `HumanDecisionToken` containing `operatorId`, `operatorSignature`, `decision` (`APPROVE` | `REJECT`), `rationale`, `nonce`, `timestamp`, `expiresAt`, and `keyId`. For an MS-1.5.20 handoff, its canonical HMAC payload also binds `tenantId`, `policyDomain`, `proposalId`, `dossierId`, `dossierProvenanceHash`, and `policyDeltaHash`.
 * **Immutability:** Once recorded, the decision cannot be altered, overwritten, or replayed across proposals or tenants.
 * **Separation of Concerns:** Human approval recorded in MS-1.5.19 is approval of the *dossier handoff to PDP*, NOT policy activation or execution.
+
+### Authoritative MS-1.5.19 to MS-1.5.20 Handoff Contract
+
+```typescript
+export interface PdpPolicyHandoffPackage {
+  handoffId: string;
+  proposalId: string;
+  dossierId: string;
+  tenantId: string;
+  policyDomain: PolicyDomain;
+  proposedChanges: PolicyDelta[];
+  policyDeltaHash: string;       // SHA-256(canonicalPolicyDeltaArray(proposedChanges))
+  humanApprovalCertified: true;
+  isAuthoritativePolicy: false;
+  dossierProvenanceHash: string; // Must equal dossier.provenanceHash
+  packagedAt: number;
+}
+```
+
+`dossierProvenanceHash` and `policyDeltaHash` are distinct commitments. The former protects the complete canonical dossier; the latter protects only the canonical proposed delta array. The handoff is valid only when the dossier identity/provenance and the recomputed canonical delta hash both match. Neither hash is authorization; PDP ratification remains independently required.
 
 ================================================================================
 
@@ -736,7 +765,7 @@ All text payloads undergo strict sanitization before admission, simulation, or p
 6. **Group 6: Lifecycle State Machine Integrity (Vectors 61–73):** Tests monotonic state progression, illegal transition rejection, and terminal state immutability.
 7. **Group 7: Constitutional Invariant Evaluation (Vectors 74–85):** Verifies enforcement of supreme axioms, structural contradiction detection, and instant quarantine on violation.
 8. **Group 8: Deliberation Dossier Compilation (Vectors 86–97):** Tests dossier synthesis, hash sealing, size limits, and immutable evidence packaging.
-9. **Group 9: Human Deliberation Gateway (Vectors 98–109):** Validates review token verification, multi-operator signing, rationale recording, expired session rejection, and verifies `APPROVED_FOR_PDP_HANDOFF != POLICY_APPROVED`.
+9. **Group 9: Human Deliberation Gateway (Vectors 98–109):** Validates sole-human review-token evidence, elevated CRITICAL affirmation requirements, rationale recording, expired session rejection, delta/provenance commitments, and verifies `APPROVED_FOR_PDP_HANDOFF != POLICY_APPROVED`.
 10. **Group 10: Policy Mutation Firewall (Vectors 110–120):** Tests fail-closed rejection of direct policy writes, lease creation, or autonomous PDP bypass.
 11. **Group 11: Stop Interlocks (Vectors 121–130):** Verifies Priority 1 `EMERGENCY_STOP` and Priority 2 `USER_STOP` across all 16 checkpoints.
 12. **Group 12: Tenant & Session Isolation (Vectors 131–140):** Proves zero cross-tenant leakage in proposals, simulations, dossiers, or persistence.

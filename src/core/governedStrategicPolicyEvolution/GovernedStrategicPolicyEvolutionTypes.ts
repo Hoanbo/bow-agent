@@ -236,13 +236,19 @@ export interface InvariantCheckResult {
 }
 
 export interface HumanDecisionToken {
+  tokenId: string;
+  proposalId: string;
+  dossierId: string;
+  policyDomain: PolicyDomain;
   operatorId: string;
   operatorSignature: string;
   decision: 'APPROVE' | 'REJECT';
   rationale: string;
+  nonce: string;
   timestamp: number;
-  twoPersonVerifierId?: string;
-  twoPersonVerifierSignature?: string;
+  expiresAt: number;
+  keyId: string;
+  policyDeltaHash: string;
 }
 
 export interface HumanDecisionRecord {
@@ -269,13 +275,14 @@ export interface PdpPolicyHandoffPackage {
   humanApprovalCertified: true;
   isAuthoritativePolicy: false; // PDP will evaluate authoritatively
   dossierProvenanceHash: string;
+  policyDeltaHash: string;
   packagedAt: number;
 }
 
 export interface HumanReviewRequirements {
   requiresExplicitSignOff: boolean;
   minimumOperatorRole: string;
-  twoPersonRuleRequired: boolean;
+  elevatedSingleHumanAffirmationRequired: boolean;
 }
 
 export interface StrategicPolicyDeliberationDossier {
@@ -303,12 +310,13 @@ export interface StrategicPolicyDeliberationDossier {
   humanReviewRequirements: {
     requiresExplicitSignOff: true;
     minimumOperatorRole: string;
-    twoPersonRuleRequired: boolean;
+    elevatedSingleHumanAffirmationRequired: boolean;
   };
   humanDecision?: HumanDecisionRecord;
   pdpHandoffPackage?: PdpPolicyHandoffPackage;
   version: number;
   provenanceHash: string;
+  policyDeltaHash: string;
 }
 
 // EN: 38 canonical structured audit event types.
@@ -423,6 +431,34 @@ function canonicalJsonSerialize(obj: unknown): string {
 
 function sha256(content: string): string {
   return crypto.createHash('sha256').update(content, 'utf8').digest('hex');
+}
+
+/** Canonical UTF-8 commitment for policy deltas. */
+export function canonicalPolicyDeltaArray(deltas: PolicyDelta[]): string {
+  if (!Array.isArray(deltas) || deltas.length === 0) throw new Error('Policy deltas must be non-empty');
+  const normalized = deltas.map((delta) => {
+    if (!delta || typeof delta.fieldPath !== 'string' || !delta.fieldPath) throw new Error('Invalid policy delta fieldPath');
+    const normalize = (value: unknown): unknown => {
+      if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('Non-finite policy delta number');
+      if (typeof value === 'string') return value.normalize('NFC');
+      if (Array.isArray(value)) return value.map(normalize);
+      if (value && typeof value === 'object') {
+        return Object.fromEntries(Object.keys(value as Record<string, unknown>).sort().map((k) => [k.normalize('NFC'), normalize((value as Record<string, unknown>)[k])]));
+      }
+      return value ?? null;
+    };
+    return normalize(delta) as Record<string, unknown>;
+  }).sort((a, b) => {
+    const aKey = `${a.fieldPath}\u0000${canonicalJsonSerialize(a)}`;
+    const bKey = `${b.fieldPath}\u0000${canonicalJsonSerialize(b)}`;
+    if (aKey === bKey) throw new Error('Duplicate canonical policy delta');
+    return aKey.localeCompare(bKey, 'en', { sensitivity: 'variant' });
+  });
+  return canonicalJsonSerialize(normalized);
+}
+
+export function computePolicyDeltaHash(deltas: PolicyDelta[]): string {
+  return sha256(canonicalPolicyDeltaArray(deltas));
 }
 
 // EN: 8 deterministic SHA-256 provenance hashers.

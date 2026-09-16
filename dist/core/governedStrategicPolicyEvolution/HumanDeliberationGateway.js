@@ -4,7 +4,7 @@
 // Dossier Compilation, Human Decision Recording & Non-Authoritative PDP Handoff
 // ============================================================================
 import * as crypto from 'crypto';
-import { MAX_DELIBERATION_DOSSIER_SIZE_BYTES, MAX_DELIBERATION_SESSION_DURATION_MS, computeDeliberationDossierHash, computeHumanDecisionRecordHash, UnauthorizedHumanDecisionError, StrategicPolicySecurityCheckpointError, } from './GovernedStrategicPolicyEvolutionTypes.js';
+import { MAX_DELIBERATION_DOSSIER_SIZE_BYTES, MAX_DELIBERATION_SESSION_DURATION_MS, computeDeliberationDossierHash, computePolicyDeltaHash, computeHumanDecisionRecordHash, UnauthorizedHumanDecisionError, StrategicPolicySecurityCheckpointError, } from './GovernedStrategicPolicyEvolutionTypes.js';
 export class HumanDeliberationGateway {
     dossiersByTenant = new Map();
     constructor() { }
@@ -42,10 +42,11 @@ export class HumanDeliberationGateway {
             humanReviewRequirements: {
                 requiresExplicitSignOff: true,
                 minimumOperatorRole: impact.riskLevel === 'CRITICAL' ? 'CONSTITUTIONAL_ADMIN' : 'OPERATIONS_SUPERVISOR',
-                twoPersonRuleRequired: impact.riskLevel === 'CRITICAL',
+                elevatedSingleHumanAffirmationRequired: impact.riskLevel === 'CRITICAL',
             },
             version: 1,
             provenanceHash: '',
+            policyDeltaHash: computePolicyDeltaHash(proposal.proposedChanges),
         };
         dossier.provenanceHash = computeDeliberationDossierHash(dossier);
         const serialized = JSON.stringify(dossier);
@@ -55,7 +56,7 @@ export class HumanDeliberationGateway {
         this.getOrCreateTenantDossiers(proposal.tenantId).set(dossierId, dossier);
         return dossier;
     }
-    // EN: Records a verified Human Decision Token, validating signatures and two-person rules.
+    // EN: Records sole-human decision evidence for a non-authoritative PDP handoff.
     // VI: Ghi nhận Token quyết định của con người đã xác minh, kiểm tra chữ ký và quy tắc 2 người.
     recordHumanDecision(dossier, token) {
         if (!token.operatorId || !token.operatorSignature || !token.decision) {
@@ -66,15 +67,11 @@ export class HumanDeliberationGateway {
         if (Date.now() - dossier.compiledAt > MAX_DELIBERATION_SESSION_DURATION_MS) {
             throw new UnauthorizedHumanDecisionError('Deliberation window expired: Human decision submitted after session TTL');
         }
-        // EN: Two-Person Rule verification for CRITICAL risk proposals.
-        // VI: Xác minh Quy tắc hai người cho các đề xuất có mức độ rủi ro CRITICAL.
-        if (dossier.humanReviewRequirements.twoPersonRuleRequired) {
-            if (!token.twoPersonVerifierId || !token.twoPersonVerifierSignature) {
-                throw new UnauthorizedHumanDecisionError('Two-Person Rule violation: CRITICAL risk proposal requires dual operator verification signatures');
-            }
-            if (token.operatorId === token.twoPersonVerifierId) {
-                throw new UnauthorizedHumanDecisionError('Two-Person Rule violation: Primary operator and verifier operator cannot be identical');
-            }
+        if (dossier.humanReviewRequirements.elevatedSingleHumanAffirmationRequired && token.decision !== 'APPROVE') {
+            throw new UnauthorizedHumanDecisionError('CRITICAL proposal requires explicit sole-human APPROVE');
+        }
+        if (token.policyDeltaHash && token.policyDeltaHash !== dossier.policyDeltaHash) {
+            throw new UnauthorizedHumanDecisionError('POLICY_DELTA_HASH_MISMATCH: Token does not bind dossier deltas');
         }
         const recordId = `urn:bow:decision:${crypto.randomUUID()}`;
         const decisionRecord = {
@@ -106,6 +103,7 @@ export class HumanDeliberationGateway {
                 humanApprovalCertified: true,
                 isAuthoritativePolicy: false, // EN: Strictly non-authoritative. PDP evaluates independently.
                 dossierProvenanceHash: dossier.provenanceHash,
+                policyDeltaHash: dossier.policyDeltaHash,
                 packagedAt: Date.now(),
             };
             dossier.pdpHandoffPackage = handoffPackage;
@@ -114,6 +112,7 @@ export class HumanDeliberationGateway {
         dossier.provenanceHash = computeDeliberationDossierHash(dossier);
         if (dossier.pdpHandoffPackage) {
             dossier.pdpHandoffPackage.dossierProvenanceHash = dossier.provenanceHash;
+            dossier.pdpHandoffPackage.policyDeltaHash = dossier.policyDeltaHash;
         }
         return { decisionRecord, updatedDossier: dossier };
     }

@@ -1,0 +1,21 @@
+{
+  "recordId": "lfc_tenant_alpha_pol_sec_01_v8_1789541955636",
+  "tenantId": "tenant_alpha",
+  "policyDomain": "SECURITY",
+  "policyId": "pol_sec_01",
+  "policyVersion": 1,
+  "lifecycleVersion": 8,
+  "state": "RETIRED",
+  "previousState": "ROLLED_BACK",
+  "reason": "Decommissioned by operator",
+  "transitionTrigger": "OPERATOR_COMMAND",
+  "authorizationRef": {
+    "operatorId": "boss_root",
+    "nonce": "n_02",
+    "tokenSignature": "sig_02"
+  },
+  "canonicalPolicyHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "ratificationId": "rat_01",
+  "updatedAt": 1789541955636,
+  "recordHash": "f7e4a26fa80c0d248662515a34c7c8e8ba0865c8c6b11f010e23773d7cde8aef"
+}
