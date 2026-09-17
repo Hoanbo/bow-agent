@@ -1712,3 +1712,9 @@ export {
   type SimulationPipelineResult,
   type GovernedPolicySimulationContainerConfig,
 } from './core/governedPolicySimulation/index.js';
+
+// ============================================================================
+// 86. BOWCON V4.0 — Milestone 1.5.25: Governed Cross-Federation Policy Distribution, Node Attestation & Distributed Enforcement Synchronization Engine
+// Components 1218-1227
+// ============================================================================
+export * from './core/governedPolicyDistribution/index.js';

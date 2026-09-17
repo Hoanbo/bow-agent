@@ -1,5 +1,5 @@
 {
-  "recordId": "lfc_tenant_alpha_pol_sec_01_v7_1789541955632",
+  "recordId": "lfc_tenant_alpha_pol_sec_01_v7_1789589145532",
   "tenantId": "tenant_alpha",
   "policyDomain": "SECURITY",
   "policyId": "pol_sec_01",
@@ -11,6 +11,6 @@
   "transitionTrigger": "ROLLBACK",
   "canonicalPolicyHash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
   "ratificationId": "rat_01",
-  "updatedAt": 1789541955632,
-  "recordHash": "56ce87e3ae102cb7c16f8f96682be75c7f3b6f9c66e76ff311288f3eebc1284c"
+  "updatedAt": 1789589145532,
+  "recordHash": "1bc37c2b48f04e14fc1d227fb163d1a7ca55b587a0ef0e25a1201c30ab4cabc1"
 }

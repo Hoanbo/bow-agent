@@ -1,5 +1,5 @@
 {
-  "recordId": "lfc_tenant_gamma_pol_conv_01_v2_1789541955646",
+  "recordId": "lfc_tenant_gamma_pol_conv_01_v2_1789589145547",
   "tenantId": "tenant_gamma",
   "policyDomain": "CONVERGENCE",
   "policyId": "pol_conv_01",
@@ -11,6 +11,6 @@
   "transitionTrigger": "PDP_DEPLOYMENT",
   "canonicalPolicyHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
   "ratificationId": "rat_conv_01",
-  "updatedAt": 1789541955646,
-  "recordHash": "e135d244bbdbbe72490afae0d8f8d0d4c077d411b0a88fde1e6f24c36db6ff8c"
+  "updatedAt": 1789589145547,
+  "recordHash": "7b8d2aaa8d2a198788991f57f1abe180d1d0fc3f99db724b02dc92e40bb5323a"
 }

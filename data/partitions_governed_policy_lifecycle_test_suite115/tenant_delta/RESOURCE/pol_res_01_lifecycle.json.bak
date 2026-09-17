@@ -1,5 +1,5 @@
 {
-  "recordId": "lfc_tenant_delta_pol_res_01_v1_1789541955654",
+  "recordId": "lfc_tenant_delta_pol_res_01_v1_1789589145557",
   "tenantId": "tenant_delta",
   "policyDomain": "RESOURCE",
   "policyId": "pol_res_01",
@@ -11,6 +11,6 @@
   "transitionTrigger": "PDP_DEPLOYMENT",
   "canonicalPolicyHash": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   "ratificationId": "rat_res_01",
-  "updatedAt": 1789541955654,
-  "recordHash": "d7a5b89421d26e963484719bf06a6ed9ab810091a1e7e7de4426458839c9c3bf"
+  "updatedAt": 1789589145557,
+  "recordHash": "0e3feb1944a6a28355de9481ba5c95c3c8a22de8f9ae4d07d434e7e521a6be60"
 }

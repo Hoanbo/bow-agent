@@ -1,5 +1,5 @@
 {
-  "recordId": "lfc_tenant_ctrl_pol_stop_01_v2_1789541955846",
+  "recordId": "lfc_tenant_ctrl_pol_stop_01_v2_1789589145855",
   "tenantId": "tenant_ctrl",
   "policyDomain": "SECURITY",
   "policyId": "pol_stop_01",
@@ -11,6 +11,6 @@
   "transitionTrigger": "PDP_DEPLOYMENT",
   "canonicalPolicyHash": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
   "ratificationId": "rat_stop_01",
-  "updatedAt": 1789541955846,
-  "recordHash": "f149f0996f220b83cc85992571430df4de5d5265aefaf9a12568f6fb6d85a527"
+  "updatedAt": 1789589145855,
+  "recordHash": "8bd84cd6d21fe8b81d04a5b6f2e501a0ed9e1122bdb00d9ac9a33ed495513cae"
 }

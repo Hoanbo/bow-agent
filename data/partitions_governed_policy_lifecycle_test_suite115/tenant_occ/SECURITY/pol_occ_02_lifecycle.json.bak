@@ -1,5 +1,5 @@
 {
-  "recordId": "lfc_tenant_occ_pol_occ_02_v3_1789541955863",
+  "recordId": "lfc_tenant_occ_pol_occ_02_v3_1789589145872",
   "tenantId": "tenant_occ",
   "policyDomain": "SECURITY",
   "policyId": "pol_occ_02",
@@ -11,6 +11,6 @@
   "transitionTrigger": "PDP_DEPLOYMENT",
   "canonicalPolicyHash": "3333333333333333333333333333333333333333333333333333333333333333",
   "ratificationId": "rat_occ_02",
-  "updatedAt": 1789541955863,
-  "recordHash": "19aa204a8612d8bd56510f1ced2514069f7b88c5a5d9dbee020bcf19d956792f"
+  "updatedAt": 1789589145872,
+  "recordHash": "0f5f578756f0b51b3cbcd6a9551a7834fdbe2d727a0352d6ab5d53fd49d46cd0"
 }

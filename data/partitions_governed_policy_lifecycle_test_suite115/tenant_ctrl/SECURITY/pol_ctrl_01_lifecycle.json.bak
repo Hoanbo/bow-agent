@@ -1,5 +1,5 @@
 {
-  "recordId": "lfc_tenant_ctrl_pol_ctrl_01_v5_1789541955797",
+  "recordId": "lfc_tenant_ctrl_pol_ctrl_01_v5_1789589145807",
   "tenantId": "tenant_ctrl",
   "policyDomain": "SECURITY",
   "policyId": "pol_ctrl_01",
@@ -11,11 +11,11 @@
   "transitionTrigger": "OPERATOR_COMMAND",
   "authorizationRef": {
     "operatorId": "boss_root_01",
-    "nonce": "nonce_1789541955793_91vmv5",
-    "tokenSignature": "79821fa8a20b7481d2880e8c8487d3f17039b4a0ae6c8c0982140fd225936542"
+    "nonce": "nonce_1789589145803_uruomn",
+    "tokenSignature": "8aa3c65309cfa4687af0ada676b50308ee5d21f31ad5e240a0cb1c5145e83829"
   },
   "canonicalPolicyHash": "1111111111111111111111111111111111111111111111111111111111111111",
   "ratificationId": "rat_ctrl_01",
-  "updatedAt": 1789541955797,
-  "recordHash": "aeef261c8fe92ef0228e6cf6a0e848a9857d8fd0356d23552a4a5cd63d3d8d9d"
+  "updatedAt": 1789589145807,
+  "recordHash": "57f58e1f9f6d4ae1e203defdf2c8dc32bf76410f92a1c34940c32694ea484974"
 }
