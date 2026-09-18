@@ -28,6 +28,7 @@ import { desktopAudioDriver } from './audioDriver.js';
 // Configuration
 const BRAIN_HOST = process.env.BOW_BRAIN_HOST || '127.0.0.1';
 const BRAIN_PORT = Number(process.env.BOW_BRAIN_PORT || 4000);
+const BRAIN_URL = process.env.BOW_BRAIN_URL || `ws://${BRAIN_HOST}:${BRAIN_PORT}/ws/body`;
 const BRAIN_PSK = process.env.BOW_BRAIN_PSK || process.env.BOW_BODY_PSK || '';
 const BODY_ID = process.env.BOW_BODY_ID || `desktop_xeon_${os.hostname().toLowerCase().replace(/[^a-z0-9_]/g, '')}`;
 const HEARTBEAT_INTERVAL_MS = 5000;
@@ -184,7 +185,7 @@ export class DesktopBodyRunner {
   private readonly psk: string;
 
   constructor(
-    private readonly brainUrl = `ws://${BRAIN_HOST}:${BRAIN_PORT}/ws/body`,
+    private readonly brainUrl = BRAIN_URL,
     private readonly bodyId = BODY_ID,
     psk?: string
   ) {
