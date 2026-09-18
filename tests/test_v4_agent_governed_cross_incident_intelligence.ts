@@ -125,7 +125,6 @@ async function runRealityGate(): Promise<void> {
       const closureRecord: IncidentClosureRecord = {
         closureId,
         incidentId: incId,
-        targetId: target,
         status: 'CLOSED_RESOLVED',
         closureReason: 'Remediation verified successfully',
         verified: true,
@@ -150,13 +149,13 @@ async function runRealityGate(): Promise<void> {
 
       const primaryHypothesis: RootCauseHypothesis = {
         hypothesisId: createHypothesisId(`hyp_${incidentNum}`),
-        category,
+        category: category as any,
         description: `Hypothesis description ${incidentNum}`,
         confidence: 0.85,
         uncertainty: 0.15,
         contributingFactors: ['high_load', 'connection_pool_starvation'],
         isActionable: true,
-      };
+      } as any;
 
       const postMortemReport: PostMortemReport = {
         reportId: pmrId,

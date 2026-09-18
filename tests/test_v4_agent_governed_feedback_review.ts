@@ -74,6 +74,7 @@ import {
   PolicyFeedbackReviewAuditEngine,
   type FeedbackReviewQueueEntry,
   type HumanReviewSubmission,
+  type HumanReviewDecisionRecord,
 } from '../src/core/policyFeedbackReview/index.js';
 import {
   createFeedbackProposalId,
