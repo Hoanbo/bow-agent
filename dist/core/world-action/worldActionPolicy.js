@@ -10,7 +10,7 @@
 import path from 'node:path';
 import { globalPDP } from '../policyDecisionPoint.js';
 import { WorldActionError } from './worldActionFailure.js';
-const PROTECTED_WORKSPACE = 'c:\\bow\\shopofbow';
+import { isPathProtected } from '../../config.js';
 const EXECUTION_WORKSPACE = path.resolve(process.cwd()).toLowerCase();
 export class WorldActionPolicyEngine {
     customRules = new Map();
@@ -21,8 +21,8 @@ export class WorldActionPolicyEngine {
         // 1. Strict Protected Workspace Isolation Check
         if (action.target) {
             const normalizedTarget = path.normalize(action.target).toLowerCase();
-            if (normalizedTarget.startsWith(PROTECTED_WORKSPACE)) {
-                throw new WorldActionError('SECURITY_VIOLATION', `Access to protected workspace "${action.target}" is strictly forbidden by constitutional policy.`, action.actionId, action.target);
+            if (isPathProtected(normalizedTarget) || isPathProtected(action.target)) {
+                throw new WorldActionError('SECURITY_VIOLATION', `Access to protected workspace "${action.target}" is strictly forbidden by policy.`, action.actionId, action.target);
             }
         }
         // 2. Custom policy rules evaluation

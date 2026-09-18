@@ -16,21 +16,15 @@
 // Quy tắc chú thích song ngữ (Quy tắc 1):
 // Tất cả các chú thích giải thích phải cung cấp phần tiếng Anh và tiếng Việt.
 import path from 'node:path';
+import { isPathProtected } from '../../config.js';
 import { ReleaseExecutionError, } from './releaseExecutionTypes.js';
 export class ReleaseExecutionPolicyEngine {
     /**
-     * Absolute canonical path for the protected workspace.
-     * Đường dẫn tuyệt đối chuẩn tắc cho không gian làm việc được bảo vệ.
-     */
-    static PROTECTED_WORKSPACE_NORMALIZED = path.normalize('C:/BOW/shopofbow').toLowerCase();
-    /**
-     * Asserts that a target path does not touch or traverse into C:\BOW\shopofbow.
-     * Khẳng định rằng đường dẫn mục tiêu không chạm vào hoặc đi vào C:\BOW\shopofbow.
+     * Asserts that a target path does not touch or traverse into protected workspace.
+     * Khẳng định rằng đường dẫn mục tiêu không chạm vào hoặc đi vào không gian làm việc được bảo vệ.
      */
     static assertNotProtectedWorkspace(targetPath) {
-        const normalized = path.normalize(path.resolve(targetPath)).toLowerCase();
-        if (normalized === ReleaseExecutionPolicyEngine.PROTECTED_WORKSPACE_NORMALIZED ||
-            normalized.startsWith(ReleaseExecutionPolicyEngine.PROTECTED_WORKSPACE_NORMALIZED + path.sep)) {
+        if (isPathProtected(targetPath)) {
             throw new ReleaseExecutionError('PROTECTED_WORKSPACE_VIOLATION', `Release target cannot be inside protected workspace "${targetPath}". Isolation invariant strictly enforced.`);
         }
     }

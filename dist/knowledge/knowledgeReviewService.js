@@ -2,6 +2,7 @@
 // BOW Agent V3.3 Phase 6.2 — Knowledge Operations, Priority Scoring & FAQ Quality Control
 import { getActiveShopAdapter } from '../contracts/index.js';
 import { normalizeText } from '../core/intentResolver.js';
+import { CONFIG } from '../config.js';
 import { sanitizeQueryText } from '../monitoring/demandAggregator.js';
 import { deduplicateKnowledgeGaps, normalizeKnowledgeQuestion, } from './knowledgeGapDetector.js';
 import { getGeminiApiKey, GEMINI_CONFIG } from '../gemini/config.js';
@@ -349,7 +350,8 @@ export async function generateKnowledgeSuggestion(gap) {
         return fallbackTemplate;
     }
     try {
-        const prompt = `Bạn là trợ lý Knowledge Base của ShopOfBow (Shop phần mềm và tài khoản bản quyền).
+        const persona = CONFIG.agentPersona || 'Bạn là trợ lý Knowledge Base chuyên nghiệp.';
+        const prompt = `${persona}
 Nhiệm vụ: Hãy phân tích câu hỏi của khách hàng dưới đây và đề xuất bản thảo FAQ chính thức cho Admin duyệt.
 
 Câu hỏi của khách: "${gap.originalQuestion}"

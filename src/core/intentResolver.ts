@@ -25,106 +25,171 @@ export function normalizeText(str: string): string {
     .trim();
 }
 
-// 2. Bóc tách thời hạn bằng các từ khóa ASCII thuần, trả về canonical có dấu chuẩn
-export function extractDuration(text: string): string | undefined {
+// ---------------------------------------------------------------------------
+// 2. GENERIC STRUCTURED INTENT & PURE LINGUISTIC DURATION EXTRACTION
+// ---------------------------------------------------------------------------
+
+export interface StructuredEntity {
+  name: string;
+  type?: string;
+  quantity?: number;
+}
+
+export interface StructuredTimeframe {
+  raw: string;
+  canonical: string;
+  unit: 'day' | 'week' | 'month' | 'year' | 'lifetime' | 'custom';
+  amount?: number;
+}
+
+export interface StructuredIntent {
+  action: string;
+  entities: StructuredEntity[];
+  timeframe?: StructuredTimeframe;
+  rawText: string;
+  confidence: number;
+  metadata?: Record<string, any>;
+}
+
+/**
+ * Trích xuất thời hạn tổng quát thuần ngôn ngữ (không phụ thuộc vào gói cước hay giá tiền cụ thể)
+ */
+export function extractGenericDuration(text: string): StructuredTimeframe | undefined {
   if (!text) return undefined;
   const norm = normalizeText(text);
 
-  // Gói Token
-  if (/\b(100m|100\s*trieu)\s*token\b/.test(norm)) return '100M Token';
-  if (/\b(50m|50\s*trieu)\s*token\b/.test(norm)) return '50M Token';
-  if (/\b(10m|10\s*trieu)\s*token\b/.test(norm)) return '10M Token';
+  const numYear = norm.match(/\b(\d+)\s*nam\b/);
+  if (numYear) {
+    const amt = parseInt(numYear[1], 10);
+    return { raw: numYear[0], canonical: `${amt} năm`, unit: 'year', amount: amt };
+  }
+  if (/\b(12\s*thang|12thang|12\s*t|1\s*nam|1nam|1n|ca\s*nam|365\s*ngay)\b/.test(norm)) {
+    return { raw: '1 năm', canonical: '1 năm', unit: 'year', amount: 1 };
+  }
 
-  // Preserve every explicit numeric month before any generic month alias.
-  const numericMonth = norm.match(/\b(\d+)\s*thang\b/);
-  if (numericMonth) return `${numericMonth[1]} tháng`;
+  const numMonth = norm.match(/\b(\d+)\s*thang\b/);
+  if (numMonth) {
+    const amt = parseInt(numMonth[1], 10);
+    return { raw: numMonth[0], canonical: `${amt} tháng`, unit: 'month', amount: amt };
+  }
+  if (/\b(6\s*thang|6thang|6\s*t|nua\s*nam|180\s*ngay)\b/.test(norm)) {
+    return { raw: '6 tháng', canonical: '6 tháng', unit: 'month', amount: 6 };
+  }
+  if (/\b(3\s*thang|3thang|3\s*t|1\s*quy|90\s*ngay)\b/.test(norm)) {
+    return { raw: '3 tháng', canonical: '3 tháng', unit: 'month', amount: 3 };
+  }
+  if (/\b(1\s*thang|1thang|1\s*t|30\s*ngay)\b/.test(norm)) {
+    return { raw: '1 tháng', canonical: '1 tháng', unit: 'month', amount: 1 };
+  }
 
-  // 6 tháng / nửa năm / 180 ngày (Ưu tiên trước 1 tháng)
-  if (/\b(6\s*thang|6thang|6\s*t|nua\s*nam|180\s*ngay)\b/.test(norm)) return '6 tháng';
+  const numWeek = norm.match(/\b(\d+)\s*tuan\b/);
+  if (numWeek) {
+    const amt = parseInt(numWeek[1], 10);
+    return { raw: numWeek[0], canonical: `${amt} tuần`, unit: 'week', amount: amt };
+  }
+  if (/\b(1\s*tuan|1tuan|7\s*ngay|tuan)\b/.test(norm)) {
+    return { raw: '1 tuần', canonical: '1 tuần', unit: 'week', amount: 1 };
+  }
 
-  // 12 tháng / 1 năm / cả năm / 365 ngày
-  if (/\b(12\s*thang|12thang|12\s*t|1\s*nam|1nam|1n|ca\s*nam|365\s*ngay)\b/.test(norm)) return '1 năm';
+  const numDay = norm.match(/\b(\d+)\s*ngay\b/);
+  if (numDay) {
+    const amt = parseInt(numDay[1], 10);
+    return { raw: numDay[0], canonical: `${amt} ngày`, unit: 'day', amount: amt };
+  }
 
-  // 3 tháng / 1 quý / 90 ngày
-  if (/\b(3\s*thang|3thang|3\s*t|1\s*quy|90\s*ngay)\b/.test(norm)) return '3 tháng';
-
-  // 1 tháng / 30 ngày
-  if (/\b(1\s*thang|1thang|1\s*t|30\s*ngay)\b/.test(norm)) return '1 tháng';
-
-  // 1 tuần / 7 ngày
-  if (/\b(1\s*tuan|1tuan|7\s*ngay|tuan)\b/.test(norm)) return '1 tuần';
-
-  // 3 năm
-  if (/\b(3\s*nam|3nam)\b/.test(norm)) return '3 năm';
-
-  // Vĩnh viễn
-  if (/\b(vinh\s*vien|tron\s*doi|lifetime)\b/.test(norm)) return 'vĩnh viễn';
+  if (/\b(vinh\s*vien|tron\s*doi|lifetime)\b/.test(norm)) {
+    return { raw: 'vĩnh viễn', canonical: 'vĩnh viễn', unit: 'lifetime' };
+  }
 
   return undefined;
 }
 
-// 3. Khớp chính xác gói cước (Plan) trong Database
-export function matchPlanByDuration(
-  plans: PlanItemResult[],
-  durationOrText: string,
-  fullQuery?: string
-): PlanItemResult | undefined {
-  if (!plans || plans.length === 0) return undefined;
-
-  const duration = extractDuration(durationOrText) || extractDuration(fullQuery || '') || durationOrText;
-  if (!duration) return undefined;
-
-  const normDuration = normalizeText(duration);
-
-  const equivalents: Record<string, string[]> = {
-    '6 thang': ['6 thang', '180 ngay', 'nua nam'],
-    '1 nam': ['1 nam', '12 thang', '365 ngay', 'ca nam'],
-    '3 thang': ['3 thang', '90 ngay', '1 quy'],
-    '1 thang': ['1 thang', '30 ngay'],
-    '1 tuan': ['1 tuan', '7 ngay'],
-    '3 nam': ['3 nam'],
-    'vinh vien': ['vinh vien', 'tron doi', 'lifetime'],
-  };
-
-  const terms = equivalents[normDuration] || [normDuration];
-
-  return plans.find((plan) => {
-    const planText = normalizeText(`${plan.name} ${plan.duration || ''}`);
-    return terms.some((term) => planText.includes(term));
-  });
+/**
+ * Trích xuất thời hạn dạng chuỗi chuẩn hoá
+ */
+export function extractDuration(text: string): string | undefined {
+  const generic = extractGenericDuration(text);
+  return generic ? generic.canonical : undefined;
 }
 
-
 /**
- * Trích xuất ngữ cảnh mua hàng (Deferred BUY Context) khi phát hiện multi-intent hoặc buy intent
+ * Phân tích ý định tổng quát có cấu trúc
  */
-export function extractDeferredBuyContext(text: string): DeferredContext {
-  // 1. Trích xuất thời hạn (duration) hoặc gói Token bằng regex toàn diện
-  const duration = extractDuration(text);
+export function resolveStructuredIntent(text: string): StructuredIntent {
+  const norm = normalizeText(text);
+  const timeframe = extractGenericDuration(text);
+  const entities: StructuredEntity[] = [];
 
-  // 2. Trích xuất tên sản phẩm nếu có đề cập
-  let productName: string | undefined = undefined;
-  const buyMatch = text.match(/(?:mua|cho tôi mua|tôi cần mua|tôi muốn mua|có muốn mua|muốn mua|cần mua|đăng ký|lấy|chốt)\s+([^,.\n?]+?)(?:\s+(?:nhưng|rồi|trước|giúp|được không|thì|nếu|xem)|$)/i);
-  if (buyMatch) {
-    let candidate = buyMatch[1].trim();
-    // Bỏ các từ thời hạn hoặc từ nối ra khỏi tên candidate
-    candidate = candidate
-      .replace(/100m\s*token|50m\s*token|10m\s*token|100m|50m|10m/gi, '')
-      .replace(/(?:6|12|3|1)\s*th[áa]ng|6th[áa]ng|12th[áa]ng|3th[áa]ng|1th[áa]ng|1\s*n[ăa]m|1n[ăa]m|3\s*n[ăa]m|3n[ăa]m|1\s*tu[ầa]n|1tu[ầa]n|n[ửu]a\s*n[ăa]m|c[ảa]\s*n[ăa]m|180\s*ng[àa]y|365\s*ng[àa]y|90\s*ng[àa]y|30\s*ng[àa]y|7\s*ng[àa]y/gi, '')
-      .replace(/\bgói\b|\btài\s*khoản\b|\bapp\b/gi, '')
-      .trim();
-
-    if (candidate.length >= 2 && !['này', 'nọ', 'đó', 'kia', 'ở đây', '1', '6', '12', '3'].includes(candidate.toLowerCase())) {
-      productName = candidate;
-    }
+  let action = 'inquire';
+  if (/\b(mua|lay|dat|chot|dang ky|order|buy)\b/.test(norm)) {
+    action = 'acquire';
+  } else if (/\b(bao hanh|loi|hong|sua|help|support)\b/.test(norm)) {
+    action = 'support';
+  } else if (/\b(nap|rut|so du|vi|wallet|balance)\b/.test(norm)) {
+    action = 'finance';
+  } else if (/\b(xin chao|hello|hi|chao ban)\b/.test(norm)) {
+    action = 'greet';
   }
 
   return {
-    intent: 'BUY',
-    duration,
-    productName,
-    rawQuery: text,
+    action,
+    entities,
+    timeframe,
+    rawText: text,
+    confidence: 0.9,
   };
+}
+
+// ---------------------------------------------------------------------------
+// 3. DOMAIN INTENT EXTENSION REGISTRY (Pluggable Domain Logic)
+// ---------------------------------------------------------------------------
+
+export interface DomainIntentExtension {
+  matchPlanByDuration?(plans: any[], durationQuery: string, fullQuery?: string): any;
+  extractDeferredBuyContext?(text: string): DeferredContext | undefined;
+  extractDomainDuration?(text: string): string | undefined;
+}
+
+let activeDomainIntentExtension: DomainIntentExtension | null = null;
+
+/**
+ * Đăng ký bộ mở rộng nhận diện ý định miền dọc (Domain Intent Extension)
+ * Cho phép adapter cắm các bộ khớp thời hạn, mã token, hoặc ngữ cảnh mua hàng tùy biến.
+ */
+export function registerDomainIntentExtension(ext: DomainIntentExtension): void {
+  activeDomainIntentExtension = ext;
+}
+
+export function getDomainIntentExtension(): DomainIntentExtension | null {
+  return activeDomainIntentExtension;
+}
+
+export function matchPlanByDuration(plans: any[], durationQuery: string, fullQuery?: string): any {
+  if (activeDomainIntentExtension?.matchPlanByDuration) {
+    return activeDomainIntentExtension.matchPlanByDuration(plans, durationQuery, fullQuery);
+  }
+  const normQ = normalizeText(durationQuery || fullQuery || '');
+  return (
+    plans.find((p: any) => {
+      const normD = normalizeText(p.duration || '');
+      const normN = normalizeText(p.name || '');
+      return normD === normQ || normN === normQ || normD.includes(normQ) || normQ.includes(normD);
+    }) || undefined
+  );
+}
+
+export function extractDeferredBuyContext(text: string): DeferredContext | undefined {
+  if (activeDomainIntentExtension?.extractDeferredBuyContext) {
+    return activeDomainIntentExtension.extractDeferredBuyContext(text);
+  }
+  return undefined;
+}
+
+export function extractShopDuration(text: string): string | undefined {
+  if (activeDomainIntentExtension?.extractDomainDuration) {
+    return activeDomainIntentExtension.extractDomainDuration(text);
+  }
+  return extractDuration(text) || undefined;
 }
 
 /**

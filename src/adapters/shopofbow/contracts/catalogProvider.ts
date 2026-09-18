@@ -8,7 +8,7 @@ import type {
   ProductItemResult,
   PlanItemResult,
   CategoryInfo,
-} from '../core/types.js';
+} from '../../../core/types.js';
 
 export interface CatalogProvider {
   /**

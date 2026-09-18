@@ -7,14 +7,15 @@
 // DIAGNOSIS != AUTHORIZATION
 // CONFIDENCE != AUTHORIZATION
 // High diagnosis confidence (e.g. 0.99) NEVER grants automatic authorization.
+import { isPathProtected } from '../../config.js';
 export class SupervisorRecoveryPolicy {
     evaluate(plan, target) {
         // 1. Absolute Protected Workspace Invariant
-        if (target && target.toLowerCase().includes('shopofbow')) {
+        if (target && isPathProtected(target)) {
             return {
                 allowed: false,
                 requiresHumanGate: false,
-                reason: 'DENIED: Protected workspace C:\\BOW\\shopofbow is strictly forbidden.',
+                reason: 'DENIED: Protected workspace target is strictly forbidden by path protection policy.',
             };
         }
         // 2. Critical Blocked or Inconclusive

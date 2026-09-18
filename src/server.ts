@@ -20,6 +20,7 @@ import { globalRequestGuard, RequestGuard } from './security/requestGuard.js';
 import { WebhookVerifier } from './security/webhookVerifier.js';
 import { globalPDP } from './core/policyDecisionPoint.js';
 import { globalCircuitBreaker } from './llm/resilience.js';
+import { globalBodyRegistry, validateBodyPsk, getBodyPsk, type BodyCommand, type BodyCommandResult, type BodyConnectionSender } from './core/bodyProtocol/index.js';
 
 
 
@@ -45,6 +46,12 @@ export class BowCentralAgentServer {
 
   public async start(): Promise<void> {
     if (this.isRunning) return;
+
+    // Khởi tạo và xác thực Pre-Shared Key (PSK) cho BodyProtocol
+    const bodyPsk = getBodyPsk();
+    if (CONFIG.env !== 'test') {
+      console.log(`[BOW-SERVER] BodyProtocol PSK đã sẵn sàng (độ dài: ${bodyPsk.length} ký tự).`);
+    }
 
     this.server = http.createServer(async (req, res) => {
       // Never emit wildcard CORS in production. Development stays convenient,
@@ -404,6 +411,37 @@ export class BowCentralAgentServer {
         return;
       }
 
+      // 15. BodyProtocol: Tra cứu danh sách Bodies đang hoạt động
+      if (url.pathname === '/api/body/list' && req.method === 'GET') {
+        const bodies = globalBodyRegistry.getAllActiveBodies().map((b) => ({
+          bodyId: b.bodyId,
+          bodyType: b.bodyType,
+          name: b.name,
+          capabilities: Array.from(b.capabilities.values()),
+          registeredAt: b.registeredAt,
+          lastHeartbeatAt: b.lastHeartbeatAt,
+        }));
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, count: bodies.length, bodies, correlationId }));
+        return;
+      }
+
+      // 16. BodyProtocol: Điều phối gửi lệnh trực tiếp tới Body
+      if (url.pathname === '/api/body/command' && req.method === 'POST') {
+        const body = await parseJsonBody();
+        const cmdResult = await globalBodyRegistry.executeBodyCommand({
+          commandId: body.commandId || `cmd_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+          bodyId: body.bodyId,
+          capability: body.capability,
+          params: body.params || {},
+          correlationId,
+          timeoutMs: body.timeoutMs,
+        });
+        res.writeHead(cmdResult.success ? 200 : 500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ ...cmdResult, correlationId }));
+        return;
+      }
+
       // 404
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Endpoint not found', correlationId }));
@@ -424,9 +462,27 @@ export class BowCentralAgentServer {
           return done(false, 429, 'Rate Limit Exceeded');
         }
 
-        if (CONFIG.env !== 'production') return done(true);
         const url = new URL(info.req.url || '/', `http://${info.req.headers.host || 'localhost'}`);
         const path = url.pathname;
+
+        // Route: /ws/body (BodyProtocol)
+        // Bắt buộc xác thực Pre-Shared Key (PSK) qua HTTP Header "Authorization: Bearer <PSK>"
+        if (path === '/ws/body' || path.startsWith('/ws/body')) {
+          const authHeader = info.req.headers['authorization'];
+          let bearerToken: string | undefined;
+          if (typeof authHeader === 'string' && authHeader.startsWith('Bearer ')) {
+            bearerToken = authHeader.slice(7).trim();
+          }
+
+          if (!bearerToken || !validateBodyPsk(bearerToken)) {
+            console.warn(`[BOW-SERVER] ⚠️ TỪ CHỐI kết nối /ws/body (401 Unauthorized): Thiếu hoặc sai Pre-Shared Key (PSK) từ IP: ${clientIp}`);
+            return done(false, 401, 'Unauthorized');
+          }
+
+          return done(true);
+        }
+
+        if (CONFIG.env !== 'production') return done(true);
         const robotPath = path.includes('robot') || path.includes('audio-stream');
         const desktopPath = path.includes('desktop');
         if (!robotPath && !desktopPath) return done(true);
@@ -444,7 +500,11 @@ export class BowCentralAgentServer {
       const pathname = req.url ? new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname : '/';
       const isRobotConnection = pathname.includes('robot') || pathname.includes('audio-stream');
       const isDesktopConnection = pathname.includes('desktop');
+      const isBodyConnection = pathname.includes('body');
       console.log(`[BOW-SERVER] WebSocket client connected on path: ${pathname}`);
+
+      let connectedBodyId: string | undefined;
+      const pendingCommandResolvers = new Map<string, (res: BodyCommandResult) => void>();
 
       // Nếu client kết nối từ Robot hoặc Audio Stream, đăng ký nhận các sự kiện chủ động và lệnh ngắt (robot.interrupt)
       let unregisterRobotListener: (() => void) | undefined;
@@ -474,6 +534,85 @@ export class BowCentralAgentServer {
           }
 
           const payload = JSON.parse(data.toString());
+
+          // 2. BodyProtocol Handlers (Body Advertisement, Heartbeat, Command Result)
+          if (payload.type === 'body.advertise') {
+            const ad = payload.advertisement;
+            connectedBodyId = ad.bodyId;
+
+            const sender: BodyConnectionSender = {
+              sendCommand: async (command: BodyCommand): Promise<BodyCommandResult> => {
+                return new Promise((resolve) => {
+                  const timeoutMs = command.timeoutMs || 10000;
+                  const timer = setTimeout(() => {
+                    pendingCommandResolvers.delete(command.commandId);
+                    resolve({
+                      commandId: command.commandId,
+                      success: false,
+                      error: `COMMAND_TIMEOUT: Body command execution timed out after ${timeoutMs}ms.`,
+                    });
+                  }, timeoutMs);
+
+                  pendingCommandResolvers.set(command.commandId, (res: BodyCommandResult) => {
+                    clearTimeout(timer);
+                    resolve(res);
+                  });
+
+                  if (ws.readyState === WebSocket.OPEN) {
+                    ws.send(JSON.stringify({
+                      type: 'body.command',
+                      command,
+                    }));
+                  } else {
+                    clearTimeout(timer);
+                    pendingCommandResolvers.delete(command.commandId);
+                    resolve({
+                      commandId: command.commandId,
+                      success: false,
+                      error: 'BODY_SOCKET_CLOSED: WebSocket connection to body is not open.',
+                    });
+                  }
+                });
+              },
+              isAlive: () => ws.readyState === WebSocket.OPEN,
+              close: (reason?: string) => {
+                try {
+                  ws.close(1000, reason);
+                } catch {
+                  // Ignore
+                }
+              },
+            };
+
+            globalBodyRegistry.registerBody(ad, sender);
+            ws.send(JSON.stringify({
+              type: 'body.advertise_ack',
+              bodyId: ad.bodyId,
+              status: 'REGISTERED',
+              timestamp: Date.now(),
+            }));
+            return;
+          }
+
+          if (payload.type === 'body.heartbeat') {
+            if (payload.bodyId) {
+              globalBodyRegistry.recordHeartbeat(payload.bodyId);
+            }
+            ws.send(JSON.stringify({ type: 'body.heartbeat_ack', timestamp: Date.now() }));
+            return;
+          }
+
+          if (payload.type === 'body.command_result') {
+            const res = payload.result as BodyCommandResult;
+            if (res && res.commandId) {
+              const resolver = pendingCommandResolvers.get(res.commandId);
+              if (resolver) {
+                pendingCommandResolvers.delete(res.commandId);
+                resolver(res);
+              }
+            }
+            return;
+          }
 
           // Ping / Heartbeat
           if (payload.type === 'ping' || payload.type === 'heartbeat') {
@@ -505,8 +644,8 @@ export class BowCentralAgentServer {
             return;
           }
 
-          // Desktop Command
-          if (isDesktopConnection) {
+          // Desktop Command (Legacy adapter)
+          if (isDesktopConnection && !payload.type?.startsWith('body.')) {
             const result = await desktopChannelAdapter.executeCommand(payload);
             ws.send(JSON.stringify({ ...result, requestId: payload.requestId }));
             return;
@@ -529,6 +668,9 @@ export class BowCentralAgentServer {
       });
 
       ws.on('close', () => {
+        if (connectedBodyId) {
+          globalBodyRegistry.unregisterBody(connectedBodyId, 'CONNECTION_CLOSED');
+        }
         if (unregisterRobotListener) {
           unregisterRobotListener();
         }

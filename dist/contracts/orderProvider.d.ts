@@ -18,16 +18,7 @@ export interface WarrantyStatusResult {
     status: string;
 }
 export interface OrderProvider {
-    /**
-     * Retrieve a specific order by ID or payment code
-     */
     getOrder(orderIdOrCode: string): Promise<AgentOrderSummary | null>;
-    /**
-     * Retrieve order history for a specific customer
-     */
     getUserOrders(userId: string, limit?: number): Promise<AgentOrderSummary[]>;
-    /**
-     * Check warranty eligibility for an order (e.g. active warranty period, cancelled status)
-     */
     getWarrantyStatus(orderId: string): Promise<WarrantyStatusResult>;
 }

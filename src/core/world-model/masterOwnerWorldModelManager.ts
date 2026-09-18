@@ -23,7 +23,8 @@ import type {
 import type { HostEnvironment } from '../host/hostEnvironmentTypes.js';
 import { globalHostDiscovery } from '../host/hostDiscoveryEngine.js';
 import { globalCapabilityDiscoveryBridge } from '../host/capabilityDiscoveryBridge.js';
-import { MASTER_OWNER_ID, ECOSYSTEM_ID, RUNTIME_IDENTITY } from '../architecture/masterArchitectureIdentity.js';
+import { MASTER_OWNER_ID, ECOSYSTEM_ID, RUNTIME_IDENTITY, REGISTERED_PROJECTS } from '../architecture/masterArchitectureIdentity.js';
+import { isPathProtected } from '../../config.js';
 
 export class MasterOwnerWorldModelManager {
   private readonly _storagePath: string;
@@ -31,9 +32,9 @@ export class MasterOwnerWorldModelManager {
   private readonly _stalenessThresholdMs: number;
 
   constructor(storageDir = 'data/world-model', stalenessThresholdMs = 60000) {
-    // Invariant check: storage cannot touch shopofbow
-    if (storageDir.includes('shopofbow') || storageDir.includes('C:\\BOW\\shopofbow')) {
-      throw new Error('SECURITY_VIOLATION: World model storage cannot be located within protected workspace C:\\BOW\\shopofbow.');
+    // Invariant check: storage cannot touch protected paths
+    if (isPathProtected(storageDir)) {
+      throw new Error(`SECURITY_VIOLATION: World model storage cannot be located within protected path "${storageDir}".`);
     }
 
     this._storagePath = path.join(storageDir, 'world_model_snapshot.json');
@@ -64,18 +65,26 @@ export class MasterOwnerWorldModelManager {
         decisions: ['ground_capabilities_empirically'],
         outcomes: [],
       },
-      shopofbow: {
-        projectId: 'shopofbow',
-        name: 'ShopOfBow (Independent Project)',
-        isProtected: true,
-        relationship: 'OPTIONAL_SURFACE',
-        goals: [],
-        tasks: [],
-        problems: [],
-        decisions: [],
-        outcomes: [],
-      },
     };
+
+    // Dynamically populate from REGISTERED_PROJECTS
+    for (const [projId, desc] of Object.entries(REGISTERED_PROJECTS)) {
+      if (projId !== 'personal_core') {
+        const rel: 'PERSONAL' | 'OPTIONAL_SURFACE' | 'FUTURE_APPLICATION' =
+          desc.relationship === 'OPTIONAL_SURFACE' ? 'OPTIONAL_SURFACE' : 'FUTURE_APPLICATION';
+        initialProjects[projId] = {
+          projectId: desc.projectId,
+          name: desc.name,
+          isProtected: Boolean(desc.protectedWorkspace),
+          relationship: rel,
+          goals: [],
+          tasks: [],
+          problems: [],
+          decisions: [],
+          outcomes: [],
+        };
+      }
+    }
 
     const payload = JSON.stringify({
       ownerId: MASTER_OWNER_ID,
@@ -134,6 +143,25 @@ export class MasterOwnerWorldModelManager {
 
   public isStale(): boolean {
     return Date.now() - this._currentSnapshot.temporalState.observedAt > this._stalenessThresholdMs;
+  }
+
+  public registerProject(project: ProjectModel): void {
+    this._currentSnapshot = {
+      ...this._currentSnapshot,
+      projects: {
+        ...this._currentSnapshot.projects,
+        [project.projectId]: project,
+      },
+      temporalState: {
+        ...this._currentSnapshot.temporalState,
+        updatedAt: Date.now(),
+      },
+    };
+    this._recalculateHash();
+  }
+
+  public getProjects(): Record<string, ProjectModel> {
+    return { ...this._currentSnapshot.projects };
   }
 
   public refreshObservations(): void {

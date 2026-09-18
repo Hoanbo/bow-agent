@@ -3,6 +3,7 @@
 
 import { getActiveShopAdapter } from '../contracts/index.js';
 import { normalizeText } from '../core/intentResolver.js';
+import { CONFIG } from '../config.js';
 import { sanitizeQueryText } from '../monitoring/demandAggregator.js';
 import {
   deduplicateKnowledgeGaps,
@@ -474,7 +475,8 @@ export async function generateKnowledgeSuggestion(gap: {
   }
 
   try {
-    const prompt = `Bạn là trợ lý Knowledge Base của ShopOfBow (Shop phần mềm và tài khoản bản quyền).
+    const persona = CONFIG.agentPersona || 'Bạn là trợ lý Knowledge Base chuyên nghiệp.';
+    const prompt = `${persona}
 Nhiệm vụ: Hãy phân tích câu hỏi của khách hàng dưới đây và đề xuất bản thảo FAQ chính thức cho Admin duyệt.
 
 Câu hỏi của khách: "${gap.originalQuestion}"

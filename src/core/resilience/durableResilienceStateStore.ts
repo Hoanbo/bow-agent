@@ -16,6 +16,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { isPathProtected } from '../../config.js';
 import type {
   DurableResilienceStateRecord,
   ResilienceHealthState,
@@ -54,8 +55,8 @@ export class DurableResilienceStateStore {
 
   constructor(options?: { storageDir?: string; sessionId?: string; ownerId?: string }) {
     const rawDir = options?.storageDir ?? path.join('data', 'resilience', options?.sessionId ?? 'session_default');
-    if (rawDir.includes('shopofbow') || rawDir.includes('C:\\BOW\\shopofbow')) {
-      throw new Error('SECURITY_VIOLATION: Resilience state store cannot target protected workspace C:\\BOW\\shopofbow.');
+    if (isPathProtected(rawDir)) {
+      throw new Error('SECURITY_VIOLATION: Resilience state store cannot target protected workspace.');
     }
     this._storageDir = rawDir;
     this._filePath = path.join(this._storageDir, 'resilience_state.json');
@@ -89,8 +90,8 @@ export class DurableResilienceStateStore {
     createdAt?: number;
   }): DurableResilienceStateRecord {
     // Protected workspace check
-    if (this._storageDir.includes('shopofbow') || this._filePath.includes('shopofbow')) {
-      throw new Error('SECURITY_VIOLATION: Resilience state store cannot target protected workspace C:\\BOW\\shopofbow.');
+    if (isPathProtected(this._storageDir) || isPathProtected(this._filePath)) {
+      throw new Error('SECURITY_VIOLATION: Resilience state store cannot target protected workspace.');
     }
 
     // Scrub any unexpected credentials or tokens (fail-closed invariant)

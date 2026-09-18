@@ -13,31 +13,19 @@
 import path from 'node:path';
 import fs from 'node:fs';
 import { SandboxError } from './sandboxTypes.js';
+import { isPathProtected } from '../../config.js';
 export class SandboxPathGuard {
-    // Canonical normalized protected workspace substrings.
-    // Các chuỗi con đại diện cho không gian làm việc được bảo vệ chuẩn hóa.
-    static FORBIDDEN_WORKSPACE_PATTERNS = [
-        'c:/bow/shopofbow',
-        'c:\\bow\\shopofbow',
-        '/bow/shopofbow',
-        '\\bow\\shopofbow',
-        'shopofbow',
-    ];
     /**
-     * Asserts that a path string does not reference or target the protected workspace C:\BOW\shopofbow.
-     * Khẳng định rằng chuỗi đường dẫn không tham chiếu hoặc nhắm tới không gian làm việc được bảo vệ C:\BOW\shopofbow.
+     * Asserts that a path string does not reference or target protected paths from configuration.
+     * Khẳng định rằng chuỗi đường dẫn không tham chiếu hoặc nhắm tới đường dẫn được bảo vệ từ cấu hình.
      */
     static assertNotProtectedWorkspace(rawPath) {
         if (!rawPath)
             return;
-        const normalized = rawPath.toLowerCase().replace(/\\/g, '/');
-        for (const pattern of this.FORBIDDEN_WORKSPACE_PATTERNS) {
-            const normalizedPattern = pattern.toLowerCase().replace(/\\/g, '/');
-            if (normalized.includes(normalizedPattern)) {
-                // Strict invariant: immediate fail-closed SECURITY_VIOLATION without reading or touching the target.
-                // Bất biến nghiêm ngặt: đóng thất bại ngay lập tức với SECURITY_VIOLATION mà không đọc hay chạm tới đích.
-                throw new SandboxError('SECURITY_VIOLATION', `Access to protected workspace C:\\BOW\\shopofbow is permanently forbidden: "${rawPath}"`);
-            }
+        if (isPathProtected(rawPath)) {
+            // Strict invariant: immediate fail-closed SECURITY_VIOLATION without reading or touching the target.
+            // Bất biến nghiêm ngặt: đóng thất bại ngay lập tức với SECURITY_VIOLATION mà không đọc hay chạm tới đích.
+            throw new SandboxError('SECURITY_VIOLATION', `Access to protected path is permanently forbidden: "${rawPath}"`);
         }
     }
     /**

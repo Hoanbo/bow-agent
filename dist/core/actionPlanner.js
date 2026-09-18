@@ -220,3 +220,43 @@ export function planCreateTicketAction(context) {
         requiresConfirmation: false,
     }, context);
 }
+/**
+ * Lập kế hoạch thực hiện hành động nghiệp vụ trừu tượng (Generic / Commerce Action)
+ * Cho phép các Adapter mở rộng hành động tùy biến mà không cần phụ thuộc loại cố định.
+ */
+export function planGenericAction(action, context) {
+    return validateAndFinalizeAction({
+        type: (action.type || 'COMMERCE_ACTION'),
+        label: action.label,
+        icon: action.icon || '⚡',
+        payload: action.payload || {},
+        requiresConfirmation: !!action.requiresConfirmation,
+    }, context);
+}
+import { globalBodyRegistry } from './bodyProtocol/index.js';
+/**
+ * Lập kế hoạch thực hiện hành động trên Thể xác ngoại vi (Body Capability Action).
+ * Tra cứu nguồn capability từ BodyRegistry.findBodiesWithCapability(...)
+ */
+export function planBodyAction(capabilityName, params, context, targetBodyId) {
+    const bodies = targetBodyId
+        ? (globalBodyRegistry.getBody(targetBodyId) ? [globalBodyRegistry.getBody(targetBodyId)] : [])
+        : globalBodyRegistry.findBodiesWithCapability(capabilityName);
+    if (bodies.length === 0) {
+        return null;
+    }
+    const candidate = bodies[0];
+    const descriptor = candidate.capabilities.get(capabilityName);
+    const risk = descriptor?.riskLevel || 'low';
+    return validateAndFinalizeAction({
+        type: 'BODY_ACTION',
+        label: `Chạy ${capabilityName} trên ${candidate.name}`,
+        icon: '🦾',
+        payload: {
+            capability: capabilityName,
+            bodyId: candidate.bodyId,
+            params,
+        },
+        requiresConfirmation: risk === 'high' || risk === 'critical',
+    }, context);
+}

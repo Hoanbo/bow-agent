@@ -1,7 +1,7 @@
 // src/tools/shopTools.ts
 // BOW AGENT V3.3 — E-COMMERCE & SHOP OF BOW AGENT PLUGINS
 
-import { toolRegistry } from './registry.js';
+import { toolRegistry } from '../../tools/registry.js';
 import {
   searchProducts,
   getMyOrders,
@@ -10,8 +10,8 @@ import {
   getActiveCoupons,
   getFaqsAndGuides,
   getSupportChannels,
-} from '../core/tools.js';
-import { getActiveShopAdapter } from '../contracts/shopAdapter.js';
+} from '../../core/tools.js';
+import { getActiveShopAdapter } from './shopAdapter.js';
 
 // 1. Search Products Tool
 toolRegistry.register({
@@ -357,7 +357,7 @@ toolRegistry.register({
   },
 });
 
-export * from '../core/tools.js';
+export * from '../../core/tools.js';
 
 
 

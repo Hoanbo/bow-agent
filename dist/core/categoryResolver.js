@@ -1,4 +1,4 @@
-import { getActiveShopAdapter } from '../contracts/index.js';
+import { getActiveCommerceProvider } from './commerceRegistry.js';
 // Bộ Alias chuẩn hóa cho các danh mục canonical từ database
 const CATEGORY_ALIASES = {
     'ai-tools': [
@@ -76,11 +76,21 @@ export async function getAllCategories(catalogProvider) {
         return cachedCategories;
     }
     try {
-        const provider = catalogProvider || getActiveShopAdapter().catalog;
-        const categories = await provider.getCategories();
-        cachedCategories = categories;
-        lastFetchTime = now;
-        return cachedCategories;
+        if (catalogProvider) {
+            cachedCategories = await catalogProvider.getCategories();
+            lastFetchTime = now;
+            return cachedCategories;
+        }
+        const commerce = getActiveCommerceProvider();
+        if (commerce.lookupEntity) {
+            const result = await commerce.lookupEntity('categories', '');
+            if (Array.isArray(result)) {
+                cachedCategories = result;
+                lastFetchTime = now;
+                return cachedCategories;
+            }
+        }
+        return cachedCategories || [];
     }
     catch (err) {
         console.error('[Category Resolver] Error fetching categories:', err);

@@ -1,3 +1,16 @@
+import { CONFIG } from '../config.js';
+let customProductIconResolver = null;
+export function setProductIconResolver(resolver) {
+    customProductIconResolver = resolver;
+}
+export function getProductIcon(productName) {
+    if (customProductIconResolver) {
+        const icon = customProductIconResolver(productName);
+        if (icon)
+            return icon;
+    }
+    return '📦';
+}
 /**
  * Format thông tin chi tiết sản phẩm và các plan
  */
@@ -46,7 +59,8 @@ export function formatCatalogOverviewResponse(products, categories) {
             unassignedCount++;
         }
     });
-    let msg = `🛍️ **Shop of BOW hiện đang có ${products.length} sản phẩm bản quyền:**\n\n`;
+    const storeName = CONFIG.agentPersona || 'Hệ thống';
+    let msg = `🛍️ **${storeName} hiện đang có ${products.length} sản phẩm:**\n\n`;
     // 1. Phân loại theo danh mục
     if (categories.length > 0) {
         msg += `📂 **Danh mục sản phẩm:**\n`;
@@ -168,15 +182,7 @@ export function formatCompactOrdersResponse(rawOrders, queryText) {
             msg += `   👉 [Xem giao dịch ví →](/dashboard?tab=wallet)\n\n`;
         }
         else {
-            const icon = (o.product_name || '').toLowerCase().includes('capcut')
-                ? '🎬'
-                : (o.product_name || '').toLowerCase().includes('netflix') || (o.product_name || '').toLowerCase().includes('youtube')
-                    ? '🍿'
-                    : (o.product_name || '').toLowerCase().includes('canva') || (o.product_name || '').toLowerCase().includes('figma')
-                        ? '🎨'
-                        : (o.product_name || '').toLowerCase().includes('gpt') || (o.product_name || '').toLowerCase().includes('ai')
-                            ? '🤖'
-                            : '📦';
+            const icon = getProductIcon(o.product_name || '');
             const planText = o.plan_label ? `${o.plan_label} · ` : '';
             msg += `${icon} **${o.product_name}**\n`;
             msg += `   ${planText}${statusText} · **${priceNum.toLocaleString('vi-VN')}đ**\n`;

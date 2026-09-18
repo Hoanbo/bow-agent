@@ -1,6 +1,9 @@
-import type { CatalogProvider } from '../contracts/index.js';
-import { getActiveShopAdapter } from '../contracts/index.js';
 import type { CategoryInfo, CategoryResolution } from './types.js';
+import { getActiveCommerceProvider } from './commerceRegistry.js';
+
+export interface CategoryLookupProvider {
+  getCategories(): Promise<CategoryInfo[]>;
+}
 
 export type { CategoryInfo, CategoryResolution };
 
@@ -78,7 +81,7 @@ const CACHE_TTL_MS = 60 * 1000; // 1 phút cache
  * Lấy danh sách danh mục từ Database
  */
 export async function getAllCategories(
-  catalogProvider?: CatalogProvider
+  catalogProvider?: CategoryLookupProvider
 ): Promise<CategoryInfo[]> {
   const now = Date.now();
   if (!catalogProvider && cachedCategories && now - lastFetchTime < CACHE_TTL_MS) {
@@ -86,11 +89,23 @@ export async function getAllCategories(
   }
 
   try {
-    const provider = catalogProvider || getActiveShopAdapter().catalog;
-    const categories = await provider.getCategories();
-    cachedCategories = categories;
-    lastFetchTime = now;
-    return cachedCategories;
+    if (catalogProvider) {
+      cachedCategories = await catalogProvider.getCategories();
+      lastFetchTime = now;
+      return cachedCategories;
+    }
+
+    const commerce = getActiveCommerceProvider();
+    if (commerce.lookupEntity) {
+      const result = await commerce.lookupEntity('categories', '');
+      if (Array.isArray(result)) {
+        cachedCategories = result as CategoryInfo[];
+        lastFetchTime = now;
+        return cachedCategories;
+      }
+    }
+
+    return cachedCategories || [];
   } catch (err) {
     console.error('[Category Resolver] Error fetching categories:', err);
     return cachedCategories || [];

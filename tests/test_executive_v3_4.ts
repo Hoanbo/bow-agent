@@ -1,5 +1,9 @@
 // tests/test_executive_v3_4.ts
 // BOW AGENT V3.4 — EXECUTIVE ADMIN, DUAL-PERSONA & PROACTIVE ROBOT TEST SUITE
+// NOTE: Test này kiểm tra hành vi TÍCH HỢP với adapter shopofbow cụ thể, không phải hành vi core thuần.
+
+import { bootstrapShopOfBowAdapter } from '../src/adapters/shopofbow/index.js';
+bootstrapShopOfBowAdapter();
 
 import {
   // Contracts & Adapters

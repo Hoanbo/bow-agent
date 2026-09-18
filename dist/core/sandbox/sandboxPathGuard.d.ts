@@ -1,8 +1,7 @@
 export declare class SandboxPathGuard {
-    private static readonly FORBIDDEN_WORKSPACE_PATTERNS;
     /**
-     * Asserts that a path string does not reference or target the protected workspace C:\BOW\shopofbow.
-     * Khẳng định rằng chuỗi đường dẫn không tham chiếu hoặc nhắm tới không gian làm việc được bảo vệ C:\BOW\shopofbow.
+     * Asserts that a path string does not reference or target protected paths from configuration.
+     * Khẳng định rằng chuỗi đường dẫn không tham chiếu hoặc nhắm tới đường dẫn được bảo vệ từ cấu hình.
      */
     static assertNotProtectedWorkspace(rawPath: string): void;
     /**

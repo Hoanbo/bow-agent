@@ -9,3 +9,4 @@ export * from './llmProvider.js';
 export * from './robotAdapter.js';
 export * from './shopAdapter.js';
 export * from './adminProvider.js';
+export * from './commerceProvider.js';

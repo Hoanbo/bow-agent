@@ -6,11 +6,14 @@ import crypto from 'node:crypto';
 import { globalIdempotencyStore } from '../core/idempotencyStore.js';
 import { globalAuditLedger } from '../core/auditLedger.js';
 import { globalGovernedPEP } from '../core/policyEnforcement/index.js';
+import { globalBodyRegistry } from '../core/bodyProtocol/index.js';
 export class ToolRegistry {
     tools = new Map();
     pep;
-    constructor(pep) {
+    bodyRegistry;
+    constructor(pep, bodyRegistry) {
         this.pep = pep ?? globalGovernedPEP;
+        this.bodyRegistry = bodyRegistry ?? globalBodyRegistry;
     }
     getPEP() {
         return this.pep;
@@ -19,13 +22,69 @@ export class ToolRegistry {
         this.tools.set(tool.name, tool);
     }
     getTool(name) {
-        return this.tools.get(name);
+        // 1. Kiểm tra static tools đã đăng ký trực tiếp
+        const staticTool = this.tools.get(name);
+        if (staticTool)
+            return staticTool;
+        // 2. Tra cứu động từ các Body đang kết nối thông qua BodyRegistry
+        const matchingBodies = this.bodyRegistry.findBodiesWithCapability(name);
+        if (matchingBodies.length > 0) {
+            const candidateBody = matchingBodies[0];
+            const descriptor = candidateBody.capabilities.get(name);
+            return {
+                name,
+                description: descriptor?.description || `Body capability provided by ${candidateBody.name}`,
+                parameters: descriptor?.parameters || { type: 'object', properties: {} },
+                execute: async (args, context) => {
+                    const res = await this.bodyRegistry.executeBodyCommand({
+                        commandId: `cmd_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+                        bodyId: candidateBody.bodyId,
+                        capability: name,
+                        params: args || {},
+                        correlationId: context?.correlationId,
+                    });
+                    if (!res.success) {
+                        throw new Error(`BODY_COMMAND_FAILED: ${res.error || 'Execution failed on body'}`);
+                    }
+                    return res.data;
+                },
+            };
+        }
+        return undefined;
     }
     getAllTools() {
-        return Array.from(this.tools.values());
+        const combined = new Map(this.tools);
+        // Bổ sung các capability từ tất cả các Body đang hoạt động
+        for (const body of this.bodyRegistry.getAllActiveBodies()) {
+            for (const [capName, descriptor] of body.capabilities.entries()) {
+                if (!combined.has(capName)) {
+                    combined.set(capName, {
+                        name: capName,
+                        description: descriptor.description || `Body capability provided by ${body.name}`,
+                        parameters: descriptor.parameters || { type: 'object', properties: {} },
+                        execute: async (args, context) => {
+                            const res = await this.bodyRegistry.executeBodyCommand({
+                                commandId: `cmd_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+                                bodyId: body.bodyId,
+                                capability: capName,
+                                params: args || {},
+                                correlationId: context?.correlationId,
+                            });
+                            if (!res.success) {
+                                throw new Error(`BODY_COMMAND_FAILED: ${res.error || 'Execution failed on body'}`);
+                            }
+                            return res.data;
+                        },
+                    });
+                }
+            }
+        }
+        return Array.from(combined.values());
     }
     hasTool(name) {
-        return this.tools.has(name);
+        if (this.tools.has(name))
+            return true;
+        return this.bodyRegistry.findBodiesWithCapability(name).length > 0;
     }
     /**
      * Execute tool with authoritative Level 4 governance boundary:

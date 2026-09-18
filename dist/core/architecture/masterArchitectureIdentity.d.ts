@@ -21,6 +21,7 @@ export interface ProjectDescriptor {
     readonly protectedWorkspace?: string;
 }
 export declare const REGISTERED_PROJECTS: Record<string, ProjectDescriptor>;
+export declare function registerArchitectureProject(desc: ProjectDescriptor): void;
 export declare class MasterArchitectureIdentity {
     private readonly _masterOwnerId;
     private readonly _ecosystemId;

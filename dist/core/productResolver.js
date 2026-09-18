@@ -12,6 +12,20 @@ export function normalizeString(str) {
         .replace(/\s+/g, ' ')
         .trim();
 }
+const registeredCapabilityTerms = new Set();
+/**
+ * Đăng ký các từ khóa năng lực / nhu cầu miền dọc (Domain Capability Terms)
+ * Ngăn không cho các từ khóa này chiếm dụng Layers 1-6 thay vì thương hiệu sản phẩm.
+ */
+export function registerProductCapabilityTerms(terms) {
+    for (const t of terms) {
+        if (t)
+            registeredCapabilityTerms.add(normalizeString(t));
+    }
+}
+export function getProductCapabilityTerms() {
+    return registeredCapabilityTerms;
+}
 import { extractDuration } from './intentResolver.js';
 /**
  * Trích xuất parameter thời hạn và tiêu chí từ câu hỏi
@@ -205,14 +219,9 @@ export async function resolveProductQuery(rawQuery) {
         };
     }
     const scored = [];
-    // Capability and demand terms that should participate in Layer 7 semantic scoring
-    // but must NOT hijack Layers 1-6 as exact product brand aliases.
-    const capabilityTerms = new Set([
-        'xem phim', 'xem phim online', 'phim', 'phim bo', 'phim truc tuyen', 'phim trung quoc', 'phim hoa ngu',
-        'nghe nhac', 'nhac', 'am nhac', 'podcast', 'giai tri', 'chinh anh', 'edit video', 'lam video', 'hoc tieng anh', 'dich thuat', 'streaming',
-        'xem video', 'video', 'giai tri video', 'streaming video', 'truyen hinh truc tuyen', 'xem tv online',
-        'drama', 'drama trung quoc', 'kenh truyen hinh',
-    ]);
+    // Capability and demand terms registered by domain adapters (e.g. ShopOfBow)
+    // Participate in Layer 7 semantic scoring but must NOT hijack Layers 1-6 as exact product brand aliases.
+    const capabilityTerms = getProductCapabilityTerms();
     for (const p of allProducts) {
         const normName = normalizeString(p.name);
         const normSlug = normalizeString(p.slug);

@@ -20,7 +20,12 @@ export interface BowAgentEnvConfig {
     speechPreferLocal: boolean;
     corsAllowedOrigins: string[];
     maxRequestBodyBytes: number;
+    protectedPaths: string[];
+    agentPersona: string;
 }
 export declare const CONFIG: BowAgentEnvConfig;
+export declare function getProtectedPaths(): string[];
+export declare function setProtectedPaths(paths: string[]): void;
+export declare function isPathProtected(rawPath: string): boolean;
 export declare function isDesktopAuthValid(token?: string): boolean;
 export declare function isRobotSecretValid(secret?: string): boolean;

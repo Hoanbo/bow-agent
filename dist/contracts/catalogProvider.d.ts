@@ -1,27 +1,15 @@
-import type { ProductItemResult, PlanItemResult, CategoryInfo } from '../core/types.js';
+import type { ProductItemResult, CategoryInfo, PlanItemResult } from '../core/types.js';
+export interface ProductPlanOption {
+    id: string;
+    name: string;
+    price: number;
+    duration?: string;
+}
 export interface CatalogProvider {
-    /**
-     * Retrieve all active products with their associated plans
-     */
     getAllProducts(): Promise<ProductItemResult[]>;
-    /**
-     * Search products by keyword, name, or search aliases
-     */
     findProductsByKeyword(keyword: string): Promise<ProductItemResult[]>;
-    /**
-     * Retrieve a specific product by its URL-friendly slug
-     */
     findProductBySlug(slug: string): Promise<ProductItemResult | null>;
-    /**
-     * Retrieve all available product categories
-     */
     getCategories(): Promise<CategoryInfo[]>;
-    /**
-     * Retrieve a specific plan by plan ID
-     */
     getPlanById(planId: string): Promise<PlanItemResult | null>;
-    /**
-     * Retrieve verified immutable price for a product and duration tag
-     */
-    getPlanPrice(productId: string, durationTag?: string): Promise<number | null>;
+    getPlanPrice(planId: string): Promise<number | null>;
 }

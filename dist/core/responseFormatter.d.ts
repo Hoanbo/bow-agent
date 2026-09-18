@@ -1,4 +1,7 @@
 import type { ProductItemResult, CategoryInfo } from './types.js';
+export type ProductIconResolver = (name: string) => string | null;
+export declare function setProductIconResolver(resolver: ProductIconResolver): void;
+export declare function getProductIcon(productName: string): string;
 /**
  * Format thông tin chi tiết sản phẩm và các plan
  */

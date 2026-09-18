@@ -1,0 +1,135 @@
+[
+  {
+    "id": "appr_1789648207078_1d2f42",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-17T12:30:07.078Z",
+    "expiresAt": "2026-09-17T12:35:07.078Z"
+  },
+  {
+    "id": "appr_1789648250853_20dd34",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-17T12:30:50.854Z",
+    "expiresAt": "2026-09-17T12:35:50.854Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-17T12:30:50.866Z",
+    "executionToken": "tok_0e2aec97fe19592afbdaf04e92bb6b4c869369c84059d66b"
+  },
+  {
+    "id": "appr_1789651316200_eb8ee3",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-17T13:21:56.200Z",
+    "expiresAt": "2026-09-17T13:26:56.200Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-17T13:21:56.212Z",
+    "executionToken": "tok_049637065d3695afd075439e39eaad96f49205b985073fe3"
+  },
+  {
+    "id": "appr_1789656213967_a9ec27",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-17T14:43:33.967Z",
+    "expiresAt": "2026-09-17T14:48:33.967Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-17T14:43:33.977Z",
+    "executionToken": "tok_a3fe5c6afa68401e6ccf8e38d24155052773191439a72ce0"
+  },
+  {
+    "id": "appr_1789664122383_69e8bc",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-17T16:55:22.384Z",
+    "expiresAt": "2026-09-17T17:00:22.384Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-17T16:55:22.396Z",
+    "executionToken": "tok_9e6e4c8fca1659ada346a5ba0bed23d9d087e99e6262f11e"
+  },
+  {
+    "id": "appr_1789664720362_aa6d25",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-17T17:05:20.362Z",
+    "expiresAt": "2026-09-17T17:10:20.362Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-17T17:05:20.372Z",
+    "executionToken": "tok_88766438ae7261983bde208a49428255b6e0159c3b401cd6"
+  },
+  {
+    "id": "appr_1789699899275_5a6eb7",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-18T02:51:39.275Z",
+    "expiresAt": "2026-09-18T02:56:39.275Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-18T02:51:39.286Z",
+    "executionToken": "tok_d62f4598c5bf26f7bdee43a05c0124b062cc736dc964e127"
+  },
+  {
+    "id": "appr_1789701291911_cc7693",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-18T03:14:51.911Z",
+    "expiresAt": "2026-09-18T03:19:51.911Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-18T03:14:51.923Z",
+    "executionToken": "tok_7022fc68c6f5d8afe515821c46db89ba03ed3d070d9d3cd9"
+  }
+]

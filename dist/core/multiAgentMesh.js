@@ -71,17 +71,14 @@ export class MultiAgentMesh {
     }
     // 3. Shop Operations Sub-Agent: Quản trị đơn hàng, lợi nhuận ròng
     async executeShopOperations(goal, payload) {
-        const { getActiveShopAdapter } = await import('../contracts/shopAdapter.js');
-        const adapter = getActiveShopAdapter();
+        const { getActiveCommerceProvider } = await import('./commerceRegistry.js');
+        const commerce = getActiveCommerceProvider();
         let pendingCount = 0;
         let netProfit = 0;
-        if (adapter.admin?.getPendingFulfillmentQueue) {
-            const queue = await adapter.admin.getPendingFulfillmentQueue();
-            pendingCount = queue.totalPendingCount || 0;
-        }
-        if (adapter.admin?.getProfitMarginReport) {
-            const profit = await adapter.admin.getProfitMarginReport('today');
-            netProfit = profit.netProfit || 0;
+        if (commerce.getMetrics) {
+            const metrics = await commerce.getMetrics('operations');
+            pendingCount = metrics.pendingCount || 0;
+            netProfit = metrics.netProfit || 0;
         }
         return {
             agent: 'ShopOperationsAgent',

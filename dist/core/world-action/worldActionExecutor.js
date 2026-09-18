@@ -14,8 +14,8 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { generateExecutionId } from './worldActionTypes.js';
 import { WorldActionError } from './worldActionFailure.js';
+import { isPathProtected } from '../../config.js';
 const EXECUTION_WORKSPACE = path.resolve(process.cwd()).toLowerCase();
-const PROTECTED_WORKSPACE = 'c:\\bow\\shopofbow';
 // Track governed child processes started by the WorldAction runtime
 const activeGovernedProcesses = new Map();
 /**
@@ -29,8 +29,8 @@ export function validateAndResolvePath(targetPath) {
     let resolved = path.isAbsolute(targetPath) ? path.normalize(targetPath) : path.resolve(process.cwd(), targetPath);
     const normalizedLower = resolved.toLowerCase();
     // Strict protected workspace check
-    if (normalizedLower.startsWith(PROTECTED_WORKSPACE)) {
-        throw new WorldActionError('SECURITY_VIOLATION', 'Access to protected workspace (C:\\BOW\\shopofbow) is strictly forbidden.', undefined, targetPath);
+    if (isPathProtected(normalizedLower) || isPathProtected(targetPath)) {
+        throw new WorldActionError('SECURITY_VIOLATION', 'Access to protected path is strictly forbidden.', undefined, targetPath);
     }
     // Prevent path traversal above workspace root
     if (!normalizedLower.startsWith(EXECUTION_WORKSPACE)) {

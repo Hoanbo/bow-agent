@@ -1,5 +1,9 @@
 // tests/test_multichannel_v3_3.ts
 // BOW AGENT V3.3 — MULTI-CHANNEL & COMPUTER CONTROL TEST SUITE
+// NOTE: Test này kiểm tra hành vi TÍCH HỢP với adapter shopofbow cụ thể, không phải hành vi core thuần.
+
+import { bootstrapShopOfBowAdapter } from '../src/adapters/shopofbow/index.js';
+bootstrapShopOfBowAdapter();
 
 import {
   // Central Server & Config
@@ -151,28 +155,6 @@ async function runMultiChannelSuite() {
   // --------------------------------------------------------------------------
   console.log('\n🌐 SECTION 6: Web Channel Adapter (Zero-Breaking Contract)');
 
-  const mockShopAdapter = {
-    ...fallbackShopAdapter,
-    catalog: {
-      ...fallbackShopAdapter.catalog,
-      getAllProducts: async () => [
-        {
-          id: 'prod_yt',
-          name: 'YouTube Premium',
-          slug: 'youtube-premium',
-          type: 'premium-app' as const,
-          startingPrice: 35000,
-          warranty: '1 đổi 1',
-          plans: [
-            { id: 'yt-1m', name: '1 Tháng', duration: '1 tháng', price: 35000, isHighlight: true },
-            { id: 'yt-6m', name: '6 Tháng', duration: '6 tháng', price: 280000, isHighlight: false },
-          ],
-        },
-      ],
-    },
-  };
-  setActiveShopAdapter(mockShopAdapter);
-
   const webRes = await webAdapter.handleRequest({
     query: 'Tôi muốn mua YouTube 1 tháng',
     sessionId: 'session_test_web_1',
@@ -187,8 +169,6 @@ async function runMultiChannelSuite() {
   assert(webRes.actionCard !== null, 'Response generates Action Card for purchase');
   assert(webRes.actionCard?.type === 'NAVIGATE_CHECKOUT', 'Action Card is NAVIGATE_CHECKOUT');
   assert(Array.isArray(webRes.suggestions), 'Suggestions array is provided');
-
-  setActiveShopAdapter(fallbackShopAdapter);
 
   // --------------------------------------------------------------------------
   // SECTION 7: ROBOT CHANNEL ADAPTER (BOW-ROBOT AUDIO / OLED / SERVO)

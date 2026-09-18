@@ -197,56 +197,17 @@ export interface VoucherListResult {
     totalActive: number;
 }
 export interface AdminProvider {
-    /**
-     * Fetch comprehensive sales, revenue, and order metrics for a given timeframe
-     */
     getSalesReport(timeframe?: SalesTimeframe): Promise<SalesReportResult>;
-    /**
-     * Fetch real-time stock levels, remaining slots, and restock alerts (if any)
-     */
     getInventoryHealth(): Promise<InventoryHealthResult>;
-    /**
-     * Fetch pending on-demand fulfillment queue (orders paid by customers awaiting procurement & handover)
-     */
     getPendingFulfillmentQueue?(): Promise<PendingFulfillmentResult>;
-    /**
-     * Hand over acquired account/key to customer for a pending order
-     */
     fulfillOrderHandover?(options: FulfillHandoverOptions): Promise<FulfillHandoverResult>;
-    /**
-     * Fetch Net Profit report (Revenue minus Supplier Procurement Cost)
-     */
     getProfitMarginReport?(timeframe?: SalesTimeframe): Promise<ProfitMarginReportResult>;
-    /**
-     * Create a new shop promotional voucher
-     */
     createVoucher?(options: CreateVoucherOptions): Promise<VoucherResult>;
-    /**
-     * Inspect and resolve an order dispute or warranty issue
-     */
     inspectOrderDispute?(identifier: string): Promise<OrderDisputeResult>;
-    /**
-     * Lookup complete details and timeline for a specific order
-     */
     getOrderLookup?(orderId: string): Promise<AdminOrderLookupResult | null>;
-    /**
-     * Generate daily operational summary for the Shop Admin
-     */
     getDailySummary?(): Promise<AdminDailySummaryResult>;
-    /**
-     * Generate prioritized actionable tasks list for the day
-     */
     getTaskPrioritization?(): Promise<AdminTaskPrioritizationResult>;
-    /**
-     * Lookup customer purchase history safely (no credentials)
-     */
     getCustomerLookup?(query: string): Promise<AdminCustomerLookupResult | null>;
-    /**
-     * List active promotional vouchers
-     */
     getActiveVouchers?(): Promise<VoucherListResult>;
-    /**
-     * Dispatch a business event into the agent internal event mesh
-     */
     dispatchShopEvent?(event: ShopEventPayload): Promise<void>;
 }

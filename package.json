@@ -25,7 +25,8 @@
         "test:phase3": "tsx tests/test_bow_con_phase3_multiagent.ts",
         "test:l4": "tsx tests/test_bow_con_level4_governance.ts",
         "test:hardening": "tsx tests/test_l4_security_hardening.ts",
-        "test:l4:integration": "tsx tests/test_l4_unified_governance_integration.ts"
+        "test:l4:integration": "tsx tests/test_l4_unified_governance_integration.ts",
+        "test:body:audio": "tsx tests/test_body_audio.ts"
     },
     "dependencies": {
         "@google/generative-ai": "^0.24.1",

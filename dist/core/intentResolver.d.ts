@@ -3,18 +3,57 @@
  * Standalone equivalent: @bow/agent/src/core/intentResolver.ts
  * Do NOT import directly from production UI code.
  */
-import type { AgentIntent, MultiIntentResult, DeferredContext, PlanItemResult, AgentContext } from './types.js';
+import type { AgentIntent, MultiIntentResult, DeferredContext, AgentContext } from './types.js';
 /**
  * Trích xuất thời hạn (duration) bằng Regex toàn diện: 6 tháng, 12 tháng, 1 năm, 3 tháng, 1 tháng, token, v.v.
  * BUG-001 Hotfix: Hỗ trợ tiếng Việt có dấu, không dấu, NFD/NFC Unicode normalization và viết tắt (6t, 6 t, nửa năm, 180 ngày)
  */
 export declare function normalizeText(str: string): string;
-export declare function extractDuration(text: string): string | undefined;
-export declare function matchPlanByDuration(plans: PlanItemResult[], durationOrText: string, fullQuery?: string): PlanItemResult | undefined;
+export interface StructuredEntity {
+    name: string;
+    type?: string;
+    quantity?: number;
+}
+export interface StructuredTimeframe {
+    raw: string;
+    canonical: string;
+    unit: 'day' | 'week' | 'month' | 'year' | 'lifetime' | 'custom';
+    amount?: number;
+}
+export interface StructuredIntent {
+    action: string;
+    entities: StructuredEntity[];
+    timeframe?: StructuredTimeframe;
+    rawText: string;
+    confidence: number;
+    metadata?: Record<string, any>;
+}
 /**
- * Trích xuất ngữ cảnh mua hàng (Deferred BUY Context) khi phát hiện multi-intent hoặc buy intent
+ * Trích xuất thời hạn tổng quát thuần ngôn ngữ (không phụ thuộc vào gói cước hay giá tiền cụ thể)
  */
-export declare function extractDeferredBuyContext(text: string): DeferredContext;
+export declare function extractGenericDuration(text: string): StructuredTimeframe | undefined;
+/**
+ * Trích xuất thời hạn dạng chuỗi chuẩn hoá
+ */
+export declare function extractDuration(text: string): string | undefined;
+/**
+ * Phân tích ý định tổng quát có cấu trúc
+ */
+export declare function resolveStructuredIntent(text: string): StructuredIntent;
+export interface DomainIntentExtension {
+    matchPlanByDuration?(plans: any[], durationQuery: string, fullQuery?: string): any;
+    extractDeferredBuyContext?(text: string): DeferredContext | undefined;
+    extractDomainDuration?(text: string): string | undefined;
+}
+/**
+ * Đăng ký bộ mở rộng nhận diện ý định miền dọc (Domain Intent Extension)
+ * Cho phép adapter cắm các bộ khớp thời hạn, mã token, hoặc ngữ cảnh mua hàng tùy biến.
+ */
+export declare function registerDomainIntentExtension(ext: DomainIntentExtension): void;
+export declare function getDomainIntentExtension(): DomainIntentExtension | null;
+export declare function matchPlanByDuration(plans: any[], durationQuery: string, fullQuery?: string): any;
+export declare function extractDeferredBuyContext(text: string): DeferredContext | undefined;
+export declare function extractShopDuration(text: string): string | undefined;
 /**
  * Nhận diện ý định Quản trị viên (Admin Copilot)
  */

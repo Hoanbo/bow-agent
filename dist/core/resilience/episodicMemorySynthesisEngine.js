@@ -18,6 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { isPathProtected } from '../../config.js';
 import { generateResilienceId, } from './cognitiveResilienceTypes.js';
 import { MASTER_OWNER_ID } from '../architecture/masterArchitectureIdentity.js';
 function computeEpisodeHash(episode) {
@@ -37,8 +38,8 @@ export class EpisodicMemorySynthesisEngine {
     _episodes = new Map();
     _storagePath;
     constructor(storageDir = 'data/episodes') {
-        if (storageDir.includes('shopofbow')) {
-            throw new Error('SECURITY_VIOLATION: Episode storage cannot target protected workspace C:\\BOW\\shopofbow.');
+        if (isPathProtected(storageDir)) {
+            throw new Error('SECURITY_VIOLATION: Episode storage cannot target protected workspace.');
         }
         this._storagePath = path.join(storageDir, 'episodes.json');
         this._rehydrate();

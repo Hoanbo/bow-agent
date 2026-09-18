@@ -60,7 +60,7 @@ export const CANONICAL_ARCHITECTURE_HIERARCHY = Object.freeze([
         description: 'One project within BOW; optional future surface/integration; NOT architectural parent of BOWCON.',
     },
 ]);
-export const REGISTERED_PROJECTS = Object.freeze({
+export const REGISTERED_PROJECTS = {
     shopofbow: {
         projectId: 'shopofbow',
         name: 'ShopOfBow',
@@ -69,7 +69,10 @@ export const REGISTERED_PROJECTS = Object.freeze({
         coreDependency: false,
         protectedWorkspace: 'C:\\BOW\\shopofbow',
     },
-});
+};
+export function registerArchitectureProject(desc) {
+    REGISTERED_PROJECTS[desc.projectId] = desc;
+}
 export class MasterArchitectureIdentity {
     _masterOwnerId = MASTER_OWNER_ID;
     _ecosystemId = ECOSYSTEM_ID;

@@ -1,7 +1,7 @@
 import type { AgentContext, ProductItemResult, PlanItemResult } from './types.js';
-import type { StorageAdapter } from '../contracts/index.js';
-import type { WalletProvider } from '../contracts/index.js';
-import type { KnowledgeProvider } from '../contracts/index.js';
+import type { StorageAdapter } from '../contracts/storageAdapter.js';
+import type { WalletProvider } from '../contracts/walletProvider.js';
+import type { KnowledgeProvider } from '../contracts/knowledgeProvider.js';
 export type { ProductItemResult, PlanItemResult };
 export type ProductPlanResult = PlanItemResult;
 export interface ToolExecutionResult<T = any> {

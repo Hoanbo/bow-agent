@@ -24,6 +24,12 @@ export interface ProductResolutionResult {
  */
 export declare function normalizeString(str: string): string;
 /**
+ * Đăng ký các từ khóa năng lực / nhu cầu miền dọc (Domain Capability Terms)
+ * Ngăn không cho các từ khóa này chiếm dụng Layers 1-6 thay vì thương hiệu sản phẩm.
+ */
+export declare function registerProductCapabilityTerms(terms: string[]): void;
+export declare function getProductCapabilityTerms(): Set<string>;
+/**
  * Làm sạch câu hỏi loại bỏ stop-words tiếng Việt
  * Giữ lại: tên sản phẩm thực sự, keyword ngắn có nghĩa
  */

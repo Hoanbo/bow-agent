@@ -15,7 +15,7 @@ export interface AgentContext {
     route?: string;
 }
 export type AgentIntent = 'GREETING' | 'SMALL_TALK' | 'CAPABILITY_DISCOVERY' | 'CLARIFICATION' | 'CATALOG' | 'VIEW_CATEGORY' | 'PRODUCT_SEARCH' | 'BUY' | 'EXPIRING_SOON' | 'ORDER_QUERY' | 'RENEW' | 'WARRANTY' | 'TICKET' | 'COUPON' | 'WALLET' | 'FAQ' | 'EXECUTIVE_REPORT' | 'ADMIN_PENDING_HANDOVER' | 'ADMIN_ORDER_HANDOVER' | 'ADMIN_ORDER_LOOKUP' | 'ADMIN_DAILY_SUMMARY' | 'ADMIN_TASK_PRIORITIZATION' | 'ADMIN_REVENUE_REPORT' | 'ADMIN_SALES_ANALYTICS' | 'ADMIN_VOUCHER_CREATE' | 'ADMIN_CUSTOMER_LOOKUP' | 'ADMIN_DISPUTE_INSPECT' | 'ADMIN_INVENTORY_HEALTH' | 'GENERAL';
-export type AgentActionType = 'NAVIGATE_CHECKOUT' | 'NAVIGATE_ORDER_DETAIL' | 'NAVIGATE_RENEWAL' | 'NAVIGATE_SUPPORT' | 'NAVIGATE_TICKET_DETAIL' | 'APPLY_COUPON' | 'OPEN_DEPOSIT';
+export type AgentActionType = 'NAVIGATE_CHECKOUT' | 'NAVIGATE_ORDER_DETAIL' | 'NAVIGATE_RENEWAL' | 'NAVIGATE_SUPPORT' | 'NAVIGATE_TICKET_DETAIL' | 'APPLY_COUPON' | 'OPEN_DEPOSIT' | 'COMMERCE_ACTION' | 'GENERIC_ACTION' | 'BODY_ACTION';
 export interface AgentActionPayload {
     productId?: string;
     productSlug?: string;
@@ -31,6 +31,10 @@ export interface AgentActionPayload {
     supportTitle?: string;
     amount?: number;
     issueDescription?: string;
+    capability?: string;
+    bodyId?: string;
+    params?: Record<string, unknown>;
+    [key: string]: unknown;
 }
 export interface AgentAction {
     id: string;

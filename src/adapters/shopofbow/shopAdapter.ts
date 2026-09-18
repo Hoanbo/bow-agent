@@ -4,14 +4,15 @@
 // Composes domain-specific providers into a unified Shop boundary that isolates
 // the Shop implementation (shopofbow) from the Agent Core.
 
-import type { CatalogProvider } from './catalogProvider.js';
-import type { OrderProvider } from './orderProvider.js';
-import type { WalletProvider } from './walletProvider.js';
-import type { KnowledgeProvider } from './knowledgeProvider.js';
-import type { AnalyticsProvider } from './analyticsProvider.js';
-import type { ActionHandler } from './actionHandler.js';
-import type { StorageAdapter } from './storageAdapter.js';
-import type { AdminProvider } from './adminProvider.js';
+import type { CatalogProvider } from './contracts/catalogProvider.js';
+import type { OrderProvider } from './contracts/orderProvider.js';
+import type { WalletProvider } from './contracts/walletProvider.js';
+import type { AdminProvider } from './contracts/adminProvider.js';
+import type { KnowledgeProvider } from '../../contracts/knowledgeProvider.js';
+import type { AnalyticsProvider } from '../../contracts/analyticsProvider.js';
+import type { ActionHandler } from '../../contracts/actionHandler.js';
+import type { StorageAdapter } from '../../contracts/storageAdapter.js';
+import type { CommerceProvider, CommerceEntity, CommerceActionResult } from '../../contracts/commerceProvider.js';
 
 /**
  * ShopAdapter Interface
@@ -36,14 +37,74 @@ export interface ShopAdapter {
 // HOST ADAPTER REGISTRY & DETERMINISTIC STANDALONE FALLBACK
 // ============================================================================
 
+export const DEFAULT_SHOPOFBOW_PRODUCTS = [
+  {
+    id: 'prod_yt',
+    name: 'YouTube Premium',
+    slug: 'youtube-premium',
+    type: 'premium-app' as const,
+    startingPrice: 35000,
+    warranty: '1 đổi 1',
+    description: 'Tài khoản YouTube Premium chính chủ',
+    plans: [
+      { id: 'yt-1m', name: '1 Tháng', duration: '1 tháng', price: 35000, isHighlight: true },
+      { id: 'yt-6m', name: '6 Tháng', duration: '6 tháng', price: 280000, isHighlight: false },
+      { id: 'yt-12m', name: '12 Tháng', duration: '1 năm', price: 450000, isHighlight: false },
+    ],
+  },
+  {
+    id: 'prod_canva',
+    name: 'Canva Pro',
+    slug: 'canva-pro',
+    type: 'premium-app' as const,
+    startingPrice: 150000,
+    warranty: '1 đổi 1',
+    description: 'Tài khoản Canva Pro',
+    plans: [
+      { id: 'canva-1y', name: '1 Năm', duration: '1 năm', price: 150000, isHighlight: true },
+    ],
+  },
+  {
+    id: 'prod_netflix',
+    name: 'Netflix Premium',
+    slug: 'netflix-premium',
+    type: 'premium-app' as const,
+    startingPrice: 85000,
+    warranty: '1 đổi 1',
+    description: 'Tài khoản Netflix Premium 4K',
+    plans: [
+      { id: 'netflix-1m', name: '1 Tháng', duration: '1 tháng', price: 85000, isHighlight: true },
+    ],
+  },
+];
+
 export const fallbackShopAdapter: ShopAdapter = {
   catalog: {
-    getAllProducts: async () => [],
-    findProductsByKeyword: async () => [],
-    findProductBySlug: async () => null,
+    getAllProducts: async () => DEFAULT_SHOPOFBOW_PRODUCTS,
+    findProductsByKeyword: async (keyword: string) => {
+      const q = (keyword || '').toLowerCase();
+      return DEFAULT_SHOPOFBOW_PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.slug.includes(q));
+    },
+    findProductBySlug: async (slug: string) => {
+      return DEFAULT_SHOPOFBOW_PRODUCTS.find(p => p.slug === slug || p.id === slug) || null;
+    },
     getCategories: async () => [],
-    getPlanById: async () => null,
-    getPlanPrice: async () => null,
+    getPlanById: async (planId: string) => {
+      for (const p of DEFAULT_SHOPOFBOW_PRODUCTS) {
+        const found = p.plans.find(pl => pl.id === planId);
+        if (found) return found;
+      }
+      return null;
+    },
+    getPlanPrice: async (productId: string, durationTag?: string) => {
+      const prod = DEFAULT_SHOPOFBOW_PRODUCTS.find(p => p.id === productId || p.slug === productId);
+      if (!prod) return null;
+      if (durationTag) {
+        const plan = prod.plans.find(pl => pl.duration === durationTag);
+        return plan ? plan.price : prod.startingPrice;
+      }
+      return prod.startingPrice;
+    },
   },
   orders: {
     getOrder: async () => null,
@@ -58,6 +119,7 @@ export const fallbackShopAdapter: ShopAdapter = {
   },
   wallet: {
     getBalance: async () => 0,
+    hasSufficientBalance: async () => false,
     getDepositInstructions: async () => ({
       bankId: 'MB', accountNo: '0966821315',
       accountName: 'Shop of BOW',
@@ -360,3 +422,57 @@ export function setActiveShopAdapter(adapter: ShopAdapter): void {
 export function getActiveShopAdapter(): ShopAdapter {
   return activeShopAdapter;
 }
+
+export class ShopOfBowCommerceProvider implements CommerceProvider {
+  public readonly id = 'shopofbow';
+  public readonly domainName = 'Shop of BOW Retail';
+
+  private _adapter?: ShopAdapter;
+  public get adapter(): ShopAdapter {
+    return this._adapter || getActiveShopAdapter();
+  }
+
+  constructor(adapter?: ShopAdapter) {
+    this._adapter = adapter;
+  }
+
+  public async queryCatalog(query: { query?: string; category?: string; limit?: number }): Promise<CommerceEntity[]> {
+    if (query.query) {
+      const prods = await this.adapter.catalog.findProductsByKeyword(query.query);
+      return prods.map(p => ({ id: p.id, name: p.name, description: p.description, metadata: p }));
+    }
+    const all = await this.adapter.catalog.getAllProducts();
+    return all.map(p => ({ id: p.id, name: p.name, description: p.description, metadata: p }));
+  }
+
+  public async lookupEntity(entityType: string, entityId: string): Promise<Record<string, any> | null> {
+    if (entityType === 'product') {
+      return await this.adapter.catalog.findProductBySlug(entityId);
+    }
+    if (entityType === 'order') {
+      return await this.adapter.orders.getOrder(entityId);
+    }
+    return null;
+  }
+
+  public async executeCommerceAction(action: { type: string; payload: Record<string, any> }): Promise<CommerceActionResult> {
+    const agentAction: any = {
+      id: `act_${Date.now()}`,
+      type: action.type,
+      payload: action.payload,
+    };
+    const context: any = { role: 'user' };
+    const res = await this.adapter.actions.handleAction(agentAction, context);
+    return {
+      actionId: res.actionId,
+      type: res.type,
+      success: res.success,
+      result: res,
+    };
+  }
+
+  public async getHealth(): Promise<{ status: 'healthy' | 'degraded' | 'unhealthy'; details?: Record<string, any> }> {
+    return { status: 'healthy', details: { provider: 'shopofbow', active: true } };
+  }
+}
+

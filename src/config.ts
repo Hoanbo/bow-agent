@@ -28,6 +28,8 @@ export interface BowAgentEnvConfig {
   speechPreferLocal: boolean;
   corsAllowedOrigins: string[];
   maxRequestBodyBytes: number;
+  protectedPaths: string[];
+  agentPersona: string;
 }
 
 function getEnvValue(key: string, defaultValue: string = ''): string {
@@ -74,7 +76,38 @@ export const CONFIG: BowAgentEnvConfig = {
     .map(origin => origin.trim())
     .filter(Boolean),
   maxRequestBodyBytes: Math.max(1024, parseInt(getEnvValue('BOW_MAX_REQUEST_BODY_BYTES', '1048576'), 10) || 1048576),
+  protectedPaths: getEnvValue(
+    'BOW_PROTECTED_PATHS',
+    'c:/bow/shopofbow,c:\\bow\\shopofbow,/bow/shopofbow,\\bow\\shopofbow,shopofbow'
+  )
+    .split(',')
+    .map(p => p.trim())
+    .filter(Boolean),
+  agentPersona: getEnvValue(
+    'BOW_AGENT_PERSONA',
+    'Bạn là trợ lý Knowledge Base của ShopOfBow (Shop phần mềm và tài khoản bản quyền).'
+  ),
 };
+
+export function getProtectedPaths(): string[] {
+  return [...CONFIG.protectedPaths];
+}
+
+export function setProtectedPaths(paths: string[]): void {
+  CONFIG.protectedPaths = [...paths];
+}
+
+export function isPathProtected(rawPath: string): boolean {
+  if (!rawPath) return false;
+  const normalized = rawPath.toLowerCase().replace(/\\/g, '/');
+  for (const pattern of CONFIG.protectedPaths) {
+    const normalizedPattern = pattern.toLowerCase().replace(/\\/g, '/');
+    if (normalized.includes(normalizedPattern)) {
+      return true;
+    }
+  }
+  return false;
+}
 
 
 

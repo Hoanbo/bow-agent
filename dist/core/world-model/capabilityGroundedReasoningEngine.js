@@ -13,6 +13,7 @@
 //
 // Provides transparent causal explanations; never assumes conceptual existence equals executable capability.
 import { globalCapabilityDiscoveryBridge } from '../host/capabilityDiscoveryBridge.js';
+import { isPathProtected } from '../../config.js';
 export class CapabilityGroundedReasoningEngine {
     /**
      * Distinguishes the 7 stages of a capability lifecycle.
@@ -50,8 +51,8 @@ export class CapabilityGroundedReasoningEngine {
         const requiredAuthorizations = [];
         const requiredOwnerActions = [];
         // Security invariant check: protected workspace
-        if (spec.target && (spec.target.includes('shopofbow') || spec.target.includes('C:\\BOW\\shopofbow'))) {
-            reasons.push('Plan targets protected workspace C:\\BOW\\shopofbow, which is strictly forbidden by policy.');
+        if (spec.target && isPathProtected(spec.target)) {
+            reasons.push('Plan targets protected workspace, which is strictly forbidden by policy.');
             return {
                 planId: spec.planId,
                 status: 'PLAN_BLOCKED',

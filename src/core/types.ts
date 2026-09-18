@@ -58,7 +58,10 @@ export type AgentActionType =
   | 'NAVIGATE_SUPPORT'        // Mở CreateTicketModal với tiêu đề lỗi & orderId điền sẵn
   | 'NAVIGATE_TICKET_DETAIL'  // Mở UserTicketChatModal xem trao đổi ticket
   | 'APPLY_COUPON'            // Kích hoạt couponCode vào Session Context của Checkout
-  | 'OPEN_DEPOSIT';           // Mở popup VietQR nạp tiền vào ví
+  | 'OPEN_DEPOSIT'            // Mở popup VietQR nạp tiền vào ví
+  | 'COMMERCE_ACTION'         // Thao tác giao dịch thương mại chung (Tổng quát)
+  | 'GENERIC_ACTION'          // Thao tác nghiệp vụ tùy biến từ adapter
+  | 'BODY_ACTION';            // Thao tác điều phối thực thi trên Thể xác ngoại vi (BodyProtocol)
 
 export interface AgentActionPayload {
   productId?: string;
@@ -75,6 +78,10 @@ export interface AgentActionPayload {
   supportTitle?: string;
   amount?: number;
   issueDescription?: string;
+  capability?: string;
+  bodyId?: string;
+  params?: Record<string, unknown>;
+  [key: string]: unknown;
 }
 
 export interface AgentAction {

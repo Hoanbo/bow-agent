@@ -50,3 +50,19 @@ export declare function planTicketDetailAction(ticket: any, context: AgentContex
  * Lập kế hoạch mở Modal tạo Ticket hỗ trợ mới
  */
 export declare function planCreateTicketAction(context: AgentContext): AgentAction | null;
+/**
+ * Lập kế hoạch thực hiện hành động nghiệp vụ trừu tượng (Generic / Commerce Action)
+ * Cho phép các Adapter mở rộng hành động tùy biến mà không cần phụ thuộc loại cố định.
+ */
+export declare function planGenericAction(action: {
+    type?: AgentAction['type'];
+    label: string;
+    icon?: string;
+    payload?: Record<string, unknown>;
+    requiresConfirmation?: boolean;
+}, context: AgentContext): AgentAction | null;
+/**
+ * Lập kế hoạch thực hiện hành động trên Thể xác ngoại vi (Body Capability Action).
+ * Tra cứu nguồn capability từ BodyRegistry.findBodiesWithCapability(...)
+ */
+export declare function planBodyAction(capabilityName: string, params: Record<string, unknown>, context: AgentContext, targetBodyId?: string): AgentAction | null;

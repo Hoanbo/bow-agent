@@ -22,4 +22,9 @@ export interface WalletProvider {
    * Get bank transfer details and instructions for wallet deposit
    */
   getDepositInstructions(amount?: number, userId?: string): Promise<DepositInstructions>;
+
+  /**
+   * Check if user has sufficient balance for amount
+   */
+  hasSufficientBalance?(userId: string, amount: number): Promise<boolean>;
 }

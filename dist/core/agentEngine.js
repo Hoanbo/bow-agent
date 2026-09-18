@@ -15,7 +15,7 @@ import { matchNegativePolicy } from '../knowledge/negativePolicyService.js';
 import { isCircuitOpen, recordExecutionSuccess, recordExecutionFailure } from '../production/productionCircuitBreaker.js';
 import { shouldRouteToV3, getRolloutState } from '../production/productionRolloutService.js';
 import { recordProductionMetric } from '../production/productionTelemetryService.js';
-import { getActiveShopAdapter } from '../contracts/shopAdapter.js';
+import { getActiveCommerceProvider } from './commerceRegistry.js';
 export * from './types.js';
 export { resetGeminiHistory };
 export { validateAction, validateAgentAction } from './actionValidator.js';
@@ -333,7 +333,8 @@ export async function processAgentMessageV2(userText, context) {
     const isAdminSurface = context.surface === 'admin' || (isAdminRole && context.surface !== 'customer');
     if (isAdminRole && isAdminSurface) {
         const norm = lowerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
-        const adapter = getActiveShopAdapter();
+        const commerce = getActiveCommerceProvider();
+        const adapter = commerce?.adapter;
         // 1. Pending Fulfillment Queue Intent (Ưu tiên cao nhất cho vận hành)
         if (norm.includes('cho ban giao') ||
             norm.includes('don cho') ||

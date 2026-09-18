@@ -7,19 +7,19 @@
 // BOWCON CANNOT GRANT ITSELF PERMISSIONS
 // CRITICAL_BLOCKED ACTIONS FAIL CLOSED
 // PROTECTED WORKSPACE C:\BOW\shopofbow IS STRICTLY BLOCKED
+import { isPathProtected } from '../../config.js';
 export class AgentLoopGovernanceEngine {
-    protectedWorkspace = 'c:\\bow\\shopofbow';
     evaluate(plan) {
         // 1. Protected Workspace Check
         for (const step of plan.steps) {
             const targetStr = String(step.target || '').toLowerCase();
             const paramStr = JSON.stringify(step.parameters || '').toLowerCase();
-            if (targetStr.includes(this.protectedWorkspace) || paramStr.includes(this.protectedWorkspace)) {
+            if (isPathProtected(targetStr) || isPathProtected(paramStr)) {
                 return {
                     allowed: false,
                     recoveryClass: 'CRITICAL_BLOCKED',
                     requiresHumanGate: false,
-                    reason: 'Protected workspace "C:\\BOW\\shopofbow" is strictly isolated (READS=0, WRITES=0, IMPORTS=0, TOUCHES=0).',
+                    reason: 'Protected path is strictly isolated (READS=0, WRITES=0, IMPORTS=0, TOUCHES=0).',
                 };
             }
             // Forbidden shell invocation detection

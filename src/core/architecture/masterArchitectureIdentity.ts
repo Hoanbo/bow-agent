@@ -98,7 +98,7 @@ export interface ProjectDescriptor {
   readonly protectedWorkspace?: string;
 }
 
-export const REGISTERED_PROJECTS: Record<string, ProjectDescriptor> = Object.freeze({
+export const REGISTERED_PROJECTS: Record<string, ProjectDescriptor> = {
   shopofbow: {
     projectId: 'shopofbow',
     name: 'ShopOfBow',
@@ -107,7 +107,11 @@ export const REGISTERED_PROJECTS: Record<string, ProjectDescriptor> = Object.fre
     coreDependency: false,
     protectedWorkspace: 'C:\\BOW\\shopofbow',
   },
-});
+};
+
+export function registerArchitectureProject(desc: ProjectDescriptor): void {
+  REGISTERED_PROJECTS[desc.projectId] = desc;
+}
 
 export class MasterArchitectureIdentity {
   private readonly _masterOwnerId = MASTER_OWNER_ID;

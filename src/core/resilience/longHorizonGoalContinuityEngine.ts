@@ -23,6 +23,7 @@ import {
   OwnerIntentSemantic,
 } from './cognitiveResilienceTypes.js';
 import { MASTER_OWNER_ID, isMasterOwner } from '../architecture/masterArchitectureIdentity.js';
+import { isPathProtected } from '../../config.js';
 
 export function computeGoalContinuityHash(goals: LongHorizonGoalRecord[]): string {
   const payload = JSON.stringify(
@@ -47,8 +48,8 @@ export class LongHorizonGoalContinuityEngine {
 
   constructor(options?: { storageDir?: string; stallThresholdMs?: number }) {
     const rawDir = options?.storageDir ?? path.join('data', 'goal-continuity');
-    if (rawDir.includes('shopofbow') || rawDir.includes('C:\\BOW\\shopofbow')) {
-      throw new Error('SECURITY_VIOLATION: Goal continuity storage cannot target protected workspace C:\\BOW\\shopofbow.');
+    if (isPathProtected(rawDir)) {
+      throw new Error(`SECURITY_VIOLATION: Goal continuity storage cannot target protected path "${rawDir}".`);
     }
     this._storagePath = path.join(rawDir, 'goals.json');
     this._stallThresholdMs = options?.stallThresholdMs ?? 60000; // 1 minute default threshold for testability

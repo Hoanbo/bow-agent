@@ -1,0 +1,259 @@
+﻿src/core/agent-loop/agentLoopGovernance.ts:9:// PROTECTED WORKSPACE C:\BOW\shopofbow IS STRICTLY BLOCKED
+src/core/agentLoopFacade/productionAgentLoopFacade.ts:146:    const forbidden = ['..', '/', '\\', '\0', 'shopofbow'];
+src/core/agentObservability/agentExecutionSpanGate.ts:79:    if (value.toLowerCase().includes('shopofbow')) {
+src/core/agentObservability/agentExecutionSpanGate.ts:80:      throw new AgentObservabilitySecurityError(`${fieldName} references protected workspace shopofbow`);
+src/core/architecture/masterArchitectureIdentity.ts:28:// PROTECTED_WORKSPACE: C:\BOW\shopofbow -> READS=0, WRITES=0, IMPORTS=0, TOUCHES=0
+src/core/architecture/masterArchitectureIdentity.ts:84:    id: 'project_shopofbow',
+src/core/architecture/masterArchitectureIdentity.ts:102:  shopofbow: {
+src/core/architecture/masterArchitectureIdentity.ts:103:    projectId: 'shopofbow',
+src/core/architecture/masterArchitectureIdentity.ts:108:    protectedWorkspace: 'C:\\BOW\\shopofbow',
+src/core/architecture/masterArchitectureIdentity.ts:176:    if ((RUNTIME_IDENTITY as string) === 'ShopOfBow' || (RUNTIME_IDENTITY as string) === 'shopofbow') {
+src/core/architecture/masterArchitectureIdentity.ts:181:    const sob = REGISTERED_PROJECTS['shopofbow'];
+src/core/brain/brainTools.ts:9:// Protected workspace (C:\BOW\shopofbow) is ABSOLUTELY forbidden.
+src/core/brain/brainTools.ts:18:// Access to C:\BOW\shopofbow â€” FORBIDDEN
+src/core/brain/brainTools.ts:32:const PROTECTED_WORKSPACE = path.resolve('C:\\BOW\\shopofbow');
+src/core/brain/brainTools.ts:65:      'Access to the protected workspace (C:\\BOW\\shopofbow) is absolutely forbidden.'
+src/core/capability/capabilityExecutor.ts:9:// Protected workspace (C:\BOW\shopofbow) is ABSOLUTELY FORBIDDEN.
+src/core/cognitive/cloudEscalationSanitizer.ts:60:    regex: /C:[\\/]BOW[\\/]shopofbow[^\s"']*/gi,
+src/core/cognitiveState/cognitiveStatePersistence.ts:116:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/cognitiveState/cognitiveStatePersistence.ts:117:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/cognitiveState/cognitiveStatePersistence.ts:118:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]');
+src/core/crossIncident/crossIncidentIntelligenceRuntime.ts:51:  private static readonly PROTECTED_WORKSPACE_PATTERN = /[Cc]:[\\/]BOW[\\/]shopofbow/i;
+src/core/crossIncident/crossIncidentIntelligenceRuntime.ts:113:      throw new Error('SECURITY_VIOLATION: Protected workspace C:\\BOW\\shopofbow access is strictly forbidden');
+src/core/delegation/delegationGovernanceRuntime.ts:19:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/delegation/delegationGovernanceRuntime.ts:118:        ? [...input.scope.forbiddenPaths, 'C:\\BOW\\shopofbow']
+src/core/delegation/delegationGovernanceRuntime.ts:119:        : ['C:\\BOW\\shopofbow'],
+src/core/delegation/delegationGovernanceRuntime.ts:362:        'C:\\BOW\\shopofbow',
+src/core/delegation/delegationScopeValidator.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/delegation/delegationScopeValidator.ts:30:  private static readonly PROTECTED_PATTERNS = ['shopofbow', 'c:\\bow\\shopofbow'] as const;
+src/core/delegation/delegationScopeValidator.ts:60:   * Verifies that paths do not touch or target C:\BOW\shopofbow.
+src/core/delegation/delegationScopeValidator.ts:69:            `Delegation cannot target protected workspace C:\\BOW\\shopofbow (found in ${fieldName}: "${p}").`
+src/core/delegation/delegationTypes.ts:39:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/delegation/durableDelegationStore.ts:13:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/delegation/durableDelegationStore.ts:44:    if (rawDir.includes('shopofbow') || rawDir.includes('C:\\BOW\\shopofbow')) {
+src/core/delegation/durableDelegationStore.ts:46:        'SECURITY_VIOLATION: Delegation store cannot target protected workspace C:\\BOW\\shopofbow.'
+src/core/delegation/durableDelegationStore.ts:80:    if (this._storageDir.includes('shopofbow') || this._filePath.includes('shopofbow')) {
+src/core/delegation/durableDelegationStore.ts:82:        'SECURITY_VIOLATION: Delegation store cannot target protected workspace C:\\BOW\\shopofbow.'
+src/core/deliberation/contradictionResolver.ts:276:        text.includes('shopofbow') ||
+src/core/deliberation/contradictionResolver.ts:277:        text.includes('c:\\bow\\shopofbow') ||
+src/core/deliberation/evidenceBindingEngine.ts:125:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/deliberation/evidenceBindingEngine.ts:126:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/deliberation/evidenceBindingEngine.ts:127:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]')
+src/core/deliberation/hypothesisEngine.ts:193:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/deliberation/hypothesisEngine.ts:194:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/deliberation/hypothesisEngine.ts:195:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]')
+src/core/deployment/deploymentExecutionEngine.ts:15:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/deployment/deploymentExecutionEngine.ts:65:   * Asserts that a target path does not touch the protected workspace C:\BOW\shopofbow.
+src/core/deployment/deploymentExecutionEngine.ts:66:   * Kháº³ng Ä‘á»‹nh ráº±ng Ä‘Æ°á»ng dáº«n má»¥c tiĂªu khĂ´ng cháº¡m vĂ o khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/deployment/deploymentExecutionEngine.ts:73:      normalized.includes('shopofbow') ||
+src/core/deployment/deploymentExecutionEngine.ts:74:      normalized.includes('c:\\bow\\shopofbow') ||
+src/core/deployment/deploymentExecutionEngine.ts:75:      normalized.includes('c:/bow/shopofbow')
+src/core/deployment/deploymentExecutionEngine.ts:79:        `Target path "${targetPath}" references permanently protected workspace C:\\BOW\\shopofbow.`
+src/core/deployment/deploymentPolicyEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/deployment/deploymentPolicyEngine.ts:33:   * Asserts that a target path does not touch the protected workspace C:\BOW\shopofbow.
+src/core/deployment/deploymentPolicyEngine.ts:34:   * Kháº³ng Ä‘á»‹nh ráº±ng Ä‘Æ°á»ng dáº«n má»¥c tiĂªu khĂ´ng cháº¡m vĂ o khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/deployment/deploymentPolicyEngine.ts:39:      normalized.includes('shopofbow') ||
+src/core/deployment/deploymentPolicyEngine.ts:40:      normalized.includes('c:\\bow\\shopofbow') ||
+src/core/deployment/deploymentPolicyEngine.ts:41:      normalized.includes('c:/bow/shopofbow')
+src/core/deployment/deploymentPolicyEngine.ts:45:        `Target path "${targetPath}" references permanently protected workspace C:\\BOW\\shopofbow.`
+src/core/deployment/deploymentRollbackEngine.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/deployment/deploymentRollbackEngine.ts:43:   * Asserts that a target path does not touch the protected workspace C:\BOW\shopofbow.
+src/core/deployment/deploymentRollbackEngine.ts:44:   * Kháº³ng Ä‘á»‹nh ráº±ng Ä‘Æ°á»ng dáº«n má»¥c tiĂªu khĂ´ng cháº¡m vĂ o khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/deployment/deploymentRollbackEngine.ts:51:      normalized.includes('shopofbow') ||
+src/core/deployment/deploymentRollbackEngine.ts:52:      normalized.includes('c:\\bow\\shopofbow') ||
+src/core/deployment/deploymentRollbackEngine.ts:53:      normalized.includes('c:/bow/shopofbow')
+src/core/deployment/deploymentRollbackEngine.ts:57:        `Target path "${targetPath}" references permanently protected workspace C:\\BOW\\shopofbow.`
+src/core/deployment/deploymentRuntime.ts:16:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/deployment/deploymentTypes.ts:21:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/deviceVault/deviceVaultFileStorage.ts:6:// - ZERO access to C:\BOW\shopofbow.
+src/core/deviceVault/deviceVaultFileStorage.ts:34:    // Strict invariant: NEVER touch shopofbow
+src/core/deviceVault/deviceVaultFileStorage.ts:35:    if (this.resolvedRootDir.toLowerCase().includes('shopofbow')) {
+src/core/deviceVault/deviceVaultFileStorage.ts:36:      throw new Error('[VAULT_IO_ERROR] Forbidden storage root: shopofbow is strictly protected');
+src/core/deviceVault/deviceVaultFileStorage.ts:80:    if (resolved.toLowerCase().includes('shopofbow')) {
+src/core/deviceVault/deviceVaultFileStorage.ts:81:      throw new Error('[VAULT_IO_ERROR] Storage path violates shopofbow protection boundary');
+src/core/diagnosis/diagnosisRuntime.ts:18:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/diagnosis/diagnosisTypes.ts:21:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/durableCommit/durableCommitStore.ts:77:    if (trimmed.includes('..') || trimmed.includes('/') || trimmed.includes('\\') || trimmed.includes('shopofbow')) {
+src/core/durableCommit/durableCommitValidator.ts:240:      trimmed.includes('shopofbow')
+src/core/episodicMemory/episodicMemoryStore.ts:82:      trimmed.includes('shopofbow')
+src/core/episodicMemory/episodicMemoryValidator.ts:237:      trimmed.includes('shopofbow')
+src/core/executive/executiveGoalInterpreter.ts:27:    /C:\\BOW\\shopofbow/i,
+src/core/executive/executiveGoalInterpreter.ts:28:    /shopofbow/i,
+src/core/executive/executiveGovernance.ts:20:  private _protectedPath = path.normalize('C:/BOW/shopofbow').toLowerCase();
+src/core/executive/executiveGovernance.ts:47:    if (descLower.includes('shopofbow') || descLower.includes('c:\\bow\\shopofbow')) {
+src/core/executive/executiveGovernance.ts:48:      violations.push('Protected workspace violation: Task references protected shopofbow.');
+src/core/goal/goalFormationEngine.ts:127:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/goal/goalFormationEngine.ts:128:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/goal/goalFormationEngine.ts:129:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]')
+src/core/incidentResilience/incidentResilienceRuntime.ts:19:// - C:\BOW\shopofbow: Zero reads, zero writes, zero touches. Fail closed with SECURITY_VIOLATION.
+src/core/incidentResilience/incidentResilienceTypes.ts:23:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, TOUCHES = 0. Fail closed with SECURITY_VIOLATION.
+src/core/observability/invariantVerificationEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/observability/invariantVerificationEngine.ts:54:    if (normalized.includes('c:/bow/shopofbow') || normalized.startsWith('c:/bow/shopofbow')) {
+src/core/observability/invariantVerificationEngine.ts:55:      throw new Error('PROTECTED_WORKSPACE_VIOLATION: Target path references protected workspace C:\\BOW\\shopofbow');
+src/core/observability/observabilityRuntime.ts:23:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/observability/observabilityTypes.ts:26:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/orchestration/artifactEvidenceEngine.ts:9:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/orchestration/artifactEvidenceEngine.ts:96:   * Asserts that path or contentReference does not target protected workspace C:\BOW\shopofbow.
+src/core/orchestration/artifactEvidenceEngine.ts:101:      normalized.includes('c:/bow/shopofbow') ||
+src/core/orchestration/artifactEvidenceEngine.ts:102:      normalized.includes('/shopofbow') ||
+src/core/orchestration/artifactEvidenceEngine.ts:103:      normalized.includes('shopofbow')
+src/core/orchestration/artifactEvidenceEngine.ts:107:        `Artifact contentReference cannot access protected workspace C:\\BOW\\shopofbow: "${reference}"`
+src/core/orchestration/governedTaskOrchestrator.ts:15:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/orchestration/governedTaskOrchestrator.ts:91:   * Asserts that paths do not violate the protected workspace C:\BOW\shopofbow.
+src/core/orchestration/orchestrationRuntime.ts:16:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/orchestration/taskOrchestrationTypes.ts:37:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/partnership/cognitiveChallengeEngine.ts:73:    if (context.isProtectedWorkspaceTarget || (context.targetPath && context.targetPath.toLowerCase().includes('shopofbow'))) {
+src/core/partnership/cognitiveChallengeEngine.ts:76:        note: 'Violates absolute workspace isolation invariant (C:\\BOW\\shopofbow).',
+src/core/partnership/cognitiveChallengeEngine.ts:78:      concerns.push('Operation targets protected workspace C:\\BOW\\shopofbow, which has READS=0, WRITES=0, IMPORTS=0, TOUCHES=0.');
+src/core/partnership/cognitivePartnershipRuntime.ts:30:// PROTECTED_WORKSPACE: C:\BOW\shopofbow -> READS=0, WRITES=0, IMPORTS=0, TOUCHES=0
+src/core/partnership/partnershipTypes.ts:18:// PROTECTED_WORKSPACE: C:\BOW\shopofbow -> READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/partnership/personalDecisionSupport.ts:132:          (challenge.concern.includes('C:\\BOW\\shopofbow') ||
+src/core/partnership/personalDecisionSupport.ts:145:          (command.payload.targetPath.toLowerCase().includes('shopofbow') ||
+src/core/partnership/personalKnowledgeGraph.ts:10:// Protected Workspace (C:\BOW\shopofbow) -> READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/partnership/personalKnowledgeGraph.ts:50:    if (normalized.includes('shopofbow')) {
+src/core/partnership/personalKnowledgeGraph.ts:51:      throw new Error('[PROTECTED_WORKSPACE_VIOLATION] Knowledge graph storage path cannot be in shopofbow');
+src/core/partnership/personalKnowledgeGraph.ts:214:    if (targetFile.toLowerCase().includes('shopofbow')) {
+src/core/partnership/personalKnowledgeGraph.ts:215:      throw new Error('[PROTECTED_WORKSPACE_VIOLATION] Cannot persist to shopofbow');
+src/core/partnership/personalMemoryStore.ts:10:// Protected Workspace (C:\BOW\shopofbow) -> READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/partnership/personalMemoryStore.ts:64:    if (normalized.includes('shopofbow')) {
+src/core/partnership/personalMemoryStore.ts:65:      throw new Error('[PROTECTED_WORKSPACE_VIOLATION] Memory storage path cannot be in shopofbow');
+src/core/partnership/personalMemoryStore.ts:250:    if (targetFile.toLowerCase().includes('shopofbow')) {
+src/core/partnership/personalMemoryStore.ts:251:      throw new Error('[PROTECTED_WORKSPACE_VIOLATION] Cannot persist to shopofbow');
+src/core/partnership/personalOperatingModel.ts:29:      if (normalized.toLowerCase().includes('shopofbow')) {
+src/core/partnership/personalOperatingModel.ts:30:        throw new Error('[PROTECTED_WORKSPACE_VIOLATION] Cannot store operating model in C:\\BOW\\shopofbow');
+src/core/partnership/personalOperatingModel.ts:108:      knownConstraints: knownConstraints.length > 0 ? knownConstraints : ['Protected workspace C:\\BOW\\shopofbow isolated'],
+src/core/personal-os/cognitiveChallenge2.ts:61:      (context.targetPath && context.targetPath.toLowerCase().includes('shopofbow'))
+src/core/personal-os/cognitiveChallenge2.ts:63:      vectors['security'] = { ok: false, notes: 'Direct incursion into protected workspace C:\\BOW\\shopofbow' };
+src/core/personal-os/cognitiveChallenge2.ts:64:      concerns.push('Accessing C:\\BOW\\shopofbow violates the absolute isolation policy (READS=0, WRITES=0, IMPORTS=0, TOUCHES=0).');
+src/core/personal-os/personalOperatingSystemRuntime.ts:18:// PROTECTED_WORKSPACE: C:\BOW\shopofbow -> READS=0, WRITES=0, IMPORTS=0, TOUCHES=0
+src/core/personal-os/personalOsTypes.ts:22:// PROTECTED_WORKSPACE: C:\BOW\shopofbow -> READS=0, WRITES=0, IMPORTS=0, TOUCHES=0
+src/core/phase14ExitBoundary/independentEvidenceCollector.ts:49:    // 1. Filesystem Probe for Protected Workspace C:\BOW\shopofbow
+src/core/phase14ExitBoundary/independentEvidenceCollector.ts:50:    const protectedPath = options.protectedWorkspacePath || 'C:\\BOW\\shopofbow';
+src/core/phase14ExitBoundary/phase14EvidenceReconciler.ts:184:          case 'CRIT-1.4-12': { // Protected Workspace Untouched C:\BOW\shopofbow
+src/core/phase14ExitBoundary/phase14EvidenceReconciler.ts:191:                notes = 'CRITICAL: Protected workspace C:\\BOW\\shopofbow exists or was touched.';
+src/core/phase14ExitBoundary/phase14EvidenceReconciler.ts:196:              notes = 'Missing filesystem probe evidence for C:\\BOW\\shopofbow.';
+src/core/phase14ExitBoundary/phase14ExitCertificateTypes.ts:169:    description: 'C:\\BOW\\shopofbow verified untouched throughout all Phase 1.4 execution.',
+src/core/phase14Readiness/phase14ExecutionGate.ts:67:    if (value.toLowerCase().includes('shopofbow')) {
+src/core/phase14Readiness/phase14ExecutionGate.ts:68:      throw new Phase14SecurityError(`${fieldName} references protected workspace shopofbow`);
+src/core/phase14Readiness/phase14ExitCriteriaEvaluator.ts:147:        evidence = { workspace: 'C:\\BOW\\shopofbow', exists: false, untouched: passed };
+src/core/phase14Readiness/phase14ReadinessTypes.ts:160:    description: 'C:\\BOW\\shopofbow verified untouched throughout all Phase 1.4 execution.',
+src/core/policyEvolution/policyEvolutionRuntime.ts:50:  private static readonly PROTECTED_WORKSPACE_PATTERN = /[Cc]:[\\/]BOW[\\/]shopofbow/i;
+src/core/policyEvolution/policyEvolutionRuntime.ts:109:      throw new Error('SECURITY_VIOLATION: Protected workspace C:\\BOW\\shopofbow access is strictly forbidden');
+src/core/policyGovernanceReadiness/policyGovernanceReadinessCriteria.ts:368:    description: 'The external protected workspace C:\\BOW\\shopofbow remains 100% untouched (Test-Path returns False).',
+src/core/policyGovernanceReadiness/policyGovernanceReadinessEvidenceEngine.ts:313:        const protectedWorkspace = 'C:\\BOW\\shopofbow';
+src/core/policyPhaseExitAudit/policyPhaseExitEvidenceCollector.ts:51:    const protectedPath = 'C:\\BOW\\shopofbow';
+src/core/policyPhaseExitAudit/policyPhaseExitIndependentAssessmentEngine.ts:53:  { criterionId: createAuditCriterionId('CRITERION_PROTECTED_WORKSPACE'), criterionNumber: 23, name: 'Protected Workspace Isolation', description: 'Protected workspace C:\\BOW\\shopofbow untouched (0 touches)', requiredStrength: 'STATIC_CODE_EVIDENCE', isMandatory: true, targetMilestones: ['MS-1.3.62', 'MS-1.3.77'] },
+src/core/policyPhaseTransition/policyPhaseExitReviewEngine.ts:67:    const protectedWorkspace = 'C:\\BOW\\shopofbow';
+src/core/policyPhaseTransition/policyPhaseExitReviewEngine.ts:105:      'Confirm external protected workspace C:\\BOW\\shopofbow is 100% untouched',
+src/core/promotion/controlledPromotionEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/controlledPromotionEngine.ts:73:    // 2. Guard against protected workspace C:\BOW\shopofbow.
+src/core/promotion/controlledPromotionEngine.ts:74:    // 2. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/promotion/index.ts:16:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionAuthorizationEngine.ts:13:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionConflictEngine.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionConflictEngine.ts:43:    // 1. Guard against protected workspace C:\BOW\shopofbow.
+src/core/promotion/promotionConflictEngine.ts:44:    // 1. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/promotion/promotionProposalEngine.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionProposalEngine.ts:60:    // 1. Guard against protected workspace C:\BOW\shopofbow.
+src/core/promotion/promotionProposalEngine.ts:61:    // 1. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/promotion/promotionProvenanceEngine.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionReviewEngine.ts:14:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionRollbackEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionRollbackEngine.ts:75:    // 3. Guard against protected workspace C:\BOW\shopofbow.
+src/core/promotion/promotionRollbackEngine.ts:76:    // 3. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/promotion/promotionRuntime.ts:16:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionScopeValidator.ts:15:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionScopeValidator.ts:44:        `Target path "${targetPath}" targets protected workspace C:\\BOW\\shopofbow. Promotion denied.`
+src/core/promotion/promotionScopeValidator.ts:90:    // 1. Guard against protected workspace C:\BOW\shopofbow.
+src/core/promotion/promotionScopeValidator.ts:91:    // 1. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/promotion/promotionTypes.ts:27:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionValidationEngine.ts:13:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/promotion/promotionValidationEngine.ts:64:    // 2. Guard against protected workspace C:\BOW\shopofbow.
+src/core/promotion/promotionValidationEngine.ts:65:    // 2. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/quality/governedExecutionEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/index.ts:19:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityCommandRegistry.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityEvidenceEngine.ts:80:    // 1. Guard against protected workspace C:\BOW\shopofbow.
+src/core/quality/qualityEvidenceEngine.ts:81:    // 1. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/quality/qualityGateEngine.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityPolicyEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityPolicyEngine.ts:32:   * Asserts that a target path does not target or traverse into the protected workspace C:\BOW\shopofbow.
+src/core/quality/qualityPolicyEngine.ts:33:   * Kháº³ng Ä‘á»‹nh ráº±ng Ä‘Æ°á»ng dáº«n má»¥c tiĂªu khĂ´ng nháº¯m tá»›i hoáº·c duyá»‡t vĂ o khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/quality/qualityPolicyEngine.ts:37:    if (normalized === 'c:\\bow\\shopofbow' || normalized.startsWith('c:\\bow\\shopofbow\\')) {
+src/core/quality/qualityPolicyEngine.ts:40:        `Operation targets protected workspace C:\\BOW\\shopofbow. Execution denied.`
+src/core/quality/qualityReportEngine.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityRuntime.ts:19:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityTypes.ts:32:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/quality/qualityVerificationEngine.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releaseAcceptanceCriteriaEngine.ts:14:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releaseCandidateEngine.ts:14:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releaseContradictionEngine.ts:14:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releasePolicyEngine.ts:13:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releasePolicyEngine.ts:26:   * Asserts that a target path does not target or traverse into the protected workspace C:\BOW\shopofbow.
+src/core/release/releasePolicyEngine.ts:27:   * Kháº³ng Ä‘á»‹nh ráº±ng Ä‘Æ°á»ng dáº«n má»¥c tiĂªu khĂ´ng nháº¯m tá»›i hoáº·c duyá»‡t vĂ o khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/release/releasePolicyEngine.ts:32:      normalized === 'c:\\bow\\shopofbow' ||
+src/core/release/releasePolicyEngine.ts:33:      normalized.startsWith('c:\\bow\\shopofbow\\')
+src/core/release/releasePolicyEngine.ts:37:        `Release operation targets protected workspace C:\\BOW\\shopofbow. Execution denied. ` +
+src/core/release/releasePolicyEngine.ts:38:          `Thao tĂ¡c phĂ¡t hĂ nh nháº¯m vĂ o khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\\BOW\\shopofbow. Tá»« chá»‘i thá»±c thi.`
+src/core/release/releaseRuntime.ts:21:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releaseTypes.ts:37:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/release/releaseVerificationPipeline.ts:19:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/releaseExecution/governedReleaseExecutionEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/releaseExecution/releaseExecutionAuthorizationBridge.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0.
+src/core/releaseExecution/releaseExecutionManifestEngine.ts:9:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0.
+src/core/releaseExecution/releaseExecutionPolicyEngine.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/releaseExecution/releaseExecutionProvenanceEngine.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0.
+src/core/releaseExecution/releaseExecutionReviewBridge.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0.
+src/core/releaseExecution/releaseExecutionRollbackEngine.ts:11:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/releaseExecution/releaseExecutionRuntime.ts:17:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with PROTECTED_WORKSPACE_VIOLATION).
+src/core/releaseExecution/releaseExecutionTypes.ts:16:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/releaseExecution/releaseExecutionVerificationEngine.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0.
+src/core/remediation/remediationExecutionEngine.ts:14:// - PROTECTED_WORKSPACE: C:\BOW\shopofbow access triggers immediate fail-closed SECURITY_VIOLATION.
+src/core/remediation/remediationRollbackEngine.ts:15:// - PROTECTED_WORKSPACE_PRESERVED: Rollback cannot write to or touch C:\BOW\shopofbow.
+src/core/remediation/remediationRuntime.ts:18:// - C:\BOW\shopofbow: Zero reads, zero writes, zero touches. Fail closed with SECURITY_VIOLATION.
+src/core/remediation/remediationSnapshotEngine.ts:6:// Enforces protected workspace boundary (C:\BOW\shopofbow) before inspection or snapshotting.
+src/core/remediation/remediationSnapshotEngine.ts:9:// Thá»±c thi ranh giá»›i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ (C:\BOW\shopofbow) trÆ°á»›c khi kiá»ƒm tra hoáº·c chá»¥p áº£nh.
+src/core/remediation/remediationSnapshotEngine.ts:13:// - FAIL_CLOSED_ON_PROTECTED_WORKSPACE: C:\BOW\shopofbow is strictly protected (READS=0, WRITES=0, TOUCHES=0).
+src/core/remediation/remediationTypes.ts:17:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/resilience/adaptiveHostOrchestrator.ts:16:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/cognitiveResilienceRuntime.ts:13:// C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/cognitiveResilienceTypes.ts:24:// C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/crossEpisodePatternEngine.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/durableResilienceStateStore.ts:14:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/episodicMemorySynthesisEngine.ts:17:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/longHorizonGoalContinuityEngine.ts:14:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/resilience/recoveryLessonFederation.ts:12:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/sandbox/governedSandboxManager.ts:10:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/governedSandboxManager.ts:101:    // 1. Guard against protected workspace C:\BOW\shopofbow.
+src/core/sandbox/governedSandboxManager.ts:102:    // 1. Báº£o vá»‡ chá»‘ng láº¡i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/sandbox/index.ts:18:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/sandboxExportEngine.ts:6:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/sandboxFilesystemEngine.ts:6:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/sandboxManifestEngine.ts:6:// - Protected workspace C:\BOW\shopofbow contents MUST NEVER be included.
+src/core/sandbox/sandboxManifestEngine.ts:94:    // 1. Assert sandbox root does not touch protected workspace C:\BOW\shopofbow.
+src/core/sandbox/sandboxManifestEngine.ts:95:    // 1. Kháº³ng Ä‘á»‹nh thÆ° má»¥c gá»‘c sandbox khĂ´ng cháº¡m tá»›i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/sandbox/sandboxPathGuard.ts:5:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/sandboxPathGuard.ts:72:    // 4. Assert no target touches protected workspace C:\BOW\shopofbow.
+src/core/sandbox/sandboxPathGuard.ts:73:    // 4. Kháº³ng Ä‘á»‹nh khĂ´ng cĂ³ má»¥c tiĂªu nĂ o cháº¡m tá»›i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/sandbox/sandboxPolicyEngine.ts:311:    // 11. Assert path does not touch protected workspace C:\BOW\shopofbow.
+src/core/sandbox/sandboxPolicyEngine.ts:312:    // 11. Kháº³ng Ä‘á»‹nh Ä‘Æ°á»ng dáº«n khĂ´ng cháº¡m tá»›i khĂ´ng gian lĂ m viá»‡c Ä‘Æ°á»£c báº£o vá»‡ C:\BOW\shopofbow.
+src/core/sandbox/sandboxRollbackEngine.ts:7:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/sandboxRuntime.ts:18:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/sandboxTypes.ts:18:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/sandbox/worktreeIsolationEngine.ts:7:// - C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0 (Fail closed with SECURITY_VIOLATION).
+src/core/semanticMemory/semanticMemoryPersistence.ts:117:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/semanticMemory/semanticMemoryPersistence.ts:118:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/semanticMemory/semanticMemoryPersistence.ts:119:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]');
+src/core/semanticMemory/semanticMemoryProjectionEngine.ts:73:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/semanticMemory/semanticMemoryProjectionEngine.ts:74:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/semanticMemory/semanticMemoryProjectionEngine.ts:75:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]')
+src/core/vision/visualElementDetectionEngine.ts:165:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/vision/visualElementDetectionEngine.ts:166:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]')
+src/core/vision/visualSecurityBoundary.ts:172:      .replace(/[A-Za-z]:\\\\BOW\\\\shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/vision/visualSecurityBoundary.ts:173:      .replace(/[A-Za-z]:[\\/]BOW[\\/]shopofbow[^\s"']*/gi, '[PROTECTED_WORKSPACE_PATH]')
+src/core/vision/visualSecurityBoundary.ts:174:      .replace(/shopofbow/gi, '[REDACTED_PROTECTED_WORKSPACE]')
+src/core/world-action/worldActionExecutor.ts:9:// Protected workspace (C:\BOW\shopofbow) is ABSOLUTELY FORBIDDEN.
+src/core/world-action/worldActionPolicy.ts:8:// Protected workspace (C:\BOW\shopofbow) is ABSOLUTELY FORBIDDEN.
+src/core/world-model/masterOwnerWorldModelManager.ts:11://   C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/world-model/masterOwnerWorldModelRuntime.ts:19:// C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
+src/core/world-model/worldModelTypes.ts:23:// C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0

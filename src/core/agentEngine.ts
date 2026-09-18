@@ -58,7 +58,7 @@ import type { ResponseSource } from '../monitoring/analyticsTypes.js';
 import { isCircuitOpen, recordExecutionSuccess, recordExecutionFailure } from '../production/productionCircuitBreaker.js';
 import { shouldRouteToV3, getRolloutState } from '../production/productionRolloutService.js';
 import { recordProductionMetric } from '../production/productionTelemetryService.js';
-import { getActiveShopAdapter } from '../contracts/shopAdapter.js';
+import { getActiveCommerceProvider } from './commerceRegistry.js';
 
 
 
@@ -423,7 +423,8 @@ export async function processAgentMessageV2(
 
   if (isAdminRole && isAdminSurface) {
     const norm = lowerText.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
-    const adapter = getActiveShopAdapter();
+    const commerce = getActiveCommerceProvider();
+    const adapter = (commerce as any)?.adapter;
 
     // 1. Pending Fulfillment Queue Intent (Ưu tiên cao nhất cho vận hành)
     if (

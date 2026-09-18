@@ -17,3 +17,7 @@ Thumbs.db
 .idea/
 
 *.tsbuildinfo
+
+# Body Protocol local PSK secrets
+data/config/*.local
+*.local

@@ -2,13 +2,8 @@ import { type ReleaseExecutionRequest, type ReleaseExecutionTarget } from './rel
 import type { ReleaseCandidate, ReleaseVerificationRecord } from '../release/releaseTypes.js';
 export declare class ReleaseExecutionPolicyEngine {
     /**
-     * Absolute canonical path for the protected workspace.
-     * Đường dẫn tuyệt đối chuẩn tắc cho không gian làm việc được bảo vệ.
-     */
-    private static readonly PROTECTED_WORKSPACE_NORMALIZED;
-    /**
-     * Asserts that a target path does not touch or traverse into C:\BOW\shopofbow.
-     * Khẳng định rằng đường dẫn mục tiêu không chạm vào hoặc đi vào C:\BOW\shopofbow.
+     * Asserts that a target path does not touch or traverse into protected workspace.
+     * Khẳng định rằng đường dẫn mục tiêu không chạm vào hoặc đi vào không gian làm việc được bảo vệ.
      */
     static assertNotProtectedWorkspace(targetPath: string): void;
     /**

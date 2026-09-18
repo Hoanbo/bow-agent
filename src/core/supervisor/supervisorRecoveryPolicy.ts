@@ -9,6 +9,7 @@
 // High diagnosis confidence (e.g. 0.99) NEVER grants automatic authorization.
 
 import type { RecoveryPlan } from './supervisorTypes.js';
+import { isPathProtected } from '../../config.js';
 
 export interface SupervisorPolicyDecision {
   readonly allowed: boolean;
@@ -19,11 +20,11 @@ export interface SupervisorPolicyDecision {
 export class SupervisorRecoveryPolicy {
   public evaluate(plan: RecoveryPlan, target?: string): SupervisorPolicyDecision {
     // 1. Absolute Protected Workspace Invariant
-    if (target && target.toLowerCase().includes('shopofbow')) {
+    if (target && isPathProtected(target)) {
       return {
         allowed: false,
         requiresHumanGate: false,
-        reason: 'DENIED: Protected workspace C:\\BOW\\shopofbow is strictly forbidden.',
+        reason: 'DENIED: Protected workspace target is strictly forbidden by path protection policy.',
       };
     }
 

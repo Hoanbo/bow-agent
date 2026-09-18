@@ -1,4 +1,5 @@
 import { GovernedPolicyEnforcementPoint } from '../core/policyEnforcement/index.js';
+import { BodyRegistry } from '../core/bodyProtocol/index.js';
 export interface ToolDefinition {
     name: string;
     description: string;
@@ -31,7 +32,8 @@ export interface ToolExecutionContext {
 export declare class ToolRegistry {
     private tools;
     private pep;
-    constructor(pep?: GovernedPolicyEnforcementPoint);
+    private bodyRegistry;
+    constructor(pep?: GovernedPolicyEnforcementPoint, bodyRegistry?: BodyRegistry);
     getPEP(): GovernedPolicyEnforcementPoint;
     register(tool: ToolDefinition): void;
     getTool(name: string): ToolDefinition | undefined;

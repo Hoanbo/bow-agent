@@ -1,14 +1,18 @@
 // src/services/agent/tools.ts
 // Decoupled Agent Tools via Provider Contracts & ShopAdapter
 import { checkToolPermission } from './permissions.js';
-import { getActiveShopAdapter } from '../contracts/index.js';
+import { getActiveCommerceProvider } from './commerceRegistry.js';
+function getOptionalAdapter() {
+    const commerce = getActiveCommerceProvider();
+    return commerce?.adapter || null;
+}
 /**
  * 1. Tool tra cứu danh mục & giá sản phẩm thực tế từ catalog/storage
  */
 export async function searchProducts(params, storage) {
     try {
-        const adapter = getActiveShopAdapter();
-        const store = storage || adapter.storage;
+        const adapter = getOptionalAdapter();
+        const store = storage || adapter?.storage;
         let products = [];
         if (store?.searchProducts) {
             products = await store.searchProducts(params);
@@ -16,8 +20,22 @@ export async function searchProducts(params, storage) {
         else if (store?.getProducts) {
             products = await store.getProducts();
         }
-        if ((!products || products.length === 0) && adapter.catalog?.getAllProducts) {
+        if ((!products || products.length === 0) && adapter?.catalog?.getAllProducts) {
             products = await adapter.catalog.getAllProducts();
+        }
+        if ((!products || products.length === 0)) {
+            const commerce = getActiveCommerceProvider();
+            if (commerce.queryCatalog) {
+                const entities = await commerce.queryCatalog({ query: params.keyword, category: params.categoryId, limit: params.limit });
+                products = entities.map((e) => ({
+                    id: e.id,
+                    name: e.name,
+                    slug: e.id,
+                    description: e.description,
+                    startingPrice: 0,
+                    ...e.metadata,
+                }));
+            }
         }
         return {
             success: true,
@@ -38,8 +56,8 @@ export async function getMyOrders(params, context, storage) {
         return { success: false, toolName: 'getMyOrders', message: perm.reason };
     }
     try {
-        const store = storage || getActiveShopAdapter().storage;
-        const orders = await store.getMyOrders(params, context.userId);
+        const store = storage || getOptionalAdapter()?.storage;
+        const orders = store?.getMyOrders ? await store.getMyOrders(params, context.userId) : [];
         return {
             success: true,
             toolName: 'getMyOrders',
@@ -74,8 +92,8 @@ export async function checkWarrantyPolicy(params) {
  */
 export async function searchPromptsLibrary(params, storage) {
     try {
-        const store = storage || getActiveShopAdapter().storage;
-        const prompts = await store.searchPromptsLibrary(params);
+        const store = storage || getOptionalAdapter()?.storage;
+        const prompts = store?.searchPromptsLibrary ? await store.searchPromptsLibrary(params) : [];
         return {
             success: true,
             toolName: 'searchPromptsLibrary',
@@ -91,8 +109,8 @@ export async function searchPromptsLibrary(params, storage) {
  */
 export async function getActiveCoupons(storage) {
     try {
-        const store = storage || getActiveShopAdapter().storage;
-        const coupons = await store.getActiveCoupons();
+        const store = storage || getOptionalAdapter()?.storage;
+        const coupons = store?.getActiveCoupons ? await store.getActiveCoupons() : [];
         return {
             success: true,
             toolName: 'getActiveCoupons',
@@ -112,8 +130,19 @@ export async function getMyWalletBalance(context, wallet) {
         return { success: false, toolName: 'getMyWalletBalance', message: perm.reason };
     }
     try {
-        const walletProvider = wallet || getActiveShopAdapter().wallet;
-        const bal = await walletProvider.getBalance(context.userId);
+        const adapter = getOptionalAdapter();
+        const walletProvider = wallet || adapter?.wallet;
+        let bal = 0;
+        if (walletProvider) {
+            bal = await walletProvider.getBalance(context.userId);
+        }
+        else {
+            const commerce = getActiveCommerceProvider();
+            if (commerce.executeCommerceAction) {
+                const res = await commerce.executeCommerceAction({ type: 'GET_WALLET_BALANCE', payload: { userId: context.userId } });
+                bal = Number(res.result?.balance || 0);
+            }
+        }
         return {
             success: true,
             toolName: 'getMyWalletBalance',
@@ -132,8 +161,9 @@ export async function getMyWalletBalance(context, wallet) {
  */
 export async function getFaqsAndGuides(params, knowledge) {
     try {
-        const provider = knowledge || getActiveShopAdapter().knowledge;
-        const faqs = await provider.getFaqs({ activeOnly: true });
+        const adapter = getOptionalAdapter();
+        const provider = knowledge || adapter?.knowledge;
+        const faqs = provider ? await provider.getFaqs({ activeOnly: true }) : [];
         let filtered = faqs;
         if (params.query && params.query.trim().length > 0) {
             const q = params.query.trim().toLowerCase();
@@ -154,12 +184,22 @@ export async function getFaqsAndGuides(params, knowledge) {
  */
 export async function getSupportChannels(storage) {
     try {
-        const store = storage || getActiveShopAdapter().storage;
-        const channels = await store.getSupportChannels();
+        const store = storage || getOptionalAdapter()?.storage;
+        const channels = store?.getSupportChannels ? await store.getSupportChannels() : null;
+        if (channels) {
+            return {
+                success: true,
+                toolName: 'getSupportChannels',
+                data: channels,
+            };
+        }
         return {
             success: true,
             toolName: 'getSupportChannels',
-            data: channels,
+            data: {
+                brand: 'Hỗ trợ khách hàng',
+                hours: 'Hỗ trợ trực tuyến 24/7',
+            },
         };
     }
     catch {
@@ -167,11 +207,8 @@ export async function getSupportChannels(storage) {
             success: true,
             toolName: 'getSupportChannels',
             data: {
-                brand: 'Shop of BOW',
-                hotline: '0966 821 315',
-                zalo: 'https://zalo.me/0966821315',
-                facebook: 'https://www.facebook.com/Bobowcon',
-                hours: 'Hỗ trợ 24/7 (Phản hồi nhanh nhất: 8h00 - 23h30 hàng ngày)',
+                brand: 'Hỗ trợ khách hàng',
+                hours: 'Hỗ trợ trực tuyến 24/7',
             },
         };
     }
@@ -185,8 +222,8 @@ export async function getMyTickets(params, context, storage) {
         return { success: false, toolName: 'getMyTickets', message: perm.reason };
     }
     try {
-        const store = storage || getActiveShopAdapter().storage;
-        const tickets = await store.getTicketsForUser(context.userId);
+        const store = storage || getOptionalAdapter()?.storage;
+        const tickets = store?.getTicketsForUser ? await store.getTicketsForUser(context.userId) : [];
         let filtered = tickets || [];
         if (params.status && params.status !== 'all') {
             filtered = filtered.filter((t) => t.status === params.status);

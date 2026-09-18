@@ -26,6 +26,7 @@ import {
 } from './cognitiveResilienceTypes.js';
 import { MASTER_OWNER_ID, isMasterOwner } from '../architecture/masterArchitectureIdentity.js';
 import { DurableResilienceStateStore } from './durableResilienceStateStore.js';
+import { isPathProtected } from '../../config.js';
 
 // Maximum recovery attempts before escalation to BLOCKED
 const MAX_RECOVERY_ATTEMPTS_DEFAULT = 3;
@@ -321,8 +322,8 @@ export class CognitiveResilienceRuntime {
     }
 
     // Protected workspace guard
-    if (proposal.target && (proposal.target.includes('shopofbow') || proposal.target.includes('C:\\BOW\\shopofbow'))) {
-      throw new Error('SECURITY_VIOLATION: Recovery cannot target protected workspace C:\\BOW\\shopofbow.');
+    if (proposal.target && isPathProtected(proposal.target)) {
+      throw new Error('SECURITY_VIOLATION: Recovery cannot target protected workspace.');
     }
 
     this._healthState = 'RECOVERING';

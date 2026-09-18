@@ -1,4 +1,20 @@
 import type { ProductItemResult, CategoryInfo } from './types.js';
+import { CONFIG } from '../config.js';
+
+export type ProductIconResolver = (name: string) => string | null;
+let customProductIconResolver: ProductIconResolver | null = null;
+
+export function setProductIconResolver(resolver: ProductIconResolver): void {
+  customProductIconResolver = resolver;
+}
+
+export function getProductIcon(productName: string): string {
+  if (customProductIconResolver) {
+    const icon = customProductIconResolver(productName);
+    if (icon) return icon;
+  }
+  return '📦';
+}
 
 /**
  * Format thông tin chi tiết sản phẩm và các plan
@@ -56,7 +72,8 @@ export function formatCatalogOverviewResponse(
     }
   });
 
-  let msg = `🛍️ **Shop of BOW hiện đang có ${products.length} sản phẩm bản quyền:**\n\n`;
+  const storeName = CONFIG.agentPersona || 'Hệ thống';
+  let msg = `🛍️ **${storeName} hiện đang có ${products.length} sản phẩm:**\n\n`;
 
   // 1. Phân loại theo danh mục
   if (categories.length > 0) {
@@ -203,16 +220,7 @@ export function formatCompactOrdersResponse(
       msg += `   ${statusText} · **+${priceNum.toLocaleString('vi-VN')}đ**\n`;
       msg += `   👉 [Xem giao dịch ví →](/dashboard?tab=wallet)\n\n`;
     } else {
-      const icon = (o.product_name || '').toLowerCase().includes('capcut')
-        ? '🎬'
-        : (o.product_name || '').toLowerCase().includes('netflix') || (o.product_name || '').toLowerCase().includes('youtube')
-        ? '🍿'
-        : (o.product_name || '').toLowerCase().includes('canva') || (o.product_name || '').toLowerCase().includes('figma')
-        ? '🎨'
-        : (o.product_name || '').toLowerCase().includes('gpt') || (o.product_name || '').toLowerCase().includes('ai')
-        ? '🤖'
-        : '📦';
-
+      const icon = getProductIcon(o.product_name || '');
       const planText = o.plan_label ? `${o.plan_label} · ` : '';
       msg += `${icon} **${o.product_name}**\n`;
       msg += `   ${planText}${statusText} · **${priceNum.toLocaleString('vi-VN')}đ**\n`;

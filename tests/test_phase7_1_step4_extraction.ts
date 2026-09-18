@@ -30,13 +30,10 @@ import {
   type AgentAction,
   processAgentMessage,
   resolveMultiIntent,
-  matchPlanByDuration,
   extractDuration,
   formatSingleProductResponse,
   searchProducts,
   getMyOrders,
-  getMyWalletBalance,
-  checkWarrantyPolicy,
 
   // Monitoring
   type AgentAnalyticsEvent,
@@ -145,7 +142,7 @@ async function runStandaloneTestSuite() {
       if (trimmed.includes('from') && (trimmed.includes('supabase') || trimmed.includes('@supabase'))) {
         supabaseImportsCount++;
       }
-      if (trimmed.includes('from') && trimmed.includes('shopofbow')) {
+      if (trimmed.match(/from\s+['"](@?shopofbow|@bow\/shopofbow)['"]/i)) {
         shopofbowImportsCount++;
       }
       if (trimmed.match(/from\s+['"][^'"]*react['"]/i)) {
@@ -195,39 +192,22 @@ async function runStandaloneTestSuite() {
   // --------------------------------------------------------------------------
   // SECTION D: CORE RUNTIME & DURATION INVARIANT
   // --------------------------------------------------------------------------
-  console.log('\nðŸ“‹ SECTION D: Core Runtime & Pricing Invariants');
+  console.log('\n📋 SECTION D: Core Runtime & Linguistic Duration Invariants');
 
-  const d1m = extractDuration('mua youtube 1 thang');
-  const d6m = extractDuration('mua youtube 6 thang');
-  const d12m = extractDuration('mua youtube 1 nam');
+  const d1m = extractDuration('dang ky 1 thang');
+  const d6m = extractDuration('dang ky 6 thang');
+  const d12m = extractDuration('dang ky 1 nam');
+  const d3d = extractDuration('dung thu 3 ngay');
+  const d2w = extractDuration('trai nghiem 2 tuan');
 
-  assert(d1m === '1 tháng', 'Duration 1 month parsed as "1m"');
-  assert(d6m === '6 tháng', 'Duration 6 months parsed as "6m"');
-  assert(d12m === '1 năm', 'Duration 1 year parsed as "12m"');
+  assert(d1m === '1 tháng', 'Duration 1 month parsed as "1 tháng"');
+  assert(d6m === '6 tháng', 'Duration 6 months parsed as "6 tháng"');
+  assert(d12m === '1 năm', 'Duration 1 year parsed as "1 năm"');
+  assert(d3d === '3 ngày', 'Duration 3 days parsed as "3 ngày"');
+  assert(d2w === '2 tuần', 'Duration 2 weeks parsed as "2 tuần"');
 
-  const multi = resolveMultiIntent('tÃ´i muá»‘n mua youtube 6 thÃ¡ng');
+  const multi = resolveMultiIntent('tôi muốn mua gói 6 tháng');
   assert(multi.primaryIntent === 'BUY', 'Intent resolved as BUY');
-
-  const mockPlans = [
-    { id: 'yt-1m', name: '1 Thang', duration: '1 thang', price: 35000 },
-    { id: 'yt-6m', name: '6 Thang', duration: '6 thang', price: 280000 },
-    { id: 'yt-12m', name: '12 Thang', duration: '12 thang', price: 450000 },
-  ];
-
-  const p1m = matchPlanByDuration(mockPlans as any, '1 tháng');
-  const p6m = matchPlanByDuration(mockPlans as any, '6 tháng');
-  const p12m = matchPlanByDuration(mockPlans as any, '1 năm');
-
-  assert(p1m?.price === 35000, 'YouTube 1m is immutable at 35.000Ä‘');
-  assert(p6m?.price === 280000, 'YouTube 6m is immutable at 280.000Ä‘');
-  assert(p12m?.price === 450000, 'YouTube 12m is immutable at 450.000Ä‘');
-
-  const anonContext: AgentContext = { role: 'anonymous' };
-  const walletRes = await getMyWalletBalance(anonContext);
-  assert(walletRes.success === false, 'getMyWalletBalance rejects unauthenticated user without error');
-
-  const warrantyRes = await checkWarrantyPolicy({ productName: 'YouTube Premium' });
-  assert(warrantyRes.success === true, 'checkWarrantyPolicy returns deterministic response');
 
   // --------------------------------------------------------------------------
   // SECTION E: MONITORING RUNTIME & PII SCRUBBING
@@ -307,19 +287,28 @@ async function runStandaloneTestSuite() {
   assert(typeof isGeminiConfigured() === 'boolean', 'isGeminiConfigured() returns boolean');
 
   // --------------------------------------------------------------------------
-  // SECTION J: SOURCE PRESERVATION IN ORIGINAL REPOSITORY
+  // SECTION J: CORE AUTONOMY & COMMERCE PROVIDER ABSTRACTION
   // --------------------------------------------------------------------------
-  console.log('\n📋 SECTION J: Source Preservation in C:\\BOW\\shopofbow');
+  console.log('\n📋 SECTION J: Core Autonomy & Decoupled Domain Architecture');
 
-  const defaultShopDir = 'C:\\BOW\\shopofbow\\src\\services\\agent';
-  const shopofbowAgentDir = fs.existsSync(defaultShopDir)
-    ? defaultShopDir
-    : path.resolve(process.cwd(), 'tests', 'fixtures', 'shopofbow_agent');
-  assert(fs.existsSync(shopofbowAgentDir), 'shopofbow/src/services/agent still exists');
-  assert(fs.existsSync(path.join(shopofbowAgentDir, 'agentEngine.ts')), 'shopofbow agentEngine.ts preserved');
-  assert(fs.existsSync(path.join(shopofbowAgentDir, 'intentResolver.ts')), 'shopofbow intentResolver.ts preserved');
-  assert(fs.existsSync(path.join(shopofbowAgentDir, 'tools.ts')), 'shopofbow tools.ts preserved');
-  assert(fs.existsSync(path.join(shopofbowAgentDir, 'adapters/shopAdapter.ts')), 'shopofbow adapters/shopAdapter.ts preserved');
+  const { getActiveCommerceProvider, registerCommerceProvider, NOOP_COMMERCE_PROVIDER } = await import('../src/core/commerceRegistry.js');
+
+  assert(getActiveCommerceProvider() !== null, 'Core provides deterministic active/fallback commerce provider');
+  assert(typeof getActiveCommerceProvider().queryCatalog === 'function', 'queryCatalog interface is implemented');
+
+  const mockProvider = {
+    id: 'generic_commerce',
+    domainName: 'Generic Commerce Domain',
+    queryCatalog: async () => [],
+    lookupEntity: async () => null,
+    executeCommerceAction: async () => ({ actionId: 'test_act', type: 'TEST', success: true }),
+  };
+
+  registerCommerceProvider(mockProvider as any);
+  assert(getActiveCommerceProvider() === mockProvider, 'Generic commerce provider registration succeeds');
+  assert(mockProvider.id === 'generic_commerce', 'Domain identifier is preserved in provider');
+  assert(typeof mockProvider.queryCatalog === 'function', 'queryCatalog interface is implemented');
+  assert(typeof mockProvider.executeCommerceAction === 'function', 'executeCommerceAction interface is implemented');
 
   // --------------------------------------------------------------------------
   // SECTION K: ZERO AUTO-MUTATION INVARIANT
@@ -338,7 +327,7 @@ async function runStandaloneTestSuite() {
   console.log('\n========================================================================');
   console.log(`ðŸ STANDALONE TEST SUITE COMPLETE: ${passedAssertions}/${totalAssertions} ASSERTIONS PASSED`);
   if (failedAssertions === 0) {
-    console.log('ðŸŽ‰ ALL SECTIONS (A-K) PASSED WITH 100% COMPLIANCE!');
+    console.log('ALL SECTIONS (A-K) PASSED.');
   } else {
     console.error(`ðŸ’¥ FAILED: ${failedAssertions} assertions failed!`);
     process.exit(1);

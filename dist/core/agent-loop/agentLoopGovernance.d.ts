@@ -6,7 +6,6 @@ export interface GovernanceDecision {
     readonly reason: string;
 }
 export declare class AgentLoopGovernanceEngine {
-    private readonly protectedWorkspace;
     evaluate(plan: AgentLoopPlan): GovernanceDecision;
 }
 export declare const globalAgentLoopGovernance: AgentLoopGovernanceEngine;

@@ -13,6 +13,7 @@
 // C:\BOW\shopofbow: READS = 0, WRITES = 0, IMPORTS = 0, TOUCHES = 0
 import { generateResilienceId, } from './cognitiveResilienceTypes.js';
 import { MASTER_OWNER_ID, isMasterOwner } from '../architecture/masterArchitectureIdentity.js';
+import { isPathProtected } from '../../config.js';
 // Maximum recovery attempts before escalation to BLOCKED
 const MAX_RECOVERY_ATTEMPTS_DEFAULT = 3;
 // Maximum active recovery proposals before storm prevention kicks in
@@ -273,8 +274,8 @@ export class CognitiveResilienceRuntime {
             throw new Error(`MAX_ATTEMPTS_REACHED: Recovery '${proposalId}' has exhausted ${proposal.maxAttempts} attempts. Escalation required.`);
         }
         // Protected workspace guard
-        if (proposal.target && (proposal.target.includes('shopofbow') || proposal.target.includes('C:\\BOW\\shopofbow'))) {
-            throw new Error('SECURITY_VIOLATION: Recovery cannot target protected workspace C:\\BOW\\shopofbow.');
+        if (proposal.target && isPathProtected(proposal.target)) {
+            throw new Error('SECURITY_VIOLATION: Recovery cannot target protected workspace.');
         }
         this._healthState = 'RECOVERING';
         const attempt = {
