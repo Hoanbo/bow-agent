@@ -21,3 +21,11 @@ Thumbs.db
 # Body Protocol local PSK secrets
 data/config/*.local
 *.local
+
+# Python virtual environments & build artifacts
+.venv*/
+venv*/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
