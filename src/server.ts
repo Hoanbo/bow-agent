@@ -498,10 +498,11 @@ export class BowCentralAgentServer {
 
     this.wss.on('connection', (ws: WebSocket, req) => {
       const pathname = req.url ? new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname : '/';
+      const clientIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket.remoteAddress || 'unknown';
       const isRobotConnection = pathname.includes('robot') || pathname.includes('audio-stream');
       const isDesktopConnection = pathname.includes('desktop');
       const isBodyConnection = pathname.includes('body');
-      console.log(`[BOW-SERVER] WebSocket client connected on path: ${pathname}`);
+      console.log(`[BOW-SERVER] WebSocket client connected on path: ${pathname} from IP: ${clientIp}`);
 
       let connectedBodyId: string | undefined;
       const pendingCommandResolvers = new Map<string, (res: BodyCommandResult) => void>();
@@ -585,6 +586,7 @@ export class BowCentralAgentServer {
             };
 
             globalBodyRegistry.registerBody(ad, sender);
+            console.log(`[BOW-SERVER] ✓ Body registered successfully: ${ad.bodyId} (${ad.bodyType}) from IP: ${clientIp} with capabilities: [${ad.capabilities.map((c: any) => c.name).join(', ')}]`);
             ws.send(JSON.stringify({
               type: 'body.advertise_ack',
               bodyId: ad.bodyId,

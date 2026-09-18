@@ -1,5 +1,8 @@
 // src/speech/ttsEngine.ts
 // BOW AGENT V3.3 — VIETNAMESE EDGE-TTS SPEECH SYNTHESIS ENGINE
+// [AUDIT NOTE]: PARTIAL IMPLEMENTATION (SSML ONLY).
+// synthesize() generates SSML markup and duration estimates, but does NOT generate audioBase64 binary.
+// For real audio playback on Windows, voicePipeline.ts relies on its PowerShell System.Speech fallback.
 
 import { CONFIG } from '../config.js';
 

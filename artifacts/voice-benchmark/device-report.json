@@ -1,0 +1,62 @@
+﻿{
+    "platform":  "win32",
+    "os":  "Microsoft Windows 11 Home Single Language",
+    "hostName":  "MSI",
+    "timestamp":  "2026-09-18T19:31:07.4578367+07:00",
+    "inputDevices":  [
+                         {
+                             "id":  0,
+                             "name":  "Microphone (L80PRO)",
+                             "type":  "input",
+                             "hardwareId":  "USB\\VID_4C4A\u0026PID_4155\u0026MI_00",
+                             "status":  "OK",
+                             "isHeadsetMic":  true
+                         },
+                         {
+                             "id":  1,
+                             "name":  "Microphone (DeskIn(R) Virtual Audio Device)",
+                             "type":  "input",
+                             "hardwareId":  "ROOT\\MEDIA",
+                             "status":  "OK",
+                             "isHeadsetMic":  false
+                         }
+                     ],
+    "outputDevices":  [
+                          {
+                              "id":  0,
+                              "name":  "Speakers (L80PRO)",
+                              "type":  "output",
+                              "hardwareId":  "USB\\VID_4C4A\u0026PID_4155\u0026MI_00",
+                              "status":  "OK",
+                              "isHeadsetSpeaker":  true
+                          },
+                          {
+                              "id":  1,
+                              "name":  "4 - AOC28E850.HDR (2- AMD High Definition Audio Device)",
+                              "type":  "output",
+                              "hardwareId":  "HDAUDIO\\FUNC_01\u0026VEN_1002\u0026DEV_AA01",
+                              "status":  "OK",
+                              "isHeadsetSpeaker":  false
+                          },
+                          {
+                              "id":  2,
+                              "name":  "Speakers (DeskIn(R) Virtual Audio Device)",
+                              "type":  "output",
+                              "hardwareId":  "ROOT\\MEDIA",
+                              "status":  "OK",
+                              "isHeadsetSpeaker":  false
+                          },
+                          {
+                              "id":  3,
+                              "name":  "Digital Audio (S/PDIF) (High Definition Audio Device)",
+                              "type":  "output",
+                              "hardwareId":  "HDAUDIO\\FUNC_01\u0026VEN_10EC\u0026DEV_0897",
+                              "status":  "OK",
+                              "isHeadsetSpeaker":  false
+                          }
+                      ],
+    "selectedInput":  "Microphone (L80PRO)",
+    "selectedOutput":  "Speakers (L80PRO)",
+    "selectionMethod":  "Explicit hardware identification (USB L80PRO Headset)",
+    "verificationStatus":  "VERIFIED"
+}

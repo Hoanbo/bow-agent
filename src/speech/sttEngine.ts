@@ -1,5 +1,8 @@
 // src/speech/sttEngine.ts
-// BOW AGENT V3.4 — HYBRID LOCAL WHISPER (VULKAN RX 580) & SPEECH-TO-TEXT HUB
+// BOW AGENT V3.4 — SPEECH-TO-TEXT HUB
+// [AUDIT NOTE]: MOCK / PLACEHOLDER IMPLEMENTATION.
+// This engine currently returns hardcoded text ('Xin chào Shop of BOW') for any audio binary buffer.
+// The Vulkan RX 580 / local Whisper backend is NOT yet integrated. Do not rely on for real voice recognition.
 
 import { CONFIG } from '../config.js';
 

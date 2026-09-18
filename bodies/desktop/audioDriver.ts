@@ -254,12 +254,18 @@ Start-Sleep -Milliseconds ${durationMs}
         windowsHide: true,
       });
 
+      const timer = setTimeout(() => {
+        try { child.kill(); } catch {}
+        reject(new Error(`MCI recording process timed out after ${durationMs + 5000}ms`));
+      }, durationMs + 5000);
+
       let stderr = '';
       let stdout = '';
       child.stdout?.on('data', (d) => { stdout += d.toString(); });
       child.stderr?.on('data', (d) => { stderr += d.toString(); });
 
       child.on('close', (code) => {
+        clearTimeout(timer);
         if (code === 0 && fs.existsSync(destPath)) {
           resolve();
         } else {
@@ -268,6 +274,7 @@ Start-Sleep -Milliseconds ${durationMs}
       });
 
       child.on('error', (err) => {
+        clearTimeout(timer);
         reject(err);
       });
     });
