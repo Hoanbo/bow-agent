@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOWCON — Vietnamese Male Voice Benchmark Lab</title>
+  <style>
+    :root {
+      --bg-primary: #0a0d14;
+      --bg-card: rgba(22, 28, 45, 0.75);
+      --bg-card-hover: rgba(30, 39, 64, 0.85);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --accent-cyan: #00e5ff;
+      --accent-blue: #2979ff;
+      --text-main: #f0f4f8;
+      --text-muted: #94a3b8;
+      --status-pass: #10b981;
+      --status-warn: #f59e0b;
+      --status-fail: #ef4444;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #07090e 0%, #0d1322 100%);
+      color: var(--text-main);
+      padding: 2.5rem 1.5rem;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.5rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      background: rgba(0, 229, 255, 0.12);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #ffffff, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .hw-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      backdrop-filter: blur(12px);
+    }
+    .hw-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .hw-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    .hw-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .table-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 2.5rem;
+      backdrop-filter: blur(12px);
+      overflow-x: auto;
+    }
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      color: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+    th {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+    td {
+      padding: 0.9rem 1rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .tag-verified {
+      color: var(--status-pass);
+      font-weight: 600;
+    }
+    .tag-partial {
+      color: var(--status-warn);
+      font-weight: 600;
+    }
+    .tag-failed {
+      color: var(--status-fail);
+      font-weight: 600;
+    }
+    .voices-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .voice-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 1.75rem;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .voice-card:hover {
+      border-color: rgba(0, 229, 255, 0.4);
+    }
+    .voice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+    .voice-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .voice-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+    .sentences-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sentence-item {
+      background: rgba(10, 14, 25, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .sentence-text-box {
+      flex: 1;
+    }
+    .sentence-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .sentence-text {
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+    .sentence-metrics {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .player-box {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    audio {
+      height: 38px;
+      outline: none;
+    }
+    footer {
+      margin-top: 3.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+      padding-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">Evidence-First Benchmark</div>
+      <h1>BOWCON — Vietnamese Male Voice Benchmark Lab</h1>
+      <p class="subtitle">Phòng thí nghiệm đối chuẩn khách quan 6 giọng đọc nam tiếng Việt tương thích Piper. Không tự xếp hạng — Chủ nhân tự nghe và đưa ra quyết định.</p>
+    </header>
+
+    <div class="hw-banner">
+      <div class="hw-item">
+        <span class="hw-label">Hệ điều hành / Nền tảng</span>
+        <span class="hw-val">Windows 11 (dual Xeon 28C/56T)</span>
+      </div>
+      <div class="hw-item">
+        <span class="hw-label">Tai nghe / Loa Output</span>
+        <span class="hw-val" style="color: var(--accent-cyan);">Speakers (L80PRO) — VERIFIED</span>
+      </div>
+      <div class="hw-item">
+        <span class="hw-label">Microphone Input</span>
+        <span class="hw-val" style="color: var(--accent-cyan);">Microphone (L80PRO) — VERIFIED</span>
+      </div>
+      <div class="hw-item">
+        <span class="hw-label">Runtime Engine</span>
+        <span class="hw-val">Piper-TTS (ONNX Runtime, Local CPU)</span>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <div class="section-title">Bảng Tổng Hợp Đo Lường Kỹ Thuật (Objective Technical Metrics)</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Giọng đọc (Voice)</th>
+            <th>Mô hình / Repo</th>
+            <th>Speaker ID</th>
+            <th>Sample Rate</th>
+            <th>Số câu thành công</th>
+            <th>Tổng thời lượng</th>
+            <th>Tổng thời gian sinh</th>
+            <th>RTF trung bình</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Quang Huy</strong></td>
+            <td>CakeByVPBank/piper-v3-vietnamese-5speakers</td>
+            <td>2</td>
+            <td>22,050 Hz</td>
+            <td>6 / 6 (100%)</td>
+            <td>38.93s</td>
+            <td>16,564 ms</td>
+            <td><strong>0.4255</strong></td>
+            <td><span class="tag-verified">VERIFIED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Thanh niên tự tin</strong></td>
+            <td>vongocanhthi/acut-piper-vietnamese</td>
+            <td>Single</td>
+            <td>22,050 Hz</td>
+            <td>6 / 6 (100%)</td>
+            <td>36.56s</td>
+            <td>15,920 ms</td>
+            <td><strong>0.4354</strong></td>
+            <td><span class="tag-verified">VERIFIED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Deepman 3909</strong></td>
+            <td>hoangquocviet/PIPER_MODELS</td>
+            <td>Single</td>
+            <td>22,050 Hz</td>
+            <td>4 / 6 (Lỗi câu 3, 5)</td>
+            <td>51.40s (4 câu)</td>
+            <td>20,128 ms</td>
+            <td>0.3916</td>
+            <td><span class="tag-partial">PARTIALLY_VERIFIED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Mạnh Dũng</strong></td>
+            <td>hoangquocviet/PIPER_MODELS</td>
+            <td>Single</td>
+            <td>22,050 Hz</td>
+            <td>4 / 6 (Lỗi câu 3, 5)</td>
+            <td>33.54s (4 câu)</td>
+            <td>19,132 ms</td>
+            <td>0.5704</td>
+            <td><span class="tag-partial">PARTIALLY_VERIFIED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Minh Quang</strong></td>
+            <td>hoangquocviet/PIPER_MODELS</td>
+            <td>Single</td>
+            <td>22,050 Hz</td>
+            <td>4 / 6 (Lỗi câu 3, 5)</td>
+            <td>28.28s (4 câu)</td>
+            <td>18,901 ms</td>
+            <td>0.6683</td>
+            <td><span class="tag-partial">PARTIALLY_VERIFIED</span></td>
+          </tr>
+          <tr>
+            <td><strong>Lạc Phi</strong></td>
+            <td>hoangquocviet/PIPER_MODELS</td>
+            <td>Single</td>
+            <td>22,050 Hz</td>
+            <td>4 / 6 (Lỗi câu 3, 5)</td>
+            <td>54.58s (4 câu)</td>
+            <td>20,438 ms</td>
+            <td>0.3744</td>
+            <td><span class="tag-partial">PARTIALLY_VERIFIED</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Danh Sách Nghe Thử Trực Tiếp (Voice Listening Station)</div>
+    <div class="voices-grid">
+
+      <!-- VOICE 01 -->
+      <div class="voice-card">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title">1. Quang Huy (Speaker 2)</div>
+            <div class="voice-meta">CakeByVPBank/piper-v3-vietnamese-5speakers • 22.05 kHz • RTF 0.4255 • 6/6 câu PASS</div>
+          </div>
+          <span class="tag-verified">VERIFIED 100%</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 5.29s</span><span>Gen: 2795ms</span><span>RTF: 0.528</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-01-quang-huy/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.85s</span><span>Gen: 2886ms</span><span>RTF: 0.421</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-01-quang-huy/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 3</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 5.53s</span><span>Gen: 2652ms</span><span>RTF: 0.480</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-01-quang-huy/03.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 8.77s</span><span>Gen: 3122ms</span><span>RTF: 0.356</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-01-quang-huy/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 5</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.44s</span><span>Gen: 2797ms</span><span>RTF: 0.434</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-01-quang-huy/05.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 3.05s</span><span>Gen: 2311ms</span><span>RTF: 0.757</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-01-quang-huy/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOICE 02 -->
+      <div class="voice-card">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title">2. Thanh niên tự tin</div>
+            <div class="voice-meta">vongocanhthi/acut-piper-vietnamese • 22.05 kHz • RTF 0.4354 • 6/6 câu PASS</div>
+          </div>
+          <span class="tag-verified">VERIFIED 100%</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 4.88s</span><span>Gen: 2542ms</span><span>RTF: 0.521</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-02-thanh-nien-tu-tin/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.27s</span><span>Gen: 2795ms</span><span>RTF: 0.446</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-02-thanh-nien-tu-tin/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 3</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 5.12s</span><span>Gen: 2603ms</span><span>RTF: 0.508</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-02-thanh-nien-tu-tin/03.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 8.42s</span><span>Gen: 3108ms</span><span>RTF: 0.369</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-02-thanh-nien-tu-tin/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 5</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.10s</span><span>Gen: 2814ms</span><span>RTF: 0.461</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-02-thanh-nien-tu-tin/05.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 2.77s</span><span>Gen: 2058ms</span><span>RTF: 0.743</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-02-thanh-nien-tu-tin/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOICE 03 -->
+      <div class="voice-card">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title">3. Deepman 3909</div>
+            <div class="voice-meta">hoangquocviet/PIPER_MODELS • 22.05 kHz • 4 câu thành công (Câu 3 & 5 lỗi phoneme)</div>
+          </div>
+          <span class="tag-partial">PARTIALLY VERIFIED</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 11.87s</span><span>Gen: 4986ms</span><span>RTF: 0.420</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-03-deepman-3909/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 12.18s</span><span>Gen: 5145ms</span><span>RTF: 0.422</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-03-deepman-3909/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 3 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 21.98s</span><span>Gen: 5538ms</span><span>RTF: 0.252</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-03-deepman-3909/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 5 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 5.38s</span><span>Gen: 4459ms</span><span>RTF: 0.830</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-03-deepman-3909/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOICE 04 -->
+      <div class="voice-card">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title">4. Mạnh Dũng</div>
+            <div class="voice-meta">hoangquocviet/PIPER_MODELS • 22.05 kHz • 4 câu thành công (Câu 3 & 5 lỗi phoneme)</div>
+          </div>
+          <span class="tag-partial">PARTIALLY VERIFIED</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 7.58s</span><span>Gen: 4691ms</span><span>RTF: 0.619</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-04-manh-dung/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 9.50s</span><span>Gen: 4822ms</span><span>RTF: 0.508</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-04-manh-dung/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 3 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 13.07s</span><span>Gen: 5059ms</span><span>RTF: 0.387</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-04-manh-dung/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 5 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 3.39s</span><span>Gen: 4560ms</span><span>RTF: 1.345</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-04-manh-dung/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOICE 05 -->
+      <div class="voice-card">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title">5. Minh Quang</div>
+            <div class="voice-meta">hoangquocviet/PIPER_MODELS • 22.05 kHz • 4 câu thành công (Câu 3 & 5 lỗi phoneme)</div>
+          </div>
+          <span class="tag-partial">PARTIALLY VERIFIED</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.05s</span><span>Gen: 4743ms</span><span>RTF: 0.784</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-05-minh-quang/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 8.60s</span><span>Gen: 4965ms</span><span>RTF: 0.577</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-05-minh-quang/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 3 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 10.64s</span><span>Gen: 4728ms</span><span>RTF: 0.445</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-05-minh-quang/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 5 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 3.00s</span><span>Gen: 4466ms</span><span>RTF: 1.491</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-05-minh-quang/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VOICE 06 -->
+      <div class="voice-card">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title">6. Lạc Phi</div>
+            <div class="voice-meta">hoangquocviet/PIPER_MODELS • 22.05 kHz • 4 câu thành công (Câu 3 & 5 lỗi phoneme)</div>
+          </div>
+          <span class="tag-partial">PARTIALLY VERIFIED</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 11.19s</span><span>Gen: 4953ms</span><span>RTF: 0.443</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-06-lac-phi/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 14.11s</span><span>Gen: 5188ms</span><span>RTF: 0.368</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-06-lac-phi/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 3 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 23.03s</span><span>Gen: 5673ms</span><span>RTF: 0.246</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-06-lac-phi/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 5 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.25s</span><span>Gen: 4624ms</span><span>RTF: 0.740</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-06-lac-phi/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- VOICE 07 - DUY ORYX -->
+      <div class="voice-card" style="border: 2px solid var(--accent-cyan); background: rgba(14, 22, 40, 0.95); margin-top: 1rem;">
+        <div class="voice-header">
+          <div>
+            <div class="voice-title" style="color: var(--accent-cyan); font-size: 1.5rem;">🌟 7. Duy Oryx (NAM SIÊU TRẦM - CỰC ẤM & ĐIỀM ĐẠM)</div>
+            <div class="voice-meta">hoangquocviet/PIPER_MODELS (duyoryx3175) • 22.05 kHz • Chất giọng nam siêu trầm, phong thái quản gia / trợ lý chững chạc</div>
+          </div>
+          <span class="tag-partial" style="background: rgba(0, 229, 255, 0.1); padding: 0.3rem 0.8rem; border-radius: 6px; border: 1px solid var(--accent-cyan);">ĐÃ TỔNG HỢP (4 CÂU)</span>
+        </div>
+        <div class="sentences-list">
+          <div class="sentence-item" style="border-left: 3px solid var(--accent-cyan);">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 1</div>
+              <div class="sentence-text">Xin chào Sếp. Tôi là BOWCON. Tôi đã sẵn sàng phục vụ Sếp.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 6.66s</span><span>Gen: 4920ms</span><span style="color: var(--accent-cyan); font-weight: 600;">(Đã phát qua tai nghe L80PRO)</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-07-duy-oryx/01.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="border-left: 3px solid var(--accent-cyan);">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 2</div>
+              <div class="sentence-text">Sếp muốn tôi kiểm tra hệ thống, mở một ứng dụng, hay thực hiện một công việc nào khác?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 9.13s</span><span>Gen: 5057ms</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-07-duy-oryx/02.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 3 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi đã hoàn thành yêu cầu của Sếp. Đây là kết quả mà tôi thu được.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item" style="border-left: 3px solid var(--accent-cyan);">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 4</div>
+              <div class="sentence-text">Hiện tại có một số tác vụ vẫn đang được xử lý. Tôi sẽ tiếp tục theo dõi và báo lại cho Sếp khi có kết quả.</div>
+              <div class="sentence-metrics"><span>Thời lượng: 11.61s</span><span>Gen: 5182ms</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-07-duy-oryx/04.wav"></audio></div>
+          </div>
+          <div class="sentence-item" style="opacity: 0.6;">
+            <div class="sentence-text-box">
+              <div class="sentence-num" style="color: var(--status-fail);">Câu 5 — SYNTHESIS FAILED</div>
+              <div class="sentence-text">Tôi không thể thực hiện hành động này vì quyền hạn hiện tại không cho phép.</div>
+              <div class="sentence-metrics"><span style="color: var(--status-fail);">Piper exit code 1 (Lỗi phoneme)</span></div>
+            </div>
+            <div class="player-box"><span class="tag-failed">N/A</span></div>
+          </div>
+          <div class="sentence-item" style="border-left: 3px solid var(--accent-cyan);">
+            <div class="sentence-text-box">
+              <div class="sentence-num">Câu 6</div>
+              <div class="sentence-text">Sếp có muốn tôi tiếp tục không?</div>
+              <div class="sentence-metrics"><span>Thời lượng: 3.16s</span><span>Gen: 4498ms</span></div>
+            </div>
+            <div class="player-box"><audio controls preload="none" src="audio/voice-07-duy-oryx/06.wav"></audio></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      BOWCON Voice Benchmark Lab • Báo cáo dữ liệu khách quan theo chuẩn Evidence-First • 2026
+    </footer>
+  </div>
+</body>
+</html>
