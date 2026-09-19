@@ -48,8 +48,8 @@ export interface CapabilityAdvertisement {
 export interface BodyCommand {
   /** Unique identifier for this command dispatch */
   readonly commandId: string;
-  /** Target body ID */
-  readonly bodyId: string;
+  /** Target body ID (optional if routed dynamically by capability) */
+  readonly bodyId?: string;
   /** Capability to invoke (e.g. 'system.open_app') */
   readonly capability: string;
   /** Arguments supplied to the capability */

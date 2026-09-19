@@ -32,6 +32,7 @@
 import crypto from 'node:crypto';
 import { globalPDP, PolicyDecision, ActionClassification } from './policyDecisionPoint.js';
 import { toolRegistry, ToolExecutionContext } from '../tools/registry.js';
+import '../tools/desktopTools.js';
 import { globalBossMemory, BossProfile, BossProject } from '../embodied/bossMemoryHub.js';
 import { globalBossFeedback, BossRule } from '../embodied/bossFeedbackLearner.js';
 import { memoryStore, ConversationTurn, MemoryScope, getSessionMemory, appendTurn } from './memory.js';

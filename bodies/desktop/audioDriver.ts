@@ -115,7 +115,9 @@ for ($i = 0; $i -lt $outDevs; $i++) {
         windowsHide: true,
       });
 
-      const parsed = JSON.parse(resultJson.trim());
+      const jsonStart = resultJson.indexOf('{');
+      const cleanJson = jsonStart !== -1 ? resultJson.slice(jsonStart) : resultJson.trim();
+      const parsed = JSON.parse(cleanJson);
       const inputs: AudioDeviceDescriptor[] = Array.isArray(parsed.inputs)
         ? parsed.inputs.map((d: any) => ({ id: d.id, name: d.name, type: 'input', channels: d.channels }))
         : parsed.inputs ? [{ id: parsed.inputs.id, name: parsed.inputs.name, type: 'input' }] : [];

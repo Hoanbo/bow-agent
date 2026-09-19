@@ -1,0 +1,80 @@
+{
+  "audit": "BOWCON AUDIO BODY — HARDWARE DEVICE AUDIT",
+  "timestamp": "2026-09-19T00:48:00+07:00",
+  "environment": {
+    "machine": "Xeon 1 chip (Development Machine)",
+    "cpu": "Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz (14 Cores / 28 Logical Processors)",
+    "ramGb": 47.91,
+    "os": "Microsoft Windows 10 Pro",
+    "dualXeonStatus": "OFFLINE / EXCLUDED (Zero dependency)",
+    "pythonStatus": "NOT_FOUND_IN_PATH",
+    "nodeVersion": "v24.14.1",
+    "tsxVersion": "v4.23.13"
+  },
+  "audioHardware": {
+    "inputDevices": [
+      {
+        "id": 0,
+        "name": "Microphone (L80PRO)",
+        "type": "input",
+        "channels": 2,
+        "status": "OK",
+        "pnpInstanceId": "SWD\\MMDEVAPI\\{0.0.1.00000000}.{4622EE0B-FDA7-4631-891F-78A714DB486C}",
+        "hardwareId": "USB\\VID_4C4A&PID_4155&MI_00",
+        "isHeadsetMic": true,
+        "isDefault": true,
+        "hardwareVerified": true
+      },
+      {
+        "id": 1,
+        "name": "Microphone (DeskIn(R) Virtual Audio Device)",
+        "type": "input",
+        "channels": 2,
+        "status": "OK",
+        "pnpInstanceId": "SWD\\MMDEVAPI\\{0.0.1.00000000}.{415F44CE-4CC6-4E11-A8CC-9A74A071370B}",
+        "isHeadsetMic": false,
+        "hardwareVerified": false
+      },
+      {
+        "id": 2,
+        "name": "Microphone (e2eSoft iVCam)",
+        "type": "input",
+        "channels": 2,
+        "status": "OK",
+        "pnpInstanceId": "SWD\\MMDEVAPI\\{0.0.1.00000000}.{9B7D6BBC-BEA1-401D-AF65-9EBD7411E395}",
+        "isHeadsetMic": false,
+        "hardwareVerified": false
+      }
+    ],
+    "outputDevices": [
+      {
+        "id": 0,
+        "name": "Speakers (L80PRO)",
+        "type": "output",
+        "channels": 2,
+        "status": "OK",
+        "pnpInstanceId": "SWD\\MMDEVAPI\\{0.0.0.00000000}.{163A3961-4923-4450-8B82-EBF045BDD2C5}",
+        "hardwareId": "USB\\VID_4C4A&PID_4155&MI_00",
+        "isHeadsetSpeaker": true,
+        "isDefault": true,
+        "hardwareVerified": true
+      },
+      {
+        "id": 1,
+        "name": "Speakers (DeskIn(R) Virtual Audio Device)",
+        "type": "output",
+        "channels": 2,
+        "status": "OK",
+        "pnpInstanceId": "SWD\\MMDEVAPI\\{0.0.0.00000000}.{AEAA4395-EBEA-4549-B416-6B2490A2E2A8}",
+        "isHeadsetSpeaker": false,
+        "hardwareVerified": false
+      }
+    ],
+    "selected": {
+      "inputDevice": "Microphone (L80PRO)",
+      "outputDevice": "Speakers (L80PRO)",
+      "selectionMethod": "PnP Endpoint Discovery + WinMM WaveIn/WaveOut ID 0 Matching",
+      "hardwareVerificationStatus": "HARDWARE_VERIFIED"
+    }
+  }
+}

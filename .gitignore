@@ -29,3 +29,13 @@ __pycache__/
 *.pyc
 *.pyo
 .pytest_cache/
+
+# Local binary runtimes & models cache (Voice Vertical Slice)
+bin/
+.bin/
+artifacts/voice-benchmark/models-cache/
+*.onnx
+*.onnx.json
+*.bin
+*.wav
+

@@ -7,6 +7,7 @@ import { verifyChannelAccess } from '../core/security.js';
 export interface DesktopActionResult {
   success: boolean;
   action: string;
+  appName?: string;
   payload?: any;
   message?: string;
   error?: string;
@@ -25,15 +26,58 @@ toolRegistry.register({
     required: ['appName'],
   },
   execute: async (args, context): Promise<DesktopActionResult> => {
-    if (!verifyChannelAccess(context || { channel: 'DESKTOP' }, 'DESKTOP_EXEC')) {
+    const isOwnerOrAdmin = context?.role === 'owner' || context?.role === 'admin' || context?.isOwner === true;
+    const hasDesktopExec = verifyChannelAccess(context || { channel: 'DESKTOP' }, 'DESKTOP_EXEC');
+    if (!isOwnerOrAdmin && !hasDesktopExec) {
       return { success: false, action: 'desktop_launch_app', error: 'UNAUTHORIZED: Desktop execution token invalid or missing.' };
     }
 
+    const targetApp = (args.appName || '').toLowerCase().trim();
+    const { globalBodyRegistry } = await import('../core/bodyProtocol/index.js');
+
+    // 1. Try dispatching to connected Desktop Body via BodyProtocol
+    const commandResult = await globalBodyRegistry.executeBodyCommand({
+      commandId: `cmd_app_${Date.now()}`,
+      capability: 'system.open_app',
+      params: { app: targetApp, args: args.args || [] },
+    });
+
+    if (commandResult.success) {
+      return {
+        success: true,
+        action: 'desktop_launch_app',
+        appName: targetApp,
+        payload: { appName: targetApp, app: targetApp, ...(commandResult.data as any) },
+        message: `Đã mở ứng dụng ${targetApp} thành công qua Desktop Body.`,
+      };
+    }
+
+    // 2. If no body connected, fallback to local controlled launch on Windows with whitelist
+    if (process.platform === 'win32') {
+      const whitelist = ['notepad', 'calc', 'cmd', 'explorer', 'code'];
+      if (!whitelist.includes(targetApp)) {
+        return {
+          success: false,
+          action: 'desktop_launch_app',
+          error: `UNAUTHORIZED_APP: Ứng dụng "${targetApp}" không nằm trong danh sách whitelist (${whitelist.join(', ')}).`,
+        };
+      }
+      const { spawn } = await import('node:child_process');
+      const proc = spawn(targetApp, args.args || [], { detached: true, stdio: 'ignore' });
+      proc.unref();
+      return {
+        success: true,
+        action: 'desktop_launch_app',
+        appName: targetApp,
+        payload: { appName: targetApp, app: targetApp, pid: proc.pid },
+        message: `Đã mở ứng dụng ${targetApp} thành công trên máy cục bộ (PID: ${proc.pid}).`,
+      };
+    }
+
     return {
-      success: true,
+      success: false,
       action: 'desktop_launch_app',
-      payload: { appName: args.appName, args: args.args || [] },
-      message: `Đã gửi lệnh mở ứng dụng ${args.appName} tới desktop agent.`,
+      error: commandResult.error || 'Failed to launch application on desktop.',
     };
   },
 });

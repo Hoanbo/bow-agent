@@ -4,12 +4,14 @@
 // EN:
 // End-to-end Voice Pipeline connecting real hardware microphone capture to the
 // Canonical AgentLoop and streaming synthesized speech back to hardware headset/speaker.
+// Real STT (Whisper.cpp x64) -> Canonical Brain -> Real Piper TTS (Duy Oryx) -> Body audio.play.
 // Enforces PDP governance boundaries: voice commands undergo standard policy evaluation
 // and approval gates. Raw audio binary is never persisted to the cryptographic audit ledger.
 //
 // VI:
 // Pipeline Giọng nói đầu-cuối kết nối thu âm micro phần cứng thực tế với chu trình
 // Canonical AgentLoop và phát âm thanh tổng hợp trở lại tai nghe/loa phần cứng.
+// STT thật (Whisper.cpp) -> Brain chuẩn -> Piper TTS thật (Duy Oryx) -> Body audio.play.
 // Thực thi nghiêm ngặt ranh giới quản trị PDP: lệnh giọng nói trải qua đầy đủ quy trình
 // đánh giá chính sách và cổng phê duyệt. Dữ liệu âm thanh thô không bao giờ ghi vào audit ledger.
 
@@ -20,6 +22,7 @@ import { globalBodyRegistry, type BodyRegistry } from '../core/bodyProtocol/inde
 import { AgentLoop, type AgentLoopRequest, type AgentLoopResult } from '../core/agentLoop.js';
 import { sttEngine, type VietnameseSttEngine } from './sttEngine.js';
 import { ttsEngine, type VietnameseTtsEngine } from './ttsEngine.js';
+import { PiperTtsEngine, globalPiperTtsEngine } from './piperTtsEngine.js';
 import { globalAuditLedger } from '../core/auditLedger.js';
 import { agentAnalytics } from '../monitoring/agentAnalytics.js';
 import type {
@@ -44,8 +47,10 @@ export interface VoiceRoundtripOptions {
   correlationId?: string;
   /** Capture duration in milliseconds (default: 2000ms) */
   captureDurationMs?: number;
-  /** Optional mock transcription for deterministic unit testing */
+  /** Optional mock transcription for deterministic unit testing ONLY */
   simulatedTranscript?: string;
+  /** Optional audio buffer override for deterministic STT testing without human speaking */
+  audioBufferOverride?: Buffer;
   /** Optional execution token for privileged actions (Level 4 PDP) */
   executionToken?: string;
 }
@@ -58,6 +63,8 @@ export interface VoiceRoundtripResult {
   responseText: string;
   agentLoopState: string;
   captureDurationMs: number;
+  sttDurationMs: number;
+  brainDurationMs: number;
   ttsDurationMs: number;
   playbackDurationMs: number;
   totalDurationMs: number;
@@ -77,32 +84,35 @@ export class VoicePipeline {
   private agentLoop: AgentLoop;
   private stt: VietnameseSttEngine;
   private tts: VietnameseTtsEngine;
+  private piperTts: PiperTtsEngine;
 
   constructor(
     bodyRegistry?: BodyRegistry,
     agentLoop?: AgentLoop,
     stt?: VietnameseSttEngine,
-    tts?: VietnameseTtsEngine
+    tts?: VietnameseTtsEngine,
+    piperTts?: PiperTtsEngine
   ) {
     this.bodyRegistry = bodyRegistry || globalBodyRegistry;
     this.agentLoop = agentLoop || new AgentLoop();
     this.stt = stt || sttEngine;
     this.tts = tts || ttsEngine;
+    this.piperTts = piperTts || globalPiperTtsEngine;
   }
 
   /**
    * EN: Executes the complete voice roundtrip:
    * 1. Mic capture via BodyProtocol (audio.capture)
-   * 2. Speech-To-Text transcription (STT)
+   * 2. Real Speech-To-Text transcription (STT) via Whisper.cpp
    * 3. Canonical AgentLoop (Intent -> Memory -> Plan -> PDP -> Execute -> Verify -> Update)
-   * 4. Text-To-Speech synthesis (TTS)
+   * 4. Real Text-To-Speech synthesis (TTS) via Piper (Duy Oryx model)
    * 5. Speaker playback via BodyProtocol (audio.play)
    *
    * VI: Thực thi trọn vẹn chu trình tương tác giọng nói:
    * 1. Thu âm micro qua BodyProtocol (audio.capture)
-   * 2. Nhận dạng tiếng nói thành văn bản (STT)
+   * 2. Nhận dạng tiếng nói thật thành văn bản (STT) qua Whisper.cpp
    * 3. Xử lý qua Canonical AgentLoop (Intent -> Memory -> Plan -> PDP -> Execute -> Verify -> Update)
-   * 4. Tổng hợp văn bản thành tiếng nói (TTS)
+   * 4. Tổng hợp văn bản thật thành tiếng nói (TTS) qua Piper (mô hình Duy Oryx)
    * 5. Phát âm thanh ra loa qua BodyProtocol (audio.play)
    */
   public async executeVoiceRoundtrip(options: VoiceRoundtripOptions = {}): Promise<VoiceRoundtripResult> {
@@ -124,6 +134,8 @@ export class VoicePipeline {
         responseText: '',
         agentLoopState: 'NO_BODY_CONNECTED',
         captureDurationMs: 0,
+        sttDurationMs: 0,
+        brainDurationMs: 0,
         ttsDurationMs: 0,
         playbackDurationMs: 0,
         totalDurationMs: Date.now() - startTime,
@@ -132,6 +144,8 @@ export class VoicePipeline {
     }
 
     let captureDurationMs = 0;
+    let sttDurationMs = 0;
+    let brainDurationMs = 0;
     let ttsDurationMs = 0;
     let playbackDurationMs = 0;
     let userText = '';
@@ -144,6 +158,7 @@ export class VoicePipeline {
       // STAGE 1: MICROPHONE AUDIO CAPTURE VIA BODYPROTOCOL
       // -----------------------------------------------------------------------
       const captureStart = Date.now();
+      console.log(`[VOICE-TRACE] [${correlationId}] audio.capture.start body=${targetBodyId}`);
       this.recordAuditMetadata('AUDIO_CAPTURE_STARTED', targetBodyId, correlationId, userId);
 
       const captureCommand = {
@@ -162,37 +177,53 @@ export class VoicePipeline {
       captureDurationMs = Date.now() - captureStart;
 
       if (!captureResponse.success || !captureResponse.data) {
+        console.error(`[VOICE-TRACE] [${correlationId}] audio.capture.failed duration=${captureDurationMs}ms error=${captureResponse.error}`);
         throw new Error(`AUDIO_CAPTURE_FAILED: ${captureResponse.error || 'Failed to capture audio from body'}`);
       }
 
       captureResultData = captureResponse.data as AudioCaptureResult;
+      console.log(`[VOICE-TRACE] [${correlationId}] audio.capture.complete duration=${captureDurationMs}ms bytes=${captureResultData.byteLength} status=SUCCESS`);
       this.recordAuditMetadata('AUDIO_CAPTURE_COMPLETED', targetBodyId, correlationId, userId, {
         byteLength: captureResultData.byteLength,
         durationMs: captureDurationMs,
       });
 
       // -----------------------------------------------------------------------
-      // STAGE 2: SPEECH-TO-TEXT (STT)
+      // STAGE 2: SPEECH-TO-TEXT (STT) VIA WHISPER.CPP
       // -----------------------------------------------------------------------
-      this.recordAuditMetadata('STT_REQUEST', targetBodyId, correlationId, userId);
+      const sttStart = Date.now();
+      console.log(`[VOICE-TRACE] [${correlationId}] stt.start`);
+      this.recordAuditMetadata('STT_START', targetBodyId, correlationId, userId);
 
       if (options.simulatedTranscript) {
-        // Deterministic transcript override for automated test harnesses
+        // Deterministic transcript override for automated test harnesses only
         userText = options.simulatedTranscript;
       } else {
-        const audioBuffer = Buffer.from(captureResultData.audioBase64, 'base64');
+        const audioBuffer = options.audioBufferOverride || Buffer.from(captureResultData.audioBase64, 'base64');
         const sttResult = await this.stt.transcribe(audioBuffer, { language: 'vi' });
-        userText = sttResult.text || '';
+        if (!sttResult.success) {
+          throw new Error(`STT_FAILED: ${sttResult.error || 'Speech transcription failed'}`);
+        }
+        userText = (sttResult.text || '').trim();
       }
+      sttDurationMs = Date.now() - sttStart;
 
-      if (!userText.trim()) {
+      if (!userText) {
         userText = 'Xin chào';
       }
+
+      console.log(`[VOICE-TRACE] [${correlationId}] stt.complete duration=${sttDurationMs}ms transcript="${userText}" status=SUCCESS`);
+      this.recordAuditMetadata('STT_COMPLETE', targetBodyId, correlationId, userId, {
+        sttDurationMs,
+        userTextLength: userText.length,
+      });
 
       // -----------------------------------------------------------------------
       // STAGE 3: CANONICAL AGENTLOOP REASONING & PDP GOVERNANCE
       // -----------------------------------------------------------------------
-      this.recordAuditMetadata('AGENT_REQUEST', targetBodyId, correlationId, userId, {
+      const brainStart = Date.now();
+      console.log(`[VOICE-TRACE] [${correlationId}] brain.request userText="${userText}"`);
+      this.recordAuditMetadata('BRAIN_REQUEST', targetBodyId, correlationId, userId, {
         userTextLength: userText.length,
       });
 
@@ -211,36 +242,60 @@ export class VoicePipeline {
       };
 
       const agentResult: AgentLoopResult = await this.agentLoop.execute(loopRequest);
+      brainDurationMs = Date.now() - brainStart;
       responseText = agentResult.response?.content || 'Em đã nhận lệnh từ Sếp.';
 
+      console.log(`[VOICE-TRACE] [${correlationId}] brain.response duration=${brainDurationMs}ms state=${agentResult.state} response="${responseText.substring(0, 60)}..." status=SUCCESS`);
+      this.recordAuditMetadata('BRAIN_RESPONSE', targetBodyId, correlationId, userId, {
+        brainDurationMs,
+        state: agentResult.state,
+        responseLength: responseText.length,
+      });
+
       // -----------------------------------------------------------------------
-      // STAGE 4: TEXT-TO-SPEECH (TTS)
+      // STAGE 4: REAL TEXT-TO-SPEECH (TTS) VIA PIPER (DUY ORYX MODEL)
       // -----------------------------------------------------------------------
       const ttsStart = Date.now();
-      this.recordAuditMetadata('TTS_REQUEST', targetBodyId, correlationId, userId);
+      console.log(`[VOICE-TRACE] [${correlationId}] tts.start provider=piper model=duyoryx3175`);
+      this.recordAuditMetadata('TTS_START', targetBodyId, correlationId, userId, {
+        provider: 'piper',
+        model: 'duyoryx3175',
+      });
 
       let speechAudioBase64: string | undefined;
       let speechFilePath: string | undefined;
 
-      // Check if running on Windows with local Speech synthesis capability
-      if (process.platform === 'win32') {
-        const tempTtsWav = path.resolve(process.cwd(), '.tmp', 'audio', `tts_${Date.now()}.wav`);
-        const synthesizedPath = await this.synthesizeWindowsSpeechWav(responseText, tempTtsWav);
-        if (synthesizedPath && fs.existsSync(synthesizedPath)) {
-          speechFilePath = synthesizedPath;
-        }
+      const piperResult = await this.piperTts.synthesize(responseText, { returnBase64: true });
+      ttsDurationMs = Date.now() - ttsStart;
+
+      if (!piperResult.success) {
+        console.error(`[VOICE-TRACE] [${correlationId}] tts.failed duration=${ttsDurationMs}ms errorCode=${piperResult.errorCode} error=${piperResult.error}`);
+        this.recordAuditMetadata('TTS_FAILED', targetBodyId, correlationId, userId, {
+          errorCode: piperResult.errorCode,
+          error: piperResult.error,
+          durationMs: ttsDurationMs,
+        });
+        // EXPLICIT FAILURE — NO SILENT SAPI FALLBACK
+        throw new Error(`TTS_SYNTHESIS_FAILED: [${piperResult.errorCode}] ${piperResult.error || 'Piper synthesis failed'}`);
       }
 
-      if (!speechFilePath) {
-        const ttsResult = await this.tts.synthesize(responseText);
-        speechAudioBase64 = ttsResult.audioBase64;
-      }
-      ttsDurationMs = Date.now() - ttsStart;
+      speechAudioBase64 = piperResult.audioBase64;
+      speechFilePath = piperResult.wavFilePath;
+
+      console.log(`[VOICE-TRACE] [${correlationId}] tts.complete duration=${ttsDurationMs}ms bytes=${piperResult.byteLength} status=SUCCESS`);
+      this.recordAuditMetadata('TTS_COMPLETE', targetBodyId, correlationId, userId, {
+        durationMs: ttsDurationMs,
+        byteLength: piperResult.byteLength,
+        sampleRate: piperResult.sampleRate,
+      });
 
       // -----------------------------------------------------------------------
       // STAGE 5: SPEAKER PLAYBACK VIA BODYPROTOCOL
       // -----------------------------------------------------------------------
       const playStart = Date.now();
+      console.log(`[VOICE-TRACE] [${correlationId}] audio.play.start body=${targetBodyId}`);
+      this.recordAuditMetadata('AUDIO_PLAY_START', targetBodyId, correlationId, userId);
+
       const playCommand = {
         commandId: `cmd_play_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`,
         bodyId: targetBodyId,
@@ -257,6 +312,12 @@ export class VoicePipeline {
       playbackDurationMs = Date.now() - playStart;
       playResultData = playResponse.data as AudioPlayResult;
 
+      if (!playResponse.success) {
+        console.error(`[VOICE-TRACE] [${correlationId}] audio.play.failed duration=${playbackDurationMs}ms error=${playResponse.error}`);
+        throw new Error(`AUDIO_PLAY_FAILED: ${playResponse.error || 'Playback on body failed'}`);
+      }
+
+      console.log(`[VOICE-TRACE] [${correlationId}] audio.play.complete duration=${playbackDurationMs}ms device="${playResultData?.deviceName || 'default'}" status=SUCCESS`);
       this.recordAuditMetadata('AUDIO_PLAY_COMPLETED', targetBodyId, correlationId, userId, {
         playbackDurationMs,
         success: playResponse.success,
@@ -277,6 +338,8 @@ export class VoicePipeline {
         responseText,
         agentLoopState: agentResult.state,
         captureDurationMs,
+        sttDurationMs,
+        brainDurationMs,
         ttsDurationMs,
         playbackDurationMs,
         totalDurationMs: Date.now() - startTime,
@@ -294,6 +357,7 @@ export class VoicePipeline {
           : undefined,
       };
     } catch (err: any) {
+      console.error(`[VOICE-TRACE] [${correlationId}] voice_roundtrip.error: ${err?.message || String(err)}`);
       return {
         success: false,
         correlationId,
@@ -302,6 +366,8 @@ export class VoicePipeline {
         responseText: '',
         agentLoopState: 'VOICE_PIPELINE_ERROR',
         captureDurationMs,
+        sttDurationMs,
+        brainDurationMs,
         ttsDurationMs,
         playbackDurationMs,
         totalDurationMs: Date.now() - startTime,
@@ -321,45 +387,6 @@ export class VoicePipeline {
     }
     const all = this.bodyRegistry.getAllActiveBodies();
     return all.length > 0 ? all[0].bodyId : undefined;
-  }
-
-  /**
-   * EN: Synthesize text to WAV file on Windows using PowerShell System.Speech.
-   * VI: Tổng hợp giọng nói ra file WAV trên Windows dùng PowerShell System.Speech.
-   */
-  private async synthesizeWindowsSpeechWav(text: string, outWavPath: string): Promise<string | null> {
-    const dir = path.dirname(outWavPath);
-    if (!fs.existsSync(dir)) {
-      try { fs.mkdirSync(dir, { recursive: true }); } catch {}
-    }
-
-    const absPath = path.resolve(outWavPath).replace(/\\/g, '/');
-    const cleanText = text.replace(/[`$]/g, '').slice(0, 300);
-    const psScript = `
-Add-Type -AssemblyName System.Speech
-$s = New-Object System.Speech.Synthesis.SpeechSynthesizer
-$s.SetOutputToWaveFile('${absPath}')
-$s.Speak(@'
-${cleanText}
-'@)
-$s.Dispose()
-`;
-
-    try {
-      const { execSync } = await import('node:child_process');
-      const b64 = Buffer.from(psScript, 'utf16le').toString('base64');
-      execSync(`powershell -NoProfile -NonInteractive -EncodedCommand ${b64}`, {
-        timeout: 8000,
-        windowsHide: true,
-      });
-
-      if (fs.existsSync(outWavPath) && fs.statSync(outWavPath).size > 100) {
-        return outWavPath;
-      }
-    } catch {
-      // Fallback
-    }
-    return null;
   }
 
   /**

@@ -13,6 +13,7 @@ import { robotChannelAdapter } from './adapters/robotAdapter.js';
 import { desktopChannelAdapter } from './adapters/desktopAdapter.js';
 import { ttsEngine } from './speech/ttsEngine.js';
 import { sttEngine } from './speech/sttEngine.js';
+import './tools/desktopTools.js';
 import { hybridLlmRouter } from './llm/hybridLlmRouter.js';
 import { watchdogDaemon } from './embodied/watchdogDaemon.js';
 import { getKnowledgeGaps } from './knowledge/knowledgeReviewService.js';
