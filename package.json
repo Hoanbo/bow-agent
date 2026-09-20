@@ -27,8 +27,10 @@
         "test:hardening": "tsx tests/test_l4_security_hardening.ts",
         "test:l4:integration": "tsx tests/test_l4_unified_governance_integration.ts",
         "test:voice:slice": "tsx tests/test_voice_vertical_slice.ts",
-        "test:body:auth": "tsx tests/test_body_auth.ts",
-        "test:body:audio": "tsx tests/test_body_audio.ts",
+        "test:voice-body": "tsx scripts/run_voice_body_regression.ts",
+        "test:voice:regression": "tsx scripts/run_voice_body_regression.ts",
+        "test:body:auth": "tsx tests/security/test_body_auth.ts",
+        "test:body:audio": "tsx tests/bodyProtocol/test_body_audio.ts",
         "benchmark:voice": ".venv-speech\\Scripts\\python.exe scripts/voice-benchmark/run_benchmark.py"
     },
     "dependencies": {

@@ -16,6 +16,7 @@ export interface SttTranscriptionOptions {
   preferLocal?: boolean;
   timeoutMs?: number;
   threads?: number;
+  signal?: AbortSignal;
 }
 
 export interface SttTranscriptionResult {
@@ -30,17 +31,19 @@ export interface SttTranscriptionResult {
   error?: string;
 }
 
+import { VOICE_CONFIG } from './voicePipelineConfig.js';
+import { safeUnlink } from './audioFileCleanup.js';
+import { VoicePipelineErrorCode } from './errorCodes.js';
+
 export class VietnameseSttEngine {
   private whisperExe: string;
   private modelPath: string;
   private defaultTimeoutMs: number;
 
   constructor(options?: { whisperPath?: string; modelPath?: string; timeoutMs?: number }) {
-    this.whisperExe = options?.whisperPath || path.resolve('bin/whisper/whisper-cli.exe');
-    this.modelPath =
-      options?.modelPath ||
-      path.resolve('artifacts/voice-benchmark/models-cache/whisper/ggml-base.bin');
-    this.defaultTimeoutMs = options?.timeoutMs || 20000;
+    this.whisperExe = options?.whisperPath || VOICE_CONFIG.whisperExePath;
+    this.modelPath = options?.modelPath || VOICE_CONFIG.whisperModelPath;
+    this.defaultTimeoutMs = options?.timeoutMs || VOICE_CONFIG.sttTimeoutMs;
   }
 
   /**
@@ -91,7 +94,7 @@ export class VietnameseSttEngine {
         language,
         backend: 'local_whisper_cpp',
         latencyMs: Date.now() - startTime,
-        error: `STT_UNAVAILABLE: Whisper executable not found at: ${this.whisperExe}`,
+        error: `${VoicePipelineErrorCode.STT_UNAVAILABLE}: Whisper executable not found at: ${this.whisperExe}`,
       };
     }
 
@@ -102,7 +105,7 @@ export class VietnameseSttEngine {
         language,
         backend: 'local_whisper_cpp',
         latencyMs: Date.now() - startTime,
-        error: `STT_UNAVAILABLE: Whisper model not found at: ${this.modelPath}`,
+        error: `${VoicePipelineErrorCode.STT_UNAVAILABLE}: Whisper model not found at: ${this.modelPath}`,
       };
     }
 
@@ -149,17 +152,31 @@ export class VietnameseSttEngine {
         language,
         backend: 'local_whisper_cpp',
         latencyMs: Date.now() - startTime,
-        error: 'INVALID_AUDIO: Audio input must be a Buffer, base64 string, or file path.',
+        error: `${VoicePipelineErrorCode.INVALID_AUDIO}: Audio input must be a Buffer, base64 string, or file path.`,
+      };
+    }
+
+    if (options.signal?.aborted) {
+      this.cleanupTemp(tempWavPath);
+      return {
+        success: false,
+        text: '',
+        language,
+        backend: 'local_whisper_cpp',
+        latencyMs: Date.now() - startTime,
+        error: `${VoicePipelineErrorCode.STT_ABORTED}: Transcription aborted by signal`,
       };
     }
 
     // 3. Execute Whisper CLI
     return new Promise<SttTranscriptionResult>((resolve) => {
       let isSettled = false;
+      let cleanupAbortListener: (() => void) | undefined;
 
       const timer = setTimeout(() => {
         if (isSettled) return;
         isSettled = true;
+        cleanupAbortListener?.();
         try {
           child.kill('SIGKILL');
         } catch {}
@@ -170,7 +187,7 @@ export class VietnameseSttEngine {
           language,
           backend: 'local_whisper_cpp',
           latencyMs: Date.now() - startTime,
-          error: `STT_TIMEOUT: Transcription timed out after ${timeoutMs}ms`,
+          error: `${VoicePipelineErrorCode.STT_TIMEOUT}: Transcription timed out after ${timeoutMs}ms`,
         });
       }, timeoutMs);
 
@@ -187,10 +204,43 @@ export class VietnameseSttEngine {
         targetAudioPath,
       ];
 
+      const whisperDir = path.dirname(this.whisperExe);
       const child = spawn(this.whisperExe, args, {
+        cwd: whisperDir,
+        env: {
+          ...process.env,
+          PATH: `${whisperDir};${process.env.PATH || ''}`,
+        },
         stdio: ['ignore', 'pipe', 'pipe'],
         windowsHide: true,
       });
+
+      if (options.signal) {
+        const onAbort = () => {
+          if (isSettled) return;
+          isSettled = true;
+          clearTimeout(timer);
+          try {
+            child.kill('SIGKILL');
+          } catch {}
+          this.cleanupTemp(tempWavPath);
+          resolve({
+            success: false,
+            text: '',
+            language,
+            backend: 'local_whisper_cpp',
+            latencyMs: Date.now() - startTime,
+            error: `${VoicePipelineErrorCode.STT_ABORTED}: Transcription aborted by signal`,
+          });
+        };
+
+        if (options.signal.aborted) {
+          onAbort();
+          return;
+        }
+        options.signal.addEventListener('abort', onAbort, { once: true });
+        cleanupAbortListener = () => options.signal?.removeEventListener('abort', onAbort);
+      }
 
       let stdoutText = '';
       let stderrText = '';
@@ -206,6 +256,7 @@ export class VietnameseSttEngine {
       child.on('error', (err) => {
         if (isSettled) return;
         isSettled = true;
+        cleanupAbortListener?.();
         clearTimeout(timer);
         this.cleanupTemp(tempWavPath);
         resolve({
@@ -214,13 +265,14 @@ export class VietnameseSttEngine {
           language,
           backend: 'local_whisper_cpp',
           latencyMs: Date.now() - startTime,
-          error: `STT_EXECUTION_FAILED: ${err.message}`,
+          error: `${VoicePipelineErrorCode.STT_EXECUTION_FAILED}: ${err.message}`,
         });
       });
 
       child.on('close', (code) => {
         if (isSettled) return;
         isSettled = true;
+        cleanupAbortListener?.();
         clearTimeout(timer);
         this.cleanupTemp(tempWavPath);
 
@@ -233,7 +285,7 @@ export class VietnameseSttEngine {
             language,
             backend: 'local_whisper_cpp',
             latencyMs,
-            error: `STT_PROCESS_ERROR: Whisper exited with code ${code}. Stderr: ${stderrText.trim()}`,
+            error: `${VoicePipelineErrorCode.STT_PROCESS_ERROR}: Whisper exited with code ${code}. Stderr: ${stderrText.trim()}`,
           });
           return;
         }
@@ -259,11 +311,7 @@ export class VietnameseSttEngine {
   }
 
   private cleanupTemp(tempPath: string | null): void {
-    if (tempPath && fs.existsSync(tempPath)) {
-      try {
-        fs.unlinkSync(tempPath);
-      } catch {}
-    }
+    safeUnlink(tempPath);
   }
 }
 

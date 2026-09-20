@@ -27,22 +27,19 @@ export interface SecurityScanResult {
   violations: string[];
 }
 
+import { redactPii as speechRedactPii } from '../speech/piiRedactor.js';
+
 export function detectPii(text: string): boolean {
   if (!text) return false;
-  // RegExp with the global flag is stateful. Resetting lastIndex keeps
-  // repeated security scans deterministic.
   PHONE_REGEX.lastIndex = 0;
   EMAIL_REGEX.lastIndex = 0;
-  return PHONE_REGEX.test(text) || EMAIL_REGEX.test(text);
+  if (PHONE_REGEX.test(text) || EMAIL_REGEX.test(text)) return true;
+  return speechRedactPii(text).detectedTypes.length > 0;
 }
 
 export function redactPii(text: string): string {
   if (!text) return '';
-  return text
-    .replace(PHONE_REGEX, '[REDACTED_PHONE]')
-    .replace(EMAIL_REGEX, '[REDACTED_EMAIL]')
-    .replace(API_TOKEN_PATTERN, '[REDACTED_SECRET]')
-    .replace(TOKEN_KEY_REGEX, '$1=[REDACTED_SECRET]');
+  return speechRedactPii(text).redactedText;
 }
 
 /**
@@ -68,22 +65,18 @@ export function detectPromptInjection(text: string): boolean {
  * Comprehensive Security Scan
  */
 export function scanSecurity(text: string): SecurityScanResult {
-  const containsPii = detectPii(text);
   const containsPromptInjection = detectPromptInjection(text);
-  const piiTypes: string[] = [];
+  const piiRes = speechRedactPii(text);
+  const containsPii = piiRes.detectedTypes.length > 0;
+  const piiTypes: string[] = [...piiRes.detectedTypes];
   const violations: string[] = [];
-
-  PHONE_REGEX.lastIndex = 0;
-  if (PHONE_REGEX.test(text)) piiTypes.push('PHONE');
-  EMAIL_REGEX.lastIndex = 0;
-  if (EMAIL_REGEX.test(text)) piiTypes.push('EMAIL');
 
   if (containsPromptInjection) {
     violations.push('PROMPT_INJECTION_ATTEMPT');
   }
 
   const isSafe = !containsPromptInjection;
-  const sanitizedText = redactPii(text);
+  const sanitizedText = piiRes.redactedText;
 
   return {
     isSafe,

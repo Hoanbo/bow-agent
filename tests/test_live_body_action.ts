@@ -59,7 +59,7 @@ async function runLiveVerification(): Promise<void> {
   // 3. Khởi động Desktop Body Runner với PSK hợp lệ
   console.log('--- BƯỚC 4a.2: KHỞI ĐỘNG TIẾN TRÌNH DESKTOP BODY (VỚI PSK AUTH) ---');
   const validPsk = getBodyPsk();
-  const bodyRunner = new DesktopBodyRunner(`ws://127.0.0.1:${TEST_PORT}/ws/body`, 'desktop_xeon_live_node', validPsk);
+  const bodyRunner = new DesktopBodyRunner(`wss://127.0.0.1:${TEST_PORT}/ws/body`, 'desktop_xeon_live_node', validPsk);
   await bodyRunner.start();
   console.log('Desktop Body Runner đã kết nối và gửi quảng bá CapabilityAdvertisement.\n');
 

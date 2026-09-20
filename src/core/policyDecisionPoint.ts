@@ -51,6 +51,7 @@ import {
 export * from './approvalService.js';
 export * from './idempotencyStore.js';
 export * from './auditLedger.js';
+import { getAudioActionClassification } from './policyClassification.js';
 
 export type ActionClassification =
   | 'OBSERVE'
@@ -111,6 +112,11 @@ const ACTION_CLASSIFICATIONS: Record<string, ActionClassification> = {
   'desktop_reply_message': 'HIGH_IMPACT',
   'desktop_execute_code': 'HIGH_IMPACT',
   'delegate_subagent_task': 'HIGH_IMPACT',
+  'audio.capture': 'HIGH_IMPACT',
+  'audio.play': 'HIGH_IMPACT',
+  'audio.device.select': 'REVERSIBLE',
+  'audio.device.list': 'OBSERVE',
+  'audio.status': 'OBSERVE',
 
   // 5. FORBIDDEN (Strictly forbidden actions)
   'transfer_funds': 'FORBIDDEN',
@@ -178,7 +184,13 @@ export class PolicyDecisionPoint {
 
   // --- Action Classification ---
   public getActionClassification(toolName: string): ActionClassification {
-    return ACTION_CLASSIFICATIONS[toolName] || 'HIGH_IMPACT'; // Default to HIGH_IMPACT if unknown
+    if (toolName.startsWith('audio.')) {
+      return getAudioActionClassification(toolName);
+    }
+    if (ACTION_CLASSIFICATIONS[toolName]) {
+      return ACTION_CLASSIFICATIONS[toolName];
+    }
+    return 'HIGH_IMPACT'; // Default to HIGH_IMPACT if unknown
   }
 
   public registerActionPolicy(toolName: string, classification: ActionClassification): void {

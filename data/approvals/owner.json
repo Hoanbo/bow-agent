@@ -1,0 +1,72 @@
+[
+  {
+    "id": "appr_1789913341693_fe24b9",
+    "ownerUserId": "owner",
+    "actionName": "audio.capture",
+    "targetDomain": "shop",
+    "argumentsHash": "100d8d9a594a548f08257fa96139000814a54f1f33135018ab423ec7f9e41fdc",
+    "argumentsPreview": {
+      "durationMs": 2000
+    },
+    "requestedBy": "owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-20T14:09:01.693Z",
+    "expiresAt": "2026-09-20T14:14:01.693Z"
+  },
+  {
+    "id": "appr_1789922199606_9705aa",
+    "ownerUserId": "owner",
+    "actionName": "audio.capture",
+    "targetDomain": "shop",
+    "argumentsHash": "100d8d9a594a548f08257fa96139000814a54f1f33135018ab423ec7f9e41fdc",
+    "argumentsPreview": {
+      "durationMs": 2000
+    },
+    "requestedBy": "owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-20T16:36:39.606Z",
+    "expiresAt": "2026-09-20T16:41:39.606Z"
+  },
+  {
+    "id": "appr_1789922215035_ee7221",
+    "ownerUserId": "owner",
+    "actionName": "audio.capture",
+    "targetDomain": "shop",
+    "argumentsHash": "100d8d9a594a548f08257fa96139000814a54f1f33135018ab423ec7f9e41fdc",
+    "argumentsPreview": {
+      "durationMs": 2000
+    },
+    "requestedBy": "owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-20T16:36:55.035Z",
+    "expiresAt": "2026-09-20T16:41:55.035Z"
+  },
+  {
+    "id": "appr_1789922834943_793653",
+    "ownerUserId": "owner",
+    "actionName": "audio.capture",
+    "targetDomain": "shop",
+    "argumentsHash": "100d8d9a594a548f08257fa96139000814a54f1f33135018ab423ec7f9e41fdc",
+    "argumentsPreview": {
+      "durationMs": 2000
+    },
+    "requestedBy": "owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-20T16:47:14.943Z",
+    "expiresAt": "2026-09-20T16:52:14.943Z"
+  },
+  {
+    "id": "appr_1789924405121_7ae52e",
+    "ownerUserId": "owner",
+    "actionName": "audio.capture",
+    "targetDomain": "shop",
+    "argumentsHash": "100d8d9a594a548f08257fa96139000814a54f1f33135018ab423ec7f9e41fdc",
+    "argumentsPreview": {
+      "durationMs": 2000
+    },
+    "requestedBy": "owner",
+    "status": "PENDING",
+    "createdAt": "2026-09-20T17:13:25.121Z",
+    "expiresAt": "2026-09-20T17:18:25.121Z"
+  }
+]

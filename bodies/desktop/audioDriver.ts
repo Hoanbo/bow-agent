@@ -26,6 +26,11 @@ import type {
   AudioPlayParams,
   AudioPlayResult,
 } from '../../src/core/bodyProtocol/types.js';
+import { BODY_CONFIG } from '../../src/core/bodyProtocol/bodyProtocolConfig.js';
+import { BodyProtocolErrorCode } from '../../src/core/bodyProtocol/errorCodes.js';
+import { VOICE_CONFIG } from '../../src/speech/voicePipelineConfig.js';
+import { safeUnlink, cleanupAudioTempDirectories } from '../../src/speech/audioFileCleanup.js';
+import { globalPrivacyIndicator, VisualPrivacyIndicator } from './privacyIndicator.js';
 
 export class DesktopAudioDriver {
   private activeInputDevice: string;
@@ -33,11 +38,20 @@ export class DesktopAudioDriver {
   private isCapturing = false;
   private isPlaying = false;
   private tempAudioDir: string;
+  private privacyIndicator: VisualPrivacyIndicator;
 
-  constructor() {
+  /**
+   * EN: Hook invoked whenever a privacy beep is emitted (useful for tests and auditing).
+   * VI: Hook sự kiện được gọi mỗi khi phát tiếng beep chỉ báo an toàn.
+   */
+  public onPrivacyBeep?: (type: 'start' | 'stop' | 'timeout') => void;
+
+  constructor(privacyIndicator: VisualPrivacyIndicator = globalPrivacyIndicator) {
+    this.privacyIndicator = privacyIndicator;
     this.activeInputDevice = process.env.BOW_AUDIO_INPUT_DEVICE || 'Default Microphone';
     this.activeOutputDevice = process.env.BOW_AUDIO_OUTPUT_DEVICE || 'Default Speakers';
-    this.tempAudioDir = path.resolve(process.cwd(), '.tmp', 'audio');
+    this.tempAudioDir = VOICE_CONFIG.tempAudioDir;
+
 
     if (!fs.existsSync(this.tempAudioDir)) {
       try {
@@ -50,6 +64,9 @@ export class DesktopAudioDriver {
         }
       }
     }
+
+    // Crash recovery: xóa các file WAV tạm còn sót từ lần chạy trước (khi bị kill đột ngột)
+    this.cleanupStaleTempFiles();
   }
 
   /**
@@ -159,6 +176,18 @@ for ($i = 0; $i -lt $outDevs; $i++) {
   }
 
   /**
+   * EN: Set or swap the privacy indicator instance (useful for tests or custom indicators).
+   * VI: Gán hoặc thay đổi instance privacy indicator (dùng cho test hoặc custom indicator).
+   */
+  public setPrivacyIndicator(indicator: VisualPrivacyIndicator): void {
+    this.privacyIndicator = indicator;
+  }
+
+  public getPrivacyIndicator(): VisualPrivacyIndicator {
+    return this.privacyIndicator;
+  }
+
+  /**
    * EN: Get current audio driver status.
    * VI: Lấy trạng thái hoạt động hiện tại của driver âm thanh.
    */
@@ -167,11 +196,56 @@ for ($i = 0; $i -lt $outDevs; $i++) {
       ready: true,
       activeInput: this.activeInputDevice,
       activeOutput: this.activeOutputDevice,
-      defaultSampleRate: 16000,
-      defaultChannels: 1,
+      defaultSampleRate: VOICE_CONFIG.defaultSampleRate,
+      defaultChannels: VOICE_CONFIG.defaultChannels,
       isCapturing: this.isCapturing,
       isPlaying: this.isPlaying,
     };
+  }
+
+  /**
+   * EN: Emit physical privacy beep tone:
+   *     - START: 1200Hz high pitch (single tone 120ms)
+   *     - STOP: 600Hz low pitch (single tone 150ms)
+   *     - TIMEOUT: 400Hz urgent low pulse (3 short bursts 80ms each, spaced by 40ms)
+   * VI: Phát âm thanh chỉ báo an toàn vật lý:
+   *     - BẮT ĐẦU: 1200Hz cao (1 tiếng đơn 120ms)
+   *     - KẾT THÚC: 600Hz thấp (1 tiếng đơn 150ms)
+   *     - TIMEOUT: 400Hz cảnh báo trầm (3 tiếng còi ngắn 80ms ngắt quãng 40ms)
+   * LƯU Ý BẢO MẬT: Không thể bị tắt hay bỏ qua bởi bất kỳ tham số nào từ Brain.
+   */
+  public async emitPrivacyBeep(type: 'start' | 'stop' | 'timeout'): Promise<void> {
+    if (this.onPrivacyBeep) {
+      try { this.onPrivacyBeep(type); } catch {}
+    }
+
+    if (process.platform === 'win32') {
+      if (type === 'timeout') {
+        try {
+          const { timeoutFreqHz, timeoutBurstDurationMs, timeoutPauseDurationMs } = BODY_CONFIG.beep;
+          execSync(
+            `powershell -NoProfile -NonInteractive -Command "[Console]::Beep(${timeoutFreqHz}, ${timeoutBurstDurationMs}); Start-Sleep -Milliseconds ${timeoutPauseDurationMs}; [Console]::Beep(${timeoutFreqHz}, ${timeoutBurstDurationMs}); Start-Sleep -Milliseconds ${timeoutPauseDurationMs}; [Console]::Beep(${timeoutFreqHz}, ${timeoutBurstDurationMs})"`,
+            { stdio: 'ignore', timeout: 2000 }
+          );
+        } catch {}
+      } else {
+        const freq = type === 'start' ? BODY_CONFIG.beep.startFreqHz : BODY_CONFIG.beep.stopFreqHz;
+        const duration = type === 'start' ? BODY_CONFIG.beep.startDurationMs : BODY_CONFIG.beep.stopDurationMs;
+        try {
+          execSync(`powershell -NoProfile -NonInteractive -Command "[Console]::Beep(${freq}, ${duration})"`, {
+            stdio: 'ignore',
+            timeout: 1500,
+          });
+        } catch {}
+      }
+    } else {
+      console.log(`[DESKTOP-AUDIO-BEEP] 🔔 PRIVACY BEEP (${type.toUpperCase()}) emitted.`);
+    }
+
+    // Nếu là tiếng bắt đầu thu, chờ 60ms để âm thanh dứt hẳn, tránh microphone thu lại tiếng beep
+    if (type === 'start') {
+      await new Promise((r) => setTimeout(r, 60));
+    }
   }
 
   /**
@@ -179,9 +253,24 @@ for ($i = 0; $i -lt $outDevs; $i++) {
    * VI: Thu âm từ micro phần cứng ra buffer WAV sử dụng Windows MCI.
    */
   public async recordAudio(params: AudioCaptureParams = {}): Promise<AudioCaptureResult> {
-    const durationMs = Math.max(500, Math.min(10000, params.durationMs || 2000));
-    const sampleRate = params.sampleRate || 16000;
-    const channels = params.channels || 1;
+    const durationMs = Math.max(500, Math.min(10000, params.durationMs || VOICE_CONFIG.defaultCaptureDurationMs));
+    const sampleRate = params.sampleRate || VOICE_CONFIG.defaultSampleRate;
+    const channels = params.channels || VOICE_CONFIG.defaultChannels;
+
+    // 0. Hard Prerequisite: Chỉ báo quyền riêng tư vật lý (VisualPrivacyIndicator) PHẢI hoạt động
+    const allowWithoutIndicator = process.env.BOW_ALLOW_CAPTURE_WITHOUT_INDICATOR === 'true';
+    if (!this.privacyIndicator.isReady()) {
+      if (!allowWithoutIndicator) {
+        throw new Error(`${BodyProtocolErrorCode.PRIVACY_INDICATOR_UNAVAILABLE} — không thể xác nhận chỉ báo vật lý đang hoạt động, từ chối thu âm để bảo vệ quyền riêng tư.`);
+      }
+      console.warn('[DESKTOP-AUDIO] ⚠️ CẢNH BÁO AN NINH (PRIVACY WARNING): Đang thu âm microphone khi KHÔNG CÓ chỉ báo vật lý hoạt động! (Được cho phép do BOW_ALLOW_CAPTURE_WITHOUT_INDICATOR=true)');
+    }
+
+    // 1. Kích hoạt chỉ báo hiển thị khay hệ thống (System Tray đổi màu ĐỎ)
+    this.privacyIndicator.setRecording(true);
+
+    // 2. Phát tiếng BEEP BẮT ĐẦU thu âm (Chỉ báo an toàn bắt buộc, Brain không thể tắt)
+    await this.emitPrivacyBeep('start');
 
     this.isCapturing = true;
     const timestamp = Date.now();
@@ -199,9 +288,7 @@ for ($i = 0; $i -lt $outDevs; $i++) {
       const audioBase64 = fileBuffer.toString('base64');
 
       // Cleanup temp capture file after reading into memory
-      try {
-        fs.unlinkSync(tempWavFile);
-      } catch {}
+      safeUnlink(tempWavFile);
 
       return {
         audioBase64,
@@ -212,7 +299,13 @@ for ($i = 0; $i -lt $outDevs; $i++) {
         byteLength: fileBuffer.byteLength,
       };
     } finally {
+      // Cleanup guard: đảm bảo file tạm luôn được xóa trong mọi tình huống (kể cả khi exception xảy ra)
+      safeUnlink(tempWavFile);
       this.isCapturing = false;
+      // 3. Phát tiếng BEEP KẾT THÚC thu âm (Chỉ báo an toàn bắt buộc)
+      await this.emitPrivacyBeep('stop');
+      // 4. Khôi phục chỉ báo hiển thị kháy hệ thống về trạng thái RẢNH (XÁM)
+      this.privacyIndicator.setRecording(false);
     }
   }
 
@@ -326,10 +419,8 @@ Start-Sleep -Milliseconds ${durationMs}
         error: err?.message || 'Audio playback failed',
       };
     } finally {
-      if (tempCreated && wavFilePath && fs.existsSync(wavFilePath)) {
-        try {
-          fs.unlinkSync(wavFilePath);
-        } catch {}
+      if (tempCreated) {
+        safeUnlink(wavFilePath);
       }
       this.isPlaying = false;
     }
@@ -396,6 +487,30 @@ $player.PlaySync()
 
     fs.writeFileSync(destPath, buffer);
   }
+
+  /**
+   * EN: Crash recovery — delete stale WAV/TMP temp files older than maxAgeMs (default: 5 min)
+   * left from a previous crashed session (capture_*.wav, piper_*.wav, play_*.wav, stt_in_*.wav).
+   * Scans both Body audio temp directory and Piper TTS temp directory.
+   *
+   * VI: Crash recovery — xóa các file WAV/TMP tạm còn sót từ phiên trước bị kill đột ngột
+   * (capture_*.wav, piper_*.wav, play_*.wav, stt_in_*.wav).
+   * Quét cả thư mục âm thanh của Body và thư mục TTS tạm của Piper (.tmp/audio).
+   *
+   * @param maxAgeMs Tuổi tối đa của file tính bằng ms (mặc định: 5 phút = 300,000ms).
+   * @returns Số lượng file tạm đã được dọn dẹp.
+   */
+  public cleanupStaleTempFiles(maxAgeMs: number = VOICE_CONFIG.staleAudioMaxAgeMs): number {
+    return cleanupAudioTempDirectories([this.tempAudioDir], maxAgeMs);
+  }
 }
 
 export const desktopAudioDriver = new DesktopAudioDriver();
+
+export async function emitPrivacyBeep(type: 'start' | 'stop' | 'timeout'): Promise<void> {
+  return desktopAudioDriver.emitPrivacyBeep(type);
+}
+
+export function cleanupStaleTempFiles(maxAgeMs?: number): number {
+  return desktopAudioDriver.cleanupStaleTempFiles(maxAgeMs);
+}

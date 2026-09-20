@@ -19,6 +19,17 @@ import type {
   BodyRecord,
   BodyConnectionSender,
 } from './types.js';
+import { BODY_CONFIG } from './bodyProtocolConfig.js';
+import { BodyProtocolErrorCode } from './errorCodes.js';
+import { getAudioCapabilityRiskLevel } from '../policyClassification.js';
+
+/** Entry lưu trữ một lệnh đang chờ phản hồi từ Body. */
+interface PendingCommandEntry {
+  bodyId: string;
+  resolve: (res: BodyCommandResult) => void;
+  reject: (err: Error) => void;
+  timeoutHandle: NodeJS.Timeout;
+}
 
 export interface BodyRegistryOptions {
   /** Heartbeat timeout in milliseconds (default: 15000ms) */
@@ -29,14 +40,21 @@ export interface BodyRegistryOptions {
 
 export class BodyRegistry {
   private readonly bodies = new Map<string, BodyRecord>();
+  /**
+   * Lưu trữ tập trung tất cả lệnh đang chờ phản hồi từ Body.
+   * Key = commandId, Value = { bodyId, resolve, reject, timeoutHandle }
+   * Được quản lý tại đây để failPendingCommandsForBody() hoạt động từ mọi nguyên
+   * nhân disconnect (ws.close, heartbeat timeout, manual unregister).
+   */
+  private readonly pendingCommands = new Map<string, PendingCommandEntry>();
   private readonly heartbeatTimeoutMs: number;
   private readonly sweepIntervalMs: number;
   private sweepTimer?: NodeJS.Timeout;
   private onBodyUnregisteredListeners: Array<(bodyId: string, reason: string) => void> = [];
 
   constructor(options: BodyRegistryOptions = {}) {
-    this.heartbeatTimeoutMs = options.heartbeatTimeoutMs ?? 15000;
-    this.sweepIntervalMs = options.sweepIntervalMs ?? 5000;
+    this.heartbeatTimeoutMs = options.heartbeatTimeoutMs ?? BODY_CONFIG.heartbeatTimeoutMs;
+    this.sweepIntervalMs = options.sweepIntervalMs ?? BODY_CONFIG.sweepIntervalMs;
     this.startSweep();
   }
 
@@ -50,7 +68,15 @@ export class BodyRegistry {
     const now = Date.now();
     const capMap = new Map<string, CapabilityDescriptor>();
     for (const cap of ad.capabilities) {
-      capMap.set(cap.name, cap);
+      // Security Hardening: Áp dụng riskLevel cho capability "audio.*"
+      // Khi REQUIRE_PUSH_TO_TALK đang bật -> 'medium' (không đòi hỏi approval token thừa)
+      // Khi REQUIRE_PUSH_TO_TALK tắt -> 'high' (bắt buộc qua PDP approval)
+      const isAudio = cap.name.startsWith('audio.') || cap.name === 'audio.capture' || cap.name === 'audio.play';
+      const descriptor: CapabilityDescriptor = {
+        ...cap,
+        riskLevel: isAudio ? getAudioCapabilityRiskLevel(cap.name) : cap.riskLevel,
+      };
+      capMap.set(descriptor.name, descriptor);
     }
 
     const existing = this.bodies.get(ad.bodyId);
@@ -72,9 +98,14 @@ export class BodyRegistry {
   /**
    * Gỡ đăng ký một Body khỏi hệ thống.
    */
-  public unregisterBody(bodyId: string, reason = 'MANUAL_UNREGISTER'): boolean {
+  public unregisterBody(bodyId: string, reason: string = BodyProtocolErrorCode.MANUAL_UNREGISTER): boolean {
     const existing = this.bodies.get(bodyId);
     if (!existing) return false;
+
+    // Fail all pending commands for this body BEFORE closing connection.
+    // This is the single central point that handles ALL disconnect scenarios:
+    // ws.on('close'), heartbeat timeout sweep, and manual unregister.
+    this.failPendingCommandsForBody(bodyId, `${BodyProtocolErrorCode.BODY_DISCONNECTED}: ${reason}`);
 
     if (existing.connection?.close) {
       try {
@@ -89,6 +120,86 @@ export class BodyRegistry {
       listener(bodyId, reason);
     }
     return true;
+  }
+
+  /**
+   * EN: Register a pending command waiting for a response from a Body.
+   * VI: Đăng ký một lệnh đang chờ phản hồi từ Body vào registry trung tâm.
+   *
+   * @param commandId - Unique command identifier.
+   * @param bodyId    - Target body that will execute this command.
+   * @param resolve   - Resolve callback for the pending Promise.
+   * @param reject    - Reject callback for the pending Promise.
+   * @param timeoutHandle - Active setTimeout handle (will be cleared on early fail).
+   */
+  public registerPendingCommand(
+    commandId: string,
+    bodyId: string,
+    resolve: (res: BodyCommandResult) => void,
+    reject: (err: Error) => void,
+    timeoutHandle: NodeJS.Timeout
+  ): void {
+    this.pendingCommands.set(commandId, { bodyId, resolve, reject, timeoutHandle });
+  }
+
+  /**
+   * EN: Resolve a pending command when the Body returns its result.
+   * VI: Giải quyết một lệnh đang chờ khi Body trả kết quả về.
+   *
+   * @returns true nếu command tồn tại và đã được resolved, false nếu không tìm thấy.
+   */
+  public resolvePendingCommand(commandId: string, result: BodyCommandResult): boolean {
+    const entry = this.pendingCommands.get(commandId);
+    if (!entry) return false;
+    this.pendingCommands.delete(commandId);
+    clearTimeout(entry.timeoutHandle);
+    entry.resolve(result);
+    return true;
+  }
+
+  /**
+   * EN: Explicitly abort/cancel a single pending command by commandId.
+   * Clears active timer and rejects the pending promise immediately.
+   *
+   * VI: Hủy một lệnh đang chờ theo commandId cụ thể.
+   * Xóa timer đang chạy và reject promise ngay lập tức.
+   */
+  public abortCommand(commandId: string, reason: string = BodyProtocolErrorCode.COMMAND_ABORTED): boolean {
+    const entry = this.pendingCommands.get(commandId);
+    if (!entry) return false;
+    this.pendingCommands.delete(commandId);
+    clearTimeout(entry.timeoutHandle);
+    entry.reject(new Error(reason));
+    return true;
+  }
+
+  /**
+   * EN: Immediately reject all pending commands belonging to a given body.
+   * Called automatically by unregisterBody() — covers ws.close, heartbeat timeout,
+   * and manual unregister in one place. Safe to call multiple times (idempotent).
+   *
+   * VI: Từ chối ngay lập tức tất cả lệnh đang chờ thuộc về một body cụ thể.
+   * Được gọi tự động bởi unregisterBody() — bao phủ ws.close, heartbeat timeout,
+   * và unregister thủ công tại một điểm duy nhất. An toàn khi gọi nhiều lần.
+   *
+   * @param bodyId - Body bị ngắt kết nối.
+   * @param reason - Mã lỗi rõ ràng ghi vào reject message.
+   */
+  public failPendingCommandsForBody(bodyId: string, reason: string): void {
+    const toFail: string[] = [];
+    for (const [commandId, entry] of this.pendingCommands.entries()) {
+      if (entry.bodyId === bodyId) {
+        toFail.push(commandId);
+      }
+    }
+
+    for (const commandId of toFail) {
+      const entry = this.pendingCommands.get(commandId);
+      if (!entry) continue; // Already resolved (race condition guard)
+      this.pendingCommands.delete(commandId);
+      clearTimeout(entry.timeoutHandle); // Prevent double-call when old timer fires
+      entry.reject(new Error(reason));
+    }
   }
 
   /**
@@ -110,7 +221,7 @@ export class BodyRegistry {
     if (!body) return undefined;
 
     if (this.isExpired(body)) {
-      this.unregisterBody(bodyId, 'HEARTBEAT_TIMEOUT');
+      this.unregisterBody(bodyId, BodyProtocolErrorCode.HEARTBEAT_TIMEOUT);
       return undefined;
     }
     return body;
@@ -134,7 +245,7 @@ export class BodyRegistry {
     }
 
     for (const id of expiredIds) {
-      this.unregisterBody(id, 'HEARTBEAT_TIMEOUT');
+      this.unregisterBody(id, BodyProtocolErrorCode.HEARTBEAT_TIMEOUT);
     }
 
     return matched;
@@ -156,7 +267,7 @@ export class BodyRegistry {
     }
 
     for (const id of expiredIds) {
-      this.unregisterBody(id, 'HEARTBEAT_TIMEOUT');
+      this.unregisterBody(id, BodyProtocolErrorCode.HEARTBEAT_TIMEOUT);
     }
 
     return active;
@@ -186,7 +297,7 @@ export class BodyRegistry {
       return {
         commandId: command.commandId,
         success: false,
-        error: `NO_BODY_AVAILABLE: No active body found providing capability "${command.capability}".`,
+        error: `${BodyProtocolErrorCode.NO_BODY_AVAILABLE}: No active body found providing capability "${command.capability}".`,
         executionTimeMs: Date.now() - start,
       };
     }
@@ -195,7 +306,7 @@ export class BodyRegistry {
       return {
         commandId: command.commandId,
         success: false,
-        error: `BODY_DISCONNECTED: Body "${targetBody.bodyId}" has no active connection sender.`,
+        error: `${BodyProtocolErrorCode.BODY_DISCONNECTED}: Body "${targetBody.bodyId}" has no active connection sender.`,
         executionTimeMs: Date.now() - start,
       };
     }
@@ -210,7 +321,7 @@ export class BodyRegistry {
       return {
         commandId: command.commandId,
         success: false,
-        error: `COMMAND_DISPATCH_FAILED: ${err?.message || String(err)}`,
+        error: `${BodyProtocolErrorCode.COMMAND_DISPATCH_FAILED}: ${err?.message || String(err)}`,
         executionTimeMs: Date.now() - start,
       };
     }
@@ -236,7 +347,7 @@ export class BodyRegistry {
         }
       }
       for (const id of expired) {
-        this.unregisterBody(id, 'HEARTBEAT_TIMEOUT');
+        this.unregisterBody(id, BodyProtocolErrorCode.HEARTBEAT_TIMEOUT);
       }
     }, this.sweepIntervalMs);
 
@@ -254,6 +365,12 @@ export class BodyRegistry {
       clearInterval(this.sweepTimer);
       this.sweepTimer = undefined;
     }
+    // Fail all remaining pending commands before clearing bodies
+    for (const [commandId, entry] of this.pendingCommands.entries()) {
+      clearTimeout(entry.timeoutHandle);
+      entry.reject(new Error(`${BodyProtocolErrorCode.REGISTRY_STOPPED}: BodyRegistry was shut down.`));
+    }
+    this.pendingCommands.clear();
     this.bodies.clear();
     this.onBodyUnregisteredListeners = [];
   }

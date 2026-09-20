@@ -30,6 +30,7 @@ export interface BowAgentEnvConfig {
   maxRequestBodyBytes: number;
   protectedPaths: string[];
   agentPersona: string;
+  voiceMaxE2eTimeoutMs: number;
 }
 
 function getEnvValue(key: string, defaultValue: string = ''): string {
@@ -87,6 +88,7 @@ export const CONFIG: BowAgentEnvConfig = {
     'BOW_AGENT_PERSONA',
     'Bạn là trợ lý Knowledge Base của ShopOfBow (Shop phần mềm và tài khoản bản quyền).'
   ),
+  voiceMaxE2eTimeoutMs: Math.max(1000, parseInt(getEnvValue('BOW_VOICE_MAX_E2E_TIMEOUT_MS', '30000'), 10) || 30000),
 };
 
 export function getProtectedPaths(): string[] {

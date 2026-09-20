@@ -16,6 +16,7 @@ export type PiperErrorCode =
   | 'PIPER_NOT_FOUND'
   | 'INVALID_AUDIO'
   | 'TIMEOUT'
+  | 'ABORTED'
   | 'UNSUPPORTED_TEXT';
 
 export interface PiperTtsOptions {
@@ -25,6 +26,8 @@ export interface PiperTtsOptions {
   timeoutMs?: number;
   outputWavPath?: string;
   returnBase64?: boolean;
+  speakerId?: number;
+  signal?: AbortSignal;
 }
 
 export interface PiperTtsResult {
@@ -38,6 +41,9 @@ export interface PiperTtsResult {
   error?: string;
 }
 
+import { VOICE_CONFIG } from './voicePipelineConfig.js';
+import { safeUnlink } from './audioFileCleanup.js';
+
 export class PiperTtsEngine {
   private piperExe: string;
   private modelPath: string;
@@ -45,14 +51,10 @@ export class PiperTtsEngine {
   private defaultTimeoutMs: number;
 
   constructor(options?: { piperPath?: string; modelPath?: string; configPath?: string; timeoutMs?: number }) {
-    this.piperExe = options?.piperPath || path.resolve('bin/piper/piper.exe');
-    this.modelPath =
-      options?.modelPath ||
-      path.resolve('artifacts/voice-benchmark/models-cache/voice-07-duy-oryx/duyoryx3175.onnx');
-    this.configPath =
-      options?.configPath ||
-      path.resolve('artifacts/voice-benchmark/models-cache/voice-07-duy-oryx/duyoryx3175.onnx.json');
-    this.defaultTimeoutMs = options?.timeoutMs || 15000;
+    this.piperExe = options?.piperPath || VOICE_CONFIG.piperExePath;
+    this.modelPath = options?.modelPath || VOICE_CONFIG.piperModelPath;
+    this.configPath = options?.configPath || VOICE_CONFIG.piperConfigPath;
+    this.defaultTimeoutMs = options?.timeoutMs || VOICE_CONFIG.ttsTimeoutMs;
   }
 
   /**
@@ -127,16 +129,30 @@ export class PiperTtsEngine {
       options.outputWavPath ||
       path.join(tempDir, `piper_${Date.now()}_${crypto.randomBytes(4).toString('hex')}.wav`);
 
+    if (options.signal?.aborted) {
+      safeUnlink(outWavPath);
+      return {
+        success: false,
+        errorCode: 'ABORTED',
+        sampleRate: 22050,
+        durationMs: Date.now() - startTime,
+        error: 'Piper synthesis aborted by signal',
+      };
+    }
+
     // 4. Invoke Piper executable via child process
     return new Promise<PiperTtsResult>((resolve) => {
       let isSettled = false;
+      let cleanupAbortListener: (() => void) | undefined;
 
       const timer = setTimeout(() => {
         if (isSettled) return;
         isSettled = true;
+        cleanupAbortListener?.();
         try {
           child.kill('SIGKILL');
         } catch {}
+        safeUnlink(outWavPath);
         resolve({
           success: false,
           errorCode: 'TIMEOUT',
@@ -146,14 +162,41 @@ export class PiperTtsEngine {
         });
       }, timeoutMs);
 
-      const child = spawn(
-        piperExe,
-        ['--model', modelPath, '--config', configPath, '--output_file', outWavPath],
-        {
-          stdio: ['pipe', 'pipe', 'pipe'],
-          windowsHide: true,
+      const piperArgs = ['--model', modelPath, '--config', configPath, '--output_file', outWavPath];
+      if (typeof options.speakerId === 'number') {
+        piperArgs.push('--speaker', String(options.speakerId));
+      }
+
+      const child = spawn(piperExe, piperArgs, {
+        stdio: ['pipe', 'pipe', 'pipe'],
+        windowsHide: true,
+      });
+
+      if (options.signal) {
+        const onAbort = () => {
+          if (isSettled) return;
+          isSettled = true;
+          clearTimeout(timer);
+          try {
+            child.kill('SIGKILL');
+          } catch {}
+          safeUnlink(outWavPath);
+          resolve({
+            success: false,
+            errorCode: 'ABORTED',
+            sampleRate: 22050,
+            durationMs: Date.now() - startTime,
+            error: 'Piper synthesis aborted by signal',
+          });
+        };
+
+        if (options.signal.aborted) {
+          onAbort();
+          return;
         }
-      );
+        options.signal.addEventListener('abort', onAbort, { once: true });
+        cleanupAbortListener = () => options.signal?.removeEventListener('abort', onAbort);
+      }
 
       let stderrOutput = '';
       child.stderr.on('data', (chunk) => {
@@ -163,6 +206,7 @@ export class PiperTtsEngine {
       child.on('error', (err) => {
         if (isSettled) return;
         isSettled = true;
+        cleanupAbortListener?.();
         clearTimeout(timer);
         resolve({
           success: false,
@@ -176,6 +220,7 @@ export class PiperTtsEngine {
       child.on('close', (code) => {
         if (isSettled) return;
         isSettled = true;
+        cleanupAbortListener?.();
         clearTimeout(timer);
 
         const durationMs = Date.now() - startTime;

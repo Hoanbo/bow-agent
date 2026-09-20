@@ -39,3 +39,8 @@ artifacts/voice-benchmark/models-cache/
 *.bin
 *.wav
 
+# TLS certificates and private keys
+data/certs/
+*.key
+*.pem
+*.crt

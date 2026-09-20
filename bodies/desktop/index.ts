@@ -16,6 +16,7 @@ import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
+import tls from 'node:tls';
 import type {
   CapabilityAdvertisement,
   CapabilityDescriptor,
@@ -24,12 +25,18 @@ import type {
 } from '../../src/core/bodyProtocol/types.js';
 import { getBodyPsk } from '../../src/core/bodyProtocol/index.js';
 import { desktopAudioDriver } from './audioDriver.js';
+import { globalPrivacyIndicator } from './privacyIndicator.js';
+import { globalPushToTalkManager, isPushToTalkEnabled } from '../../src/security/pushToTalkManager.js';
+
+export { globalPushToTalkManager, isPushToTalkEnabled };
 
 // Configuration
 const BRAIN_HOST = process.env.BOW_BRAIN_HOST || '127.0.0.1';
 const BRAIN_PORT = Number(process.env.BOW_BRAIN_PORT || 4000);
-const BRAIN_URL = process.env.BOW_BRAIN_URL || `ws://${BRAIN_HOST}:${BRAIN_PORT}/ws/body`;
+const BRAIN_URL = process.env.BOW_BRAIN_URL || `wss://${BRAIN_HOST}:${BRAIN_PORT}/ws/body`;
 const BRAIN_PSK = process.env.BOW_BRAIN_PSK || process.env.BOW_BODY_PSK || '';
+const BRAIN_CA_PATH = process.env.BOW_BRAIN_CA_PATH || path.resolve(process.cwd(), 'data/certs/ca.crt');
+const BRAIN_PINNED_FINGERPRINT = process.env.BOW_PINNED_CERT_FINGERPRINT || process.env.BOW_PINNED_FINGERPRINT || '';
 const BODY_ID = process.env.BOW_BODY_ID || `desktop_xeon_${os.hostname().toLowerCase().replace(/[^a-z0-9_]/g, '')}`;
 const HEARTBEAT_INTERVAL_MS = 5000;
 
@@ -183,18 +190,41 @@ export class DesktopBodyRunner {
   private heartbeatTimer?: NodeJS.Timeout;
   private isStopping = false;
   private readonly psk: string;
+  private readonly caPath: string;
+  private readonly pinnedFingerprint: string;
 
   constructor(
     private readonly brainUrl = BRAIN_URL,
     private readonly bodyId = BODY_ID,
-    psk?: string
+    psk?: string,
+    caPath?: string,
+    pinnedFingerprint?: string
   ) {
     this.psk = psk || BRAIN_PSK || getBodyPsk();
+    this.caPath = caPath || BRAIN_CA_PATH;
+    this.pinnedFingerprint = pinnedFingerprint || BRAIN_PINNED_FINGERPRINT;
   }
 
   public async start(): Promise<void> {
     console.log(`[DESKTOP-BODY] Starting Desktop Body "${this.bodyId}"...`);
     console.log(`[DESKTOP-BODY] Target Brain URL: ${this.brainUrl}`);
+
+    // Khởi động chỉ báo khay hệ thống hiển thị (System Tray Visual Indicator)
+    const indicatorResult = await globalPrivacyIndicator.start();
+    if (!indicatorResult.started) {
+      console.error(`[DESKTOP-BODY] ❌ CRITICAL: VisualPrivacyIndicator không thể khởi động: ${indicatorResult.error}`);
+    }
+
+    // Dọn dẹp các file WAV/TMP tạm còn sót từ phiên trước (crash recovery)
+    const cleanedStale = desktopAudioDriver.cleanupStaleTempFiles();
+    if (cleanedStale > 0) {
+      console.log(`[DESKTOP-BODY] Đã dọn dẹp ${cleanedStale} file âm thanh tạm còn sót từ phiên trước.`);
+    }
+
+    // Kết nối Push-to-Talk Timeout Beep với DesktopAudioDriver (3x 400Hz alert beep)
+    globalPushToTalkManager.setBeepNotifier(async (type) => {
+      await desktopAudioDriver.emitPrivacyBeep(type);
+    });
 
     return new Promise((resolve, reject) => {
       const headers: Record<string, string> = {};
@@ -202,7 +232,48 @@ export class DesktopBodyRunner {
         headers['Authorization'] = `Bearer ${this.psk}`;
       }
 
-      this.ws = new WebSocket(this.brainUrl, { headers });
+      const wsOptions: any = { headers };
+
+      // Bắt buộc cấu hình TLS/WSS và Certificate Pinning cho kênh BodyProtocol
+      if (this.brainUrl.startsWith('wss://')) {
+        if (this.caPath && fs.existsSync(this.caPath)) {
+          wsOptions.ca = fs.readFileSync(this.caPath);
+        } else {
+          console.warn(`[DESKTOP-BODY] ⚠️ Không tìm thấy file CA tại "${this.caPath}". Đang kiểm tra TLS với CA hệ thống.`);
+        }
+
+        // Cơ chế Fail-Fast Certificate Pinning & Phát hiện Tấn công Giả mạo (MITM)
+        wsOptions.checkServerIdentity = (host: string, cert: any) => {
+          // 1. Kiểm tra tính hợp lệ về Hostname/IP SAN
+          const defaultErr = tls.checkServerIdentity(host, cert);
+          if (defaultErr) {
+            return defaultErr;
+          }
+
+          // 2. Kiểm tra Pinning SHA-256 Fingerprint của CA hoặc Server nếu được chỉ định
+          if (this.pinnedFingerprint && cert) {
+            const expectedFingerprint = this.pinnedFingerprint.toUpperCase().replace(/[^A-F0-9]/g, '');
+            const actualServerFingerprint = (cert.fingerprint256 || '').toUpperCase().replace(/[^A-F0-9]/g, '');
+            let actualCaFingerprint = '';
+            if (cert.issuerCertificate?.fingerprint256) {
+              actualCaFingerprint = cert.issuerCertificate.fingerprint256.toUpperCase().replace(/[^A-F0-9]/g, '');
+            }
+
+            const matchesServer = actualServerFingerprint && actualServerFingerprint === expectedFingerprint;
+            const matchesCa = actualCaFingerprint && actualCaFingerprint === expectedFingerprint;
+
+            if (!matchesServer && !matchesCa) {
+              const mitmError = new Error('CERTIFICATE_MISMATCH — có thể đang bị tấn công trung gian (MITM)');
+              (mitmError as any).code = 'CERTIFICATE_MISMATCH';
+              return mitmError;
+            }
+          }
+
+          return undefined;
+        };
+      }
+
+      this.ws = new WebSocket(this.brainUrl, wsOptions);
 
       this.ws.on('unexpected-response', (_req, res) => {
         const errMsg = `WebSocket handshake rejected with HTTP ${res.statusCode}: ${res.statusMessage}`;
@@ -245,8 +316,13 @@ export class DesktopBodyRunner {
         }
       });
 
-      this.ws.on('error', (err) => {
-        console.error(`[DESKTOP-BODY] Socket error:`, err.message);
+      this.ws.on('error', (err: any) => {
+        const isMitm = err.message?.includes('CERTIFICATE_MISMATCH') || err.code === 'CERTIFICATE_MISMATCH';
+        if (isMitm) {
+          console.error(`[DESKTOP-BODY] 🚨 NGUY HIỂM: CERTIFICATE_MISMATCH — có thể đang bị tấn công trung gian (MITM)! Từ chối kết nối.`);
+        } else {
+          console.error(`[DESKTOP-BODY] Socket error:`, err.message);
+        }
         if (!this.isStopping) {
           reject(err);
         }
@@ -262,6 +338,7 @@ export class DesktopBodyRunner {
   public stop(): void {
     this.isStopping = true;
     this.stopHeartbeat();
+    globalPrivacyIndicator.stop();
     if (this.ws) {
       try {
         this.ws.close(1000, 'Desktop Body stopping');
@@ -371,13 +448,38 @@ export class DesktopBodyRunner {
 
         case 'audio.capture': {
           const params = (command.params || (command as any).parameters || {}) as any;
-          const captureResult = await desktopAudioDriver.recordAudio(params);
-          return {
-            commandId: command.commandId,
-            success: true,
-            data: captureResult,
-            executionTimeMs: Date.now() - start,
-          };
+
+          // 1. Kiểm tra xác thực vật lý Push-to-Talk (Mặc định BẬT)
+          if (globalPushToTalkManager.isEnabled()) {
+            console.log(`[DESKTOP-BODY] 🛡️ YÊU CẦU PUSH-TO-TALK: Chờ Chủ nhân xác nhận vật lý mở mic (Lệnh ID: ${command.commandId})...`);
+            const confirmed = await globalPushToTalkManager.waitForConfirmation(command.commandId);
+            if (!confirmed) {
+              return {
+                commandId: command.commandId,
+                success: false,
+                error: 'USER_DID_NOT_CONFIRM: Lệnh thu âm bị hủy do không nhận được xác nhận vật lý từ người dùng tại Machine B.',
+                executionTimeMs: Date.now() - start,
+              };
+            }
+          }
+
+          // 2. Thu âm phần cứng (Có phát tiếng Beep bắt buộc và kiểm tra hard dependency PrivacyIndicator)
+          try {
+            const captureResult = await desktopAudioDriver.recordAudio(params);
+            return {
+              commandId: command.commandId,
+              success: true,
+              data: captureResult,
+              executionTimeMs: Date.now() - start,
+            };
+          } catch (err: any) {
+            return {
+              commandId: command.commandId,
+              success: false,
+              error: err?.message || String(err),
+              executionTimeMs: Date.now() - start,
+            };
+          }
         }
 
         case 'audio.play': {
