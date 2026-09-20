@@ -88,5 +88,23 @@
     "approver": "Boss-Hoan",
     "consumedAt": "2026-09-17T12:15:07.893Z",
     "executionToken": "tok_0014f0bb91e6cbc799868b19c1823039c76d08217557f2bc"
+  },
+  {
+    "id": "appr_1789788481557_d19565",
+    "ownerUserId": "SubAgent-Shop",
+    "actionName": "refund_order",
+    "targetDomain": "shop",
+    "argumentsHash": "6462ec9cdfdbb4edf007062d5fc13a0a9ab15d2a659c395029900601bba00d7f",
+    "argumentsPreview": {
+      "orderId": "ORD-999",
+      "amount": 500000
+    },
+    "requestedBy": "SubAgent-Shop",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-19T03:28:01.557Z",
+    "expiresAt": "2026-09-19T03:29:01.557Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-19T03:28:01.570Z",
+    "executionToken": "tok_ef30c39ac6d0ff7356b7ea8381fd8701ff7f04057c776bfb"
   }
 ]

@@ -1924,5 +1924,41 @@
     "createdAt": "2026-09-13T18:49:17.018Z",
     "updatedAt": "2026-09-13T18:49:17.018Z",
     "enabled": true
+  },
+  {
+    "id": "rule_1789788433296",
+    "pattern": "xưng hô cá nhân",
+    "instruction": "Khi nói chuyện với Sếp, luôn xưng là \"Con\" và gọi là \"Sếp\" hoặc \"Ba\". Tuyệt đối không xưng là \"Tôi\".",
+    "category": "addressing",
+    "createdAt": "2026-09-19T03:27:13.296Z",
+    "updatedAt": "2026-09-19T03:27:13.296Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789788433302",
+    "pattern": "nhớ là",
+    "instruction": "bảo hành 1 đổi 1 trong vòng 30 ngày nhé",
+    "category": "policy",
+    "createdAt": "2026-09-19T03:27:13.302Z",
+    "updatedAt": "2026-09-19T03:27:13.302Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789788455536",
+    "pattern": "Lời Sếp dạy",
+    "instruction": "Từ nay xưng là Con và gọi Sếp/người dùng là Anh.",
+    "category": "behavior",
+    "createdAt": "2026-09-19T03:27:35.536Z",
+    "updatedAt": "2026-09-19T03:27:35.536Z",
+    "enabled": true
+  },
+  {
+    "id": "rule_1789838114636",
+    "pattern": "lời dạy của Sếp",
+    "instruction": "hãy nhớ quy tắc: luôn báo cáo trước 8h sáng",
+    "category": "behavior",
+    "createdAt": "2026-09-19T17:15:14.636Z",
+    "updatedAt": "2026-09-19T17:15:14.636Z",
+    "enabled": true
   }
 ]

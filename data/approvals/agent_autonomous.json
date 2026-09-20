@@ -210,5 +210,31 @@
     "status": "PENDING",
     "createdAt": "2026-09-09T20:25:50.980Z",
     "expiresAt": "2026-09-09T20:30:50.980Z"
+  },
+  {
+    "id": "appr_1789788479177_a52a4e",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "unregistered_dangerous_action",
+    "targetDomain": "shop",
+    "argumentsHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "argumentsPreview": {},
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-19T03:27:59.177Z",
+    "expiresAt": "2026-09-19T03:32:59.177Z"
+  },
+  {
+    "id": "appr_1789788479180_934b5c",
+    "ownerUserId": "agent_autonomous",
+    "actionName": "custom_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e260932e0a8e2d4a65d4de09f774b5862ac9a184add945fe2b9f18c9c4946f11",
+    "argumentsPreview": {
+      "target": "database"
+    },
+    "requestedBy": "agent_autonomous",
+    "status": "PENDING",
+    "createdAt": "2026-09-19T03:27:59.180Z",
+    "expiresAt": "2026-09-19T03:32:59.180Z"
   }
 ]

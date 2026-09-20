@@ -131,5 +131,22 @@
     "approver": "Boss-Hoan",
     "consumedAt": "2026-09-18T03:14:51.923Z",
     "executionToken": "tok_7022fc68c6f5d8afe515821c46db89ba03ed3d070d9d3cd9"
+  },
+  {
+    "id": "appr_1789838145104_fbc6ae",
+    "ownerUserId": "usr_owner",
+    "actionName": "system.open_app",
+    "targetDomain": "shop",
+    "argumentsHash": "d2bd151a9f12d70255d54dfbdacbbf8c19dcc0de1f56680647c386a08cfd6796",
+    "argumentsPreview": {
+      "app": "notepad"
+    },
+    "requestedBy": "usr_owner",
+    "status": "CONSUMED",
+    "createdAt": "2026-09-19T17:15:45.104Z",
+    "expiresAt": "2026-09-19T17:20:45.104Z",
+    "approver": "Boss-Hoan",
+    "consumedAt": "2026-09-19T17:15:45.114Z",
+    "executionToken": "tok_0f2b53c3173e96a6e17abc87a3d086579f1bc7946491a241"
   }
 ]

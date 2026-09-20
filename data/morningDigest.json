@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-06T14:09:17.521Z",
-  "targetDate": "2026-09-06",
+  "generatedAt": "2026-09-19T03:27:13.307Z",
+  "targetDate": "2026-09-19",
   "greeting": "Chào buổi sáng Sếp! Chúc Sếp một ngày mới tràn đầy năng lượng và sáng tạo!",
   "weatherForecast": "Thời tiết hôm nay dễ chịu, nhiệt độ phòng lý tưởng để tập trung lập trình.",
   "techNews": [
@@ -24,14 +24,14 @@
     }
   ],
   "shopExecutiveSummary": {
-    "totalRevenueYesterday": 2850000,
-    "completedOrders": 22,
-    "pendingFulfillmentCount": 3,
-    "netProfitYesterday": 1200000
+    "totalRevenueYesterday": 1850000,
+    "completedOrders": 5,
+    "pendingFulfillmentCount": 0,
+    "netProfitYesterday": 925000
   },
   "recommendedActionsForToday": [
     "Thưởng thức một ly sinh tố bơ vào buổi chiều nhé để khởi đầu ngày mới.",
-    "Có 3 đơn hàng khách đã thanh toán đang chờ bàn giao.",
+    "Toàn bộ đơn hàng Shop hôm qua đã hoàn tất sạch sẽ.",
     "Tiếp tục nghiên cứu và hoàn thiện dự án \"Robot Tự Hành BOW Robot\"."
   ]
 }

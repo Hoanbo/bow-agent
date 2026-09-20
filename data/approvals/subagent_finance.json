@@ -121,5 +121,22 @@
     "expiresAt": "2026-09-17T12:17:18.695Z",
     "approver": "Boss-Hoan",
     "executionToken": "tok_abe81143aee7e2bd3d8d36c27486ec95a453b0b8b690b66a"
+  },
+  {
+    "id": "appr_1789788487507_fb400c",
+    "ownerUserId": "subagent_finance",
+    "actionName": "test_transfer_payout",
+    "targetDomain": "shop",
+    "argumentsHash": "7f065be029bb699f69c230377c2a46db1bc566df90cfa2bf5781261b8b324c74",
+    "argumentsPreview": {
+      "recipient": "supplier_01",
+      "amount": 5000000
+    },
+    "requestedBy": "subagent_finance",
+    "status": "APPROVED",
+    "createdAt": "2026-09-19T03:28:07.508Z",
+    "expiresAt": "2026-09-19T03:30:07.508Z",
+    "approver": "Boss-Hoan",
+    "executionToken": "tok_d823524a87e0c297d15ef3e05f09704a214c3af29174750a"
   }
 ]

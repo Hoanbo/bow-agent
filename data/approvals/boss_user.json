@@ -6790,5 +6790,19 @@
     "status": "PENDING",
     "createdAt": "2026-09-13T18:49:17.048Z",
     "expiresAt": "2026-09-13T18:54:17.048Z"
+  },
+  {
+    "id": "appr_1789838114807_611dfd",
+    "ownerUserId": "boss_user",
+    "actionName": "test_high_impact_action",
+    "targetDomain": "shop",
+    "argumentsHash": "e88cf1682a67742b52b15a4f0a5ffa0bdf5f52f4ea08d477ca107e1059321c02",
+    "argumentsPreview": {
+      "target": "database_cluster"
+    },
+    "requestedBy": "boss_user",
+    "status": "PENDING",
+    "createdAt": "2026-09-19T17:15:14.808Z",
+    "expiresAt": "2026-09-19T17:20:14.808Z"
   }
 ]

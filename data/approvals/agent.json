@@ -83,5 +83,19 @@
     "status": "REVOKED",
     "createdAt": "2026-09-17T12:15:07.885Z",
     "expiresAt": "2026-09-17T12:20:07.885Z"
+  },
+  {
+    "id": "appr_1789788481564_632268",
+    "ownerUserId": "Agent",
+    "actionName": "delete_data",
+    "targetDomain": "system",
+    "argumentsHash": "037c9214eef74cc3887f3a4f085b4e17d76280dafd273b0ee160c09c4ba1cfd4",
+    "argumentsPreview": {
+      "id": 1
+    },
+    "requestedBy": "Agent",
+    "status": "REVOKED",
+    "createdAt": "2026-09-19T03:28:01.564Z",
+    "expiresAt": "2026-09-19T03:33:01.564Z"
   }
 ]

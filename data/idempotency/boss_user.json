@@ -1916,14 +1916,38 @@
     "status": "COMPLETED"
   },
   {
+    "key": "idem_checkout_test_1789788479194",
+    "ownerUserId": "boss_user",
+    "payloadHash": "",
+    "result": {
+      "orderId": "ORD-12345"
+    },
+    "recordedAt": 1789788479196,
+    "expiresAt": 1789874879196,
+    "status": "COMPLETED"
+  },
+  {
     "key": "idem_key_payment_1001",
     "ownerUserId": "boss_user",
     "payloadHash": "008671dc23063013ed08eda1528b32e623f7ee820e511714659eeb1dba058d90",
     "result": {
       "status": "PAID"
     },
-    "recordedAt": 1789647307904,
-    "expiresAt": 1789647317904,
+    "recordedAt": 1789788481579,
+    "expiresAt": 1789788491579,
+    "status": "COMPLETED"
+  },
+  {
+    "key": "idem_key_1789838114838",
+    "ownerUserId": "boss_user",
+    "payloadHash": "9bebd470fd7fe93d4c033e7902cc56faf0745b4ebe05d1e68270223a7083a444",
+    "result": {
+      "success": true,
+      "data": "Read query: test_corr",
+      "timestamp": 1789838114843
+    },
+    "recordedAt": 1789838114843,
+    "expiresAt": 1789924514843,
     "status": "COMPLETED"
   }
 ]
