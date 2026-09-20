@@ -11,6 +11,9 @@
 // (hoặc chạy local trên máy dualXeon để kiểm chứng). Kết nối tới Não bộ Trung tâm qua
 // WebSocket BodyProtocol, quảng bá các năng lực cục bộ, xử lý lệnh và gửi heartbeat định kỳ.
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { WebSocket } from 'ws';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';

@@ -16,7 +16,8 @@
 // Nếu hết thời hạn mà không có xác nhận vật lý, lệnh bị hủy với lỗi 'USER_DID_NOT_CONFIRM'.
 
 import { execSync } from 'node:child_process';
-import { BODY_CONFIG, BodyProtocolErrorCode } from '../core/bodyProtocol/index.js';
+import { BODY_CONFIG } from '../core/bodyProtocol/bodyProtocolConfig.js';
+import { BodyProtocolErrorCode } from '../core/bodyProtocol/errorCodes.js';
 
 export interface PendingPttRequest {
   commandId: string;
