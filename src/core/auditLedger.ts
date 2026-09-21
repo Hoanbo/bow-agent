@@ -31,11 +31,13 @@ export class AuditLedger {
   private auditLog: AuditEvent[] = [];
   private lastHash = '0000000000000000000000000000000000000000000000000000000000000000';
   private filePath?: string;
+  private maxFileSizeBytes: number;
 
   private _corruptionStatus = { hasCorruption: false, errors: [] as string[] };
 
-  constructor(filePath?: string) {
+  constructor(filePath?: string, maxFileSizeBytes: number = 10 * 1024 * 1024) {
     this.filePath = filePath;
+    this.maxFileSizeBytes = maxFileSizeBytes;
     this.loadAndVerifyFromDisk();
   }
 
@@ -44,6 +46,19 @@ export class AuditLedger {
       hasCorruption: this._corruptionStatus.hasCorruption,
       errors: [...this._corruptionStatus.errors],
     };
+  }
+
+  private rotateFileIfNeeded(): void {
+    if (!this.filePath || !fs.existsSync(this.filePath)) return;
+    try {
+      const stats = fs.statSync(this.filePath);
+      if (stats.size >= this.maxFileSizeBytes) {
+        const rotatedPath = `${this.filePath}.${Date.now()}.rotated.jsonl`;
+        fs.renameSync(this.filePath, rotatedPath);
+      }
+    } catch {
+      // Best-effort rotation
+    }
   }
 
   private loadAndVerifyFromDisk(): void {
@@ -76,6 +91,7 @@ export class AuditLedger {
       }
 
       this.lastHash = currentHash;
+      this.rotateFileIfNeeded();
     } catch (err: any) {
       this._corruptionStatus.hasCorruption = true;
       this._corruptionStatus.errors.push(`Error reading audit file: ${err.message}`);
@@ -88,6 +104,7 @@ export class AuditLedger {
    * Fails closed if disk persistence fails
    */
   public record(eventData: Omit<AuditEvent, 'eventId' | 'previousHash' | 'signature'>): AuditEvent {
+    this.rotateFileIfNeeded();
     const eventId = 'audit_' + Date.now() + '_' + crypto.randomBytes(3).toString('hex');
     const rawForHash = `${this.lastHash}|${eventId}|${eventData.timestamp}|${eventData.toolName}|${eventData.policyDecision}`;
     const signature = crypto.createHash('sha256').update(rawForHash).digest('hex');

@@ -44,3 +44,7 @@ data/certs/
 *.key
 *.pem
 *.crt
+
+# Runtime snapshots and rotated audit logs
+data/snapshots/
+*.rotated.jsonl

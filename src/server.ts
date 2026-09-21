@@ -26,6 +26,7 @@ import { WebhookVerifier } from './security/webhookVerifier.js';
 import { globalPDP } from './core/policyDecisionPoint.js';
 import { globalCircuitBreaker } from './llm/resilience.js';
 import { globalBodyRegistry, validateBodyPsk, getBodyPsk, BODY_CONFIG, type BodyCommand, type BodyCommandResult, type BodyConnectionSender } from './core/bodyProtocol/index.js';
+import { globalVoicePipeline } from './speech/voicePipeline.js';
 
 
 
@@ -532,6 +533,23 @@ export class BowCentralAgentServer {
         }
       }
 
+      // 18. Voice Pipeline End-to-End Roundtrip Endpoint
+      if (url.pathname === '/api/voice/roundtrip' && req.method === 'POST') {
+        try {
+          const body = await parseJsonBody();
+          const result = await globalVoicePipeline.executeVoiceRoundtrip({
+            ...body,
+            correlationId,
+          });
+          res.writeHead(result.success ? 200 : 500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ...result, correlationId }));
+        } catch (err: any) {
+          res.writeHead(500, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ success: false, error: err?.message || 'Voice roundtrip failed', correlationId }));
+        }
+        return;
+      }
+
       // 404
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Endpoint not found', correlationId }));
@@ -760,6 +778,26 @@ export class BowCentralAgentServer {
             const result = await robotChannelAdapter.handleAudioIn(payload.audio || payload.text || '', payload.context);
 
             ws.send(JSON.stringify({ ...result, requestId: payload.requestId }));
+            return;
+          }
+
+          // Voice Pipeline Roundtrip over WebSocket
+          if (payload.type === 'voice.roundtrip' || payload.type === 'voice.turn' || payload.type === 'body.voice_turn') {
+            const voiceRes = await globalVoicePipeline.executeVoiceRoundtrip({
+              bodyId: connectedBodyId || payload.bodyId,
+              sessionId: payload.sessionId,
+              userId: payload.userId,
+              role: payload.role,
+              isOwner: payload.isOwner,
+              correlationId: payload.correlationId,
+              audioBufferOverride: payload.audioBase64 ? Buffer.from(payload.audioBase64, 'base64') : undefined,
+              simulatedTranscript: payload.text,
+            });
+            ws.send(JSON.stringify({
+              type: 'voice.roundtrip_result',
+              requestId: payload.requestId,
+              ...voiceRes,
+            }));
             return;
           }
 

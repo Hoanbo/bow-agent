@@ -54,7 +54,7 @@ toolRegistry.register({
 
     // 2. If no body connected, fallback to local controlled launch on Windows with whitelist
     if (process.platform === 'win32') {
-      const whitelist = ['notepad', 'calc', 'cmd', 'explorer', 'code'];
+      const whitelist = ['notepad', 'calc', 'explorer', 'code'];
       if (!whitelist.includes(targetApp)) {
         return {
           success: false,
