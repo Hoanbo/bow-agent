@@ -34,8 +34,8 @@ export interface CapabilityAdvertisement {
 export interface BodyCommand {
     /** Unique identifier for this command dispatch */
     readonly commandId: string;
-    /** Target body ID */
-    readonly bodyId: string;
+    /** Target body ID (optional if routed dynamically by capability) */
+    readonly bodyId?: string;
     /** Capability to invoke (e.g. 'system.open_app') */
     readonly capability: string;
     /** Arguments supplied to the capability */
@@ -71,4 +71,64 @@ export interface BodyRecord {
     readonly registeredAt: number;
     lastHeartbeatAt: number;
     connection?: BodyConnectionSender;
+}
+export interface AudioDeviceDescriptor {
+    readonly id: string | number;
+    readonly name: string;
+    readonly type: 'input' | 'output';
+    readonly isDefault?: boolean;
+    readonly channels?: number;
+    readonly sampleRates?: number[];
+}
+export interface AudioDeviceListResult {
+    readonly inputs: AudioDeviceDescriptor[];
+    readonly outputs: AudioDeviceDescriptor[];
+    readonly activeInput?: string;
+    readonly activeOutput?: string;
+}
+export interface AudioStatusResult {
+    readonly ready: boolean;
+    readonly activeInput: string;
+    readonly activeOutput: string;
+    readonly defaultSampleRate: number;
+    readonly defaultChannels: number;
+    readonly isCapturing: boolean;
+    readonly isPlaying: boolean;
+}
+export interface AudioCaptureParams {
+    readonly durationMs?: number;
+    readonly sampleRate?: number;
+    readonly channels?: number;
+    readonly mode?: 'record' | 'stream';
+    readonly [key: string]: unknown;
+}
+export interface AudioCaptureResult {
+    readonly audioBase64: string;
+    readonly format: 'wav' | 'pcm';
+    readonly durationMs: number;
+    readonly sampleRate: number;
+    readonly channels: number;
+    readonly byteLength: number;
+}
+export interface AudioPlayParams {
+    readonly audioBase64?: string;
+    readonly audioFilePath?: string;
+    readonly format?: 'wav' | 'mp3' | 'pcm';
+    readonly volumePercent?: number;
+    readonly [key: string]: unknown;
+}
+export interface AudioPlayResult {
+    readonly success: boolean;
+    readonly playbackDurationMs: number;
+    readonly deviceName?: string;
+    readonly error?: string;
+}
+export interface BodyEvent {
+    readonly type: 'body.event';
+    readonly id: string;
+    readonly correlationId?: string;
+    readonly bodyId: string;
+    readonly capability: string;
+    readonly payload: unknown;
+    readonly timestamp: number;
 }

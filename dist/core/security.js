@@ -12,23 +12,20 @@ const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b/g;
 const BANK_ACCOUNT_REGEX = /\b(?:\d{9,16})\b/g;
 const TOKEN_KEY_REGEX = /(?:api[_-]?key|key|secret|token|password|bearer\s+)[=:]\s*['"]?([a-zA-Z0-9_\-\.]{8,})['"]?/gi;
 const API_TOKEN_PATTERN = /\b(?:sk-[a-zA-Z0-9_\-]{20,}|ghp_[a-zA-Z0-9]{20,}|gho_[a-zA-Z0-9]{20,}|xoxb-[a-zA-Z0-9_\-]{20,})\b/g;
+import { redactPii as speechRedactPii } from '../speech/piiRedactor.js';
 export function detectPii(text) {
     if (!text)
         return false;
-    // RegExp with the global flag is stateful. Resetting lastIndex keeps
-    // repeated security scans deterministic.
     PHONE_REGEX.lastIndex = 0;
     EMAIL_REGEX.lastIndex = 0;
-    return PHONE_REGEX.test(text) || EMAIL_REGEX.test(text);
+    if (PHONE_REGEX.test(text) || EMAIL_REGEX.test(text))
+        return true;
+    return speechRedactPii(text).detectedTypes.length > 0;
 }
 export function redactPii(text) {
     if (!text)
         return '';
-    return text
-        .replace(PHONE_REGEX, '[REDACTED_PHONE]')
-        .replace(EMAIL_REGEX, '[REDACTED_EMAIL]')
-        .replace(API_TOKEN_PATTERN, '[REDACTED_SECRET]')
-        .replace(TOKEN_KEY_REGEX, '$1=[REDACTED_SECRET]');
+    return speechRedactPii(text).redactedText;
 }
 /**
  * Prompt Injection & Jailbreak Detection
@@ -52,21 +49,16 @@ export function detectPromptInjection(text) {
  * Comprehensive Security Scan
  */
 export function scanSecurity(text) {
-    const containsPii = detectPii(text);
     const containsPromptInjection = detectPromptInjection(text);
-    const piiTypes = [];
+    const piiRes = speechRedactPii(text);
+    const containsPii = piiRes.detectedTypes.length > 0;
+    const piiTypes = [...piiRes.detectedTypes];
     const violations = [];
-    PHONE_REGEX.lastIndex = 0;
-    if (PHONE_REGEX.test(text))
-        piiTypes.push('PHONE');
-    EMAIL_REGEX.lastIndex = 0;
-    if (EMAIL_REGEX.test(text))
-        piiTypes.push('EMAIL');
     if (containsPromptInjection) {
         violations.push('PROMPT_INJECTION_ATTEMPT');
     }
     const isSafe = !containsPromptInjection;
-    const sanitizedText = redactPii(text);
+    const sanitizedText = piiRes.redactedText;
     return {
         isSafe,
         containsPii,

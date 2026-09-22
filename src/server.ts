@@ -580,6 +580,11 @@ export class BowCentralAgentServer {
           let bearerToken: string | undefined;
           if (typeof authHeader === 'string' && authHeader.startsWith('Bearer ')) {
             bearerToken = authHeader.slice(7).trim();
+          } else {
+            const queryToken = url.searchParams.get('token') || url.searchParams.get('psk');
+            if (typeof queryToken === 'string' && queryToken.trim().length > 0) {
+              bearerToken = queryToken.trim();
+            }
           }
 
           if (!bearerToken || !validateBodyPsk(bearerToken)) {

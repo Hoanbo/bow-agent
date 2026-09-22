@@ -8,9 +8,11 @@ export class AuditLedger {
     auditLog = [];
     lastHash = '0000000000000000000000000000000000000000000000000000000000000000';
     filePath;
+    maxFileSizeBytes;
     _corruptionStatus = { hasCorruption: false, errors: [] };
-    constructor(filePath) {
+    constructor(filePath, maxFileSizeBytes = 10 * 1024 * 1024) {
         this.filePath = filePath;
+        this.maxFileSizeBytes = maxFileSizeBytes;
         this.loadAndVerifyFromDisk();
     }
     getCorruptionStatus() {
@@ -18,6 +20,20 @@ export class AuditLedger {
             hasCorruption: this._corruptionStatus.hasCorruption,
             errors: [...this._corruptionStatus.errors],
         };
+    }
+    rotateFileIfNeeded() {
+        if (!this.filePath || !fs.existsSync(this.filePath))
+            return;
+        try {
+            const stats = fs.statSync(this.filePath);
+            if (stats.size >= this.maxFileSizeBytes) {
+                const rotatedPath = `${this.filePath}.${Date.now()}.rotated.jsonl`;
+                fs.renameSync(this.filePath, rotatedPath);
+            }
+        }
+        catch {
+            // Best-effort rotation
+        }
     }
     loadAndVerifyFromDisk() {
         if (!this.filePath || !fs.existsSync(this.filePath))
@@ -48,6 +64,7 @@ export class AuditLedger {
                 this.auditLog.push(event);
             }
             this.lastHash = currentHash;
+            this.rotateFileIfNeeded();
         }
         catch (err) {
             this._corruptionStatus.hasCorruption = true;
@@ -60,6 +77,7 @@ export class AuditLedger {
      * Fails closed if disk persistence fails
      */
     record(eventData) {
+        this.rotateFileIfNeeded();
         const eventId = 'audit_' + Date.now() + '_' + crypto.randomBytes(3).toString('hex');
         const rawForHash = `${this.lastHash}|${eventId}|${eventData.timestamp}|${eventData.toolName}|${eventData.policyDecision}`;
         const signature = crypto.createHash('sha256').update(rawForHash).digest('hex');

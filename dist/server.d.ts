@@ -1,3 +1,4 @@
+import './tools/desktopTools.js';
 export interface ServerOptions {
     port?: number;
     host?: string;

@@ -33,6 +33,7 @@ import { globalAuditLedger, AuditLedger, } from './auditLedger.js';
 export * from './approvalService.js';
 export * from './idempotencyStore.js';
 export * from './auditLedger.js';
+import { getAudioActionClassification } from './policyClassification.js';
 // ---------------------------------------------------------------------------
 // 1. ACTION CLASSIFICATION REGISTRY
 // ---------------------------------------------------------------------------
@@ -71,6 +72,11 @@ const ACTION_CLASSIFICATIONS = {
     'desktop_reply_message': 'HIGH_IMPACT',
     'desktop_execute_code': 'HIGH_IMPACT',
     'delegate_subagent_task': 'HIGH_IMPACT',
+    'audio.capture': 'HIGH_IMPACT',
+    'audio.play': 'HIGH_IMPACT',
+    'audio.device.select': 'REVERSIBLE',
+    'audio.device.list': 'OBSERVE',
+    'audio.status': 'OBSERVE',
     // 5. FORBIDDEN (Strictly forbidden actions)
     'transfer_funds': 'FORBIDDEN',
     'delete_database': 'FORBIDDEN',
@@ -126,7 +132,13 @@ export class PolicyDecisionPoint {
     }
     // --- Action Classification ---
     getActionClassification(toolName) {
-        return ACTION_CLASSIFICATIONS[toolName] || 'HIGH_IMPACT'; // Default to HIGH_IMPACT if unknown
+        if (toolName.startsWith('audio.')) {
+            return getAudioActionClassification(toolName);
+        }
+        if (ACTION_CLASSIFICATIONS[toolName]) {
+            return ACTION_CLASSIFICATIONS[toolName];
+        }
+        return 'HIGH_IMPACT'; // Default to HIGH_IMPACT if unknown
     }
     registerActionPolicy(toolName, classification) {
         ACTION_CLASSIFICATIONS[toolName] = classification;

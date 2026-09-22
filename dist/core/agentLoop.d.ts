@@ -1,4 +1,5 @@
 import { PolicyDecision, ActionClassification } from './policyDecisionPoint.js';
+import '../tools/desktopTools.js';
 import { BossProfile, BossProject } from '../embodied/bossMemoryHub.js';
 import { BossRule } from '../embodied/bossFeedbackLearner.js';
 import { ConversationTurn, MemoryScope } from './memory.js';

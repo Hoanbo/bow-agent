@@ -3,6 +3,8 @@
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
+import dotenv from 'dotenv';
+dotenv.config();
 let cachedPsk = null;
 /**
  * Retrieves or lazily initializes the persistent Body Pre-Shared Key (PSK).

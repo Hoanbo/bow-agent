@@ -1,9 +1,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
-// src/server.ts
-// BOW AGENT V3.3 — MULTI-CHANNEL CENTRAL SERVER & WEBSOCKET GATEWAY (Port 4000)
-import http from 'node:http';
+import https from 'node:https';
+import fs from 'node:fs';
+import path from 'node:path';
 import { WebSocketServer, WebSocket } from 'ws';
+import { ensureTlsCertificates } from './security/tlsCertManager.js';
 import { CONFIG, isDesktopAuthValid, isRobotSecretValid } from './config.js';
 import { isGeminiConfigured } from './gemini/config.js';
 import { webAdapter } from './adapters/webAdapter.js';
@@ -11,6 +12,7 @@ import { robotChannelAdapter } from './adapters/robotAdapter.js';
 import { desktopChannelAdapter } from './adapters/desktopAdapter.js';
 import { ttsEngine } from './speech/ttsEngine.js';
 import { sttEngine } from './speech/sttEngine.js';
+import './tools/desktopTools.js';
 import { hybridLlmRouter } from './llm/hybridLlmRouter.js';
 import { watchdogDaemon } from './embodied/watchdogDaemon.js';
 import { getKnowledgeGaps } from './knowledge/knowledgeReviewService.js';
@@ -18,7 +20,8 @@ import { globalRequestGuard } from './security/requestGuard.js';
 import { WebhookVerifier } from './security/webhookVerifier.js';
 import { globalPDP } from './core/policyDecisionPoint.js';
 import { globalCircuitBreaker } from './llm/resilience.js';
-import { globalBodyRegistry, validateBodyPsk, getBodyPsk } from './core/bodyProtocol/index.js';
+import { globalBodyRegistry, validateBodyPsk, getBodyPsk, BODY_CONFIG } from './core/bodyProtocol/index.js';
+import { globalVoicePipeline } from './speech/voicePipeline.js';
 export class BowCentralAgentServer {
     server;
     wss;
@@ -39,7 +42,13 @@ export class BowCentralAgentServer {
         if (CONFIG.env !== 'test') {
             console.log(`[BOW-SERVER] BodyProtocol PSK đã sẵn sàng (độ dài: ${bodyPsk.length} ký tự).`);
         }
-        this.server = http.createServer(async (req, res) => {
+        // Khởi tạo và nạp chứng chỉ TLS nội bộ (Internal CA & Machine A Server Cert)
+        const { serverCertPath, serverKeyPath } = ensureTlsCertificates({ hosts: [this.host] });
+        const tlsOptions = {
+            key: fs.readFileSync(serverKeyPath),
+            cert: fs.readFileSync(serverCertPath),
+        };
+        this.server = https.createServer(tlsOptions, async (req, res) => {
             // Never emit wildcard CORS in production. Development stays convenient,
             // while production must explicitly name browser origins in the env file.
             // 1. Correlation ID Propagation
@@ -196,18 +205,17 @@ export class BowCentralAgentServer {
                     const timestamp = req.headers['x-bow-timestamp'];
                     const signature = req.headers['x-bow-signature'];
                     const nonce = req.headers['x-bow-nonce'];
-                    if (CONFIG.env === 'production' || CONFIG.shopWebhookSecret) {
-                        const verifyRes = this.webhookVerifier.verify({
-                            rawBody,
-                            signatureHeader: typeof signature === 'string' ? signature : undefined,
-                            timestampHeader: typeof timestamp === 'string' ? timestamp : undefined,
-                            nonceHeader: typeof nonce === 'string' ? nonce : undefined,
-                        });
-                        if (!verifyRes.valid) {
-                            res.writeHead(401, { 'Content-Type': 'application/json' });
-                            res.end(JSON.stringify({ error: 'UNAUTHORIZED_WEBHOOK', reason: verifyRes.reason, correlationId }));
-                            return;
-                        }
+                    // Bắt buộc xác thực chữ ký Webhook vô điều kiện (không có bypass theo environment)
+                    const verifyRes = this.webhookVerifier.verify({
+                        rawBody,
+                        signatureHeader: typeof signature === 'string' ? signature : undefined,
+                        timestampHeader: typeof timestamp === 'string' ? timestamp : undefined,
+                        nonceHeader: typeof nonce === 'string' ? nonce : undefined,
+                    });
+                    if (!verifyRes.valid) {
+                        res.writeHead(401, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ error: 'UNAUTHORIZED_WEBHOOK', reason: verifyRes.reason, correlationId }));
+                        return;
                     }
                     const body = rawBody ? JSON.parse(rawBody) : {};
                     const robotCommand = await robotChannelAdapter.pushShopEventToOwner(body);
@@ -395,19 +403,109 @@ export class BowCentralAgentServer {
                 res.end(JSON.stringify({ success: true, count: bodies.length, bodies, correlationId }));
                 return;
             }
-            // 16. BodyProtocol: Điều phối gửi lệnh trực tiếp tới Body
+            // 16. BodyProtocol: Điều phối gửi lệnh trực tiếp tới Body (Chỉ bật khi có BOW_ALLOW_DEBUG_ENDPOINTS=true, bắt buộc Bearer Auth và PDP)
             if (url.pathname === '/api/body/command' && req.method === 'POST') {
-                const body = await parseJsonBody();
-                const cmdResult = await globalBodyRegistry.executeBodyCommand({
-                    commandId: body.commandId || `cmd_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
-                    bodyId: body.bodyId,
-                    capability: body.capability,
-                    params: body.params || {},
-                    correlationId,
-                    timeoutMs: body.timeoutMs,
-                });
-                res.writeHead(cmdResult.success ? 200 : 500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ ...cmdResult, correlationId }));
+                // 1. Kiểm tra cờ Debug: Mặc định TẮT ở production và mọi môi trường trừ khi bật tường minh
+                if (process.env.BOW_ALLOW_DEBUG_ENDPOINTS !== 'true') {
+                    res.writeHead(403, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({
+                        error: 'DEBUG_ENDPOINT_DISABLED',
+                        message: 'Endpoint /api/body/command is disabled by default. Set BOW_ALLOW_DEBUG_ENDPOINTS=true to enable.',
+                        correlationId,
+                    }));
+                    return;
+                }
+                // 2. Bắt buộc xác thực phiên Chủ nhân qua Bearer Token / PSK / Desktop Token
+                const rawAuth = req.headers['authorization'] || req.headers['x-auth-token'];
+                let authToken;
+                if (typeof rawAuth === 'string') {
+                    authToken = rawAuth.startsWith('Bearer ') ? rawAuth.slice(7).trim() : rawAuth.trim();
+                }
+                const isAuthorized = Boolean(authToken && (validateBodyPsk(authToken) || isDesktopAuthValid(authToken)));
+                if (!isAuthorized) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({
+                        error: 'UNAUTHORIZED',
+                        message: 'Missing or invalid authentication token for /api/body/command.',
+                        correlationId,
+                    }));
+                    return;
+                }
+                // 3. Phân tích body và đánh giá chính sách qua PDP (Policy Decision Point)
+                try {
+                    const body = await parseJsonBody();
+                    const capability = String(body.capability || '').trim();
+                    // Kiểm tra qua PDP — tuyệt đối không tạo đường tắt xuống BodyRegistry
+                    const pdpDecision = globalPDP.evaluate({
+                        toolName: capability,
+                        args: body.params || {},
+                        actor: { userId: 'owner', role: 'owner', isOwner: true, channel: 'BODY_COMMAND_API' },
+                        executionToken: body.executionToken,
+                        consumeToken: true,
+                    });
+                    if (!pdpDecision.allowed) {
+                        res.writeHead(403, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({
+                            error: 'POLICY_DENIED',
+                            reason: pdpDecision.reason,
+                            classification: pdpDecision.classification,
+                            requiresApproval: pdpDecision.requiresApproval,
+                            approvalId: pdpDecision.approvalId,
+                            correlationId,
+                        }));
+                        return;
+                    }
+                    const cmdResult = await globalBodyRegistry.executeBodyCommand({
+                        commandId: body.commandId || `cmd_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
+                        bodyId: body.bodyId,
+                        capability: body.capability,
+                        params: body.params || {},
+                        correlationId,
+                        timeoutMs: body.timeoutMs,
+                    });
+                    res.writeHead(cmdResult.success ? 200 : 500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ ...cmdResult, correlationId }));
+                }
+                catch (err) {
+                    res.writeHead(400, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: err?.message || 'Invalid JSON body', correlationId }));
+                }
+                return;
+            }
+            // 17. Voice Benchmark Lab Static Web UI
+            if (url.pathname.startsWith('/voice-lab') && (req.method === 'GET' || req.method === 'HEAD')) {
+                const subPath = url.pathname.replace(/^\/voice-lab\/?/, '') || 'index.html';
+                const fullPath = path.resolve('artifacts/voice-benchmark', subPath);
+                const baseDir = path.resolve('artifacts/voice-benchmark');
+                if (fullPath.toLowerCase().startsWith(baseDir.toLowerCase()) && fs.existsSync(fullPath) && !fs.statSync(fullPath).isDirectory()) {
+                    const ext = path.extname(fullPath).toLowerCase();
+                    const mimeTypes = {
+                        '.html': 'text/html; charset=utf-8',
+                        '.wav': 'audio/wav',
+                        '.css': 'text/css',
+                        '.js': 'application/javascript',
+                        '.json': 'application/json',
+                    };
+                    res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
+                    fs.createReadStream(fullPath).pipe(res);
+                    return;
+                }
+            }
+            // 18. Voice Pipeline End-to-End Roundtrip Endpoint
+            if (url.pathname === '/api/voice/roundtrip' && req.method === 'POST') {
+                try {
+                    const body = await parseJsonBody();
+                    const result = await globalVoicePipeline.executeVoiceRoundtrip({
+                        ...body,
+                        correlationId,
+                    });
+                    res.writeHead(result.success ? 200 : 500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ ...result, correlationId }));
+                }
+                catch (err) {
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: false, error: err?.message || 'Voice roundtrip failed', correlationId }));
+                }
                 return;
             }
             // 404
@@ -437,34 +535,61 @@ export class BowCentralAgentServer {
                     if (typeof authHeader === 'string' && authHeader.startsWith('Bearer ')) {
                         bearerToken = authHeader.slice(7).trim();
                     }
+                    else {
+                        const queryToken = url.searchParams.get('token') || url.searchParams.get('psk');
+                        if (typeof queryToken === 'string' && queryToken.trim().length > 0) {
+                            bearerToken = queryToken.trim();
+                        }
+                    }
                     if (!bearerToken || !validateBodyPsk(bearerToken)) {
                         console.warn(`[BOW-SERVER] ⚠️ TỪ CHỐI kết nối /ws/body (401 Unauthorized): Thiếu hoặc sai Pre-Shared Key (PSK) từ IP: ${clientIp}`);
                         return done(false, 401, 'Unauthorized');
                     }
                     return done(true);
                 }
-                if (CONFIG.env !== 'production')
-                    return done(true);
+                // Route: /ws/robot và /ws/audio-stream
+                // Bắt buộc xác thực x-robot-secret VÔ ĐIỀU KIỆN (Loại bỏ hoàn toàn mọi bypass theo environment)
                 const robotPath = path.includes('robot') || path.includes('audio-stream');
-                const desktopPath = path.includes('desktop');
-                if (!robotPath && !desktopPath)
+                if (robotPath) {
+                    const robotSecret = info.req.headers['x-robot-secret'] || url.searchParams.get('secret') || url.searchParams.get('token');
+                    const isSecretProvided = typeof robotSecret === 'string' && robotSecret.trim().length > 0;
+                    if (!isSecretProvided || !isRobotSecretValid(robotSecret)) {
+                        console.warn(`[BOW-SERVER] ⚠️ TỪ CHỐI kết nối robot/audio-stream (401 Unauthorized): Thiếu hoặc sai Robot Secret từ IP: ${clientIp}`);
+                        return done(false, 401, 'Unauthorized');
+                    }
                     return done(true);
-                const robotSecret = info.req.headers['x-robot-secret'] || url.searchParams.get('secret') || url.searchParams.get('token');
-                const desktopToken = info.req.headers['x-auth-token'] || info.req.headers.authorization?.replace(/^Bearer\s+/i, '') || url.searchParams.get('token');
-                const authorized = robotPath
-                    ? isRobotSecretValid(typeof robotSecret === 'string' ? robotSecret : undefined)
-                    : isDesktopAuthValid(typeof desktopToken === 'string' ? desktopToken : undefined);
-                return authorized ? done(true) : done(false, 401, 'Unauthorized');
+                }
+                // Route: /ws/desktop
+                // Bắt buộc xác thực Desktop Token VÔ ĐIỀU KIỆN
+                const desktopPath = path.includes('desktop');
+                if (desktopPath) {
+                    const desktopToken = info.req.headers['x-auth-token'] || info.req.headers.authorization?.replace(/^Bearer\s+/i, '') || url.searchParams.get('token');
+                    const isTokenProvided = typeof desktopToken === 'string' && desktopToken.trim().length > 0;
+                    if (!isTokenProvided || !isDesktopAuthValid(desktopToken)) {
+                        console.warn(`[BOW-SERVER] ⚠️ TỪ CHỐI kết nối desktop (401 Unauthorized): Thiếu hoặc sai Desktop Token từ IP: ${clientIp}`);
+                        return done(false, 401, 'Unauthorized');
+                    }
+                    return done(true);
+                }
+                // Route: /ws/web (Kênh chat web public của shop)
+                const webPath = path.includes('web') || path === '/ws' || path === '/';
+                if (webPath) {
+                    return done(true);
+                }
+                // Mọi route lạ khác đều bị từ chối 404 thay vì cho qua
+                return done(false, 404, 'Not Found');
             },
         });
         this.wss.on('connection', (ws, req) => {
             const pathname = req.url ? new URL(req.url, `http://${req.headers.host || 'localhost'}`).pathname : '/';
+            const clientIp = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket.remoteAddress || 'unknown';
             const isRobotConnection = pathname.includes('robot') || pathname.includes('audio-stream');
             const isDesktopConnection = pathname.includes('desktop');
             const isBodyConnection = pathname.includes('body');
-            console.log(`[BOW-SERVER] WebSocket client connected on path: ${pathname}`);
+            console.log(`[BOW-SERVER] WebSocket client connected on path: ${pathname} from IP: ${clientIp}`);
             let connectedBodyId;
-            const pendingCommandResolvers = new Map();
+            // NOTE: pendingCommandResolvers đã được chuyển vào globalBodyRegistry.pendingCommands.
+            // Không còn quản lý tại closure này nữa — mọi Body type đều dùng chung điểm trung tâm.
             // Nếu client kết nối từ Robot hoặc Audio Stream, đăng ký nhận các sự kiện chủ động và lệnh ngắt (robot.interrupt)
             let unregisterRobotListener;
             if (isRobotConnection) {
@@ -498,20 +623,21 @@ export class BowCentralAgentServer {
                         connectedBodyId = ad.bodyId;
                         const sender = {
                             sendCommand: async (command) => {
-                                return new Promise((resolve) => {
-                                    const timeoutMs = command.timeoutMs || 10000;
-                                    const timer = setTimeout(() => {
-                                        pendingCommandResolvers.delete(command.commandId);
-                                        resolve({
+                                return new Promise((resolve, reject) => {
+                                    const timeoutMs = command.timeoutMs || BODY_CONFIG.commandTimeoutMs;
+                                    const timeoutHandle = setTimeout(() => {
+                                        // Timeout: xóa khỏi registry trước khi resolve để tránh double-call
+                                        const hadEntry = globalBodyRegistry.resolvePendingCommand(command.commandId, {
                                             commandId: command.commandId,
                                             success: false,
                                             error: `COMMAND_TIMEOUT: Body command execution timed out after ${timeoutMs}ms.`,
                                         });
+                                        if (!hadEntry) {
+                                            // Đã được failPendingCommandsForBody() xử lý trước — không làm gì thêm
+                                        }
                                     }, timeoutMs);
-                                    pendingCommandResolvers.set(command.commandId, (res) => {
-                                        clearTimeout(timer);
-                                        resolve(res);
-                                    });
+                                    // Đăng ký vào registry trung tâm (thay cho pendingCommandResolvers local)
+                                    globalBodyRegistry.registerPendingCommand(command.commandId, connectedBodyId || command.bodyId || 'unknown', resolve, reject, timeoutHandle);
                                     if (ws.readyState === WebSocket.OPEN) {
                                         ws.send(JSON.stringify({
                                             type: 'body.command',
@@ -519,9 +645,8 @@ export class BowCentralAgentServer {
                                         }));
                                     }
                                     else {
-                                        clearTimeout(timer);
-                                        pendingCommandResolvers.delete(command.commandId);
-                                        resolve({
+                                        // Socket đã đóng ngay tại thời điểm gửi — fail ngay lập tức
+                                        globalBodyRegistry.resolvePendingCommand(command.commandId, {
                                             commandId: command.commandId,
                                             success: false,
                                             error: 'BODY_SOCKET_CLOSED: WebSocket connection to body is not open.',
@@ -540,6 +665,7 @@ export class BowCentralAgentServer {
                             },
                         };
                         globalBodyRegistry.registerBody(ad, sender);
+                        console.log(`[BOW-SERVER] ✓ Body registered successfully: ${ad.bodyId} (${ad.bodyType}) from IP: ${clientIp} with capabilities: [${ad.capabilities.map((c) => c.name).join(', ')}]`);
                         ws.send(JSON.stringify({
                             type: 'body.advertise_ack',
                             bodyId: ad.bodyId,
@@ -558,11 +684,8 @@ export class BowCentralAgentServer {
                     if (payload.type === 'body.command_result') {
                         const res = payload.result;
                         if (res && res.commandId) {
-                            const resolver = pendingCommandResolvers.get(res.commandId);
-                            if (resolver) {
-                                pendingCommandResolvers.delete(res.commandId);
-                                resolver(res);
-                            }
+                            // Dùng registry trung tâm thay vì pendingCommandResolvers local
+                            globalBodyRegistry.resolvePendingCommand(res.commandId, res);
                         }
                         return;
                     }
@@ -593,6 +716,25 @@ export class BowCentralAgentServer {
                         ws.send(JSON.stringify({ ...result, requestId: payload.requestId }));
                         return;
                     }
+                    // Voice Pipeline Roundtrip over WebSocket
+                    if (payload.type === 'voice.roundtrip' || payload.type === 'voice.turn' || payload.type === 'body.voice_turn') {
+                        const voiceRes = await globalVoicePipeline.executeVoiceRoundtrip({
+                            bodyId: connectedBodyId || payload.bodyId,
+                            sessionId: payload.sessionId,
+                            userId: payload.userId,
+                            role: payload.role,
+                            isOwner: payload.isOwner,
+                            correlationId: payload.correlationId,
+                            audioBufferOverride: payload.audioBase64 ? Buffer.from(payload.audioBase64, 'base64') : undefined,
+                            simulatedTranscript: payload.text,
+                        });
+                        ws.send(JSON.stringify({
+                            type: 'voice.roundtrip_result',
+                            requestId: payload.requestId,
+                            ...voiceRes,
+                        }));
+                        return;
+                    }
                     // Desktop Command (Legacy adapter)
                     if (isDesktopConnection && !payload.type?.startsWith('body.')) {
                         const result = await desktopChannelAdapter.executeCommand(payload);
@@ -616,6 +758,9 @@ export class BowCentralAgentServer {
                 }
             });
             ws.on('close', () => {
+                // failPendingCommandsForBody() được gọi TỰ ĐỘNG bên trong unregisterBody().
+                // Không cần vòng lặp thủ công ở đây nữa — đây là điểm cải thiện cốt lõi:
+                // mọi body type đều được hưởng lợi từ một điểm fix duy nhất tại BodyRegistry.
                 if (connectedBodyId) {
                     globalBodyRegistry.unregisterBody(connectedBodyId, 'CONNECTION_CLOSED');
                 }
@@ -628,7 +773,7 @@ export class BowCentralAgentServer {
         return new Promise((resolve, reject) => {
             this.server.listen(this.port, this.host, () => {
                 this.isRunning = true;
-                console.log(`[BOW-SERVER] Central Autonomous Brain listening on http://${this.host}:${this.port}`);
+                console.log(`[BOW-SERVER] Central Autonomous Brain listening on https://${this.host}:${this.port} (TLS/WSS Enforced)`);
                 resolve();
             });
             this.server.on('error', reject);

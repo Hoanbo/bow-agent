@@ -22,6 +22,7 @@ export interface BowAgentEnvConfig {
     maxRequestBodyBytes: number;
     protectedPaths: string[];
     agentPersona: string;
+    voiceMaxE2eTimeoutMs: number;
 }
 export declare const CONFIG: BowAgentEnvConfig;
 export declare function getProtectedPaths(): string[];

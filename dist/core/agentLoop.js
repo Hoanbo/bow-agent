@@ -31,6 +31,7 @@
 import crypto from 'node:crypto';
 import { globalPDP } from './policyDecisionPoint.js';
 import { toolRegistry } from '../tools/registry.js';
+import '../tools/desktopTools.js';
 import { globalBossMemory } from '../embodied/bossMemoryHub.js';
 import { globalBossFeedback } from '../embodied/bossFeedbackLearner.js';
 import { memoryStore } from './memory.js';
@@ -257,7 +258,9 @@ export class AgentLoop {
         // STAGE 1: INTENT RESOLUTION
         // =========================================================================
         try {
-            intent = await this.resolveIntent(sanitizedText, req);
+            // EN: Real-time intent reasoning operates on raw userText to preserve full context.
+            // VI: Xử lý ý định trong phiên hiện tại dùng userText gốc để bảo toàn trọn vẹn ngữ cảnh.
+            intent = await this.resolveIntent(req.userText || sanitizedText, req);
             currentState = 'INTENT_RESOLVED';
         }
         catch (err) {
@@ -330,7 +333,7 @@ export class AgentLoop {
         semanticIntent = this.intentService.interpret({
             userId: actor.userId,
             sessionId,
-            userText: sanitizedText,
+            userText: req.userText || sanitizedText,
             context: memoryContext.contextSnapshot ? { recentTurns: memoryContext.contextSnapshot.recentTurns } : undefined,
             workingMemory: memoryContext.sessionTurns,
         });
@@ -355,7 +358,7 @@ export class AgentLoop {
         contextAwarePlan = this.planningService.plan({
             userId: actor.userId,
             sessionId,
-            userText: sanitizedText,
+            userText: req.userText || sanitizedText,
             context: memoryContext.contextSnapshot ? { recentTurns: memoryContext.contextSnapshot.recentTurns } : undefined,
             workingMemory: memoryContext.sessionTurns,
         }, semanticIntent);
@@ -364,7 +367,7 @@ export class AgentLoop {
         const decisionContext = createDecisionContext({
             userId: actor.userId,
             sessionId,
-            userText: sanitizedText,
+            userText: req.userText || sanitizedText,
             context: memoryContext.contextSnapshot ? { recentTurns: memoryContext.contextSnapshot.recentTurns } : undefined,
             workingMemory: memoryContext.sessionTurns,
         }, semanticIntent);

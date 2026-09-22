@@ -52,6 +52,7 @@ export const CONFIG = {
         .map(p => p.trim())
         .filter(Boolean),
     agentPersona: getEnvValue('BOW_AGENT_PERSONA', 'Bạn là trợ lý Knowledge Base của ShopOfBow (Shop phần mềm và tài khoản bản quyền).'),
+    voiceMaxE2eTimeoutMs: Math.max(1000, parseInt(getEnvValue('BOW_VOICE_MAX_E2E_TIMEOUT_MS', '30000'), 10) || 30000),
 };
 export function getProtectedPaths() {
     return [...CONFIG.protectedPaths];
