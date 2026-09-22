@@ -37,17 +37,19 @@ export interface ServerOptions {
 }
 
 export class BowCentralAgentServer {
-  private server?: https.Server;
+  private server?: http.Server | https.Server;
   private wss?: WebSocketServer;
   private isRunning = false;
   private port: number;
   private host: string;
   private webhookVerifier: WebhookVerifier;
+  private tlsEnabled = false;
 
   constructor(options: ServerOptions = {}) {
     this.port = options.port || CONFIG.port || 4000;
     this.host = options.host || CONFIG.host || '0.0.0.0';
     this.webhookVerifier = new WebhookVerifier(CONFIG.shopWebhookSecret || (CONFIG.env === 'production' ? '' : 'bow_webhook_secret_default'));
+    this.tlsEnabled = process.env.BOW_ENABLE_TLS === 'true';
   }
 
   public async start(): Promise<void> {
@@ -59,14 +61,7 @@ export class BowCentralAgentServer {
       console.log(`[BOW-SERVER] BodyProtocol PSK đã sẵn sàng (độ dài: ${bodyPsk.length} ký tự).`);
     }
 
-    // Khởi tạo và nạp chứng chỉ TLS nội bộ (Internal CA & Machine A Server Cert)
-    const { serverCertPath, serverKeyPath } = ensureTlsCertificates({ hosts: [this.host] });
-    const tlsOptions: https.ServerOptions = {
-      key: fs.readFileSync(serverKeyPath),
-      cert: fs.readFileSync(serverCertPath),
-    };
-
-    this.server = https.createServer(tlsOptions, async (req, res) => {
+    const requestHandler: http.RequestListener = async (req, res) => {
       // Never emit wildcard CORS in production. Development stays convenient,
       // while production must explicitly name browser origins in the env file.
       // 1. Correlation ID Propagation
@@ -553,7 +548,18 @@ export class BowCentralAgentServer {
       // 404
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Endpoint not found', correlationId }));
-    });
+    };
+
+    if (this.tlsEnabled) {
+      const { serverCertPath, serverKeyPath } = ensureTlsCertificates({ hosts: [this.host] });
+      const tlsOptions: https.ServerOptions = {
+        key: fs.readFileSync(serverKeyPath),
+        cert: fs.readFileSync(serverCertPath),
+      };
+      this.server = https.createServer(tlsOptions, requestHandler);
+    } else {
+      this.server = http.createServer(requestHandler);
+    }
 
     // WebSocket Gateway Server
     this.wss = new WebSocketServer({
@@ -847,7 +853,9 @@ export class BowCentralAgentServer {
     return new Promise((resolve, reject) => {
       this.server!.listen(this.port, this.host, () => {
         this.isRunning = true;
-        console.log(`[BOW-SERVER] Central Autonomous Brain listening on https://${this.host}:${this.port} (TLS/WSS Enforced)`);
+        const proto = this.tlsEnabled ? 'https' : 'http';
+        const mode = this.tlsEnabled ? 'TLS/WSS Enforced' : 'Plain HTTP/WS (Tailscale Mesh VPN)';
+        console.log(`[BOW-SERVER] Central Autonomous Brain listening on ${proto}://${this.host}:${this.port} (${mode})`);
         resolve();
       });
       this.server!.on('error', reject);
