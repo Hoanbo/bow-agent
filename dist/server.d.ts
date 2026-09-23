@@ -10,6 +10,7 @@ export declare class BowCentralAgentServer {
     private port;
     private host;
     private webhookVerifier;
+    private tlsEnabled;
     constructor(options?: ServerOptions);
     start(): Promise<void>;
     stop(): Promise<void>;

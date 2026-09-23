@@ -1120,6 +1120,7 @@ export class AgentLoop {
     return {
       intentType: 'GENERAL_QUERY',
       capability: 'conversation',
+      actionName: 'bowcon_converse',
       parameters: { query: rawQuery },
       confidence: 0.85,
       requiresClarification: false,

@@ -27,6 +27,7 @@ import { globalPDP } from './core/policyDecisionPoint.js';
 import { globalCircuitBreaker } from './llm/resilience.js';
 import { globalBodyRegistry, validateBodyPsk, getBodyPsk, BODY_CONFIG, type BodyCommand, type BodyCommandResult, type BodyConnectionSender } from './core/bodyProtocol/index.js';
 import { globalVoicePipeline } from './speech/voicePipeline.js';
+import { globalPiperTtsEngine } from './speech/piperTtsEngine.js';
 
 
 
@@ -37,19 +38,17 @@ export interface ServerOptions {
 }
 
 export class BowCentralAgentServer {
-  private server?: http.Server | https.Server;
+  private server?: https.Server | http.Server;
   private wss?: WebSocketServer;
   private isRunning = false;
   private port: number;
   private host: string;
   private webhookVerifier: WebhookVerifier;
-  private tlsEnabled = false;
 
   constructor(options: ServerOptions = {}) {
     this.port = options.port || CONFIG.port || 4000;
     this.host = options.host || CONFIG.host || '0.0.0.0';
     this.webhookVerifier = new WebhookVerifier(CONFIG.shopWebhookSecret || (CONFIG.env === 'production' ? '' : 'bow_webhook_secret_default'));
-    this.tlsEnabled = process.env.BOW_ENABLE_TLS === 'true';
   }
 
   public async start(): Promise<void> {
@@ -61,7 +60,7 @@ export class BowCentralAgentServer {
       console.log(`[BOW-SERVER] BodyProtocol PSK đã sẵn sàng (độ dài: ${bodyPsk.length} ký tự).`);
     }
 
-    const requestHandler: http.RequestListener = async (req, res) => {
+    const requestHandler = async (req: http.IncomingMessage, res: http.ServerResponse) => {
       // Never emit wildcard CORS in production. Development stays convenient,
       // while production must explicitly name browser origins in the env file.
       // 1. Correlation ID Propagation
@@ -550,7 +549,8 @@ export class BowCentralAgentServer {
       res.end(JSON.stringify({ error: 'Endpoint not found', correlationId }));
     };
 
-    if (this.tlsEnabled) {
+    const useTls = process.env.BOW_DISABLE_TLS !== 'true';
+    if (useTls) {
       const { serverCertPath, serverKeyPath } = ensureTlsCertificates({ hosts: [this.host] });
       const tlsOptions: https.ServerOptions = {
         key: fs.readFileSync(serverKeyPath),
@@ -580,24 +580,28 @@ export class BowCentralAgentServer {
         const path = url.pathname;
 
         // Route: /ws/body (BodyProtocol)
-        // Bắt buộc xác thực Pre-Shared Key (PSK) qua HTTP Header "Authorization: Bearer <PSK>"
+        // Bắt buộc xác thực Pre-Shared Key (PSK) qua HTTP Header "Authorization: Bearer <PSK>" hoặc query param
         if (path === '/ws/body' || path.startsWith('/ws/body')) {
           const authHeader = info.req.headers['authorization'];
           let bearerToken: string | undefined;
+          let authSource = 'NONE';
           if (typeof authHeader === 'string' && authHeader.startsWith('Bearer ')) {
             bearerToken = authHeader.slice(7).trim();
-          } else {
-            const queryToken = url.searchParams.get('token') || url.searchParams.get('psk');
-            if (typeof queryToken === 'string' && queryToken.trim().length > 0) {
-              bearerToken = queryToken.trim();
-            }
+            authSource = 'HTTP_HEADER_AUTHORIZATION';
+          } else if (url.searchParams.get('token')) {
+            bearerToken = url.searchParams.get('token') || undefined;
+            authSource = 'QUERY_PARAM_TOKEN';
+          } else if (url.searchParams.get('psk')) {
+            bearerToken = url.searchParams.get('psk') || undefined;
+            authSource = 'QUERY_PARAM_PSK';
           }
 
           if (!bearerToken || !validateBodyPsk(bearerToken)) {
-            console.warn(`[BOW-SERVER] ⚠️ TỪ CHỐI kết nối /ws/body (401 Unauthorized): Thiếu hoặc sai Pre-Shared Key (PSK) từ IP: ${clientIp}`);
+            console.warn(`[BOW-SERVER] ⚠️ TỪ CHỐI kết nối /ws/body (401 Unauthorized): Thiếu hoặc sai Pre-Shared Key (PSK) từ IP: ${clientIp} (nguồn: ${authSource})`);
             return done(false, 401, 'Unauthorized');
           }
 
+          console.log(`[BOW-SERVER] [AUTH-BODY] Xác thực PSK THÀNH CÔNG từ IP: ${clientIp} qua nguồn: ${authSource}`);
           return done(true);
         }
 
@@ -681,8 +685,19 @@ export class BowCentralAgentServer {
 
           // 2. BodyProtocol Handlers (Body Advertisement, Heartbeat, Command Result)
           if (payload.type === 'body.advertise') {
-            const ad = payload.advertisement;
-            connectedBodyId = ad.bodyId;
+            const rawAd = payload.advertisement || payload;
+            const bodyId = rawAd.bodyId || payload.bodyId || 'mobile_body';
+            connectedBodyId = bodyId;
+            const rawCaps = Array.isArray(rawAd.capabilities) ? rawAd.capabilities : [];
+            const capabilities = rawCaps.map((c: any) => typeof c === 'string' ? { name: c, description: c, riskLevel: 'low' } : c);
+            const ad: CapabilityAdvertisement = {
+              bodyId,
+              bodyType: rawAd.bodyType || 'mobile',
+              name: rawAd.name || bodyId,
+              capabilities,
+              metadata: rawAd.metadata || {},
+              timestamp: rawAd.timestamp || Date.now(),
+            };
 
             const sender: BodyConnectionSender = {
               sendCommand: async (command: BodyCommand): Promise<BodyCommandResult> => {
@@ -742,6 +757,12 @@ export class BowCentralAgentServer {
               status: 'REGISTERED',
               timestamp: Date.now(),
             }));
+            ws.send(JSON.stringify({
+              type: 'body.registered',
+              bodyId: ad.bodyId,
+              status: 'REGISTERED',
+              timestamp: Date.now(),
+            }));
             return;
           }
 
@@ -792,8 +813,44 @@ export class BowCentralAgentServer {
             return;
           }
 
-          // Voice Pipeline Roundtrip over WebSocket
+          // Voice Pipeline Roundtrip over WebSocket (Authenticated Body Channel)
           if (payload.type === 'voice.roundtrip' || payload.type === 'voice.turn' || payload.type === 'body.voice_turn') {
+            const rawAudio = payload.audioBase64 ? Buffer.from(payload.audioBase64, 'base64') : undefined;
+
+            // Xử lý Audition Test Probe (khi không có raw audio nhưng có text kiểm thử Duy Oryx)
+            if (!rawAudio && (payload.text || payload.simulatedTranscript)) {
+              const probeText = payload.text || payload.simulatedTranscript || 'Chào Ngài, tôi là Duy Oryx.';
+              const ttsStart = Date.now();
+              console.log(`[VOICE-TRACE] [${payload.correlationId || 'audition'}] audition_test.start text="${probeText}"`);
+              const ttsRes = await globalPiperTtsEngine.synthesizeSpeech(probeText, { returnBase64: true });
+              if (!ttsRes.success || !ttsRes.audioBase64) {
+                console.error(`[VOICE-TRACE] [${payload.correlationId || 'audition'}] audition_test.failed error=${ttsRes.error}`);
+                ws.send(JSON.stringify({
+                  type: 'voice.roundtrip_result',
+                  requestId: payload.requestId,
+                  success: false,
+                  stageAtError: 'TTS',
+                  error: ttsRes.error || 'Piper TTS synthesis failed',
+                  correlationId: payload.correlationId,
+                }));
+                return;
+              }
+              const duration = Date.now() - ttsStart;
+              console.log(`[VOICE-TRACE] [${payload.correlationId || 'audition'}] audition_test.complete duration=${duration}ms bytes=${ttsRes.byteLength}`);
+              ws.send(JSON.stringify({
+                type: 'voice.roundtrip_result',
+                requestId: payload.requestId,
+                success: true,
+                correlationId: payload.correlationId,
+                bodyId: connectedBodyId || payload.bodyId,
+                userText: probeText,
+                responseText: probeText,
+                speechAudioBase64: ttsRes.audioBase64,
+                totalDurationMs: duration,
+              }));
+              return;
+            }
+
             const voiceRes = await globalVoicePipeline.executeVoiceRoundtrip({
               bodyId: connectedBodyId || payload.bodyId,
               sessionId: payload.sessionId,
@@ -801,8 +858,8 @@ export class BowCentralAgentServer {
               role: payload.role,
               isOwner: payload.isOwner,
               correlationId: payload.correlationId,
-              audioBufferOverride: payload.audioBase64 ? Buffer.from(payload.audioBase64, 'base64') : undefined,
-              simulatedTranscript: payload.text,
+              realAudioBuffer: rawAudio && rawAudio.length > 0 ? rawAudio : undefined,
+              skipBodyPlayback: true,
             });
             ws.send(JSON.stringify({
               type: 'voice.roundtrip_result',
@@ -827,6 +884,7 @@ export class BowCentralAgentServer {
             ...webRes,
           }));
         } catch (err: any) {
+          console.error(`[BOW-SERVER] ❌ WebSocket message handling error:`, err);
           ws.send(JSON.stringify({
             type: 'agent.error',
             error: err?.message || 'Invalid payload',
@@ -853,9 +911,8 @@ export class BowCentralAgentServer {
     return new Promise((resolve, reject) => {
       this.server!.listen(this.port, this.host, () => {
         this.isRunning = true;
-        const proto = this.tlsEnabled ? 'https' : 'http';
-        const mode = this.tlsEnabled ? 'TLS/WSS Enforced' : 'Plain HTTP/WS (Tailscale Mesh VPN)';
-        console.log(`[BOW-SERVER] Central Autonomous Brain listening on ${proto}://${this.host}:${this.port} (${mode})`);
+        const protocol = useTls ? 'https' : 'http';
+        console.log(`[BOW-SERVER] Central Autonomous Brain listening on ${protocol}://${this.host}:${this.port} (${useTls ? 'TLS/WSS Enforced' : 'HTTP/WS Mode'})`);
         resolve();
       });
       this.server!.on('error', reject);

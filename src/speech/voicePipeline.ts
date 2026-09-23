@@ -64,6 +64,10 @@ export interface VoiceRoundtripOptions {
   isOwner?: boolean;
   /** Correlation ID for distributed tracing */
   correlationId?: string;
+  /** Real audio buffer captured by an authenticated Body in production */
+  realAudioBuffer?: Buffer;
+  /** Skip sending audio.play command to body registry (e.g. when client plays audio from roundtrip result) */
+  skipBodyPlayback?: boolean;
   /** Capture duration in milliseconds (default: 2000ms) */
   captureDurationMs?: number;
   /** Maximum end-to-end roundtrip timeout in milliseconds (default: 30000ms from CONFIG) */
@@ -93,6 +97,8 @@ export interface VoiceRoundtripResult {
   ttsDurationMs: number;
   playbackDurationMs: number;
   totalDurationMs: number;
+  /** Piper TTS synthesized speech audio in Base64 (22.05kHz WAV) */
+  speechAudioBase64?: string;
   error?: string;
   stageAtError?: VoicePipelineStage;
   audioCapture?: {
@@ -218,49 +224,65 @@ export class VoicePipeline {
 
     const pipelinePromise = (async (): Promise<VoiceRoundtripResult> => {
       // -----------------------------------------------------------------------
-      // STAGE 1: MICROPHONE AUDIO CAPTURE VIA BODYPROTOCOL
+      // STAGE 1: MICROPHONE AUDIO CAPTURE VIA BODYPROTOCOL / INBOUND REAL AUDIO BUFFER
       // -----------------------------------------------------------------------
       currentStage = 'CAPTURE';
       if (abortController.signal.aborted) {
         throw new Error(`${VoicePipelineErrorCode.VOICE_ROUNDTRIP_ABORTED}: Pipeline aborted at stage CAPTURE`);
       }
 
-      const captureStart = Date.now();
-      console.log(`[VOICE-TRACE] [${correlationId}] audio.capture.start body=${targetBodyId}`);
-      this.recordAuditMetadata('AUDIO_CAPTURE_STARTED', targetBodyId, correlationId, userId);
-
-      const captureCommand = {
-        commandId: `cmd_cap_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`,
-        bodyId: targetBodyId,
-        capability: 'audio.capture',
-        params: {
-          durationMs: options.captureDurationMs || VOICE_CONFIG.defaultCaptureDurationMs,
+      if (options.realAudioBuffer) {
+        // Inbound production audio already captured by authenticated Body
+        captureResultData = {
+          audioBase64: options.realAudioBuffer.toString('base64'),
+          format: 'wav',
+          byteLength: options.realAudioBuffer.length,
           sampleRate: VOICE_CONFIG.defaultSampleRate,
-          channels: VOICE_CONFIG.defaultChannels,
-        } as AudioCaptureParams,
-        correlationId,
-      };
+        };
+        captureDurationMs = 0;
+        console.log(`[VOICE-TRACE] [${correlationId}] audio.inbound_buffer body=${targetBodyId} bytes=${options.realAudioBuffer.length} status=SUCCESS`);
+        this.recordAuditMetadata('AUDIO_CAPTURE_COMPLETED', targetBodyId, correlationId, userId, {
+          byteLength: options.realAudioBuffer.length,
+          durationMs: 0,
+        });
+      } else {
+        const captureStart = Date.now();
+        console.log(`[VOICE-TRACE] [${correlationId}] audio.capture.start body=${targetBodyId}`);
+        this.recordAuditMetadata('AUDIO_CAPTURE_STARTED', targetBodyId, correlationId, userId);
 
-      activeBodyCommandId = captureCommand.commandId;
-      let captureResponse;
-      try {
-        captureResponse = await this.bodyRegistry.executeBodyCommand(captureCommand);
-      } finally {
-        activeBodyCommandId = undefined;
+        const captureCommand = {
+          commandId: `cmd_cap_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`,
+          bodyId: targetBodyId,
+          capability: 'audio.capture',
+          params: {
+            durationMs: options.captureDurationMs || VOICE_CONFIG.defaultCaptureDurationMs,
+            sampleRate: VOICE_CONFIG.defaultSampleRate,
+            channels: VOICE_CONFIG.defaultChannels,
+          } as AudioCaptureParams,
+          correlationId,
+        };
+
+        activeBodyCommandId = captureCommand.commandId;
+        let captureResponse;
+        try {
+          captureResponse = await this.bodyRegistry.executeBodyCommand(captureCommand);
+        } finally {
+          activeBodyCommandId = undefined;
+        }
+        captureDurationMs = Date.now() - captureStart;
+
+        if (!captureResponse.success || !captureResponse.data) {
+          console.error(`[VOICE-TRACE] [${correlationId}] audio.capture.failed duration=${captureDurationMs}ms error=${captureResponse.error}`);
+          throw new Error(`${VoicePipelineErrorCode.AUDIO_CAPTURE_FAILED}: ${captureResponse.error || 'Failed to capture audio from body'}`);
+        }
+
+        captureResultData = captureResponse.data as AudioCaptureResult;
+        console.log(`[VOICE-TRACE] [${correlationId}] audio.capture.complete duration=${captureDurationMs}ms bytes=${captureResultData.byteLength} status=SUCCESS`);
+        this.recordAuditMetadata('AUDIO_CAPTURE_COMPLETED', targetBodyId, correlationId, userId, {
+          byteLength: captureResultData.byteLength,
+          durationMs: captureDurationMs,
+        });
       }
-      captureDurationMs = Date.now() - captureStart;
-
-      if (!captureResponse.success || !captureResponse.data) {
-        console.error(`[VOICE-TRACE] [${correlationId}] audio.capture.failed duration=${captureDurationMs}ms error=${captureResponse.error}`);
-        throw new Error(`${VoicePipelineErrorCode.AUDIO_CAPTURE_FAILED}: ${captureResponse.error || 'Failed to capture audio from body'}`);
-      }
-
-      captureResultData = captureResponse.data as AudioCaptureResult;
-      console.log(`[VOICE-TRACE] [${correlationId}] audio.capture.complete duration=${captureDurationMs}ms bytes=${captureResultData.byteLength} status=SUCCESS`);
-      this.recordAuditMetadata('AUDIO_CAPTURE_COMPLETED', targetBodyId, correlationId, userId, {
-        byteLength: captureResultData.byteLength,
-        durationMs: captureDurationMs,
-      });
 
       // -----------------------------------------------------------------------
       // STAGE 2: SPEECH-TO-TEXT (STT) VIA WHISPER.CPP
@@ -284,7 +306,7 @@ export class VoicePipeline {
         if (options.audioBufferOverride && process.env.NODE_ENV !== 'test') {
           throw new Error(`${VoicePipelineErrorCode.TEST_ONLY_METHOD_CALLED_OUTSIDE_TEST_ENV}: audioBufferOverride option can only be used in test environment (NODE_ENV=test).`);
         }
-        const audioBuffer = options.audioBufferOverride || Buffer.from(captureResultData.audioBase64, 'base64');
+        const audioBuffer = options.realAudioBuffer || options.audioBufferOverride || Buffer.from(captureResultData.audioBase64, 'base64');
         const sttResult = await this.stt.transcribe(audioBuffer, { language: 'vi', signal: abortController.signal });
         if (!sttResult.success) {
           throw new Error(`${VoicePipelineErrorCode.STT_FAILED}: ${sttResult.error || 'Speech transcription failed'}`);
@@ -302,12 +324,10 @@ export class VoicePipeline {
       piiCheck = redactPii(userText);
 
       // PII-SAFE LOG: chỉ ghi metadata, không ghi nội dung transcript
-      console.log(`[VOICE-TRACE] [${correlationId}] stt.complete duration=${sttDurationMs}ms chars=${userText.length} status=SUCCESS`);
-      // Nội dung transcript chỉ ghi vào debug log riêng khi BOW_DEBUG_VOICE_CONTENT=true
-      logVoiceContent(correlationId, 'stt.complete', `chars=${userText.length} lang=vi`);
       this.recordAuditMetadata('STT_COMPLETE', targetBodyId, correlationId, userId, {
         sttDurationMs,
         userTextLength: userText.length,
+        hasPii: piiCheck ? piiCheck.hasPii : false,
       });
 
       // -----------------------------------------------------------------------
@@ -353,8 +373,13 @@ export class VoicePipeline {
         responseLength: responseText.length,
       });
 
+      if (agentResult.state.endsWith('_FAILED') || agentResult.state.endsWith('_DENIED') || (agentResult.error && agentResult.state !== 'COMPLETED')) {
+        console.error(`[VOICE-TRACE] [${correlationId}] brain.failed error=${agentResult.error}`);
+        throw new Error(`${VoicePipelineErrorCode.AGENT_LOOP_FAILED}: ${agentResult.error || 'Agent execution failed'}`);
+      }
+
       // -----------------------------------------------------------------------
-      // STAGE 4: REAL TEXT-TO-SPEECH (TTS) VIA PIPER (DUY ORYX MODEL)
+      // STAGE 4: TEXT-TO-SPEECH (TTS) VIA PIPER (DUY ORYX MODEL - 22.05kHz)
       // -----------------------------------------------------------------------
       currentStage = 'TTS';
       if (abortController.signal.aborted) {
@@ -362,21 +387,23 @@ export class VoicePipeline {
       }
 
       const ttsStart = Date.now();
-      console.log(`[VOICE-TRACE] [${correlationId}] tts.start provider=piper model=duyoryx3175`);
+      console.log(`[VOICE-TRACE] [${correlationId}] tts.start model=duyoryx3175`);
       this.recordAuditMetadata('TTS_START', targetBodyId, correlationId, userId, {
-        provider: 'piper',
+        engine: 'piper',
         model: 'duyoryx3175',
       });
 
-      let speechAudioBase64: string | undefined;
+      let speechAudioBase64: string;
 
       try {
-        const piperResult = await this.piperTts.synthesize(responseText, { returnBase64: true, signal: abortController.signal });
-        ttsDurationMs = Date.now() - ttsStart;
-        speechFilePath = piperResult.wavFilePath;
+        const piperResult = await this.piperTts.synthesize(responseText, {
+          signal: abortController.signal,
+        });
 
-        if (!piperResult.success) {
-          console.error(`[VOICE-TRACE] [${correlationId}] tts.failed duration=${ttsDurationMs}ms errorCode=${piperResult.errorCode} error=${piperResult.error}`);
+        ttsDurationMs = Date.now() - ttsStart;
+        speechFilePath = piperResult.filePath || (piperResult as any).wavFilePath;
+
+        if (!piperResult.success || !piperResult.audioBase64) {
           this.recordAuditMetadata('TTS_FAILED', targetBodyId, correlationId, userId, {
             errorCode: piperResult.errorCode,
             error: piperResult.error,
@@ -403,42 +430,53 @@ export class VoicePipeline {
           throw new Error(`${VoicePipelineErrorCode.VOICE_ROUNDTRIP_ABORTED}: Pipeline aborted at stage PLAYBACK`);
         }
 
-        const playStart = Date.now();
-        console.log(`[VOICE-TRACE] [${correlationId}] audio.play.start body=${targetBodyId}`);
-        this.recordAuditMetadata('AUDIO_PLAY_START', targetBodyId, correlationId, userId);
+        if (options.skipBodyPlayback) {
+          playbackDurationMs = 0;
+          playResultData = { deviceName: 'client_managed_playback' };
+          console.log(`[VOICE-TRACE] [${correlationId}] audio.play.skipped reason=client_managed_playback`);
+          this.recordAuditMetadata('AUDIO_PLAY_COMPLETED', targetBodyId, correlationId, userId, {
+            playbackDurationMs: 0,
+            success: true,
+          });
+        } else {
+          const playStart = Date.now();
+          console.log(`[VOICE-TRACE] [${correlationId}] audio.play.start body=${targetBodyId}`);
+          this.recordAuditMetadata('AUDIO_PLAY_START', targetBodyId, correlationId, userId);
 
-        const playCommand = {
-          commandId: `cmd_play_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`,
-          bodyId: targetBodyId,
-          capability: 'audio.play',
-          params: {
-            audioBase64: speechAudioBase64,
-            audioFilePath: speechFilePath,
-            format: 'wav',
-          } as AudioPlayParams,
-          correlationId,
-        };
+          const playCommand = {
+            commandId: `cmd_play_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`,
+            bodyId: targetBodyId,
+            capability: 'audio.play',
+            timeoutMs: 25000,
+            params: {
+              audioBase64: speechAudioBase64,
+              audioFilePath: speechFilePath,
+              format: 'wav',
+            } as AudioPlayParams,
+            correlationId,
+          };
 
-        activeBodyCommandId = playCommand.commandId;
-        let playResponse;
-        try {
-          playResponse = await this.bodyRegistry.executeBodyCommand(playCommand);
-        } finally {
-          activeBodyCommandId = undefined;
+          activeBodyCommandId = playCommand.commandId;
+          let playResponse;
+          try {
+            playResponse = await this.bodyRegistry.executeBodyCommand(playCommand);
+          } finally {
+            activeBodyCommandId = undefined;
+          }
+          playbackDurationMs = Date.now() - playStart;
+          playResultData = playResponse.data as AudioPlayResult;
+
+          if (!playResponse.success) {
+            console.error(`[VOICE-TRACE] [${correlationId}] audio.play.failed duration=${playbackDurationMs}ms error=${playResponse.error}`);
+            throw new Error(`${VoicePipelineErrorCode.AUDIO_PLAY_FAILED}: ${playResponse.error || 'Playback on body failed'}`);
+          }
+
+          console.log(`[VOICE-TRACE] [${correlationId}] audio.play.complete duration=${playbackDurationMs}ms device="${playResultData?.deviceName || 'default'}" status=SUCCESS`);
+          this.recordAuditMetadata('AUDIO_PLAY_COMPLETED', targetBodyId, correlationId, userId, {
+            playbackDurationMs,
+            success: playResponse.success,
+          });
         }
-        playbackDurationMs = Date.now() - playStart;
-        playResultData = playResponse.data as AudioPlayResult;
-
-        if (!playResponse.success) {
-          console.error(`[VOICE-TRACE] [${correlationId}] audio.play.failed duration=${playbackDurationMs}ms error=${playResponse.error}`);
-          throw new Error(`${VoicePipelineErrorCode.AUDIO_PLAY_FAILED}: ${playResponse.error || 'Playback on body failed'}`);
-        }
-
-        console.log(`[VOICE-TRACE] [${correlationId}] audio.play.complete duration=${playbackDurationMs}ms device="${playResultData?.deviceName || 'default'}" status=SUCCESS`);
-        this.recordAuditMetadata('AUDIO_PLAY_COMPLETED', targetBodyId, correlationId, userId, {
-          playbackDurationMs,
-          success: playResponse.success,
-        });
       } finally {
         // Cleanup guard: đảm bảo file WAV tạm của TTS luôn được xóa trong mọi tình huống
         // (kể cả khi audio.play thất bại, body offline, lỗi mạng, PDP từ chối approval...)
@@ -462,6 +500,7 @@ export class VoicePipeline {
         ttsDurationMs,
         playbackDurationMs,
         totalDurationMs: Date.now() - startTime,
+        speechAudioBase64,
         audioCapture: captureResultData
           ? {
               format: captureResultData.format,

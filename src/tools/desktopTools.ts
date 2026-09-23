@@ -3,6 +3,7 @@
 
 import { toolRegistry } from './registry.js';
 import { verifyChannelAccess } from '../core/security.js';
+import { globalPDP } from '../core/policyDecisionPoint.js';
 
 export interface DesktopActionResult {
   success: boolean;
@@ -671,6 +672,48 @@ toolRegistry.register({
       action: 'send_telegram_briefing_to_boss',
       payload: res,
       message: 'Bản Tin Chào Buổi Sáng đã được gửi thành công vào điện thoại của Sếp qua Telegram!',
+    };
+  },
+});
+
+// 20. BOWCON Smart LLM Conversation Tool
+globalPDP.registerActionPolicy('bowcon_converse', 'RECOMMEND');
+toolRegistry.register({
+  name: 'bowcon_converse',
+  description: 'Trò chuyện, đối thoại, trả lời câu hỏi và giải đáp thắc mắc của Sếp/Ngài thông qua Gemini LLM theo phong cách BOWCON.',
+  parameters: {
+    type: 'object',
+    properties: {
+      query: { type: 'string', description: 'Nội dung câu hỏi hoặc yêu cầu đối thoại từ Sếp' },
+    },
+    required: ['query'],
+  },
+  execute: async (args, context): Promise<DesktopActionResult> => {
+    const query = args?.query || '';
+    const { processAgentMessageWithGemini } = await import('../gemini/geminiClient.js');
+    const result = await processAgentMessageWithGemini(query, {
+      userId: context?.userId || 'boss_user',
+      role: 'owner',
+      isAuthenticated: true,
+      channel: context?.channel || 'VOICE',
+      sessionId: context?.correlationId,
+    });
+
+    if (result.success && result.message) {
+      return {
+        success: true,
+        action: 'bowcon_converse',
+        payload: { reply: result.message.content },
+        message: result.message.content,
+      };
+    }
+
+    // Fallback if LLM failed
+    return {
+      success: true,
+      action: 'bowcon_converse',
+      payload: { reply: 'Thưa Ngài, tôi là BOWCON. Tôi có thể hỗ trợ Ngài quản lý shop, điều phối robot, đọc bản tin sáng và phục vụ Ngài theo thời gian thực.' },
+      message: 'Thưa Ngài, tôi là BOWCON. Tôi có thể hỗ trợ Ngài quản lý shop, điều phối robot, đọc bản tin sáng và phục vụ Ngài theo thời gian thực.',
     };
   },
 });

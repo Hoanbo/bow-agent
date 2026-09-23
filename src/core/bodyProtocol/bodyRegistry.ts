@@ -67,14 +67,16 @@ export class BodyRegistry {
   ): BodyRecord {
     const now = Date.now();
     const capMap = new Map<string, CapabilityDescriptor>();
-    for (const cap of ad.capabilities) {
-      // Security Hardening: Áp dụng riskLevel cho capability "audio.*"
-      // Khi REQUIRE_PUSH_TO_TALK đang bật -> 'medium' (không đòi hỏi approval token thừa)
-      // Khi REQUIRE_PUSH_TO_TALK tắt -> 'high' (bắt buộc qua PDP approval)
-      const isAudio = cap.name.startsWith('audio.') || cap.name === 'audio.capture' || cap.name === 'audio.play';
+    for (const rawCap of (ad.capabilities || [])) {
+      const cap: CapabilityDescriptor = typeof rawCap === 'string'
+        ? { name: rawCap, description: rawCap, riskLevel: 'low' }
+        : rawCap;
+      const capName = cap.name || String(rawCap);
+      const isAudio = capName.startsWith('audio.') || capName === 'audio.capture' || capName === 'audio.play';
       const descriptor: CapabilityDescriptor = {
         ...cap,
-        riskLevel: isAudio ? getAudioCapabilityRiskLevel(cap.name) : cap.riskLevel,
+        name: capName,
+        riskLevel: isAudio ? getAudioCapabilityRiskLevel(capName) : (cap.riskLevel || 'low'),
       };
       capMap.set(descriptor.name, descriptor);
     }

@@ -3,7 +3,7 @@
 
 import type { AgentContext, AgentMessage, AgentAction } from '../core/types.js';
 import { GEMINI_CONFIG, getGeminiApiKey, sanitizeLogOutput } from './config.js';
-import { BOW_AGENT_SYSTEM_PROMPT, BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT, BOW_ADMIN_COPILOT_SYSTEM_PROMPT } from './geminiPrompt.js';
+import { BOW_AGENT_SYSTEM_PROMPT, BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT, BOW_ADMIN_COPILOT_SYSTEM_PROMPT, BOW_CON_SYSTEM_PROMPT } from './geminiPrompt.js';
 import { geminiToolDeclarations, executeGeminiTool, type GeminiToolExecutionOutput } from './geminiTools.js';
 
 
@@ -94,10 +94,10 @@ export async function processAgentMessageWithGemini(
       const MAX_TOOL_ITERATIONS = 2;
       let responseText = '';
 
-      const isOwnerPersona = context?.role === 'owner' || context?.channel === 'ROBOT';
+      const isOwnerPersona = context?.role === 'owner' || context?.channel === 'ROBOT' || context?.channel === 'VOICE' || (context as any)?.isOwner === true;
       const isAdminPersona = context?.role === 'admin' || (context as any)?.isAdmin === true;
       const activeSystemPrompt = isOwnerPersona
-        ? BOW_JARVIS_EXECUTIVE_SYSTEM_PROMPT
+        ? BOW_CON_SYSTEM_PROMPT
         : isAdminPersona
         ? BOW_ADMIN_COPILOT_SYSTEM_PROMPT
         : BOW_AGENT_SYSTEM_PROMPT;
